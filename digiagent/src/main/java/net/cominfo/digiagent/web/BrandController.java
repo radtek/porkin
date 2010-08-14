@@ -26,6 +26,6 @@ public class BrandController {
 			throw new ResourceNotFoundException(new Long(id));
 		}
 		model.addAttribute(brand);
-		return "category/view";
+		return "brand/view";
 	}
 }
