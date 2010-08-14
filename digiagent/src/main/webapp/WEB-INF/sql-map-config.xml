@@ -7,8 +7,15 @@
 	<settings useStatementNamespaces="true" />
 
 	<!-- Predefi -->
-	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_country_SqlMap.xml" />
-	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_brand_SqlMap.xml" />
-	
-
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_brand_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_category_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_city_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_commodity_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_contact_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_country_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_productbrand_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_product_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_province_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplierproduct_SqlMap.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplier_SqlMap.xml"/>
 </sqlMapConfig>

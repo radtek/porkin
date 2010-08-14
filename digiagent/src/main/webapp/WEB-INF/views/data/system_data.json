@@ -1,0 +1,13 @@
+﻿[{
+	"id":1,
+	"text":"系统设置",
+	"iconCls":"icon-ok",
+	"children":[{
+		"id":2,
+		"text":"用户列表",
+		"checked":true
+	},{
+		"id":3,
+		"text":"广告投放"
+	}]
+}]

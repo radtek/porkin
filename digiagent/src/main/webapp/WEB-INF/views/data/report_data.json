@@ -1,0 +1,19 @@
+﻿[{
+	"id":1,
+	"text":"报表",
+	"iconCls":"icon-ok",
+	"children":[{
+		"id":2,
+		"text":"日访问量",
+		"checked":true
+	},{
+		"id":3,
+		"text":"周访问量"
+	},{
+		"id":4,
+		"text":"月访问量"
+	},{
+		"id":5,
+		"text":"城市访问"
+	}]
+}]

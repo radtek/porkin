@@ -1,0 +1,12 @@
+﻿{"total":28,"rows":[
+	{"categoryId":"FI-SW-01","unitcost":10.00,"status":"P","listprice":16.50,"categoryName":"Large","itemid":"EST-1"},
+	{"categoryId":"K9-DL-01","unitcost":12.00,"status":"P","listprice":18.50,"categoryName":"Spotted Adult Female","itemid":"EST-10"},
+	{"categoryId":"RP-SN-01","unitcost":12.00,"status":"P","listprice":18.50,"categoryName":"Venomless","itemid":"EST-11"},
+	{"categoryId":"RP-SN-01","unitcost":12.00,"status":"P","listprice":18.50,"categoryName":"Rattleless","itemid":"EST-12"},
+	{"categoryId":"RP-LI-02","unitcost":12.00,"status":"P","listprice":18.50,"categoryName":"Green Adult","itemid":"EST-13"},
+	{"categoryId":"FL-DSH-01","unitcost":12.00,"status":"P","listprice":58.50,"categoryName":"Tailless","itemid":"EST-14"},
+	{"categoryId":"FL-DSH-01","unitcost":12.00,"status":"P","listprice":23.50,"categoryName":"With tail","itemid":"EST-15"},
+	{"categoryId":"FL-DLH-02","unitcost":12.00,"status":"P","listprice":93.50,"categoryName":"Adult Female","itemid":"EST-16"},
+	{"categoryId":"FL-DLH-02","unitcost":12.00,"status":"P","listprice":93.50,"categoryName":"Adult Male","itemid":"EST-17"},
+	{"categoryId":"AV-CB-01","unitcost":92.00,"status":"P","listprice":193.50,"categoryName":"Adult Male","itemid":"EST-181"}
+]}
