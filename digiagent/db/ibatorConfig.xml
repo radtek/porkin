@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ibatorConfiguration PUBLIC "-//Apache Software Foundation//DTD Apache iBATIS Ibator Configuration 1.0//EN" "http://ibatis.apache.org/dtd/ibator-config_1_0.dtd" >
+<ibatorConfiguration >
+  <classPathEntry location="E:/Java/JDBC/mysql/mysql-connector-java-5.1.12/mysql-connector-java-5.1.12-bin.jar" />
+
+	<ibatorContext id="omt" targetRuntime="Ibatis2Java5">
+		<ibatorPlugin type="org.apache.ibatis.ibator.plugins.EqualsHashCodePlugin" />
+		<ibatorPlugin type="org.apache.ibatis.ibator.plugins.SerializablePlugin" />
+		<ibatorPlugin type="org.apache.ibatis.ibator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$" />
+            <property name="replaceString" value="Criteria" />
+    	</ibatorPlugin>
+		
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/digiagent" userId="digiagent"
+			password="digiagent_123">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="net.cominfo.digiagent.persistence.domain"
+			targetProject="digiagent/src/main/java" />
+		<sqlMapGenerator targetPackage="net.cominfo.digiagent.persistence.sql"
+			targetProject="digiagent/src/main/java" />
+		<daoGenerator targetPackage="net.cominfo.digiagent.persistence.sqlmapdao"
+			targetProject="digiagent/src/main/java" type="SPRING" />
+			
+		<table tableName="T_DA_CONTACT" domainObjectName="Contact" />
+		<table tableName="T_DA_SUPPLIERPRODUCT" domainObjectName="SupplierProduct" />
+		<table tableName="T_DA_PRODUCTBRAND" domainObjectName="ProductBrand" />
+		<table tableName="T_DA_BRAND" domainObjectName="Brand" />
+		<table tableName="T_DA_PRODUCT" domainObjectName="Product" />
+		<table tableName="T_DA_CATEGORY" domainObjectName="Category" />
+		<table tableName="T_DA_SUPPLIER" domainObjectName="Supplier" />
+		<table tableName="T_DA_CITY" domainObjectName="City" />
+		<table tableName="T_DA_COMMODITY" domainObjectName="Commodity" />
+		<table tableName="T_DA_COUNTRY" domainObjectName="Country" />
+		<table tableName="T_DA_PROVINCE" domainObjectName="Province" />
+
+	</ibatorContext>
+</ibatorConfiguration>
