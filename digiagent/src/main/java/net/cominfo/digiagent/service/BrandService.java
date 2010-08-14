@@ -24,4 +24,8 @@ public class BrandService {
 		return brandDao.selectByPrimaryKey(brandId);
 	}
 	
+	public void create(Brand brand){
+		brandDao.insert(brand);
+	}
+	
 }
