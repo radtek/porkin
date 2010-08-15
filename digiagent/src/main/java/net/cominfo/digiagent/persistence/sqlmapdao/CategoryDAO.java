@@ -1,7 +1,7 @@
 package net.cominfo.digiagent.persistence.sqlmapdao;
 
-import java.sql.SQLException;
 import java.util.List;
+
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 
@@ -73,10 +73,4 @@ public interface CategoryDAO {
 	 */
 	int updateByPrimaryKey(Category record);
 	
-	// FIXME expend start
-	/**
-	 * Pagination Query List
-	 */
-	List<Category> queryListByExample(CategoryCriteria example, PaginationContext paginationContext);
-	// expend end
 }

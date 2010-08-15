@@ -29,13 +29,16 @@ public class CategoryService {
 		return categoryDao.selectByPrimaryKey(id);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Category> query(int skipResults, int maxResults){
 		PaginationContext paginationContext = new PaginationContext();
 		paginationContext.setSkipResults(skipResults);
 		paginationContext.setMaxResults(maxResults);
 		CategoryCriteria example = new CategoryCriteria();
 		example.setOrderByClause("CATEGORY_NAME");
-		return categoryDao.queryListByExample(example, paginationContext);
+		categoryDao.setCountSqlKey("t_da_category.ibatorgenerated_countByExample");
+		categoryDao.setListSqlKey("t_da_category.ibatorgenerated_selectByExample");
+		return (List<Category>) categoryDao.queryListByExample(example, paginationContext);
 	}
 	
 	public Category insert(Category category) {
@@ -72,6 +75,9 @@ public class CategoryService {
 		CategoryCriteria example = new CategoryCriteria();
 		Criteria criteria = example.createCriteria();
 		criteria.andCategoryNameEqualTo(category.getCategoryName());
+		if (category.getCategoryId() != null) {
+			criteria.andCategoryIdNotEqualTo(category.getCategoryId());
+		}
 		List<Category> list = categoryDao.selectByExample(example);
 		if (list != null && list.size() > 0) {
 			category.setCategoryId(-1);

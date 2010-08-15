@@ -1,20 +1,12 @@
 ﻿// edit event
 function formSubmit(actionUrl) {
 	// validate
-//	$('#caetgoryForm').ajaxForm({ 
-//		url: actionUrl,
-//		beforeSubmit: validate, 
-//		dataType:  'json', 
-//        success:   processJson 
-//    }); 
-	$('#caetgoryForm').form({
-		url:actionUrl,
-	    onSubmit:function(){
-	        return $(this).form('validate');
-	    },
-	    dataType:  'json',
-	    success:processJson
-	});
+	$('#caetgoryForm').ajaxForm({ 
+		url: actionUrl,
+		beforeSubmit: validate, 
+		dataType:  'json', 
+        success:   processJson 
+    }); 
 }
 // call back
 function processJson(data) { 
@@ -22,25 +14,25 @@ function processJson(data) {
     	alert("类别名已存在，请重新操作！");
     	return;
     }
-	$('#dd').dialog('close');
-    $('#tt').datagrid('reload');
+	$('#categoryEdit').dialog('close');
+    $('#categoryList').datagrid('reload');
 }
 // validate method
-//function validate(formData, jqForm, options) {
-//	var queryString = $.param(formData);
-//	var form = jqForm[0]; 
-//	if (form.categoryName.value.length == 0) {
-//		alert('请输入类别名！');
-//		form.categoryName.focus();
-//		return false;
-//	}
-//}
+function validate(formData, jqForm, options) {
+	var queryString = $.param(formData);
+	var form = jqForm[0]; 
+	if (form.categoryName.value.length == 0) {
+		alert('请输入类别名！');
+		form.categoryName.focus();
+		return false;
+	}
+}
 function onEditClickHandler(id) {
 	$.get('../category/get', { id: id } ,function(data) {
 		$('input[name="categoryId"]').val(id);
 		$('input[name="categoryName"]').val(data.categoryName);
 		$('select[name="activeFlag"]').val(data.activeFlag);
-		$('#dd').dialog({title:'Edit', modal: true});
+		$('#categoryEdit').dialog({title:'Edit', modal: true});
 	});
 	formSubmit('../category/update');
 }
@@ -49,7 +41,7 @@ function onDeleteClickHandler(id) {
 	if (confirm("确定要删除该记录吗？")) {
 		$.get('../category/delete', { id: id } ,function(data) {
 			if (data == "success") {
-			    $('#tt').datagrid('reload');
+			    $('#categoryList').datagrid('reload');
 				alert('删除成功！');
 			}
 		});
@@ -58,13 +50,13 @@ function onDeleteClickHandler(id) {
 // list
 $(function(){
 	// edit
-	$('#dd').dialog();
-	$('#dd').dialog('close');
+	$('#categoryEdit').dialog();
+	$('#categoryEdit').dialog('close');
 	var lastIndex;
-	$('#tt').datagrid({
+	$('#categoryList').datagrid({
 		title:'类别维护',
 		iconCls:'icon-edit',
-		width:650,
+		width:700,
 		height:'auto',
 		singleSelect:true,
 		sortName: 'categoryName',
@@ -95,6 +87,18 @@ $(function(){
 					}
 				}
 			},
+			{field:'createdBy',title:'创建人',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+				return (a>b?1:-1)*(order=='asc'?1:-1);
+			}},
+			{field:'createdDate',title:'创建时间',width:130	,align:'center',sortable:true,
+					sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				},
+				formatter: function(value,rec){
+					return format_cn(value);
+				}
+			},
 			{field:'opt',title:'操作',width:100,align:'center',
 				formatter:function(value,rec){
 					return '<span><image onClick="onEditClickHandler(' + rec['categoryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" src="../images/datagrid/icon_list_edit.gif"/>&nbsp;&nbsp;<image onClick="onDeleteClickHandler(' + rec['categoryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
@@ -110,7 +114,7 @@ $(function(){
 					$('input[name="categoryId"]').val('');
 					$('input[name="categoryName"]').val('');
 					$('select[name="activeFlag"]').val('Y');
-					$('#dd').dialog({title:'Add', modal: true, icon:'icon-add'});
+					$('#categoryEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
 					formSubmit('../category/create');
 				}
 		}],
@@ -123,3 +127,4 @@ $(function(){
 	});
 	
 });
+

@@ -47,6 +47,16 @@
 								addTab($(this).text(), 'supplier.html');
 							});
 						}
+						if ($(map[key]).text().toLowerCase() == '城市维护') {
+							$(map[key]).click(function() {
+								addTab($(this).text(), 'supplier.html');
+							});
+						}
+						if ($(map[key]).text().toLowerCase() == '产品维护') {
+							$(map[key]).click(function() {
+								addTab($(this).text(), 'product/list');
+							});
+						}
 				});
 		});
 	</script>

@@ -4,24 +4,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>类别维护</title>
+<title>产品维护</title>
 	<link rel="stylesheet" type="text/css" href="../styles/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../styles/icon.css">
 	<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="../scripts/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="../scripts/jquery.form.js"></script>
-	<script type="text/javascript" src="../scripts/service/category.js"></script>
+	<script type="text/javascript" src="../scripts/service/product.js"></script>
 	<script type="text/javascript" src="../scripts/common/datetime.js"></script>
 </head>
 <body>
-	<table id="categoryList"></table>
-	<div id="categoryEdit" icon="icon-edit" style="width:400px;height:200px;">
+	<table id="productList"></table>
+	<div id="productEdit" icon="icon-edit" style="width:400px;height:200px;">
 		<div style="background:#fafafa;padding:10px;text-align:center">
-		<form id="categoryForm" action="../category/create" method="post"> 
+		<form id="productForm" action="../product/create" method="post"> 
+		  <div>
+              	<label for="name">类别:</label>
+              	<select id="categoryId" name="categoryId" required="true"> 
+              	</select>
+          </div>
           <div>
-              	<label for="name">类别名:</label>
-              	<input type="hidden" name="categoryId"/>
-              	<input class="easyui-validatebox" type="text" name="categoryName" required="true" maxlength="20"/>
+              	<label for="name">产品名:</label>
+              	<input type="hidden" name="productId"/>
+              	<input class="easyui-validatebox" type="text" name="productName" required="true" maxlength="20"/>
           </div> 
           <div>
               	<label for="name">状态:</label>

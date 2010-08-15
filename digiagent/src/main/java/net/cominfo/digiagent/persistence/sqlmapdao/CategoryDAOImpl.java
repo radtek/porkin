@@ -154,52 +154,5 @@ public class CategoryDAOImpl extends BaseDao implements CategoryDAO {
 			return record;
 		}
 	}
-	
-	// FIXME expend start
-	public List<Category> queryListByExample(CategoryCriteria example,  
-            PaginationContext paginationContext){
-		
-		assert paginationContext.getSkipResults() >= 0;  
-        assert paginationContext.getMaxResults() >= 0;  
-  
-        try {  
-            final List<Category> result = new ArrayList<Category>();  
-            try {  
-            	getSqlMapClient().startTransaction();  
-                performProductQuery(example, paginationContext, result);  
-                getSqlMapClient().commitTransaction();  
-            } finally {  
-            	getSqlMapClient().endTransaction();  
-            }  
-            return Collections.unmodifiableList(result);  
-        } catch (SQLException e) {  
-            throw new RuntimeException(e);  
-        }  
-		
-	}
-	
-	@SuppressWarnings("unchecked")  
-    private void performProductQuery(CategoryCriteria example,  
-            PaginationContext paginationContext, final List<Category> result)  
-            throws SQLException {  
-  
-        // Gather total number of results using a separate query  
-        if (!paginationContext.hasTotalCount()) {  
-            updateTotalCount(example, paginationContext);  
-        }  
-  
-        // iBatis does physical pagination using database cursor if  
-        // available using ResultSet.absolute(position);  
-        final List<Category> queryForList = getSqlMapClient().queryForList("t_da_category.ibatorgenerated_selectByExample",  
-        		example, paginationContext.getSkipResults(),  
-                paginationContext.getMaxResults());  
-        result.addAll(queryForList);  
-    }  
-  
-    private void updateTotalCount(CategoryCriteria example,  
-            PaginationContext paginationContext) throws SQLException {  
-        paginationContext.updateTotalCount((Integer) getSqlMapClient()  
-                .queryForObject("t_da_category.ibatorgenerated_countByExample", example));  
-    } 
-	// expend end
+
 }

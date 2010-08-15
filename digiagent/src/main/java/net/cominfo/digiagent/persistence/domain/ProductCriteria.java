@@ -652,62 +652,62 @@ public class ProductCriteria {
 		}
 
 		public Criteria andCategoryIdIsNull() {
-			addCriterion("CATEGORY_ID is null");
+			addCriterion("t_da_product.CATEGORY_ID is null");
 			return this;
 		}
 
 		public Criteria andCategoryIdIsNotNull() {
-			addCriterion("CATEGORY_ID is not null");
+			addCriterion("t_da_product.CATEGORY_ID is not null");
 			return this;
 		}
 
 		public Criteria andCategoryIdEqualTo(Integer value) {
-			addCriterion("CATEGORY_ID =", value, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID =", value, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdNotEqualTo(Integer value) {
-			addCriterion("CATEGORY_ID <>", value, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID <>", value, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdGreaterThan(Integer value) {
-			addCriterion("CATEGORY_ID >", value, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID >", value, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdGreaterThanOrEqualTo(Integer value) {
-			addCriterion("CATEGORY_ID >=", value, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID >=", value, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdLessThan(Integer value) {
-			addCriterion("CATEGORY_ID <", value, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID <", value, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdLessThanOrEqualTo(Integer value) {
-			addCriterion("CATEGORY_ID <=", value, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID <=", value, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdIn(List<Integer> values) {
-			addCriterion("CATEGORY_ID in", values, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID in", values, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdNotIn(List<Integer> values) {
-			addCriterion("CATEGORY_ID not in", values, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID not in", values, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdBetween(Integer value1, Integer value2) {
-			addCriterion("CATEGORY_ID between", value1, value2, "categoryId");
+			addCriterion("t_da_product.CATEGORY_ID between", value1, value2, "categoryId");
 			return this;
 		}
 
 		public Criteria andCategoryIdNotBetween(Integer value1, Integer value2) {
-			addCriterion("CATEGORY_ID not between", value1, value2,
+			addCriterion("t_da_product.CATEGORY_ID not between", value1, value2,
 					"categoryId");
 			return this;
 		}
