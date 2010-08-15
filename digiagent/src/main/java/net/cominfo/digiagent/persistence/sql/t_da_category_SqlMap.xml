@@ -96,7 +96,7 @@
       #createdDate:TIMESTAMP#, #lastupdatedBy:VARCHAR#, #lastupdatedDate:TIMESTAMP#,
       #activeFlag:CHAR#)
      <selectKey resultClass="int" keyProperty="categoryId">
-      select last_insert_id() as categoryI
+      select last_insert_id() as categoryId
      </selectKey>
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="net.cominfo.digiagent.persistence.domain.Category">

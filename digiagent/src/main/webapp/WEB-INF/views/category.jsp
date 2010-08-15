@@ -14,20 +14,27 @@
 </head>
 <body>
 	<table id="tt"></table>
-	<div id="dd" icon="icon-edit" style="padding:5px;width:500px;height:300px;">
-		<form id="caetgoryForm" action="../category/update" method="post"> 
-          <table> 
-              <tr><td>类别名:</td><td>
-              	<input type="text" name="categoryName"></td></tr> 
-              <tr><td>状态:</td><td>
-              	<select name="activeFlag"> 
-                      <option value="0" selected="selected">开启</option> 
-                      <option value="1">禁用</option>
-              	</select></td></tr>
-              </table> 
+	<div id="dd" icon="icon-edit" style="width:400px;height:200px;">
+		<div style="background:#fafafa;padding:10px;text-align:center">
+		<form id="caetgoryForm" action="../category/create" method="post"> 
+          <div>
+              	<label for="name">类别名:</label>
+              	<input type="hidden" name="categoryId"/>
+              	<input class="easyui-validatebox" type="text" name="categoryName" required="true" maxlength="20"/>
+          </div> 
+          <div>
+              	<label for="name">状态:</label>
+              	<select class="easyui-validatebox" id="activeFlag" name="activeFlag" required="true"> 
+                      <option value="Y">开启</option> 
+                      <option value="N">禁用</option>
+              	</select>
+          </div>
+          <div>
               <input type="submit"  name="submitButton" value="确定" /> 
-              <input type="reset"   name="resetButton " value="重置" /> 
+              <input type="reset"   name="resetButton " value="重置" />
+          </div> 
       </form> 
+      </div>
 	</div>
 </body>
 </html>
