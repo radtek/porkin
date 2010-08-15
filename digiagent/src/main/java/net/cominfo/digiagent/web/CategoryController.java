@@ -35,8 +35,8 @@ public class CategoryController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
-	Map query(@RequestParam Integer skipResults, @RequestParam Integer maxResults) {
-		List<Category> categoryList = categoryService.query(skipResults, maxResults);
+	Map query(@RequestParam Integer page, @RequestParam Integer rows) {
+		List<Category> categoryList = categoryService.query((page - 1) * rows, rows);
 		Map map = new HashMap();
 		map.put("total", categoryService.countCategory());
 		map.put("rows", categoryList);

@@ -1,12 +1,20 @@
 ﻿// edit event
 function formSubmit(actionUrl) {
 	// validate
-	$('#caetgoryForm').ajaxForm({ 
-		url: actionUrl,
-		beforeSubmit: validate, 
-		dataType:  'json', 
-        success:   processJson 
-    }); 
+//	$('#caetgoryForm').ajaxForm({ 
+//		url: actionUrl,
+//		beforeSubmit: validate, 
+//		dataType:  'json', 
+//        success:   processJson 
+//    }); 
+	$('#caetgoryForm').form({
+		url:actionUrl,
+	    onSubmit:function(){
+	        return $(this).form('validate');
+	    },
+	    dataType:  'json',
+	    success:processJson
+	});
 }
 // call back
 function processJson(data) { 
@@ -18,15 +26,15 @@ function processJson(data) {
     $('#tt').datagrid('reload');
 }
 // validate method
-function validate(formData, jqForm, options) {
-	var queryString = $.param(formData);
-	var form = jqForm[0]; 
-	if (form.categoryName.value.length == 0) {
-		alert('请输入类别名！');
-		form.categoryName.focus();
-		return false;
-	}
-}
+//function validate(formData, jqForm, options) {
+//	var queryString = $.param(formData);
+//	var form = jqForm[0]; 
+//	if (form.categoryName.value.length == 0) {
+//		alert('请输入类别名！');
+//		form.categoryName.focus();
+//		return false;
+//	}
+//}
 function onEditClickHandler(id) {
 	$.get('../category/get', { id: id } ,function(data) {
 		$('input[name="categoryId"]').val(id);
@@ -65,7 +73,7 @@ $(function(){
 		idField:'categoryId',
 		method:'get',
 		url:'../category/search',
-		queryParams:{skipResults:0, maxResults:10},
+//		queryParams:{skipResults:0, maxResults:10},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
@@ -107,16 +115,10 @@ $(function(){
 				}
 		}],
 		onBeforeLoad:function(){
-			$('#tt').datagrid('getPager').pagination({
-				displayMsg:'显示 {from} 到 {to} 共 {total} 条',
-				beforePageText:'页',
-				afterPageText:'/{pages}',
-				onSelectPage:function(pageNumber, pageSize){
-					$(this).pagination('loading');
-					$('#tt').datagrid({pageNumber:pageNumber, pageSize:pageSize, queryParams:{skipResults:(pageNumber-1) * pageSize, maxResults:pageSize}});
-					$(this).pagination('loaded');
-				}
-			});
+			$(this).datagrid('rejectChanges');
+		},
+		onLoadSuccess:function() {
+			
 		}
 	});
 	
