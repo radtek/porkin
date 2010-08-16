@@ -2,13 +2,11 @@ package net.cominfo.digiagent.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
