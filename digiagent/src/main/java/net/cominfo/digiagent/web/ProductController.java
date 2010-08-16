@@ -1,5 +1,7 @@
 package net.cominfo.digiagent.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -89,12 +91,13 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/getCategoryList", method = RequestMethod.GET)
-	public @ResponseBody String getCategoryList(HttpServletRequest request) {
+	public void getCategoryList(HttpServletResponse response) {
 		try {
-			request.setCharacterEncoding("utf8");
-		} catch (UnsupportedEncodingException e) {
+			PrintWriter pw = response.getWriter();
+			pw.write(productService.getCategoryList());
+			pw.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return productService.getCategoryList();
 	}
 }
