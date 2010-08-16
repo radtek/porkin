@@ -3,7 +3,7 @@
 		url:"../product/getCategoryList",
 		dataType:"html",
 		type: "GET",
-		success: function(data) {alert(data);
+		success: function(data) {
 			$('select[name="categoryId"]').empty();
 			$('select[name="categoryId"]').append(data).val(categoryId);
 		},
