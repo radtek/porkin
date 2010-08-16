@@ -1,11 +1,11 @@
-﻿function setCategorySelect() {
+﻿function setCategorySelect(categoryId) {
 	$.ajax({
 		url:"../product/getCategoryList",
 		dataType:"html",
 		type: "GET",
-		success: function(data) {
+		success: function(data) {alert(data);
 			$('select[name="categoryId"]').empty();
-		    $(data).appendTo($('select[name="categoryId"]'));
+			$('select[name="categoryId"]').append(data).val(categoryId);
 		},
 		error:function(err) {
 			alert(err);
@@ -48,11 +48,9 @@ function validate(formData, jqForm, options) {
 	}
 }
 function onEditClickHandler(id) {
-	setCategorySelect();
-	formSubmit('../product/create');
 	$.get('../product/get', { id: id } ,function(data) {
+		setCategorySelect(data.categoryId);
 		$('input[name="productId"]').val(id);
-		$('select[name="categoryId"]').val(data.categoryId);
 		$('input[name="productName"]').val(data.productName);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#productEdit').css('display','block');
@@ -74,7 +72,7 @@ function onDeleteClickHandler(id) {
 }
 
 $(document).ready(function() {
-//	$('#productEdit').css('display','none');
+	
 });
 // list
 $(function(){
@@ -145,7 +143,7 @@ $(function(){
 				handler:function(){
 					// set category list
 //			$('<option value=1>11</option><option value=2>22</option>').appendTo($('select[name="categoryId"]'));
-					setCategorySelect();
+					setCategorySelect('');
 					$('input[name="productId"]').val('');
 					$('select[name="categoryId"]').val('');
 					$('input[name="productName"]').val('');
