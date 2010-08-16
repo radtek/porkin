@@ -32,6 +32,7 @@ function onEditClickHandler(id) {
 		$('input[name="categoryId"]').val(id);
 		$('input[name="categoryName"]').val(data.categoryName);
 		$('select[name="activeFlag"]').val(data.activeFlag);
+		$('#categoryEdit').css('display','block');
 		$('#categoryEdit').dialog({title:'Edit', modal: true});
 	});
 	formSubmit('../category/update');
@@ -50,8 +51,6 @@ function onDeleteClickHandler(id) {
 // list
 $(function(){
 	// edit
-	$('#categoryEdit').dialog();
-	$('#categoryEdit').dialog('close');
 	var lastIndex;
 	$('#categoryList').datagrid({
 		title:'类别维护',
@@ -114,6 +113,7 @@ $(function(){
 					$('input[name="categoryId"]').val('');
 					$('input[name="categoryName"]').val('');
 					$('select[name="activeFlag"]').val('Y');
+					$('#categoryEdit').css('display','block');
 					$('#categoryEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
 					formSubmit('../category/create');
 				}

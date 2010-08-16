@@ -15,7 +15,7 @@
 </head>
 <body>
 	<table id="productList"></table>
-	<div id="productEdit" icon="icon-edit" style="width:400px;height:200px;">
+	<div id="productEdit" icon="icon-edit" style="width:400px;height:200px;display:none">
 		<div style="background:#fafafa;padding:10px;text-align:center">
 		<form id="productForm" action="../product/create" method="post"> 
 		  <div>

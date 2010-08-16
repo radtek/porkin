@@ -1,4 +1,4 @@
-﻿function setCategorySelect(method, id) {
+﻿function setCategorySelect() {
 	$.ajax({
 		url:"../product/getCategoryList",
 		dataType:"html",
@@ -6,12 +6,6 @@
 		success: function(data) {
 			$('select[name="categoryId"]').empty();
 		    $(data).appendTo($('select[name="categoryId"]'));
-		    if (method == 'edit') {
-		    	onEditAflterHanler(id);
-		    } else if (method == 'add') {
-		    	onAddAfterHandler();
-		    }
-		    
 		},
 		error:function(err) {
 			alert(err);
@@ -54,29 +48,20 @@ function validate(formData, jqForm, options) {
 	}
 }
 function onEditClickHandler(id) {
-	setCategorySelect('edit', id);
-}
-
-function onEditAflterHanler(id) {
+	setCategorySelect();
+	formSubmit('../product/create');
 	$.get('../product/get', { id: id } ,function(data) {
 		$('input[name="productId"]').val(id);
 		$('select[name="categoryId"]').val(data.categoryId);
 		$('input[name="productName"]').val(data.productName);
 		$('select[name="activeFlag"]').val(data.activeFlag);
+		$('#productEdit').css('display','block');
 		$('#productEdit').dialog({title:'Edit', modal: true});
 	});
 	formSubmit('../product/update');
 }
 
-function onAddAfterHandler() {
-	$('input[name="productId"]').val('');
-	$('select[name="categoryId"]').val('');
-	$('input[name="productName"]').val('');
-	$('select[name="activeFlag"]').val('Y');
-	$('#productEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
-	formSubmit('../product/create');
-}
-
+	
 function onDeleteClickHandler(id) {
 	if (confirm("确定要删除该记录吗？")) {
 		$.get('../product/delete', { id: id } ,function(data) {
@@ -87,11 +72,13 @@ function onDeleteClickHandler(id) {
 		});
 	}
 }
+
+$(document).ready(function() {
+//	$('#productEdit').css('display','none');
+});
 // list
 $(function(){
 	// edit
-	$('#productEdit').dialog();
-	$('#productEdit').dialog('close');
 	var lastIndex;
 	$('#productList').datagrid({
 		title:'产品维护',
@@ -158,7 +145,14 @@ $(function(){
 				handler:function(){
 					// set category list
 //			$('<option value=1>11</option><option value=2>22</option>').appendTo($('select[name="categoryId"]'));
-					setCategorySelect('add');
+					setCategorySelect();
+					$('input[name="productId"]').val('');
+					$('select[name="categoryId"]').val('');
+					$('input[name="productName"]').val('');
+					$('select[name="activeFlag"]').val('Y');
+					$('#productEdit').css('display','block');
+					$('#productEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					formSubmit('../product/create');
 				}
 		}],
 		onBeforeLoad:function(){

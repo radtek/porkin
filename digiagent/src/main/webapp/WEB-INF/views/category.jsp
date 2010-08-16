@@ -15,7 +15,7 @@
 </head>
 <body>
 	<table id="categoryList"></table>
-	<div id="categoryEdit" icon="icon-edit" style="width:400px;height:200px;">
+	<div id="categoryEdit" icon="icon-edit" style="width:400px;height:200px;display:none">
 		<div style="background:#fafafa;padding:10px;text-align:center">
 		<form id="categoryForm" action="../category/create" method="post"> 
           <div>
