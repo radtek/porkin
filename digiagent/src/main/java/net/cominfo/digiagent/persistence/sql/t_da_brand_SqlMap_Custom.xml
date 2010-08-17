@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="t_da_brand_Custom">
+
+  <select id="pagebyId" parameterClass="net.cominfo.digiagent.utils.Page" resultClass="HashMap">
+    SELECT * FROM t_da_brand WHERE brand_id > 0 ORDER BY #orderBy# #ASC$ LIMIT #pageSize#;
+  </select>
+</sqlMap>
