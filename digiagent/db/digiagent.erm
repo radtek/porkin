@@ -22,7 +22,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>549</y>
+	<y>865</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -92,7 +92,7 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>微软雅黑</font_name>
+				<font_name>Tahoma</font_name>
 				<font_size>9</font_size>
 			<x>50</x>
 			<y>50</y>
@@ -105,7 +105,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2010-07-29 23:23:36</creation_date>
-			<updated_date>2010-08-13 23:36:25</updated_date>
+			<updated_date>2010-08-17 14:33:38</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -869,9 +869,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -1097,9 +1097,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -1398,9 +1398,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -1738,9 +1738,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -2039,9 +2039,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -2295,9 +2295,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -2568,9 +2568,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -2589,7 +2589,7 @@
 			<connections>
 				<relation>
 					<id>4</id>
-					<source>0</source>
+					<source>6</source>
 					<target>7</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2606,7 +2606,7 @@
 				</relation>
 				<relation>
 					<id>5</id>
-					<source>6</source>
+					<source>0</source>
 					<target>7</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2659,7 +2659,7 @@
 				<normal_column>
 					<id>62</id>
 					<referenced_column>0</referenced_column>
-					<relation>4</relation>
+					<relation>5</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2687,7 +2687,7 @@
 				<normal_column>
 					<id>63</id>
 					<referenced_column>53</referenced_column>
-					<relation>5</relation>
+					<relation>4</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2858,9 +2858,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -3400,9 +3400,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 		<table>
@@ -3421,7 +3421,7 @@
 			<connections>
 				<relation>
 					<id>7</id>
-					<source>7</source>
+					<source>9</source>
 					<target>10</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -3438,7 +3438,7 @@
 				</relation>
 				<relation>
 					<id>8</id>
-					<source>9</source>
+					<source>7</source>
 					<target>10</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -3463,7 +3463,7 @@
 				<normal_column>
 					<id>85</id>
 					<referenced_column>77</referenced_column>
-					<relation>8</relation>
+					<relation>7</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -3491,7 +3491,7 @@
 				<normal_column>
 					<id>86</id>
 					<referenced_column>61</referenced_column>
-					<relation>7</relation>
+					<relation>8</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -3522,9 +3522,9 @@
 			<complex_unique_key_list>
 			</complex_unique_key_list>
 			<table_properties>
-				<character_set></character_set>
+				<character_set>utf8</character_set>
 				<schema></schema>
-				<storage_engine></storage_engine>
+				<storage_engine>InnoDB</storage_engine>
 			</table_properties>
 		</table>
 	</contents>
