@@ -1,7 +1,7 @@
 ﻿// edit event
 function formSubmit(actionUrl) {
 	// validate
-	$('#caetgoryForm').ajaxForm({ 
+	$('#categoryForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
 		dataType:  'json', 
@@ -124,6 +124,12 @@ $(function(){
 		onLoadSuccess:function() {
 			
 		}
+	});
+	
+	$('#categoryList').datagrid('getPager').pagination({
+		displayMsg:'显示 {from} 至 {to} 条  共 {total} 条记录',
+		afterPageText:'/{pages}',
+		beforePageText:'页'
 	});
 	
 });

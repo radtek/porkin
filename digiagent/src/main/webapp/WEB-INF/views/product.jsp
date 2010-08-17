@@ -20,17 +20,17 @@
 		<form id="productForm" action="../product/create" method="post"> 
 		  <div>
               	<label for="name">类别:</label>
-              	<select id="categoryId" name="categoryId" required="true"> 
+              	<select id="categoryId" name="categoryId"> 
               	</select>
           </div>
           <div>
               	<label for="name">产品名:</label>
               	<input type="hidden" name="productId"/>
-              	<input class="easyui-validatebox" type="text" name="productName" required="true" maxlength="20"/>
+              	<input class="easyui-validatebox" type="text" name="productName" maxlength="20"/>
           </div> 
           <div>
               	<label for="name">状态:</label>
-              	<select class="easyui-validatebox" id="activeFlag" name="activeFlag" required="true"> 
+              	<select class="easyui-validatebox" id="activeFlag" name="activeFlag"> 
                       <option value="Y">开启</option> 
                       <option value="N">禁用</option>
               	</select>

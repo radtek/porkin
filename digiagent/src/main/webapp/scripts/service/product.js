@@ -76,6 +76,7 @@ $(document).ready(function() {
 });
 // list
 $(function(){
+	setCategorySelect();
 	// edit
 	var lastIndex;
 	$('#productList').datagrid({
@@ -161,4 +162,9 @@ $(function(){
 		}
 	});
 	
+	$('#productList').datagrid('getPager').pagination({
+		displayMsg:'显示 {from} 至 {to} 条  共 {total} 条记录',
+		afterPageText:'/{pages}',
+		beforePageText:'页'
+	});
 });
