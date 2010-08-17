@@ -39,7 +39,7 @@
 						}
 						if ($(map[key]).text().toLowerCase() == '品牌维护') {
 							$(map[key]).click(function() {
-								addTab($(this).text(), 'vender.html');
+								addTab($(this).text(), 'brand/list');
 							});
 						}
 						if ($(map[key]).text().toLowerCase() == '商家维护') {
@@ -47,9 +47,14 @@
 								addTab($(this).text(), 'supplier.html');
 							});
 						}
+						if ($(map[key]).text().toLowerCase() == '国家维护') {
+							$(map[key]).click(function() {
+								addTab($(this).text(), 'country/list');
+							});
+						}
 						if ($(map[key]).text().toLowerCase() == '城市维护') {
 							$(map[key]).click(function() {
-								addTab($(this).text(), 'supplier.html');
+								addTab($(this).text(), 'city.html');
 							});
 						}
 						if ($(map[key]).text().toLowerCase() == '产品维护') {

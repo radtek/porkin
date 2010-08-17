@@ -8,8 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
-import net.cominfo.digiagent.persistence.domain.Category;
-import net.cominfo.digiagent.service.CategoryService;
+import net.cominfo.digiagent.persistence.domain.Country;
+import net.cominfo.digiagent.service.CountryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,67 +21,68 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/category")
-public class CategoryController {
+@RequestMapping(value = "/country")
+public class CountryController {
 
 	@Autowired
-	private CategoryService categoryService;
+	private CountryService countryService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getList(Model model) {
-		return "category";
+		return "country";
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
 	Map query(@RequestParam Integer page, @RequestParam Integer rows) {
-		List<Category> categoryList = categoryService.query((page - 1) * rows, rows);
+		List<Country> countryList = countryService.query((page - 1) * rows, rows);
 		Map map = new HashMap();
-		map.put("total", categoryService.countCategory());
-		map.put("rows", categoryList);
+		map.put("total", countryService.countCountry());
+		map.put("rows", countryList);
 		return Collections.singletonList(map).get(0);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Category category,
+	Map<String, ? extends Object> update(@ModelAttribute Country country,
 			HttpServletResponse response) {
-		Category categoryUpdate = categoryService.getById(category.getCategoryId());
-		if (category == null) {
-			new ResourceNotFoundException(new Long(categoryUpdate.getCategoryId()));
+		Country countryUpdate = countryService.getById(country.getCountryId());
+		if (country == null) {
+			new ResourceNotFoundException(new Long(countryUpdate.getCountryId()));
 		}
-		categoryUpdate.setActiveFlag(category.getActiveFlag());
-		categoryUpdate.setCategoryName(category.getCategoryName());
-		categoryUpdate = categoryService.update(categoryUpdate);
-		return Collections.singletonMap("categoryId", categoryUpdate.getCategoryId());
+		countryUpdate.setActiveFlag(country.getActiveFlag());
+		countryUpdate.setCountryAbbreviation(country.getCountryAbbreviation());
+		countryUpdate.setCountryName(country.getCountryName());
+		countryUpdate = countryService.update(countryUpdate);
+		return Collections.singletonMap("countryId", countryUpdate.getCountryId());
 	}
 	
 	@RequestMapping(value="/get",method=RequestMethod.GET)
-	public @ResponseBody Category get(@RequestParam Integer id) {
-		Category category = categoryService.getById(id);
-		if (category == null) {
+	public @ResponseBody Country get(@RequestParam Integer id) {
+		Country country = countryService.getById(id);
+		if (country == null) {
 			new ResourceNotFoundException(new Long(id));
 		}
-		return category;
+		return country;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Category category,
+	Map<String, ? extends Object> create(@ModelAttribute Country country,
 			HttpServletResponse response) {
-		Category categoryNew = categoryService.insert(category);
-		return Collections.singletonMap("categoryId", categoryNew.getCategoryId());
+		Country countryNew = countryService.insert(country);
+		return Collections.singletonMap("countryId", countryNew.getCountryId());
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public @ResponseBody String delete(@RequestParam Integer id) {
-		Category category = categoryService.getById(id);
-		if (category == null) {
+		Country country = countryService.getById(id);
+		if (country == null) {
 			new ResourceNotFoundException(new Long(id));
 			return "fail";
 		} else {
-			return categoryService.delete(id);
+			return countryService.delete(id);
 		}
 	}
 }

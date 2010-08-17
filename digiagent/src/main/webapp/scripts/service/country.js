@@ -1,7 +1,7 @@
 ﻿// edit event
 function formSubmit(actionUrl) {
 	// validate
-	$('#categoryForm').ajaxForm({ 
+	$('#countryForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
 		dataType:  'json', 
@@ -10,42 +10,48 @@ function formSubmit(actionUrl) {
 }
 // call back
 function processJson(data) { 
-    if (data.categoryId == -1) {
-    	alert("类别名已存在，请重新操作！");
+    if (data.countryId == -1) {
+    	alert("国家名已存在，请重新操作！");
     	return;
     }
-	$('#categoryEdit').dialog('close');
-    $('#categoryList').datagrid('reload');
+	$('#countryEdit').dialog('close');
+    $('#countryList').datagrid('reload');
 }
 // validate method
 function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0]; 
-	if (form.categoryName.value.length == 0) {
-		alert('请输入类别名！');
-		form.categoryName.focus();
+	if (form.countryName.value.length == 0) {
+		alert('请输入国家名称！');
+		form.countryName.focus();
+		return false;
+	}
+	if (form.countryAbbreviation.value.length == 0) {
+		alert('请输入国家缩写！');
+		form.countryAbbreviation.focus();
 		return false;
 	}
 }
 function onEditClickHandler(id) {
-	$.get('../category/get', { id: id } ,function(data) {
-		$('input[name="categoryId"]').val(id);
-		$('input[name="categoryName"]').val(data.categoryName);
+	$.get('../country/get', { id: id } ,function(data) {
+		$('input[name="countryId"]').val(id);
+		$('input[name="countryName"]').val(data.countryName);
+		$('input[name="countryAbbreviation"]').val(data.countryAbbreviation);
 		$('select[name="activeFlag"]').val(data.activeFlag);
-		$('#categoryEdit').css('display','block');
-		$('#categoryEdit').dialog({title:'Edit', modal: true});
+		$('#countryEdit').css('display','block');
+		$('#countryEdit').dialog({title:'Edit', modal: true});
 	});
-	formSubmit('../category/update');
+	formSubmit('../country/update');
 }
 
 function onDeleteClickHandler(id) {
 	if (confirm("确定要删除该记录吗？")) {
-		$.get('../category/delete', { id: id } ,function(data) {
+		$.get('../country/delete', { id: id } ,function(data) {
 			if (data == "success") {
-			    $('#categoryList').datagrid('reload');
+			    $('#countryList').datagrid('reload');
 				alert('删除成功！');
 			} else if (data == "reference") {
-				alert('有产品关联此类，暂时无法删除！');
+				alert('有品牌关联此类，暂时无法删除！');
 			} else {
 				alert('删除失败！');
 			}
@@ -56,24 +62,29 @@ function onDeleteClickHandler(id) {
 $(function(){
 	// edit
 	var lastIndex;
-	$('#categoryList').datagrid({
-		title:'类别维护',
+	$('#countryList').datagrid({
+		title:'国家维护',
 		iconCls:'icon-edit',
-		width:700,
+		width:850,
 		height:'auto',
 		singleSelect:true,
-		sortName: 'categoryName',
+		sortName: 'countryName',
 		sortOrder: 'asc',
 		remoteSort: false,
-		idField:'categoryId',
+		idField:'countryId',
 		method:'get',
-		url:'../category/search',
+		url:'../country/search',
 //		queryParams:{skipResults:0, maxResults:10},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
-			{field:'categoryId',title:'编号',width:80,align:'center'},
-			{field:'categoryName',title:'类别',width:100,align:'center',sortable:true,
+			{field:'countryId',title:'编号',width:80,align:'center'},
+			{field:'countryName',title:'国家名称',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'countryAbbreviation',title:'缩写',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
@@ -104,7 +115,7 @@ $(function(){
 			},
 			{field:'opt',title:'操作',width:100,align:'center',
 				formatter:function(value,rec){
-					return '<span><image onClick="onEditClickHandler(' + rec['categoryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" src="../images/datagrid/icon_list_edit.gif"/>&nbsp;&nbsp;<image onClick="onDeleteClickHandler(' + rec['categoryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
+					return '<span><image onClick="onEditClickHandler(' + rec['countryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" src="../images/datagrid/icon_list_edit.gif"/>&nbsp;&nbsp;<image onClick="onDeleteClickHandler(' + rec['countryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
 				}
 			}
 		]],
@@ -114,12 +125,13 @@ $(function(){
 				text:'新增',
 				iconCls:'icon-add',
 				handler:function(){
-					$('input[name="categoryId"]').val('');
-					$('input[name="categoryName"]').val('');
+					$('input[name="countryId"]').val('');
+					$('input[name="countryName"]').val('');
+					$('input[name="countryAbbreviation"]').val('');
 					$('select[name="activeFlag"]').val('Y');
-					$('#categoryEdit').css('display','block');
-					$('#categoryEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
-					formSubmit('../category/create');
+					$('#countryEdit').css('display','block');
+					$('#countryEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					formSubmit('../country/create');
 				}
 		}],
 		onBeforeLoad:function(){
@@ -130,7 +142,7 @@ $(function(){
 		}
 	});
 	
-	$('#categoryList').datagrid('getPager').pagination({
+	$('#countryList').datagrid('getPager').pagination({
 		displayMsg:'显示 {from} 至 {to} 条  共 {total} 条记录',
 		afterPageText:'/{pages}',
 		beforePageText:'页'

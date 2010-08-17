@@ -4,8 +4,7 @@
 		dataType:"html",
 		type: "GET",
 		success: function(data) {
-			$('select[name="categoryId"]').empty();
-			$('select[name="categoryId"]').append(data).val(categoryId);
+			$('select[name="categoryId"]').empty().append(data).val(categoryId);
 		},
 		error:function(err) {
 			alert(err);

@@ -34,7 +34,7 @@ public class BrandServiceTest {
 		brand.setLastupdatedBy("Porkin");
 		brand.setLastupdatedDate(new Date());
 		brand.setCountryId(1);
-		bs.create(brand);
+//		bs.create(brand);
 		
 	}
 

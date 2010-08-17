@@ -1,6 +1,5 @@
 package net.cominfo.digiagent.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +34,6 @@ public class ProductService {
 		return productDao.selectByPrimaryKey(id);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public String getCategoryList() {
 		CategoryCriteria example = new CategoryCriteria();
 		net.cominfo.digiagent.persistence.domain.CategoryCriteria.Criteria criteria = example.createCriteria();
