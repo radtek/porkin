@@ -35,10 +35,11 @@ public class CountryController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
-	Map query(@RequestParam Integer page, @RequestParam Integer rows) {
-		List<Country> countryList = countryService.query((page - 1) * rows, rows);
+	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
+		Long total = countryService.count(param);
+		List<Country> countryList = countryService.query(page, rows, param);
 		Map map = new HashMap();
-		map.put("total", countryService.countCountry());
+		map.put("total", total);
 		map.put("rows", countryList);
 		return Collections.singletonList(map).get(0);
 	}

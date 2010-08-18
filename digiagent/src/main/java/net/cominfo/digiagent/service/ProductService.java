@@ -1,7 +1,9 @@
 package net.cominfo.digiagent.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CategoryDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
@@ -9,8 +11,7 @@ import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
-import net.cominfo.digiagent.persistence.domain.ProductCriteria.Criteria;
-import net.cominfo.digiagent.persistence.sqlmapdao.PaginationContext;
+import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,15 +54,20 @@ public class ProductService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Product> query(int skipResults, int maxResults){
-		PaginationContext paginationContext = new PaginationContext();
-		paginationContext.setSkipResults(skipResults);
-		paginationContext.setMaxResults(maxResults);
-		ProductCriteria example = new ProductCriteria();
-		example.setOrderByClause("CATEGORY_NAME");
-		productDao.setCountSqlKey("t_da_product.ibatorgenerated_countByExample");
-		productDao.setListSqlKey("t_da_product.ibatorgenerated_selectByExample");
-		return (List<Product>) productDao.queryListByExample(example, paginationContext);
+	public List<Product> query(int pageNo, int pageSize, Map<String, Object> param){
+		Page<Product> page = new Page<Product>();
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		page.setOrderBy("CATEGORY_NAME,PRODUCT_NAME");
+		page.setOrder("ASC,ASC");
+		page.setParam(param);
+		return (List<Product>) productDao.findPage(page, "t_da_product_Custom.pageByCondition").getResult();
+	}
+	
+	public Long count(Map<String, Object> param){
+		Page<Product> page = new Page<Product>();
+		page.setParam(param);
+		return productDao.count(page, "t_da_product_Custom.countByCondition");
 	}
 	
 	public Product insert(Product product) {
@@ -94,15 +100,15 @@ public class ProductService {
 		productDao.deleteByPrimaryKey(id);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private Product validateProductName(Product product) {
-		ProductCriteria example = new ProductCriteria();
-		Criteria criteria = example.createCriteria();
-		criteria.andCategoryIdEqualTo(product.getCategoryId());
-		criteria.andProductNameEqualTo(product.getProductName());
-		if (product.getProductId() != null) {
-			criteria.andProductIdNotEqualTo(product.getProductId());
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("categoryId", product.getCategoryId());
+		paramMap.put("productName", product.getProductName());
+		if (product.getCategoryId() != null) {
+			paramMap.put("productId",product.getProductId());
 		}
-		List<Product> list = productDao.selectByExample(example);
+		List<Map> list = productDao.findByCondition(paramMap);
 		if (list != null && list.size() > 0) {
 			product.setProductId(-1);
 			return product;

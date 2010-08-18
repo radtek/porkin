@@ -8,11 +8,14 @@ package net.cominfo.digiagent.utils;
  * $Id: Page.java 838 2010-01-06 13:47:36Z calvinxiu $
  */
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * 与具体ORM实现无关的分页参数及查询结果封装.
@@ -33,7 +36,10 @@ public class Page<T> {
 	protected String orderBy = null;
 	protected String order = null;
 	protected boolean autoCount = true;
-
+	
+	//-- 条件参数集合 --//
+	protected Map<String, Object> param = Maps.newHashMap();
+	
 	//-- 返回结果 --//
 	protected List<T> result = Lists.newArrayList();
 	protected long totalCount = -1;
@@ -94,10 +100,10 @@ public class Page<T> {
 	}
 
 	/**
-	 * 根据pageNo和pageSize计算当前页第一条记录在总结果集中的位置,序号从1开始.
+	 * 根据pageNo和pageSize计算当前页第一条记录在总结果集中的位置,序号从0开始.
 	 */
 	public int getFirst() {
-		return ((pageNo - 1) * pageSize) + 1;
+		return (pageNo - 1) * pageSize;
 	}
 
 	/**
@@ -189,6 +195,22 @@ public class Page<T> {
 	public void setResult(final List<T> result) {
 		this.result = result;
 	}
+	
+	//-- 访问条件参数函数 --//
+	/**
+	 * 返回条件参数集合
+	 */
+	public Map<String, Object> getParam() {
+		return param;
+	}
+	
+	/**
+	 * 设置条件参数集合
+	 * @param param
+	 */
+	public void setParam(Map<String, Object> param) {
+		this.param = param;
+	}
 
 	/**
 	 * 取得总记录数, 默认值为-1.
@@ -255,5 +277,21 @@ public class Page<T> {
 		} else {
 			return pageNo;
 		}
+	}
+	
+	public String getOrderByStatement() {
+		String[] orderBys = this.orderBy.split(",");
+		String[] orders = this.order.split(",");
+		if (orderBys.length == orders.length && orders.length > 0) {
+			StringBuffer orderBuffer = new StringBuffer();
+			for (int i = 0; i < orders.length; i++) {
+				orderBuffer.append(orderBys[i]);
+				orderBuffer.append(" ");
+				orderBuffer.append(orders[i]);
+				orderBuffer.append(",");
+			}
+			return orderBuffer.toString().replaceAll(",$", "");
+		}
+		return "";
 	}
 }

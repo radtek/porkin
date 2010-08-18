@@ -18,4 +18,9 @@
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_province_SqlMap.xml"/>
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplierproduct_SqlMap.xml"/>
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplier_SqlMap.xml"/>
+	
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_country_SqlMap_Custom.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_brand_SqlMap_Custom.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_category_SqlMap_Custom.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_product_SqlMap_Custom.xml"/>
 </sqlMapConfig>

@@ -68,7 +68,7 @@ $(function(){
 		idField:'categoryId',
 		method:'get',
 		url:'../category/search',
-//		queryParams:{skipResults:0, maxResults:10},
+		queryParams:{categoryName:''},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[

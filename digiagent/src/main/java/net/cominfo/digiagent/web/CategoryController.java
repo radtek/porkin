@@ -35,11 +35,12 @@ public class CategoryController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
-	Map query(@RequestParam Integer page, @RequestParam Integer rows) {
-		List<Category> categoryList = categoryService.query((page - 1) * rows, rows);
+	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
+		Long total = categoryService.count(param);
+		List<Category> brandList = categoryService.query(page, rows, param);
 		Map map = new HashMap();
-		map.put("total", categoryService.countCategory());
-		map.put("rows", categoryList);
+		map.put("total", total);
+		map.put("rows", brandList);
 		return Collections.singletonList(map).get(0);
 	}
 	

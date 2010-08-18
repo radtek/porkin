@@ -2,6 +2,7 @@ package net.cominfo.digiagent.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CategoryDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
@@ -10,7 +11,7 @@ import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria.Criteria;
-import net.cominfo.digiagent.persistence.sqlmapdao.PaginationContext;
+import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,15 +36,20 @@ public class CategoryService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Category> query(int skipResults, int maxResults){
-		PaginationContext paginationContext = new PaginationContext();
-		paginationContext.setSkipResults(skipResults);
-		paginationContext.setMaxResults(maxResults);
-		CategoryCriteria example = new CategoryCriteria();
-		example.setOrderByClause("CATEGORY_NAME");
-		categoryDao.setCountSqlKey("t_da_category.ibatorgenerated_countByExample");
-		categoryDao.setListSqlKey("t_da_category.ibatorgenerated_selectByExample");
-		return (List<Category>) categoryDao.queryListByExample(example, paginationContext);
+	public List<Category> query(int pageNo, int pageSize, Map<String, Object> param){
+		Page<Category> page = new Page<Category>();
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		page.setOrderBy("CATEGORY_NAME");
+		page.setOrder("ASC");
+		page.setParam(param);
+		return (List<Category>) categoryDao.findPage(page, "t_da_category_Custom.pageByCondition").getResult();
+	}
+	
+	public Long count(Map<String, Object> param){
+		Page<Category> page = new Page<Category>();
+		page.setParam(param);
+		return categoryDao.count(page, "t_da_category_Custom.countByCondition");
 	}
 	
 	public Category insert(Category category) {

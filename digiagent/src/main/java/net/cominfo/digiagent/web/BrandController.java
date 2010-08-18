@@ -38,10 +38,11 @@ public class BrandController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
-	Map query(@RequestParam Integer page, @RequestParam Integer rows) {
-		List<Brand> brandList = brandService.query((page - 1) * rows, rows);
+	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
+		Long total = brandService.count(param);
+		List<Brand> brandList = brandService.query(page, rows, param);
 		Map map = new HashMap();
-		map.put("total", brandService.countBrand());
+		map.put("total", total);
 		map.put("rows", brandList);
 		return Collections.singletonList(map).get(0);
 	}

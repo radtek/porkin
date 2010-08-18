@@ -74,7 +74,7 @@ $(function(){
 		idField:'countryId',
 		method:'get',
 		url:'../country/search',
-//		queryParams:{skipResults:0, maxResults:10},
+		queryParams:{countryName:''},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[

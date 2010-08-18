@@ -2,6 +2,7 @@ package net.cominfo.digiagent.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.CountryDao;
@@ -10,7 +11,7 @@ import net.cominfo.digiagent.persistence.domain.BrandCriteria;
 import net.cominfo.digiagent.persistence.domain.Country;
 import net.cominfo.digiagent.persistence.domain.CountryCriteria;
 import net.cominfo.digiagent.persistence.domain.CountryCriteria.Criteria;
-import net.cominfo.digiagent.persistence.sqlmapdao.PaginationContext;
+import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,15 +35,20 @@ public class CountryService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Country> query(int skipResults, int maxResults){
-		PaginationContext paginationContext = new PaginationContext();
-		paginationContext.setSkipResults(skipResults);
-		paginationContext.setMaxResults(maxResults);
-		CountryCriteria example = new CountryCriteria();
-		example.setOrderByClause("COUNTRY_ABBREVIATION");
-		countryDao.setCountSqlKey("t_da_country.ibatorgenerated_countByExample");
-		countryDao.setListSqlKey("t_da_country.ibatorgenerated_selectByExample");
-		return (List<Country>) countryDao.queryListByExample(example, paginationContext);
+	public List<Country> query(int pageNo, int pageSize, Map<String, Object> param){
+		Page<Country> page = new Page<Country>();
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		page.setOrderBy("COUNTRY_ABBREVIATION");
+		page.setOrder("ASC");
+		page.setParam(param);
+		return (List<Country>) countryDao.findPage(page, "t_da_country_Custom.pageByCondition").getResult();
+	}
+	
+	public Long count(Map<String, Object> param){
+		Page<Country> page = new Page<Country>();
+		page.setParam(param);
+		return countryDao.count(page, "t_da_country_Custom.countByCondition");
 	}
 	
 	public Country insert(Country country) {

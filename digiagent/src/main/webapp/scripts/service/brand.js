@@ -90,13 +90,13 @@ $(function(){
 		width:950,
 		height:'auto',
 		singleSelect:true,
-		sortName: 'brandName',
-		sortOrder: 'asc',
+		sortName: 'countryName,brandName',
+		sortOrder: 'asc,asc',
 		remoteSort: false,
 		idField:'brandId',
 		method:'get',
 		url:'../brand/search',
-//		queryParams:{skipResults:0, maxResults:10},
+		queryParams:{brandName:''},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
@@ -135,9 +135,6 @@ $(function(){
 			{field:'createdDate',title:'创建时间',width:130	,align:'center',sortable:true,
 					sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
-				},
-				formatter: function(value,rec){
-					return format_cn(value);
 				}
 			},
 			{field:'opt',title:'操作',width:100,align:'center',

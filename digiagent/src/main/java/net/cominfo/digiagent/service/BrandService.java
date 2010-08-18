@@ -1,7 +1,9 @@
 package net.cominfo.digiagent.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.CountryDao;
@@ -9,8 +11,7 @@ import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.persistence.domain.BrandCriteria;
 import net.cominfo.digiagent.persistence.domain.Country;
 import net.cominfo.digiagent.persistence.domain.CountryCriteria;
-import net.cominfo.digiagent.persistence.domain.BrandCriteria.Criteria;
-import net.cominfo.digiagent.persistence.sqlmapdao.PaginationContext;
+import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,15 +54,20 @@ public class BrandService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Brand> query(int skipResults, int maxResults){
-		PaginationContext paginationContext = new PaginationContext();
-		paginationContext.setSkipResults(skipResults);
-		paginationContext.setMaxResults(maxResults);
-		BrandCriteria example = new BrandCriteria();
-		example.setOrderByClause("COUNTRY_NAME");
-		brandDao.setCountSqlKey("t_da_brand.ibatorgenerated_countByExample");
-		brandDao.setListSqlKey("t_da_brand.ibatorgenerated_selectByExample");
-		return (List<Brand>) brandDao.queryListByExample(example, paginationContext);
+	public List<Brand> query(int pageNo, int pageSize, Map<String, Object> param){
+		Page<Brand> page = new Page<Brand>();
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		page.setOrderBy("COUNTRY_NAME,BRAND_NAME");
+		page.setOrder("ASC,ASC");
+		page.setParam(param);
+		return (List<Brand>) brandDao.findPage(page, "t_da_brand_Custom.pageByCondition").getResult();
+	}
+	
+	public Long count(Map<String, Object> param){
+		Page<Brand> page = new Page<Brand>();
+		page.setParam(param);
+		return brandDao.count(page, "t_da_brand_Custom.countByCondition");
 	}
 	
 	public Brand insert(Brand brand) {
@@ -94,15 +100,15 @@ public class BrandService {
 		brandDao.deleteByPrimaryKey(id);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private Brand validateBrandName(Brand brand) {
-		BrandCriteria example = new BrandCriteria();
-		Criteria criteria = example.createCriteria();
-		criteria.andCountryIdEqualTo(brand.getCountryId());
-		criteria.andBrandNameEqualTo(brand.getBrandName());
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("countryId", brand.getCountryId());
+		paramMap.put("brandName", brand.getBrandName());
 		if (brand.getBrandId() != null) {
-			criteria.andBrandIdNotEqualTo(brand.getBrandId());
+			paramMap.put("brandId",brand.getBrandId());
 		}
-		List<Brand> list = brandDao.selectByExample(example);
+		List<Map> list = brandDao.findByCondition(paramMap);
 		if (list != null && list.size() > 0) {
 			brand.setBrandId(-1);
 			return brand;
