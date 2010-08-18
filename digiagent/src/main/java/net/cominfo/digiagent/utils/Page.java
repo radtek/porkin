@@ -8,7 +8,6 @@ package net.cominfo.digiagent.utils;
  * $Id: Page.java 838 2010-01-06 13:47:36Z calvinxiu $
  */
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
