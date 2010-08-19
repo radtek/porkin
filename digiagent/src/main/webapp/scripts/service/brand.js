@@ -149,8 +149,6 @@ $(function(){
 				text:'新增',
 				iconCls:'icon-add',
 				handler:function(){
-					// set country list
-//			$('<option value=1>11</option><option value=2>22</option>').appendTo($('select[name="countryId"]'));
 					setCountrySelect('');
 					$('input[name="brandId"]').val('');
 					$('select[name="countryId"]').val('');

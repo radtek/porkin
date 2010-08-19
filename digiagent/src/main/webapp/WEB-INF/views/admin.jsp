@@ -72,6 +72,11 @@
 								addTab($(this).text(), 'productBrand/list');
 							});
 						}
+						if ($(map[key]).text().toLowerCase() == '商家联系信息维护') {
+							$(map[key]).click(function() {
+								addTab($(this).text(), 'contact/list');
+							});
+						}
 				});
 		});
 	</script>

@@ -141,8 +141,6 @@ $(function(){
 				text:'新增',
 				iconCls:'icon-add',
 				handler:function(){
-					// set category list
-//			$('<option value=1>11</option><option value=2>22</option>').appendTo($('select[name="categoryId"]'));
 					setCategorySelect('');
 					$('input[name="productId"]').val('');
 					$('select[name="categoryId"]').val('');

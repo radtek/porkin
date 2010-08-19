@@ -75,7 +75,6 @@ public class ProductBrandService {
 			criteria.andCategoryIdEqualTo(categoryId);
 			example.setOrderByClause("PRODUCT_NAME");
 			productList = productDao.selectByExample(example);
-			buffer = new StringBuffer();
 			for (Product product : productList) {
 				buffer.append("<option value='");
 				buffer.append(product.getProductId());

@@ -225,8 +225,6 @@ $(function(){
 				text:'新增',
 				iconCls:'icon-add',
 				handler:function(){
-					// set province list
-//			$('<option value=1>11</option><option value=2>22</option>').appendTo($('select[name="provinceId"]'));
 					$('input[name="productbrandId"]').val('');
 					$('select[name="countryId"]').val('');
 					$('select[name="categoryId"]').val('');
@@ -234,8 +232,6 @@ $(function(){
 					setCategorySelect('', -1);
 					setBrandSelect('');
 					setProductSelect('');
-//					$('select[name="productId"]').val('');
-//					$('select[name="brandId"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#productBrandEdit').css('display','block');
 					$('#productBrandEdit').dialog({title:'Add', modal: true, icon:'icon-add'});

@@ -10,8 +10,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
-import net.cominfo.digiagent.persistence.domain.Supplier;
-import net.cominfo.digiagent.service.SupplierService;
+import net.cominfo.digiagent.persistence.domain.Contact;
+import net.cominfo.digiagent.service.ContactService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,77 +24,78 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-@RequestMapping(value="/supplier")
-public class SupplierController {
+@RequestMapping(value="/contact")
+public class ContactController {
 	
 	@Autowired
-	private SupplierService supplierService;
+	private ContactService contactService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getList(Model model) {
-		return "supplier";
+		return "contact";
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
 	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
-		Long total = supplierService.count(param);
-		List<Supplier> supplierList = supplierService.query(page, rows, param);
+		Long total = contactService.count(param);
+		List<Contact> contactList = contactService.query(page, rows, param);
 		Map map = new HashMap();
 		map.put("total", total);
-		map.put("rows", supplierList);
+		map.put("rows", contactList);
 		return Collections.singletonList(map).get(0);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Supplier supplier,
+	Map<String, ? extends Object> update(@ModelAttribute Contact contact,
 			HttpServletResponse response) {
-		Supplier supplierUpdate = supplierService.getById(supplier.getSupplierId());
-		if (supplier == null) {
-			new ResourceNotFoundException(new Long(supplierUpdate.getSupplierId()));
+		Contact contactUpdate = contactService.getById(contact.getContactId());
+		if (contact == null) {
+			new ResourceNotFoundException(new Long(contactUpdate.getContactId()));
 		}
-		supplierUpdate.setCityId(supplier.getCityId());
-		supplierUpdate.setActiveFlag(supplier.getActiveFlag());
-		supplierUpdate.setSupplierName(supplier.getSupplierName());
-		supplierUpdate = supplierService.update(supplierUpdate);
-		return Collections.singletonMap("supplierId", supplierUpdate.getSupplierId());
+		contactUpdate.setSupplierId(contact.getSupplierId());
+		contactUpdate.setActiveFlag(contact.getActiveFlag());
+		contactUpdate.setContactContent(contact.getContactContent());
+		contactUpdate.setContactType(contact.getContactType());
+		contactUpdate = contactService.update(contactUpdate);
+		return Collections.singletonMap("contactId", contactUpdate.getContactId());
 	}
 	
 	@RequestMapping(value="/get",method=RequestMethod.GET)
-	public @ResponseBody Supplier get(@RequestParam Integer id) {
-		Supplier supplier = supplierService.getById(id);
-		if (supplier == null) {
+	public @ResponseBody Contact get(@RequestParam Integer id) {
+		Contact contact = contactService.getById(id);
+		if (contact == null) {
 			new ResourceNotFoundException(new Long(id));
 		}
-		return supplier;
+		return contact;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Supplier supplier,
+	Map<String, ? extends Object> create(@ModelAttribute Contact contact,
 			HttpServletResponse response) {
-		Supplier supplierNew = supplierService.insert(supplier);
-		return Collections.singletonMap("supplierId", supplierNew.getSupplierId());
+		Contact contactNew = contactService.insert(contact);
+		return Collections.singletonMap("contactId", contactNew.getContactId());
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public @ResponseBody String delete(@RequestParam Integer id) {
-		Supplier supplier = supplierService.getById(id);
-		if (supplier == null) {
+		Contact contact = contactService.getById(id);
+		if (contact == null) {
 			new ResourceNotFoundException(new Long(id));
 		} else {
-			supplierService.delete(id);
+			contactService.delete(id);
 		}
 		return "success";
 	}
 	
-	@RequestMapping(value = "/getCityList", method = RequestMethod.GET)
-	public void getCityList(@RequestParam Integer id, HttpServletResponse response) {
+	@RequestMapping(value = "/getSupplierList", method = RequestMethod.GET)
+	public void getSupplierList(@RequestParam Integer id, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
-			pw.write(supplierService.getCityList(id));
+			pw.write(contactService.getSupplierList(id));
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

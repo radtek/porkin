@@ -1,6 +1,6 @@
 ﻿function setProvinceSelect(provinceId, cityId) {
 	$.ajax({
-		url:"../supplier/getProvinceList",
+		url:"../city/getProvinceList",
 		dataType:"html",
 		type: "GET",
 		success: function(data) {
@@ -173,14 +173,10 @@ $(function(){
 				text:'新增',
 				iconCls:'icon-add',
 				handler:function(){
-					// set province list
-//			$('<option value=1>11</option><option value=2>22</option>').appendTo($('select[name="provinceId"]'));
 					$('input[name="supplierId"]').val('');
 					$('select[name="provinceId"]').val('');
 					setProvinceSelect('', -1);
 					setCitySelect('');
-//					$('select[name="provinceId"]').val('');
-//					$('select[name="cityId"]').val('');
 					$('input[name="supplierName"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#supplierEdit').css('display','block');

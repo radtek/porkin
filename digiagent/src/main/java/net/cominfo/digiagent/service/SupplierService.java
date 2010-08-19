@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CityDao;
-import net.cominfo.digiagent.persistence.dao.ProvinceDao;
 import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.domain.City;
 import net.cominfo.digiagent.persistence.domain.CityCriteria;
-import net.cominfo.digiagent.persistence.domain.Province;
-import net.cominfo.digiagent.persistence.domain.ProvinceCriteria;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
 import net.cominfo.digiagent.utils.Page;
@@ -29,8 +26,6 @@ public class SupplierService {
 	@Autowired
 	private SupplierDao supplierDao;
 	@Autowired
-	private ProvinceDao provinceDao;
-	@Autowired
 	private CityDao cityDao;
 
 	public int countSupplier() {
@@ -41,25 +36,7 @@ public class SupplierService {
 		return supplierDao.selectByPrimaryKey(id);
 	}
 	
-	public String getProvinceList() {
-		ProvinceCriteria example = new ProvinceCriteria();
-		net.cominfo.digiagent.persistence.domain.ProvinceCriteria.Criteria criteria = example.createCriteria();
-		criteria.andActiveFlagEqualTo("Y");
-		example.setOrderByClause("PROVINCE_NAME");
-		List<Province> provinceList = provinceDao.selectByExample(example);
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<option value='' selected='selected'>请选择...</option>");
-		for (Province province : provinceList) {
-			buffer.append("<option value='");
-			buffer.append(province.getProvinceId());
-			buffer.append("'>");
-			buffer.append(province.getProvinceName());
-			buffer.append("</option>");
-		}
-		return buffer.toString();
-	}
 
-	
 	public String getCityList(Integer provinceId) {
 		CityCriteria example = new CityCriteria();
 		net.cominfo.digiagent.persistence.domain.CityCriteria.Criteria criteria = example.createCriteria();
@@ -72,7 +49,6 @@ public class SupplierService {
 			example.setOrderByClause("CITY_NAME");
 			cityDao.selectByExample(example);
 			cityList = cityDao.selectByExample(example);
-			buffer = new StringBuffer();
 			for (City city : cityList) {
 				buffer.append("<option value='");
 				buffer.append(city.getCityId());
