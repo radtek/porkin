@@ -1,5 +1,6 @@
 package net.cominfo.digiagent.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,38 +41,48 @@ public class ProductBrandService {
 		return productBrandDao.selectByPrimaryKey(id);
 	}
 	
-	public String getBrandList() {
+	public String getBrandList(Integer countryId) {
 		BrandCriteria example = new BrandCriteria();
 		net.cominfo.digiagent.persistence.domain.BrandCriteria.Criteria criteria = example.createCriteria();
 		criteria.andActiveFlagEqualTo("Y");
-		example.setOrderByClause("BRAND_NAME");
-		List<Brand> brandList = brandDao.selectByExample(example);
+		List<Brand> brandList = new ArrayList<Brand>();
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<option value='' selected='selected'>请选择...</option>");
-		for (Brand brand : brandList) {
-			buffer.append("<option value='");
-			buffer.append(brand.getBrandId());
-			buffer.append("'>");
-			buffer.append(brand.getBrandName());
-			buffer.append("</option>");
+		if (countryId != null && countryId > 0) {
+			criteria.andCountryIdEqualTo(countryId);
+			example.setOrderByClause("BRAND_NAME");
+			brandList = brandDao.selectByExample(example);
+			buffer = new StringBuffer();
+			for (Brand brand : brandList) {
+				buffer.append("<option value='");
+				buffer.append(brand.getBrandId());
+				buffer.append("'>");
+				buffer.append(brand.getBrandName());
+				buffer.append("</option>");
+			}
 		}
 		return buffer.toString();
 	}
 	
-	public String getProductList() {
+	public String getProductList(Integer categoryId) {
 		ProductCriteria example = new ProductCriteria();
 		net.cominfo.digiagent.persistence.domain.ProductCriteria.Criteria criteria = example.createCriteria();
 		criteria.andActiveFlagEqualTo("Y");
-		example.setOrderByClause("PRODUCT_NAME");
-		List<Product> productList = productDao.selectByExample(example);
+		List<Product> productList = new ArrayList<Product>();
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<option value='' selected='selected'>请选择...</option>");
-		for (Product product : productList) {
-			buffer.append("<option value='");
-			buffer.append(product.getProductId());
-			buffer.append("'>");
-			buffer.append(product.getProductName());
-			buffer.append("</option>");
+		if (categoryId != null && categoryId > 0) {
+			criteria.andCategoryIdEqualTo(categoryId);
+			example.setOrderByClause("PRODUCT_NAME");
+			productList = productDao.selectByExample(example);
+			buffer = new StringBuffer();
+			for (Product product : productList) {
+				buffer.append("<option value='");
+				buffer.append(product.getProductId());
+				buffer.append("'>");
+				buffer.append(product.getProductName());
+				buffer.append("</option>");
+			}
 		}
 		return buffer.toString();
 	}
@@ -81,8 +92,8 @@ public class ProductBrandService {
 		Page<ProductBrand> page = new Page<ProductBrand>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
-		page.setOrderBy("BRAND_NAME,PRODUCT_NAME");
-		page.setOrder("ASC,ASC");
+		page.setOrderBy("COUNTRY_NAME,BRAND_NAME,CATEGORY_NAME,PRODUCT_NAME");
+		page.setOrder("ASC,ASC,ASC,ASC");
 		page.setParam(param);
 		return (List<ProductBrand>) productBrandDao.findPage(page, "t_da_productbrand_Custom.pageByCondition").getResult();
 	}

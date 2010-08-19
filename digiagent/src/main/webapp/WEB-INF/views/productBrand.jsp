@@ -19,12 +19,18 @@
 		<div style="background:#fafafa;padding:10px;text-align:center">
 		<form id="productBrandForm" action="../productBrand/create" method="post"> 
 		  <div>
+		  		<label for="name">国家:</label>
+		  		<input type="hidden" name="productbrandId"/>
+              	<select id="countryId" name="countryId"> 
+              	</select>
               	<label for="name">品牌:</label>
-              	<input type="hidden" name="productbrandId"/>
               	<select id="brandId" name="brandId"> 
               	</select>
           </div>
           <div>
+          		<label for="name">类别:</label>
+              	<select id="categoryId" name="categoryId"> 
+              	</select>
               	<label for="name">产品:</label>
               	<select id="productId" name="productId"> 
               	</select>

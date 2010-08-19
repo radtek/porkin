@@ -12,11 +12,16 @@
 		       date_format(t_da_productbrand.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
 		       t_da_productbrand.active_flag as activeFlag,
 		       t_da_product.product_name as productName,
+		       t_da_category.category_name as categoryName,
 		       t_da_brand.brand_name as brandName,
-		       t_da_brand.brand_english as brandEnglish
+		       t_da_brand.brand_english as brandEnglish,
+		       t_da_country.country_name as countryName,
+		       t_da_country.country_abbreviation as countryAbbreviation
 		  FROM t_da_productbrand
 		  LEFT JOIN t_da_product ON t_da_productbrand.product_id = t_da_product.product_id
+		  LEFT JOIN t_da_category ON t_da_category.category_id = t_da_product.category_id
 		  LEFT JOIN t_da_brand ON t_da_productbrand.brand_id = t_da_brand.brand_id
+		  LEFT JOIN t_da_country ON t_da_country.country_id = t_da_brand.country_id
 		 WHERE productbrand_id > 0
 		 <isNotEmpty prepend="AND" property="param.productName">
 			t_da_brand.product_name like '%$param.productName$%'

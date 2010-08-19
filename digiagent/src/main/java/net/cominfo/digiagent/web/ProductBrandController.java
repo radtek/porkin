@@ -91,10 +91,10 @@ public class ProductBrandController {
 	}
 	
 	@RequestMapping(value = "/getBrandList", method = RequestMethod.GET)
-	public void getBrandList(HttpServletResponse response) {
+	public void getBrandList(@RequestParam Integer id, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
-			pw.write(productBrandService.getBrandList());
+			pw.write(productBrandService.getBrandList(id));
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -102,10 +102,10 @@ public class ProductBrandController {
 	}
 	
 	@RequestMapping(value = "/getProductList", method = RequestMethod.GET)
-	public void getProvinceList(HttpServletResponse response) {
+	public void getProvinceList(@RequestParam Integer id, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
-			pw.write(productBrandService.getProductList());
+			pw.write(productBrandService.getProductList(id));
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

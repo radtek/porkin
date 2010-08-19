@@ -1,6 +1,7 @@
 ﻿function setProductSelect(productId) {
 	$.ajax({
 		url:"../productBrand/getProductList",
+		data:"id=" + $('select[name="categoryId"]').val(),
 		dataType:"html",
 		type: "GET",
 		success: function(data) {
@@ -12,9 +13,33 @@
 	});
 }
 
+function setCategorySelect(categoryId, productId) {
+	$.ajax({
+		url:"../product/getCategoryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="categoryId"]').empty().append(data).val(categoryId);
+			if (productId > 0) {
+				setProductSelect(productId);
+			}
+		},
+		error:function(err) {
+			alert(err);
+		}
+	});
+}
+
+function setCategoryByProductId(productId) {
+	$.get('../product/get', { id: productId } ,function(data) {
+		setCategorySelect(data.categoryId, productId);
+	});
+}
+
 function setBrandSelect(brandId) {
 	$.ajax({
 		url:"../productBrand/getBrandList",
+		data:"id=" + $('select[name="countryId"]').val(),
 		dataType:"html",
 		type: "GET",
 		success: function(data) {
@@ -23,6 +48,29 @@ function setBrandSelect(brandId) {
 		error:function(err) {
 			alert(err);
 		}
+	});
+}
+
+function setCountrySelect(countryId, brandId) {
+	$.ajax({
+		url:"../brand/getCountryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="countryId"]').empty().append(data).val(countryId);
+			if (brandId > 0) {
+				setBrandSelect(brandId);
+			}
+		},
+		error:function(err) {
+			alert(err);
+		}
+	});
+}
+
+function setCountryByBrandId(brandId) {
+	$.get('../brand/get', { id: brandId } ,function(data) {
+		setCountrySelect(data.countryId, brandId);
 	});
 }
 
@@ -62,11 +110,11 @@ function validate(formData, jqForm, options) {
 }
 function onEditClickHandler(id) {
 	$.get('../productBrand/get', { id: id } ,function(data) {
-		setBrandSelect(data.brandId);
-		setProductSelect(data.productId);
 		$('input[name="productbrandId"]').val(id);
-//		$('input[name="productId"]').val(data.productId);
-//		$('input[name="brandId"]').val(data.brandId);
+		setCountryByBrandId(data.brandId);
+		setBrandSelect(data.brandId);
+		setCategoryByProductId(data.productId);
+		setProductSelect(data.productId);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#productBrandEdit').css('display','block');
 		$('#productBrandEdit').dialog({title:'Edit', modal: true});
@@ -87,22 +135,24 @@ function onDeleteClickHandler(id) {
 }
 
 $(document).ready(function() {
-	
+	$('select[name="countryId"]').bind('change', setBrandSelect);
+	$('select[name="categoryId"]').bind('change', setProductSelect);
 });
+
 // list
 $(function(){
-	setBrandSelect();
-	setProductSelect();
+	setCountrySelect('', -1);
+	setCategorySelect('', -1);
 	// edit
 	var lastIndex;
 	$('#productBrandList').datagrid({
-		title:'城市维护',
+		title:'品牌与产品信息维护',
 		iconCls:'icon-edit',
-		width:950,
+		width:1250,
 		height:'auto',
 		singleSelect:true,
-		sortName: 'provinceName,productBrandName',
-		sortOrder: 'asc,asc',
+		sortName: 'countryName,brandName,categoryName,productName',
+		sortOrder: 'asc,asc,asc,asc',
 		remoteSort: false,
 		idField:'productBrandId',
 		method:'get',
@@ -112,12 +162,27 @@ $(function(){
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
 			{field:'productbrandId',title:'编号',width:80,align:'center'},
+			{field:'countryName',title:'国家',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'countryAbbreviation',title:'缩写',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
 			{field:'brandName',title:'品牌',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
 			{field:'brandEnglish',title:'英文',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'categoryName',title:'类别',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
@@ -162,9 +227,13 @@ $(function(){
 				handler:function(){
 					// set province list
 //			$('<option value=1>11</option><option value=2>22</option>').appendTo($('select[name="provinceId"]'));
+					$('input[name="productbrandId"]').val('');
+					$('select[name="countryId"]').val('');
+					$('select[name="categoryId"]').val('');
+					setCountrySelect('', -1);
+					setCategorySelect('', -1);
 					setBrandSelect('');
 					setProductSelect('');
-					$('input[name="productbrandId"]').val('');
 //					$('select[name="productId"]').val('');
 //					$('select[name="brandId"]').val('');
 					$('select[name="activeFlag"]').val('Y');
