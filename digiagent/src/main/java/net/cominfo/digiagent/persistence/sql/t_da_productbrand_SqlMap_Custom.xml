@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="t_da_productbrand_Custom">
+	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT t_da_productbrand.product_id as productId,
+			   t_da_productbrand.brand_id as brandId,
+		       productbrand_id as productbrandId,
+		       t_da_productbrand.created_by as createdBy,
+		       date_format(t_da_productbrand.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+		       t_da_productbrand.lastupdated_by as lastupdatedBy,
+		       date_format(t_da_productbrand.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
+		       t_da_productbrand.active_flag as activeFlag,
+		       t_da_product.product_name as productName,
+		       t_da_brand.brand_name as brandName,
+		       t_da_brand.brand_english as brandEnglish
+		  FROM t_da_productbrand
+		  LEFT JOIN t_da_product ON t_da_productbrand.product_id = t_da_product.product_id
+		  LEFT JOIN t_da_brand ON t_da_productbrand.brand_id = t_da_brand.brand_id
+		 WHERE productbrand_id > 0
+		 <isNotEmpty prepend="AND" property="param.productName">
+			t_da_brand.product_name like '%$param.productName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.brandName">
+			t_da_brand.brand_name like '%$param.brandName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
+		 	$orderByStatement$
+		 </isNotEmpty>
+		 LIMIT $first$, $pageSize$;
+	</select>
+	
+	<select id="countByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT count(*) as total
+		FROM t_da_productbrand
+		  LEFT JOIN t_da_product ON t_da_productbrand.product_id = t_da_product.product_id
+		  LEFT JOIN t_da_brand ON t_da_productbrand.brand_id = t_da_brand.brand_id
+		 WHERE productbrand_id > 0
+		 <isNotEmpty prepend="AND" property="param.productName">
+			t_da_brand.product_name like '%$param.productName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.brandName">
+			t_da_brand.brand_name like '%$param.brandName$%'
+         </isNotEmpty>
+	</select>
+
+	<select id="listByCondition" parameterClass="HashMap"
+		resultClass="HashMap">
+		SELECT * FROM t_da_productbrand WHERE productbrand_id > 0
+		<isNotEmpty prepend="AND" property="brandId">
+			brand_id = '$brandId$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productId">
+			product_id = $productId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productbrandId">
+			productbrand_id != $productbrandId$
+		</isNotEmpty>
+	</select>
+</sqlMap>

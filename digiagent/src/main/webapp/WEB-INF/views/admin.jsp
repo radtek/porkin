@@ -44,7 +44,7 @@
 						}
 						if ($(map[key]).text().toLowerCase() == '商家维护') {
 							$(map[key]).click(function() {
-								addTab($(this).text(), 'supplier.html');
+								addTab($(this).text(), 'supplier/list');
 							});
 						}
 						if ($(map[key]).text().toLowerCase() == '国家维护') {
@@ -52,14 +52,24 @@
 								addTab($(this).text(), 'country/list');
 							});
 						}
+						if ($(map[key]).text().toLowerCase() == '省份维护') {
+							$(map[key]).click(function() {
+								addTab($(this).text(), 'province/list');
+							});
+						}
 						if ($(map[key]).text().toLowerCase() == '城市维护') {
 							$(map[key]).click(function() {
-								addTab($(this).text(), 'city.html');
+								addTab($(this).text(), 'city/list');
 							});
 						}
 						if ($(map[key]).text().toLowerCase() == '产品维护') {
 							$(map[key]).click(function() {
 								addTab($(this).text(), 'product/list');
+							});
+						}
+						if ($(map[key]).text().toLowerCase() == '品牌与产品信息维护') {
+							$(map[key]).click(function() {
+								addTab($(this).text(), 'productBrand/list');
 							});
 						}
 				});

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="t_da_supplier_Custom">
+	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT t_da_supplier.city_id as cityId,
+			   t_da_province.province_id,
+		       supplier_id as supplierId,
+		       supplier_name as supplierName,
+		       t_da_supplier.created_by as createdBy,
+		       date_format(t_da_supplier.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+		       t_da_supplier.lastupdated_by as lastupdatedBy,
+		       date_format(t_da_supplier.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
+		       t_da_supplier.active_flag as activeFlag,
+		       t_da_city.city_name as cityName,
+		       t_da_city.city_abbreviation as cityAbbreviation,
+		       t_da_province.province_name as provinceName,
+		       t_da_province.province_abbreviation as provinceAbbreviation
+		  FROM t_da_supplier
+		  LEFT JOIN t_da_city ON t_da_supplier.city_id = t_da_city.city_id
+		  LEFT JOIN t_da_province ON t_da_province.province_id = t_da_city.province_id
+		 WHERE supplier_id > 0
+		 <isNotEmpty prepend="AND" property="param.supplierName">
+			supplier_name like '%$param.supplierName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
+		 	$orderByStatement$
+		 </isNotEmpty>
+		 LIMIT $first$, $pageSize$;
+	</select>
+	
+	<select id="countByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT count(*) as total
+		FROM t_da_supplier
+		  LEFT JOIN t_da_city ON t_da_supplier.city_id = t_da_city.city_id
+		  LEFT JOIN t_da_province ON t_da_province.province_id = t_da_city.province_id
+		 WHERE supplier_id > 0
+		 <isNotEmpty prepend="AND" property="param.supplierName">
+			supplier_name = '%$param.supplierName$%'
+		</isNotEmpty>
+	</select>
+
+	<select id="listByCondition" parameterClass="HashMap"
+		resultClass="HashMap">
+		SELECT * FROM t_da_supplier WHERE supplier_id > 0
+		<isNotEmpty prepend="AND" property="supplierName">
+			supplier_name = '$supplierName$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="cityId">
+			city_id = $cityId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="supplierId">
+			supplier_id != $supplierId$
+		</isNotEmpty>
+	</select>
+</sqlMap>

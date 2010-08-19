@@ -1,7 +1,7 @@
 ﻿// edit event
 function formSubmit(actionUrl) {
 	// validate
-	$('#countryForm').ajaxForm({ 
+	$('#provinceForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
 		dataType:  'json', 
@@ -10,48 +10,48 @@ function formSubmit(actionUrl) {
 }
 // call back
 function processJson(data) { 
-    if (data.countryId == -1) {
-    	alert("国家名已存在，请重新操作！");
+    if (data.provinceId == -1) {
+    	alert("省份名已存在，请重新操作！");
     	return;
     }
-	$('#countryEdit').dialog('close');
-    $('#countryList').datagrid('reload');
+	$('#provinceEdit').dialog('close');
+    $('#provinceList').datagrid('reload');
 }
 // validate method
 function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0]; 
-	if (form.countryName.value.length == 0) {
-		alert('请输入国家名称！');
-		form.countryName.focus();
+	if (form.provinceName.value.length == 0) {
+		alert('请输入省份名称！');
+		form.provinceName.focus();
 		return false;
 	}
-	if (form.countryAbbreviation.value.length == 0) {
-		alert('请输入国家缩写！');
-		form.countryAbbreviation.focus();
+	if (form.provinceAbbreviation.value.length == 0) {
+		alert('请输入省份缩写！');
+		form.provinceAbbreviation.focus();
 		return false;
 	}
 }
 function onEditClickHandler(id) {
-	$.get('../country/get', { id: id } ,function(data) {
-		$('input[name="countryId"]').val(id);
-		$('input[name="countryName"]').val(data.countryName);
-		$('input[name="countryAbbreviation"]').val(data.countryAbbreviation);
+	$.get('../province/get', { id: id } ,function(data) {
+		$('input[name="provinceId"]').val(id);
+		$('input[name="provinceName"]').val(data.provinceName);
+		$('input[name="provinceAbbreviation"]').val(data.provinceAbbreviation);
 		$('select[name="activeFlag"]').val(data.activeFlag);
-		$('#countryEdit').css('display','block');
-		$('#countryEdit').dialog({title:'Edit', modal: true});
+		$('#provinceEdit').css('display','block');
+		$('#provinceEdit').dialog({title:'Edit', modal: true});
 	});
-	formSubmit('../country/update');
+	formSubmit('../province/update');
 }
 
 function onDeleteClickHandler(id) {
 	if (confirm("确定要删除该记录吗？")) {
-		$.get('../country/delete', { id: id } ,function(data) {
+		$.get('../province/delete', { id: id } ,function(data) {
 			if (data == "success") {
-			    $('#countryList').datagrid('reload');
+			    $('#provinceList').datagrid('reload');
 				alert('删除成功！');
 			} else if (data == "reference") {
-				alert('有品牌关联此国家，暂时无法删除！');
+				alert('有城市关联此省份，暂时无法删除！');
 			} else {
 				alert('删除失败！');
 			}
@@ -62,29 +62,29 @@ function onDeleteClickHandler(id) {
 $(function(){
 	// edit
 	var lastIndex;
-	$('#countryList').datagrid({
-		title:'国家维护',
+	$('#provinceList').datagrid({
+		title:'省份维护',
 		iconCls:'icon-edit',
 		width:850,
 		height:'auto',
 		singleSelect:true,
-		sortName: 'countryName',
+		sortName: 'provinceName',
 		sortOrder: 'asc',
 		remoteSort: false,
-		idField:'countryId',
+		idField:'provinceId',
 		method:'get',
-		url:'../country/search',
-		queryParams:{countryName:''},
+		url:'../province/search',
+		queryParams:{provinceName:''},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
-			{field:'countryId',title:'编号',width:80,align:'center'},
-			{field:'countryName',title:'国家名称',width:100,align:'center',sortable:true,
+			{field:'provinceId',title:'编号',width:80,align:'center'},
+			{field:'provinceName',title:'省份名称',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
-			{field:'countryAbbreviation',title:'缩写',width:100,align:'center',sortable:true,
+			{field:'provinceAbbreviation',title:'缩写',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
@@ -115,7 +115,7 @@ $(function(){
 			},
 			{field:'opt',title:'操作',width:100,align:'center',
 				formatter:function(value,rec){
-					return '<span><image onClick="onEditClickHandler(' + rec['countryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" src="../images/datagrid/icon_list_edit.gif"/>&nbsp;&nbsp;<image onClick="onDeleteClickHandler(' + rec['countryId'] + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
+					return '<span><image onClick="onEditClickHandler(' + rec['provinceId'] + ')" onmouseover="this.style.cursor=\'pointer\';" src="../images/datagrid/icon_list_edit.gif"/>&nbsp;&nbsp;<image onClick="onDeleteClickHandler(' + rec['provinceId'] + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
 				}
 			}
 		]],
@@ -125,13 +125,13 @@ $(function(){
 				text:'新增',
 				iconCls:'icon-add',
 				handler:function(){
-					$('input[name="countryId"]').val('');
-					$('input[name="countryName"]').val('');
-					$('input[name="countryAbbreviation"]').val('');
+					$('input[name="provinceId"]').val('');
+					$('input[name="provinceName"]').val('');
+					$('input[name="provinceAbbreviation"]').val('');
 					$('select[name="activeFlag"]').val('Y');
-					$('#countryEdit').css('display','block');
-					$('#countryEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
-					formSubmit('../country/create');
+					$('#provinceEdit').css('display','block');
+					$('#provinceEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					formSubmit('../province/create');
 				}
 		}],
 		onBeforeLoad:function(){
@@ -142,7 +142,7 @@ $(function(){
 		}
 	});
 	
-	$('#countryList').datagrid('getPager').pagination({
+	$('#provinceList').datagrid('getPager').pagination({
 		displayMsg:'显示 {from} 至 {to} 条  共 {total} 条记录',
 		afterPageText:'/{pages}',
 		beforePageText:'页'
