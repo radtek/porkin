@@ -52,7 +52,6 @@ public class ProductBrandService {
 			criteria.andCountryIdEqualTo(countryId);
 			example.setOrderByClause("BRAND_NAME");
 			brandList = brandDao.selectByExample(example);
-			buffer = new StringBuffer();
 			for (Brand brand : brandList) {
 				buffer.append("<option value='");
 				buffer.append(brand.getBrandId());
