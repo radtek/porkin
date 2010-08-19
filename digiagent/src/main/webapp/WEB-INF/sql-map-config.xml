@@ -28,4 +28,5 @@
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_productbrand_SqlMap_Custom.xml"/>
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplier_SqlMap_Custom.xml"/>
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_contact_SqlMap_Custom.xml"/>
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplierproduct_SqlMap_Custom.xml"/>
 </sqlMapConfig>

@@ -67,7 +67,7 @@
 								addTab($(this).text(), 'product/list');
 							});
 						}
-						if ($(map[key]).text().toLowerCase() == '品牌与产品信息维护') {
+						if ($(map[key]).text().toLowerCase() == '品牌与产品关系维护') {
 							$(map[key]).click(function() {
 								addTab($(this).text(), 'productBrand/list');
 							});
@@ -75,6 +75,11 @@
 						if ($(map[key]).text().toLowerCase() == '商家联系信息维护') {
 							$(map[key]).click(function() {
 								addTab($(this).text(), 'contact/list');
+							});
+						}
+						if ($(map[key]).text().toLowerCase() == '商家与产品关系维护') {
+							$(map[key]).click(function() {
+								addTab($(this).text(), 'supplierProduct/list');
 							});
 						}
 				});
