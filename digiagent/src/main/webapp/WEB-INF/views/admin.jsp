@@ -29,8 +29,8 @@
 			$('#basic').tree({data:<%@include file="data/basic_data.json"%>});
 			$('#report').tree({data:<%@include file="data/report_data.json"%>});
 			$('#system').tree({data:<%@include file="data/system_data.json"%>});
-			
-			var map = $('#basic').find('.tree-title');
+			$('#basic').mouseover(function() {
+				var map = $('#basic').find('.tree-title');
 				$.each(map, function(key) {
 						if ($(map[key]).text().toLowerCase() == '类别维护') {
 							$(map[key]).click(function() {
@@ -83,6 +83,7 @@
 							});
 						}
 				});
+			});
 		});
 	</script>
 </head>
