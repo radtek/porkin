@@ -29,6 +29,9 @@
 		 <isNotEmpty prepend="AND" property="param.brandName">
 			t_da_brand.brand_name like '%$param.brandName$%'
          </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.activeFlag">
+			t_da_productbrand.active_flag = '$param.activeFlag$'
+         </isNotEmpty>
 		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
 		 	$orderByStatement$
 		 </isNotEmpty>
@@ -47,6 +50,9 @@
          </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.brandName">
 			t_da_brand.brand_name like '%$param.brandName$%'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.activeFlag">
+			t_da_productbrand.active_flag = '$param.activeFlag$'
          </isNotEmpty>
 	</select>
 

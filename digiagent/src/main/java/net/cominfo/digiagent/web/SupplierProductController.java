@@ -1,10 +1,15 @@
 package net.cominfo.digiagent.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.service.SupplierProductService;
 
@@ -39,5 +44,29 @@ public class SupplierProductController {
 		map.put("total", total);
 		map.put("rows", supplierProductList);
 		return Collections.singletonList(map).get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/productSearch", method = RequestMethod.GET)
+	public @ResponseBody
+	Map queryProduct(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
+		Long total = supplierProductService.countProduct(param);
+		List<ProductBrand> supplierProductList = supplierProductService.queryProduct(page, rows, param);
+		Map map = new HashMap();
+		map.put("total", total);
+		map.put("rows", supplierProductList);
+		return Collections.singletonList(map).get(0);
+	}
+	
+	@RequestMapping(value = "/addSupplierProduct", method = RequestMethod.GET)
+	public void addSupplierProduct(@RequestParam String productBrandIds, @RequestParam String supplierId, HttpServletResponse response) {
+		String result = supplierProductService.addSupplierProduct(productBrandIds.split(","), supplierId);
+		try {
+			PrintWriter pw = response.getWriter();
+			pw.write(result);
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
