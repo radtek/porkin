@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 public class SupplierProductDao extends SupplierProductDAOImpl {
 
 	@SuppressWarnings("unchecked")
-	public List<Map> findByCondition(final Map condition) {
-		return getSqlMapClientTemplate().queryForList("t_da_supplierproduct_Custom.listByCondition", condition);
+	public List<Map> getProductListByCondition(final List condition) {
+		return getSqlMapClientTemplate().queryForList("t_da_supplierproduct_Custom.getProductListByCondition", condition);
 	}
 	
 }

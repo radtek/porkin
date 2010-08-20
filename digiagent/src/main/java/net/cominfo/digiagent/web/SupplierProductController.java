@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
-import net.cominfo.digiagent.persistence.domain.SupplierProduct;
+import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.service.SupplierProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class SupplierProductController {
 	public @ResponseBody
 	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
 		Long total = supplierProductService.count(param);
-		List<SupplierProduct> supplierProductList = supplierProductService.query(page, rows, param);
+		List<SupplierProductKey> supplierProductList = supplierProductService.query(page, rows, param);
 		Map map = new HashMap();
 		map.put("total", total);
 		map.put("rows", supplierProductList);
@@ -61,6 +61,17 @@ public class SupplierProductController {
 	@RequestMapping(value = "/addSupplierProduct", method = RequestMethod.GET)
 	public void addSupplierProduct(@RequestParam String productBrandIds, @RequestParam String supplierId, HttpServletResponse response) {
 		String result = supplierProductService.addSupplierProduct(productBrandIds.split(","), supplierId);
+		try {
+			PrintWriter pw = response.getWriter();
+			pw.write(result);
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value = "/deleteSupplierProduct", method = RequestMethod.GET)
+	public void deleteSupplierProduct(@RequestParam String productBrandIds, @RequestParam String supplierId, HttpServletResponse response) {
+		String result = supplierProductService.deleteSupplierProduct(productBrandIds.split(","), supplierId);
 		try {
 			PrintWriter pw = response.getWriter();
 			pw.write(result);

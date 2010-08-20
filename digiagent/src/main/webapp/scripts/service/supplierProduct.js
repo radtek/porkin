@@ -23,7 +23,7 @@ function openProduct(supplierId){
 		frozenColumns:[[
             {field:'ck',checkbox:true}
 		]],
-		idField:'productBrandId',
+		idField:'productbrandId',
 		method:'get',
 		url:'../supplierProduct/productSearch',
 		queryParams:{productName:'', supplierId:supplierId},
@@ -52,7 +52,7 @@ function openProduct(supplierId){
 			},
 			{field:'opt',title:'操作',width:50,align:'center',
 				formatter:function(value,rec){
-					return '<image onClick="onProductDeleteClickHandler(' + rec['productId'] + ',' + supplierId +')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
+					return '<image onClick="onDeleteClickHandler(' + rec['productbrandId'] + ',' + supplierId +')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
 				}
 			}
 		]],
@@ -71,6 +71,7 @@ function openProduct(supplierId){
 			text:'批量删除',
 			iconCls:'icon-remove',
 			handler:function(){
+				deleteSupplierProduct();
 			}
 		}],
 		onBeforeLoad:function(){
@@ -86,26 +87,89 @@ function openProduct(supplierId){
 }
 // product brand 
 function addSupplierProduct() {
-	var productIds = getSelectedProductIds();
+	var productIds = getSelectedAddProductIds();
 	if (productIds) {
 		$.get('../supplierProduct/addSupplierProduct', { productBrandIds: productIds, supplierId:$('#supplierId').val()} ,function(data) {
 			if (data == "success") {
-//				alert("追加成功！");
+				$.messager.show({
+					title:'消息',
+					msg:'追加成功',
+					timeout:3000,
+					showType:'slide'
+				});
 				$('#productWin').dialog('close');
 			} else {
-				alert("已存在的品牌产品列表：\n" + data);
+				$.messager.alert('消息','已存在的品牌产品：' + data,'info');
 			}
 			$('#ownProductList').datagrid('reload');
 			$('#supplierProductList').datagrid('reload');
 		});
 	} else {
-		alert('请选择品牌产品！');
+		$.messager.alert('消息','请选择品牌产品！','info');
 	}
 }
 
-function getSelectedProductIds() {
+function onDeleteClickHandler(productBrandId, supplierId) {
+	$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+		if (r){
+			$.get('../supplierProduct/deleteSupplierProduct', { productBrandIds: productBrandId, supplierId:supplierId} ,function(data) {
+				if (data == "success") {
+					$.messager.show({
+						title:'消息',
+						msg:'删除成功！',
+						timeout:3000,
+						showType:'slide'
+					});
+					$('#productWin').dialog('close');
+				} else {
+					$.messager.alert('消息','不存在的品牌产品：' + data,'info');
+				}
+				$('#ownProductList').datagrid('reload');
+				$('#supplierProductList').datagrid('reload');
+			});
+		}
+	});
+}
+//product brand 
+function deleteSupplierProduct() {
+	var productIds = getSelectedDeleteProductIds();
+	if (productIds) {
+		$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+			if (r){
+				$.get('../supplierProduct/deleteSupplierProduct', { productBrandIds: productIds, supplierId:$('#supplierId').val()} ,function(data) {
+					if (data == "success") {
+						$.messager.show({
+							title:'消息',
+							msg:'删除成功！',
+							timeout:3000,
+							showType:'slide'
+						});
+						$('#productWin').dialog('close');
+					} else {
+						$.messager.alert('消息','不存在的品牌产品：' + data,'info');
+					}
+					$('#ownProductList').datagrid('reload');
+					$('#supplierProductList').datagrid('reload');
+				});
+			}					
+		});
+	} else {
+		$.messager.alert('消息','请选择要删除的品牌产品');
+	}
+}
+
+function getSelectedAddProductIds() {
 	var ids = [];
 	var rows = $('#targetProductList').datagrid('getSelections');
+	for(var i=0;i<rows.length;i++){
+		ids.push(rows[i].productbrandId);
+	}
+	return ids.join(',');
+}
+
+function getSelectedDeleteProductIds() {
+	var ids = [];
+	var rows = $('#ownProductList').datagrid('getSelections');
 	for(var i=0;i<rows.length;i++){
 		ids.push(rows[i].productbrandId);
 	}
@@ -162,7 +226,6 @@ function openProductBrand() {
 	if (p){
 		$(p).pagination({
 			onBeforeRefresh:function(){
-//				alert('before refresh');
 			}
 		});
 	}

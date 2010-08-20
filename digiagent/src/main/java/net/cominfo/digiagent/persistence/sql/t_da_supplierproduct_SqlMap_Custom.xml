@@ -102,6 +102,22 @@
          </isNotEmpty>
 	</select>
 	
+	<select id="getProductListByCondition" parameterClass="java.util.List"
+		resultClass="HashMap">
+		SELECT t_da_product.product_name as productName
+		  FROM t_da_productbrand
+		  LEFT JOIN t_da_product ON t_da_productbrand.product_id = t_da_product.product_id
+		  LEFT JOIN t_da_category ON t_da_category.category_id = t_da_product.category_id
+		  LEFT JOIN t_da_brand ON t_da_brand.brand_id = t_da_productbrand.brand_id
+		  LEFT JOIN t_da_country ON t_da_brand.country_id = t_da_country.country_id
+		  <dynamic prepend="where t_da_productbrand.productbrand_id IN ">
+			<iterate open="(" close=")" conjunction=","> 
+			#[]# 
+			</iterate> 
+		  </dynamic>
+		  GROUP BY t_da_product.product_name
+	</select>
+	
 	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
 		resultClass="HashMap">
 		SELECT t_da_supplier.supplier_id as supplierId,
