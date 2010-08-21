@@ -40,6 +40,8 @@ function setCitySelect(cityId, supplierId) {
 			$('select[name="cityId"]').empty().append(data).val(cityId);
 			if (supplierId > 0) {
 				setSupplierSelect(supplierId);
+			} else {
+				$('select[name="supplierId"]').empty().append("<option value=''>请选择...</option>");
 			}
 		},
 		error:function(err) {
