@@ -18,7 +18,9 @@ $(document).ready(function() {
 			case "基础数据":
 				basicFunction();
 				break;
-
+			case "Basic data":
+				basicFunction();
+				break;
 			default:
 				break;
 			}
