@@ -46,7 +46,6 @@ function setCitySelect(cityId, supplierId) {
 			$.messager.alert('消息',err,'error');
 		}
 	});
-	$('select[name="supplierId"]').empty();
 }
 
 function setProvinceByCityId(cityId, supplierId) {
