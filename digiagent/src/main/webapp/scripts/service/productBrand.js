@@ -8,7 +8,7 @@
 			$('select[name="productId"]').empty().append(data).val(productId);
 		},
 		error:function(err) {
-			alert(err);
+	    	$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -25,7 +25,7 @@ function setCategorySelect(categoryId, productId) {
 			}
 		},
 		error:function(err) {
-			alert(err);
+	    	$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -46,7 +46,7 @@ function setBrandSelect(brandId) {
 			$('select[name="brandId"]').empty().append(data).val(brandId);
 		},
 		error:function(err) {
-			alert(err);
+	    	$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -63,7 +63,7 @@ function setCountrySelect(countryId, brandId) {
 			}
 		},
 		error:function(err) {
-			alert(err);
+	    	$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -87,9 +87,19 @@ function formSubmit(actionUrl) {
 // call back
 function processJson(data) { 
     if (data.productBrandId == -1) {
-    	alert("该品牌的此产品已存在，请重新操作！");
+    	$.messager.alert('消息','该品牌的此产品已存在，请重新操作！','warning');
     	return;
     }
+    var optMsg = "新增成功！";
+    if ($('input[name="productbrandId"]').val() > 0) {
+    	optMsg = "更新成功！";
+    }
+    $.messager.show({
+		title:'消息',
+		msg:optMsg,
+		timeout:optSuccessTime,
+		showType:'slide'
+	});
 	$('#productBrandEdit').dialog('close');
     $('#productBrandList').datagrid('reload');
 }
@@ -98,12 +108,12 @@ function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0]; 
 	if (form.brandId.value.length == 0) {
-		alert('请选择品牌！');
+		$.messager.alert('消息','请选择品牌！','info');
 		form.brandId.focus();
 		return false;
 	}
 	if (form.productId.value.length == 0) {
-		alert('请选择产品！');
+		$.messager.alert('消息','请选择产品！','info');
 		form.productId.focus();
 		return false;
 	}
@@ -117,21 +127,32 @@ function onEditClickHandler(id) {
 		setProductSelect(data.productId);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#productBrandEdit').css('display','block');
-		$('#productBrandEdit').dialog({title:'Edit', modal: true});
+		$('#productBrandEdit').dialog({title:'修改', modal: true});
 	});
 	formSubmit('../productBrand/update');
 }
 
 	
 function onDeleteClickHandler(id) {
-	if (confirm("确定要删除该记录吗？")) {
-		$.get('../productBrand/delete', { id: id } ,function(data) {
-			if (data == "success") {
-			    $('#productBrandList').datagrid('reload');
-				alert('删除成功！');
-			}
-		});
-	}
+	$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+		if (r){
+			$.get('../productBrand/delete', { id: id } ,function(data) {
+				if (data == "success") {
+				    $('#productBrandList').datagrid('reload');
+				    $.messager.show({
+						title:'消息',
+						msg:'删除成功！',
+						timeout:optSuccessTime,
+						showType:'slide'
+					});
+				} else if (data == "reference") {
+					$.messager.alert('消息','有商家与品牌产品关系关联此品牌产品，暂时无法删除！','warning');
+				} else {
+					$.messager.alert('消息','删除失败！','error');
+				}
+			});
+		}
+	});
 }
 
 $(document).ready(function() {
@@ -234,7 +255,7 @@ $(function(){
 					setProductSelect('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#productBrandEdit').css('display','block');
-					$('#productBrandEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					$('#productBrandEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../productBrand/create');
 				}
 		}],

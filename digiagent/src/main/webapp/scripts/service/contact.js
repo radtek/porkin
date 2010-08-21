@@ -8,7 +8,7 @@
 			$('select[name="supplierId"]').empty().append(data).val(supplierId);
 		},
 		error:function(err) {
-			alert(err);
+			$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -25,7 +25,7 @@ function setProvinceSelect(provinceId, cityId, supplierId) {
 			}
 		},
 		error:function(err) {
-			alert(err);
+			$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -43,9 +43,10 @@ function setCitySelect(cityId, supplierId) {
 			}
 		},
 		error:function(err) {
-			alert(err);
+			$.messager.alert('消息',err,'error');
 		}
 	});
+	$('select[name="supplierId"]').empty();
 }
 
 function setProvinceByCityId(cityId, supplierId) {
@@ -73,9 +74,19 @@ function formSubmit(actionUrl) {
 // call back
 function processJson(data) {
     if (data.contactId == -1) {
-    	alert("商家联系内容已存在，请重新操作！");
+    	$.messager.alert('消息','商家联系内容已存在，请重新操作！','warning');
     	return;
     }
+    var optMsg = "新增成功！";
+    if ($('input[name="contactId"]').val() > 0) {
+    	optMsg = "更新成功！";
+    }
+    $.messager.show({
+		title:'消息',
+		msg:optMsg,
+		timeout:optSuccessTime,
+		showType:'slide'
+	});
 	$('#contactEdit').dialog('close');
     $('#contactList').datagrid('reload');
 }
@@ -84,22 +95,22 @@ function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0];
 	if (form.provinceId.value.length == 0) {
-		alert('请选择省份！');
+		$.messager.alert('消息','请选择省份！','info');
 		form.provinceId.focus();
 		return false;
 	}
 	if (form.cityId.value.length == 0) {
-		alert('请选择城市！');
+		$.messager.alert('消息','请选择城市！','info');
 		form.cityId.focus();
 		return false;
 	}
 	if (form.supplierId.value.length == 0) {
-		alert('请选择供应商！');
+		$.messager.alert('消息','请选择商家！','info');
 		form.supplierId.focus();
 		return false;
 	}
 	if (form.contactContent.value.length == 0) {
-		alert('请输入联系内容！');
+		$.messager.alert('消息','请输入联系内容！','info');
 		form.contactContent.focus();
 		return false;
 	}
@@ -112,21 +123,30 @@ function onEditClickHandler(id) {
 		$('input[name="contactContent"]').val(data.contactContent);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#contactEdit').css('display','block');
-		$('#contactEdit').dialog({title:'Edit', modal: true});
+		$('#contactEdit').dialog({title:'修改', modal: true});
 	});
 	formSubmit('../contact/update');
 }
 
 	
 function onDeleteClickHandler(id) {
-	if (confirm("确定要删除该记录吗？")) {
-		$.get('../contact/delete', { id: id } ,function(data) {
-			if (data == "success") {
-			    $('#contactList').datagrid('reload');
-				alert('删除成功！');
-			}
-		});
-	}
+	$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+		if (r){
+			$.get('../contact/delete', { id: id } ,function(data) {
+				if (data == "success") {
+				    $('#contactList').datagrid('reload');
+				    $.messager.show({
+						title:'消息',
+						msg:'删除成功！',
+						timeout:optSuccessTime,
+						showType:'slide'
+					});
+				} else {
+					$.messager.alert('消息','删除失败！','error');
+				}
+			});
+		}
+	});
 }
 
 $(document).ready(function() {
@@ -236,7 +256,7 @@ $(function(){
 					$('input[name="contactContent"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#contactEdit').css('display','block');
-					$('#contactEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					$('#contactEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../contact/create');
 				}
 		}],

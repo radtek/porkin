@@ -7,7 +7,7 @@
 			$('select[name="provinceId"]').empty().append(data).val(provinceId);
 		},
 		error:function(err) {
-			alert(err);
+			$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -25,9 +25,19 @@ function formSubmit(actionUrl) {
 // call back
 function processJson(data) { 
     if (data.cityId == -1) {
-    	alert("城市名称已存在，请重新操作！");
+    	$.messager.alert('消息','城市名称已存在，请重新操作！','warning');
     	return;
     }
+    var optMsg = "新增成功！";
+    if ($('input[name="cityId"]').val() > 0) {
+    	optMsg = "更新成功！";
+    }
+    $.messager.show({
+		title:'消息',
+		msg:optMsg,
+		timeout:optSuccessTime,
+		showType:'slide'
+	});
 	$('#cityEdit').dialog('close');
     $('#cityList').datagrid('reload');
 }
@@ -36,17 +46,17 @@ function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0]; 
 	if (form.provinceId.value.length == 0) {
-		alert('请选择省份！');
+		$.messager.alert('消息','请选择省份！','info');
 		form.provinceId.focus();
 		return false;
 	}
 	if (form.cityName.value.length == 0) {
-		alert('请输入城市中文名！');
+		$.messager.alert('消息','请输入城市中文名！','info');
 		form.cityName.focus();
 		return false;
 	}
 	if (form.cityAbbreviation.value.length == 0) {
-		alert('请输入城市英文名！');
+		$.messager.alert('消息','请输入城市英文名！','info');
 		form.cityAbbreviation.focus();
 		return false;
 	}
@@ -59,21 +69,32 @@ function onEditClickHandler(id) {
 		$('input[name="cityAbbreviation"]').val(data.cityAbbreviation);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#cityEdit').css('display','block');
-		$('#cityEdit').dialog({title:'Edit', modal: true});
+		$('#cityEdit').dialog({title:'修改', modal: true});
 	});
 	formSubmit('../city/update');
 }
 
 	
 function onDeleteClickHandler(id) {
-	if (confirm("确定要删除该记录吗？")) {
-		$.get('../city/delete', { id: id } ,function(data) {
-			if (data == "success") {
-			    $('#cityList').datagrid('reload');
-				alert('删除成功！');
-			}
-		});
-	}
+	$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+		if (r){
+			$.get('../city/delete', { id: id } ,function(data) {
+				if (data == "success") {
+				    $('#cityList').datagrid('reload');
+				    $.messager.show({
+						title:'消息',
+						msg:'删除成功！',
+						timeout:optSuccessTime,
+						showType:'slide'
+					});
+				} else if (data == "reference") {
+					$.messager.alert('消息','有商家关联此城市，暂时无法删除！','warning');
+				} else {
+					$.messager.alert('消息','删除失败！','error');
+				}
+			});
+		}
+	});
 }
 
 $(document).ready(function() {
@@ -156,7 +177,7 @@ $(function(){
 					$('input[name="cityAbbreviation"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#cityEdit').css('display','block');
-					$('#cityEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					$('#cityEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../city/create');
 				}
 		}],

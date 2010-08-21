@@ -85,10 +85,10 @@ public class BrandController {
 		Brand brand = brandService.getById(id);
 		if (brand == null) {
 			new ResourceNotFoundException(new Long(id));
+			return "fail";
 		} else {
-			brandService.delete(id);
+			return brandService.delete(id);
 		}
-		return "success";
 	}
 	
 	@RequestMapping(value = "/getCountryList", method = RequestMethod.GET)

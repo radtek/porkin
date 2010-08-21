@@ -84,10 +84,10 @@ public class ProductBrandController {
 		ProductBrand productBrand = productBrandService.getById(id);
 		if (productBrand == null) {
 			new ResourceNotFoundException(new Long(id));
+			return "fail";
 		} else {
-			productBrandService.delete(id);
+			return productBrandService.delete(id);
 		}
-		return "success";
 	}
 	
 	@RequestMapping(value = "/getBrandList", method = RequestMethod.GET)

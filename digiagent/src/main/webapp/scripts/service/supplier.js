@@ -25,7 +25,7 @@ function setCitySelect(cityId) {
 			$('select[name="cityId"]').empty().append(data).val(cityId);
 		},
 		error:function(err) {
-			alert(err);
+	    	$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -43,9 +43,19 @@ function formSubmit(actionUrl) {
 // call back
 function processJson(data) { 
     if (data.supplierId == -1) {
-    	alert("商家名称已存在，请重新操作！");
+    	$.messager.alert('消息','商家名称已存在，请重新操作！','warning');
     	return;
     }
+    var optMsg = "新增成功！";
+    if ($('input[name="supplierId"]').val() > 0) {
+    	optMsg = "更新成功！";
+    }
+    $.messager.show({
+		title:'消息',
+		msg:optMsg,
+		timeout:optSuccessTime,
+		showType:'slide'
+	});
 	$('#supplierEdit').dialog('close');
     $('#supplierList').datagrid('reload');
 }
@@ -54,17 +64,17 @@ function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0]; 
 	if (form.provinceId.value.length == 0) {
-		alert('请选择省份！');
+		$.messager.alert('消息','请选择省份！','info');
 		form.provinceId.focus();
 		return false;
 	}
 	if (form.cityId.value.length == 0) {
-		alert('请选择城市！');
+		$.messager.alert('消息','请选择城市！','info');
 		form.cityId.focus();
 		return false;
 	}
 	if (form.supplierName.value.length == 0) {
-		alert('请输入商家中文名！');
+		$.messager.alert('消息','请输入商家中文名！','info');
 		form.supplierName.focus();
 		return false;
 	}
@@ -77,7 +87,7 @@ function onEditClickHandler(id) {
 		$('input[name="supplierName"]').val(data.supplierName);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#supplierEdit').css('display','block');
-		$('#supplierEdit').dialog({title:'Edit', modal: true});
+		$('#supplierEdit').dialog({title:'修改', modal: true});
 	});
 	formSubmit('../supplier/update');
 }
@@ -90,14 +100,27 @@ function setProvinceByCityId(cityId) {
 
 	
 function onDeleteClickHandler(id) {
-	if (confirm("确定要删除该记录吗？")) {
-		$.get('../supplier/delete', { id: id } ,function(data) {
-			if (data == "success") {
-			    $('#supplierList').datagrid('reload');
-				alert('删除成功！');
-			}
-		});
-	}
+	$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+		if (r){
+			$.get('../supplier/delete', { id: id } ,function(data) {
+				if (data == "success") {
+				    $('#supplierList').datagrid('reload');
+				    $.messager.show({
+						title:'消息',
+						msg:'删除成功！',
+						timeout:optSuccessTime,
+						showType:'slide'
+					});
+				} else if (data == "referenceSupplierProduct") {
+					$.messager.alert('消息','有商家与产品关系关联此商家，暂时无法删除！','warning');
+				} else if (data == "referenceContact") {
+					$.messager.alert('消息','有商家联系方式关联此商家，暂时无法删除！','warning');
+				} else {
+					$.messager.alert('消息','删除失败！','error');
+				}
+			});
+		}
+	});
 }
 
 $(document).ready(function() {
@@ -180,7 +203,7 @@ $(function(){
 					$('input[name="supplierName"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#supplierEdit').css('display','block');
-					$('#supplierEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					$('#supplierEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../supplier/create');
 				}
 		}],

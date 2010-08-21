@@ -7,15 +7,19 @@ import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CityDao;
 import net.cominfo.digiagent.persistence.dao.ProvinceDao;
+import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.domain.City;
 import net.cominfo.digiagent.persistence.domain.CityCriteria;
 import net.cominfo.digiagent.persistence.domain.Province;
 import net.cominfo.digiagent.persistence.domain.ProvinceCriteria;
+import net.cominfo.digiagent.persistence.domain.Supplier;
+import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 
 @Service
@@ -26,6 +30,8 @@ public class CityService {
 	private CityDao cityDao;
 	@Autowired
 	private ProvinceDao provinceDao;
+	@Autowired
+	private SupplierDao supplierDao;
 
 	public int countCity() {
 		return cityDao.countByExample(new CityCriteria());
@@ -96,8 +102,14 @@ public class CityService {
 		}
 	}
 	
-	public void delete(Integer id){
-		cityDao.deleteByPrimaryKey(id);
+	public String delete(Integer id){
+		// 是否有商家关联
+		if (isReferenceSupplier(id)) {
+			return "reference";
+		} else {
+			cityDao.deleteByPrimaryKey(id);
+			return "success";
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -114,6 +126,18 @@ public class CityService {
 			return city;
 		} else {
 			return city;
+		}
+	}
+	
+	private boolean isReferenceSupplier(Integer cityId) {
+		SupplierCriteria example = new SupplierCriteria();
+		net.cominfo.digiagent.persistence.domain.SupplierCriteria.Criteria criteria = example.createCriteria();
+		criteria.andCityIdEqualTo(cityId);
+		List<Supplier> list = supplierDao.selectByExample(example);
+		if (list != null && list.size() > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

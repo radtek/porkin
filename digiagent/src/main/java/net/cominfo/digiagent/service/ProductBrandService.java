@@ -9,12 +9,15 @@ import java.util.Map;
 import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
+import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.persistence.domain.BrandCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.ProductBrandCriteria;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
+import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
+import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,8 @@ public class ProductBrandService {
 	private BrandDao brandDao;
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private SupplierProductDao supplierProductDao;
 
 	public int countProductBrand() {
 		return productBrandDao.countByExample(new ProductBrandCriteria());
@@ -128,8 +133,14 @@ public class ProductBrandService {
 		}
 	}
 	
-	public void delete(Integer id){
-		productBrandDao.deleteByPrimaryKey(id);
+	public String delete(Integer id){
+		// 是否有商家与品牌产品关联
+		if (isReferenceSupplierProduct(id)) {
+			return "reference";
+		} else {
+			productBrandDao.deleteByPrimaryKey(id);
+			return "success";
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -146,6 +157,19 @@ public class ProductBrandService {
 			return productBrand;
 		} else {
 			return productBrand;
+		}
+	}
+	
+
+	private boolean isReferenceSupplierProduct(Integer productBrandId) {
+		SupplierProductCriteria example = new SupplierProductCriteria();
+		net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria criteria = example.createCriteria();
+		criteria.andProductbrandIdEqualTo(productBrandId);
+		List<SupplierProductKey> list = supplierProductDao.selectByExample(example);
+		if (list != null && list.size() > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

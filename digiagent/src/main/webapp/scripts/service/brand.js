@@ -7,7 +7,7 @@
 			$('select[name="countryId"]').empty().append(data).val(countryId);
 		},
 		error:function(err) {
-			alert(err);
+			$.messager.alert('消息',err,'error');
 		}
 	});
 }
@@ -23,11 +23,21 @@ function formSubmit(actionUrl) {
     }); 
 }
 // call back
-function processJson(data) { 
+function processJson(data) {
     if (data.brandId == -1) {
-    	alert("品牌名称已存在，请重新操作！");
+		$.messager.alert('消息','品牌名称已存在，请重新操作！','warning');
     	return;
     }
+    var optMsg = "新成功！";
+    if ($('input[name="brandId"]').val() > 0) {
+    	optMsg = "更新成功！";
+    }
+    $.messager.show({
+		title:'消息',
+		msg:optMsg,
+		timeout:optSuccessTime,
+		showType:'slide'
+	});
 	$('#brandEdit').dialog('close');
     $('#brandList').datagrid('reload');
 }
@@ -36,17 +46,17 @@ function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0]; 
 	if (form.countryId.value.length == 0) {
-		alert('请选择国家！');
+		$.messager.alert('消息','请选择国家！','info');
 		form.countryId.focus();
 		return false;
 	}
 	if (form.brandName.value.length == 0) {
-		alert('请输入品牌中文名！');
+		$.messager.alert('消息','请输入品牌中文名！','info');
 		form.brandName.focus();
 		return false;
 	}
 	if (form.brandEnglish.value.length == 0) {
-		alert('请输入品牌英文名！');
+		$.messager.alert('消息','请输入品牌英文名！','info');
 		form.brandEnglish.focus();
 		return false;
 	}
@@ -59,21 +69,32 @@ function onEditClickHandler(id) {
 		$('input[name="brandEnglish"]').val(data.brandEnglish);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#brandEdit').css('display','block');
-		$('#brandEdit').dialog({title:'Edit', modal: true});
+		$('#brandEdit').dialog({title:'修改', modal: true});
 	});
 	formSubmit('../brand/update');
 }
 
 	
 function onDeleteClickHandler(id) {
-	if (confirm("确定要删除该记录吗？")) {
-		$.get('../brand/delete', { id: id } ,function(data) {
-			if (data == "success") {
-			    $('#brandList').datagrid('reload');
-				alert('删除成功！');
-			}
-		});
-	}
+	$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+		if (r){
+			$.get('../brand/delete', { id: id } ,function(data) {
+				if (data == "success") {
+				    $('#brandList').datagrid('reload');
+				    $.messager.show({
+						title:'消息',
+						msg:'删除成功！',
+						timeout:optSuccessTime,
+						showType:'slide'
+					});
+				} else if (data == "reference") {
+					$.messager.alert('消息','有品牌产品关联此品牌，暂时无法删除！','warning');
+				} else {
+					$.messager.alert('消息','删除失败！','error');
+				}
+			});
+		}
+	});
 }
 
 $(document).ready(function() {
@@ -156,7 +177,7 @@ $(function(){
 					$('input[name="brandEnglish"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#brandEdit').css('display','block');
-					$('#brandEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					$('#brandEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../brand/create');
 				}
 		}],

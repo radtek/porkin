@@ -11,9 +11,19 @@ function formSubmit(actionUrl) {
 // call back
 function processJson(data) { 
     if (data.provinceId == -1) {
-    	alert("省份名已存在，请重新操作！");
+    	$.messager.alert('消息','省份名已存在，请重新操作！','warning');
     	return;
     }
+    var optMsg = "新增成功！";
+    if ($('input[name="provinceId"]').val() > 0) {
+    	optMsg = "更新成功！";
+    }
+    $.messager.show({
+		title:'消息',
+		msg:optMsg,
+		timeout:optSuccessTime,
+		showType:'slide'
+	});
 	$('#provinceEdit').dialog('close');
     $('#provinceList').datagrid('reload');
 }
@@ -22,12 +32,12 @@ function validate(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	var form = jqForm[0]; 
 	if (form.provinceName.value.length == 0) {
-		alert('请输入省份名称！');
+		$.messager.alert('消息','请输入省份名称！','info');
 		form.provinceName.focus();
 		return false;
 	}
 	if (form.provinceAbbreviation.value.length == 0) {
-		alert('请输入省份缩写！');
+		$.messager.alert('消息','请输入省份缩写！','info');
 		form.provinceAbbreviation.focus();
 		return false;
 	}
@@ -39,24 +49,31 @@ function onEditClickHandler(id) {
 		$('input[name="provinceAbbreviation"]').val(data.provinceAbbreviation);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#provinceEdit').css('display','block');
-		$('#provinceEdit').dialog({title:'Edit', modal: true});
+		$('#provinceEdit').dialog({title:'修改', modal: true});
 	});
 	formSubmit('../province/update');
 }
 
 function onDeleteClickHandler(id) {
-	if (confirm("确定要删除该记录吗？")) {
-		$.get('../province/delete', { id: id } ,function(data) {
-			if (data == "success") {
-			    $('#provinceList').datagrid('reload');
-				alert('删除成功！');
-			} else if (data == "reference") {
-				alert('有城市关联此省份，暂时无法删除！');
-			} else {
-				alert('删除失败！');
-			}
-		});
-	}
+	$.messager.confirm('消息', '确认要删除该记录吗?', function(r){
+		if (r){
+			$.get('../province/delete', { id: id } ,function(data) {
+				if (data == "success") {
+				    $('#provinceList').datagrid('reload');
+				    $.messager.show({
+						title:'消息',
+						msg:'删除成功！',
+						timeout:optSuccessTime,
+						showType:'slide'
+					});
+				} else if (data == "reference") {
+					$.messager.alert('消息','有城市关联此省份，暂时无法删除！','warning');
+				} else {
+					$.messager.alert('消息','删除失败！','error');
+				}
+			});
+		}
+	});
 }
 // list
 $(function(){
@@ -108,9 +125,6 @@ $(function(){
 			{field:'createdDate',title:'创建时间',width:130	,align:'center',sortable:true,
 					sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
-				},
-				formatter: function(value,rec){
-					return format_cn(value);
 				}
 			},
 			{field:'opt',title:'操作',width:100,align:'center',
@@ -130,7 +144,7 @@ $(function(){
 					$('input[name="provinceAbbreviation"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#provinceEdit').css('display','block');
-					$('#provinceEdit').dialog({title:'Add', modal: true, icon:'icon-add'});
+					$('#provinceEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../province/create');
 				}
 		}],

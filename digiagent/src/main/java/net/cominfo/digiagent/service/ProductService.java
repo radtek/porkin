@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CategoryDao;
+import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
+import net.cominfo.digiagent.persistence.domain.ProductBrand;
+import net.cominfo.digiagent.persistence.domain.ProductBrandCriteria;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
 import net.cominfo.digiagent.utils.Page;
 
@@ -26,6 +29,8 @@ public class ProductService {
 	private ProductDao productDao;
 	@Autowired
 	private CategoryDao categoryDao;
+	@Autowired
+	private ProductBrandDao productBrandDao;
 
 	public int countProduct() {
 		return productDao.countByExample(new ProductCriteria());
@@ -96,8 +101,14 @@ public class ProductService {
 		}
 	}
 	
-	public void delete(Integer id){
-		productDao.deleteByPrimaryKey(id);
+	public String delete(Integer id){
+		// 是否有品牌产品关联
+		if (isReferenceProductBrand(id)) {
+			return "reference";
+		} else {
+			productDao.deleteByPrimaryKey(id);
+			return "success";
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -114,6 +125,18 @@ public class ProductService {
 			return product;
 		} else {
 			return product;
+		}
+	}
+	
+	private boolean isReferenceProductBrand(Integer productId) {
+		ProductBrandCriteria example = new ProductBrandCriteria();
+		net.cominfo.digiagent.persistence.domain.ProductBrandCriteria.Criteria criteria = example.createCriteria();
+		criteria.andProductIdEqualTo(productId);
+		List<ProductBrand> list = productBrandDao.selectByExample(example);
+		if (list != null && list.size() > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

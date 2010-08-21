@@ -1,17 +1,8 @@
 ﻿<%@page contentType="text/html;charset=UTF-8"%>
-<%@page pageEncoding="UTF-8"%>
-<%@page session="false" %>
+<%@include file="common/common.jsp" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>城市维护</title>
-	<link rel="stylesheet" type="text/css" href="../styles/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../styles/icon.css">
-	<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="../scripts/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="../scripts/jquery.form.js"></script>
 	<script type="text/javascript" src="../scripts/service/city.js"></script>
-	<script type="text/javascript" src="../scripts/common/datetime.js"></script>
 </head>
 <body>
 	<table id="cityList"></table>
@@ -30,7 +21,7 @@
           </div> 
           <div>
               	<label for="name">城市缩写:</label>
-              	<input class="easyui-validatebox" type="text" name="cityAbbreviation" maxlength="20"/>
+              	<input class="easyui-validatebox" type="text" name="cityAbbreviation" maxlength="3"/>
           </div> 
           <div>
               	<label for="name">状态:</label>

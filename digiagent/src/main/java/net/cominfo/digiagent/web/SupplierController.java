@@ -84,10 +84,10 @@ public class SupplierController {
 		Supplier supplier = supplierService.getById(id);
 		if (supplier == null) {
 			new ResourceNotFoundException(new Long(id));
+			return "fail";
 		} else {
-			supplierService.delete(id);
+			return supplierService.delete(id);
 		}
-		return "success";
 	}
 	
 	@RequestMapping(value = "/getCityList", method = RequestMethod.GET)

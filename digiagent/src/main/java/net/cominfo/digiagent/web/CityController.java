@@ -85,10 +85,10 @@ public class CityController {
 		City city = cityService.getById(id);
 		if (city == null) {
 			new ResourceNotFoundException(new Long(id));
+			return "fail";
 		} else {
-			cityService.delete(id);
+			return cityService.delete(id);
 		}
-		return "success";
 	}
 	
 	@RequestMapping(value = "/getProvinceList", method = RequestMethod.GET)

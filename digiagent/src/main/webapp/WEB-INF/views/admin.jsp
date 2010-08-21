@@ -1,120 +1,48 @@
 <%@page contentType="text/html;charset=UTF-8"%>
-<%@page pageEncoding="UTF-8"%>
-<%@ page session="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@include file="common/common.jsp" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>index</title>
-	<link rel="stylesheet" type="text/css" href="styles/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="styles/icon.css">
-	<script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="scripts/jquery.easyui.min.js"></script>
-	<script>		
-		function addTab(title, url){
-		    if ($('#mytab').tabs('exists', title)){
-		        $('#mytab').tabs('select', title);
-		    } else {
-		        var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
-		        $('#mytab').tabs('add',{
-		            title:title,
-		            content:content,
-		            closable:true
-		        });
-		    }
-		}
-		
-		$(document).ready(function() {
+	<script type="text/javascript" src="scripts/service/admin.js"></script>
+	<script>
+		$(function() {
 			$('#basic').tree({data:<%@include file="data/basic_data.json"%>});
 			$('#report').tree({data:<%@include file="data/report_data.json"%>});
 			$('#system').tree({data:<%@include file="data/system_data.json"%>});
-			$('#basic').mouseover(function() {
-				var map = $('#basic').find('.tree-title');
-				$.each(map, function(key) {
-						if ($(map[key]).text().toLowerCase() == '类别维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'category/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '品牌维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'brand/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '商家维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'supplier/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '国家维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'country/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '省份维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'province/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '城市维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'city/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '产品维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'product/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '品牌与产品关系维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'productBrand/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '商家联系信息维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'contact/list');
-							});
-						}
-						if ($(map[key]).text().toLowerCase() == '商家与产品关系维护') {
-							$(map[key]).click(function() {
-								addTab($(this).text(), 'supplierProduct/list');
-							});
-						}
-				});
-			});
+			basicFunction();
 		});
 	</script>
 </head>
 <body class="easyui-layout">
-		<div region="north" title="Header" split="false" style="height:100px;padding:0px;">
+		<div region="north" title="↑" split="false" style="height:80px;padding:0px;">
+			<div style="text-align:center">
+				<a href="?locale=en_us">English</a> | <a href="?locale=GB_zh">中文</a>
+			</div>
 			<div style="text-align:right;padding:10px">
-				<a href="javascript:window.opener=null;window.close();">注销</a>
+				<a href="javascript:window.opener=null;window.close();"><fmt:message key="label.common.logout"/></a>
 			</div>
 		</div>
-		<div region="south" title="Footer" split="false" style="height:100px;padding:10px;">
+		<div region="south" title="↓" split="false" style="height:50px;padding:10px;">
 			
 		</div>
 		
-		<div region="west" split="true" title="菜单" style="width:280px;padding1:1px;overflow:hidden;">
-			<div class="easyui-accordion" fit="true" border="false">
-				<div title="基础数据" style="overflow:auto;" selected="true">
+		<div region="west" split="true" title="<fmt:message key='label.common.menu'/>" style="width:280px;padding1:1px;overflow:hidden;">
+			<div id="menuAccordion" class="easyui-accordion" fit="true" border="false">
+				<div title="<fmt:message key='label.common.basic'/>" style="overflow:auto;" selected="true">
 					<ul id="basic" class="easyui-tree"></ul>
 				</div>
-				<div title="报表管理" style="padding:10px;">
+				<div title="<fmt:message key='label.common.report'/>" style="padding:10px;">
 					<ul id="report" class="easyui-tree"></ul>
 				</div>
-				<div title="系统设置">
+				<div title="<fmt:message key='label.common.system'/>">
 					<ul id="system" class="easyui-tree"></ul>
 				</div>
 			</div>
 		</div>
-		<div region="center" title="内容" style="overflow:hidden;">
+		<div region="center" title="<fmt:message key='label.common.content'/>" style="overflow:hidden;">
 			<div id="mytab" class="easyui-tabs" fit="true" border="false">
-				<div title="Welcome" style="padding:20px;overflow:hidden;"> 
+				<div title="<fmt:message key='label.common.welcome'/>" style="padding:20px;overflow:hidden;"> 
 					<div style="left:50%;top:50%;position:absolute;">
-						<h1>Welcome</h1>
+						<h1><fmt:message key='label.common.welcome'/></h1>
 					</div>
 				</div>
 			</div>

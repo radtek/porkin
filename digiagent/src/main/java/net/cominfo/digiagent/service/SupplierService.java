@@ -7,11 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CityDao;
+import net.cominfo.digiagent.persistence.dao.ContactDao;
 import net.cominfo.digiagent.persistence.dao.SupplierDao;
+import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.City;
 import net.cominfo.digiagent.persistence.domain.CityCriteria;
+import net.cominfo.digiagent.persistence.domain.Contact;
+import net.cominfo.digiagent.persistence.domain.ContactCriteria;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
+import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
+import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +33,10 @@ public class SupplierService {
 	private SupplierDao supplierDao;
 	@Autowired
 	private CityDao cityDao;
+	@Autowired
+	private SupplierProductDao supplierProductDao;
+	@Autowired
+	private ContactDao contactDao;
 
 	public int countSupplier() {
 		return supplierDao.countByExample(new SupplierCriteria());
@@ -104,8 +114,17 @@ public class SupplierService {
 		}
 	}
 	
-	public void delete(Integer id){
-		supplierDao.deleteByPrimaryKey(id);
+	public String delete(Integer id){
+		// 是否有商家产品关联
+		if (isReferenceSupplierProduct(id)) {
+			return "referenceSupplierProduct";
+		} else if (isReferenceContact(id)) {
+			// 是否有商家联系方式关联
+			return "referenceContact";
+		} else {
+			supplierDao.deleteByPrimaryKey(id);
+			return "success";
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -122,6 +141,30 @@ public class SupplierService {
 			return supplier;
 		} else {
 			return supplier;
+		}
+	}
+	
+	private boolean isReferenceSupplierProduct(Integer supplierId) {
+		SupplierProductCriteria example = new SupplierProductCriteria();
+		net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria criteria = example.createCriteria();
+		criteria.andSupplierIdEqualTo(supplierId);
+		List<SupplierProductKey> list = supplierProductDao.selectByExample(example);
+		if (list != null && list.size() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean isReferenceContact(Integer supplierId) {
+		ContactCriteria example = new ContactCriteria();
+		net.cominfo.digiagent.persistence.domain.ContactCriteria.Criteria criteria = example.createCriteria();
+		criteria.andSupplierIdEqualTo(supplierId);
+		List<Contact> list = contactDao.selectByExample(example);
+		if (list != null && list.size() > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

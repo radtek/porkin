@@ -7,10 +7,13 @@ import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.CountryDao;
+import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.persistence.domain.BrandCriteria;
 import net.cominfo.digiagent.persistence.domain.Country;
 import net.cominfo.digiagent.persistence.domain.CountryCriteria;
+import net.cominfo.digiagent.persistence.domain.ProductBrand;
+import net.cominfo.digiagent.persistence.domain.ProductBrandCriteria;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,8 @@ public class BrandService {
 	private BrandDao brandDao;
 	@Autowired
 	private CountryDao countryDao;
+	@Autowired
+	private ProductBrandDao productBrandDao;
 
 	public int countBrand() {
 		return brandDao.countByExample(new BrandCriteria());
@@ -96,8 +101,14 @@ public class BrandService {
 		}
 	}
 	
-	public void delete(Integer id){
-		brandDao.deleteByPrimaryKey(id);
+	public String delete(Integer id){
+		// 是否有品牌产品关联
+		if (isReferenceProductBrand(id)) {
+			return "reference";
+		} else {
+			brandDao.deleteByPrimaryKey(id);
+			return "success";
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -114,6 +125,18 @@ public class BrandService {
 			return brand;
 		} else {
 			return brand;
+		}
+	}
+	
+	private boolean isReferenceProductBrand(Integer brandId) {
+		ProductBrandCriteria example = new ProductBrandCriteria();
+		net.cominfo.digiagent.persistence.domain.ProductBrandCriteria.Criteria criteria = example.createCriteria();
+		criteria.andBrandIdEqualTo(brandId);
+		List<ProductBrand> list = productBrandDao.selectByExample(example);
+		if (list != null && list.size() > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

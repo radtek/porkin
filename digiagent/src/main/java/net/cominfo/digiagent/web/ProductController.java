@@ -83,10 +83,10 @@ public class ProductController {
 		Product product = productService.getById(id);
 		if (product == null) {
 			new ResourceNotFoundException(new Long(id));
+			return "fail";
 		} else {
-			productService.delete(id);
+			return productService.delete(id);
 		}
-		return "success";
 	}
 	
 	@RequestMapping(value = "/getCategoryList", method = RequestMethod.GET)

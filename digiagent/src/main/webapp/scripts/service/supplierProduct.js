@@ -94,7 +94,7 @@ function addSupplierProduct() {
 				$.messager.show({
 					title:'消息',
 					msg:'追加成功',
-					timeout:3000,
+					timeout:optSuccessTime,
 					showType:'slide'
 				});
 				$('#productWin').dialog('close');
@@ -117,7 +117,7 @@ function onDeleteClickHandler(productBrandId, supplierId) {
 					$.messager.show({
 						title:'消息',
 						msg:'删除成功！',
-						timeout:3000,
+						timeout:optSuccessTime,
 						showType:'slide'
 					});
 					$('#productWin').dialog('close');
@@ -141,7 +141,7 @@ function deleteSupplierProduct() {
 						$.messager.show({
 							title:'消息',
 							msg:'删除成功！',
-							timeout:3000,
+							timeout:optSuccessTime,
 							showType:'slide'
 						});
 						$('#productWin').dialog('close');
