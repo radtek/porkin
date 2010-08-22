@@ -14,7 +14,13 @@
 		<property name="basename" value="/WEB-INF/messages/messages" />
 		<property name="cacheSeconds" value="0" />
 	</bean>
-
+	
+	<bean id="multipartResolver"
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- one of the properties available; the maximum file size in bytes -->
+	    <property name="maxUploadSize" value="100000"/>
+	</bean>
+	
 	<!-- Configures Spring MVC -->
 	<import resource="mvc-config.xml" />
 	<import resource="db-config.xml" />

@@ -5,7 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-<META  http-equiv="Content-Type"  content="text/html;charset=UTF-8">
+<meta  http-equiv="Content-Type"  content="text/html;charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
 <title><fmt:message key="welcome.title" /></title>
 <%
 	String jspName = request.getRequestURL().toString().replaceAll(

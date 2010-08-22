@@ -292,6 +292,9 @@ $(function(){
 		},
 		onLoadSuccess:function() {
 			
+		},
+		onLoadError:function(){
+			$.messager.alert('消息','数据加载失败，请联系管理员！','error');
 		}
 	});
 	

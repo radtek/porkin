@@ -81,5 +81,10 @@ var basicFunction = function() {
 				addTab($(this).text(), 'supplierProduct/list');
 			});
 		}
+		if ($(map[key]).text().toLowerCase() == '商品') {
+			$(map[key]).click(function() {
+				addTab($(this).text(), 'commodity/list');
+			});
+		}
 	});
 };

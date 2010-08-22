@@ -122,6 +122,9 @@
       #createdBy:VARCHAR#, #createdDate:TIMESTAMP#, #lastupdatedBy:VARCHAR#,
       #lastupdatedDate:TIMESTAMP#, #activeFlag:CHAR#, #startDate:TIMESTAMP#, #endDate:TIMESTAMP#,
       #commodityImage:LONGVARBINARY#)
+    <selectKey resultClass="int" keyProperty="commodityId">
+      select last_insert_id() as commodityId
+    </selectKey>
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="net.cominfo.digiagent.persistence.domain.Commodity">
     <!--
