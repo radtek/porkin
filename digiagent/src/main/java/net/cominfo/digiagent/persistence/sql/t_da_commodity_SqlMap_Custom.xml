@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="t_da_commodity_Custom">
+	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT commodity_id as commodityId,
+		       commodity_name as commodityName,
+		       commodity_Description as commodityDescription,
+		       date_format(start_date, '%Y/%m/%d %H:%i:%s') as startDate,
+		       date_format(end_date, '%Y/%m/%d %H:%i:%s') as endDate,
+		       created_by as createdBy,
+		       date_format(created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+		       lastupdated_by as lastupdatedBy,
+		       date_format(lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
+		       active_flag as activeFlag
+		  FROM t_da_commodity
+		 WHERE commodity_id > 0
+		 <isNotEmpty prepend="AND" property="param.commodityName">
+			commodity_name like '%$param.commodityName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
+		 	$orderByStatement$
+		 </isNotEmpty>
+		 LIMIT $first$, $pageSize$;
+	</select>
+	
+	<select id="countByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT count(*) as total
+		FROM t_da_commodity
+		 WHERE commodity_id > 0
+		 <isNotEmpty prepend="AND" property="param.commodityName">
+			commodity_name = '%$param.commodityName$%'
+		</isNotEmpty>
+	</select>
+</sqlMap>
