@@ -3,6 +3,8 @@ package net.cominfo.digiagent.web;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +32,27 @@ public class CommodityController{
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getList(Model model) {
 		return "commodity";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public @ResponseBody
+	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
+		Long total = commodityService.count(param);
+		List<Commodity> brandList = commodityService.query(page, rows, param);
+		Map map = new HashMap();
+		map.put("total", total);
+		map.put("rows", brandList);
+		return Collections.singletonList(map).get(0);
+	}
+	
+	@RequestMapping(value="/get",method=RequestMethod.GET)
+	public @ResponseBody Commodity get(@RequestParam Integer id) {
+		Commodity commodity = commodityService.getById(id);
+		if (commodity == null) {
+			new ResourceNotFoundException(new Long(id));
+		}
+		return commodity;
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)

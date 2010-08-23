@@ -2,11 +2,13 @@ package net.cominfo.digiagent.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CommodityDao;
 import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria.Criteria;
+import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,23 @@ public class CommodityService {
 	
 	public Commodity getById(Integer id){
 		return commodityDao.selectByPrimaryKey(id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Commodity> query(int pageNo, int pageSize, Map<String, Object> param){
+		Page<Commodity> page = new Page<Commodity>();
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		page.setOrderBy("COMMODITY_NAME");
+		page.setOrder("ASC");
+		page.setParam(param);
+		return (List<Commodity>) commodityDao.findPage(page, "t_da_commodity_Custom.pageByCondition").getResult();
+	}
+	
+	public Long count(Map<String, Object> param){
+		Page<Commodity> page = new Page<Commodity>();
+		page.setParam(param);
+		return commodityDao.count(page, "t_da_commodity_Custom.countByCondition");
 	}
 	
 	
