@@ -18,6 +18,7 @@
 <script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="../scripts/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../scripts/jquery.form.js"></script>
+<script type="text/javascript" src="../scripts/common/datetime.js"></script>
 <%
 	} else {
 %>
@@ -26,6 +27,7 @@
 <script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="scripts/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="scripts/jquery.form.js"></script>
+<script type="text/javascript" src="scripts/common/datetime.js"></script>
 <%
 	}
 %>

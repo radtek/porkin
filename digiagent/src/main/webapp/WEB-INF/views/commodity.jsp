@@ -11,6 +11,7 @@
 		<form id="commodityForm" action="../commodity/create" method="post"	enctype="multipart/form-data">
 			  <div>
 	              	<label for="name">商品名称:</label>
+					<input id="commodityId" name="commodityId" type="hidden" /> 
 	              	<input class="easyui-validatebox" type="text" name="commodityName" maxlength="20"/>
 	          </div> 
 	          <div>
@@ -19,11 +20,11 @@
 	          </div> 
 	          <div>
 	              	<label for="name">开始时间:</label>
-	              	<input class="easyui-validatebox" type="text" name="startDate" maxlength="20"/>
+	              	<input id="startDate" name="startDate" class="easyui-datebox" required="true" readonly="readonly"/>
 	          </div> 
 	          <div>
 	              	<label for="name">结束时间:</label>
-	              	<input class="easyui-validatebox" type="text" name="endDate" maxlength="20"/>
+	              	<input id="endDate" name="endDate" class="easyui-datebox" required="true" readonly="readonly"/>
 	          </div> 
 	          <div>
 	              	<label for="name">状态:</label>
@@ -33,15 +34,16 @@
 	              	</select>
 	          </div>
 	          <div>
+	              	<label for="name">图片: </label>
+					<input type="file" name="file" id="file"/> 
+	          </div>
+	          <div id="image" style="width:auto;height:auto"></div>
+	          <div>
+					<input type="hidden" name="MAX_FILE_SIZE" value="100000" /> 
 	              <input type="submit"  name="submitButton" value="确定" /> 
 	              <input type="reset"   name="resetButton " value="重置" />
 	          </div> 
-			<input type="hidden" name="MAX_FILE_SIZE" value="100000" /> 
-			File: <input type="file" name="file" id="file"/> 
-			<input id="commodityId" name="commodityId" type="hidden" /> 
-			<input	type="submit" value="上传" name="submitButton" />
 		</form>
-		<div id="image"></div>
 	</div>
 </div>
 </body>

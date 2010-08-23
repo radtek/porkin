@@ -6,7 +6,6 @@ function formSubmit(actionUrl) {
 		dataType:  'json', 
         success:   processJson,
         error:   function(err){
-			$.messager.alert('消息',"图片大小超过65K，不能上传！",'warning');
 			$('#image').empty();
 		} 
 	});
@@ -14,6 +13,26 @@ function formSubmit(actionUrl) {
 
 function validate(formData, jqForm, options) {
 	var form = jqForm[0]; 
+	if (form.commodityName.value.length == 0) {
+    	$.messager.alert('消息','请输入商品名称！','info');
+		form.commodityName.focus();
+		return false;
+	}
+	if (form.commodityDescription.value.length == 0) {
+    	$.messager.alert('消息','请输入商品描述！','info');
+		form.commodityDescription.focus();
+		return false;
+	}
+	if (form.startDate.value.length == 0) {
+    	$.messager.alert('消息','请选择开始时间！','info');
+		form.startDate.focus();
+		return false;
+	}
+	if (form.endDate.value.length == 0) {
+    	$.messager.alert('消息','请选择结束时间！','info');
+		form.endDate.focus();
+		return false;
+	}
 	if (form.file.value.length == 0) {
 		$.messager.alert('消息','请选择图片！','info');
 		form.file.focus();
@@ -26,6 +45,7 @@ function validate(formData, jqForm, options) {
 	   $.messager.alert('消息','请选择图片格式为：gif,png,jpg,jpeg！','info');
 	   return false;
 	} 
+//	$.messager.alert('消息',"图片大小超过65K，不能上传！",'warning');
 //	var oas = new ActiveXObject("Scripting.FileSystemObject");
 //	var filePath = form.file.value;
 //	var fileContent = oas.getFile(filePath);
@@ -49,6 +69,7 @@ function processJson(data) {
     var url = "../commodity/getImage?id=" +data.commodityId;
     $('#image').empty().append('<img  src="'+url+'"/>');
 	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
+	$('#commodityList').datagrid('reload');
 }
 
 function onEditClickHandler(id) {
@@ -56,8 +77,8 @@ function onEditClickHandler(id) {
 		$('input[name="commodityId"]').val(id);
 		$('input[name="commodityName"]').val(data.commodityName);
 		$('input[name="commodityDescription"]').val(data.commodityDescription);
-		$('input[name="startDate"]').val(data.startDate);
-		$('input[name="endDate"]').val(data.endDate);
+		$('input[name="startDate"]').val(new Date(data.startDate).format('yyyy/MM/dd'));
+		$('input[name="endDate"]').val(new Date(data.endDate).format('yyyy/MM/dd'));
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
@@ -92,6 +113,16 @@ function onDeleteClickHandler(id) {
 
 //list
 $(function(){
+	$('#startDate').datebox({
+		formatter:function(value) {
+		return new Date(value).format('yyyy/MM/dd');
+		}
+	});
+	$('#endDate').datebox({
+		formatter:function(value) {
+		return new Date(value).format('yyyy/MM/dd');
+		}
+	});
 	// edit
 	var lastIndex;
 	$('#commodityList').datagrid({

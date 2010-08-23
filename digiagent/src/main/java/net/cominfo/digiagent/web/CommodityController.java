@@ -2,7 +2,6 @@ package net.cominfo.digiagent.web;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,7 @@ import net.cominfo.digiagent.service.CommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,17 +57,29 @@ public class CommodityController{
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(
+	Map<String, ? extends Object> create(@ModelAttribute Commodity commodity,
 			@RequestParam("file") MultipartFile image) throws IOException {
-		Commodity commodity = new Commodity();
-		commodity.setCommodityName(String.valueOf(new Date().getTime()));
-		commodity.setCommodityDescription("testDesc");
-		commodity.setActiveFlag("Y");
 		commodity.setCommodityImage(image.getBytes());
-		commodity.setStartDate(new Date());
-		commodity.setEndDate(new Date());
 		commodity = commodityService.insert(commodity);
 		return Collections.singletonMap("commodityId", commodity.getCommodityId());
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public @ResponseBody
+	Map<String, ? extends Object> update(@ModelAttribute Commodity commodity,
+			@RequestParam("file") MultipartFile image)  throws IOException {
+		Commodity commodityUpdate = commodityService.getById(commodity.getCommodityId());
+		if (commodity == null) {
+			new ResourceNotFoundException(new Long(commodityUpdate.getCommodityId()));
+		}
+		commodityUpdate.setActiveFlag(commodity.getActiveFlag());
+		commodityUpdate.setStartDate(commodity.getStartDate());
+		commodityUpdate.setEndDate(commodity.getEndDate());
+		commodityUpdate.setCommodityName(commodity.getCommodityName());
+		commodityUpdate.setCommodityDescription(commodity.getCommodityDescription());
+		commodityUpdate.setCommodityImage(image.getBytes());
+		commodityUpdate = commodityService.update(commodityUpdate);
+		return Collections.singletonMap("commodityId", commodityUpdate.getCommodityId());
 	}
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
