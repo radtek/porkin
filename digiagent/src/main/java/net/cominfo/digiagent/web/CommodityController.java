@@ -1,6 +1,7 @@
 package net.cominfo.digiagent.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -56,18 +57,30 @@ public class CommodityController{
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Commodity commodity,
-			@RequestParam("file") MultipartFile image) throws IOException {
-		commodity.setCommodityImage(image.getBytes());
-		commodity = commodityService.insert(commodity);
-		return Collections.singletonMap("commodityId", commodity.getCommodityId());
+	public void create(@ModelAttribute Commodity commodity,
+			@RequestParam("file") MultipartFile image, HttpServletResponse response) throws IOException {
+		// MYSQL BLOB类型最大65K
+		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
+			commodity.setCommodityImage(image.getBytes());
+		}
+		try {
+			PrintWriter pw = response.getWriter();
+			if (image.getSize()/1024 >= 65) {
+				pw.write(Collections.singletonMap("commodityId", -2).toString().replaceAll("=", ":"));
+			} else {
+				commodity = commodityService.insert(commodity);
+				pw.write(Collections.singletonMap("commodityId", commodity.getCommodityId()).toString().replaceAll("=", ":"));
+			}
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+//		return Collections.singletonMap("commodityId", commodity.getCommodityId());
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Commodity commodity,
-			@RequestParam("file") MultipartFile image)  throws IOException {
+	public void update(@ModelAttribute Commodity commodity,
+			@RequestParam("file") MultipartFile image, HttpServletResponse response)  throws IOException {
 		Commodity commodityUpdate = commodityService.getById(commodity.getCommodityId());
 		if (commodity == null) {
 			new ResourceNotFoundException(new Long(commodityUpdate.getCommodityId()));
@@ -77,9 +90,23 @@ public class CommodityController{
 		commodityUpdate.setEndDate(commodity.getEndDate());
 		commodityUpdate.setCommodityName(commodity.getCommodityName());
 		commodityUpdate.setCommodityDescription(commodity.getCommodityDescription());
-		commodityUpdate.setCommodityImage(image.getBytes());
+		// MYSQL BLOB类型最大65K
+		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
+			commodityUpdate.setCommodityImage(image.getBytes());
+		}
 		commodityUpdate = commodityService.update(commodityUpdate);
-		return Collections.singletonMap("commodityId", commodityUpdate.getCommodityId());
+		try {
+			PrintWriter pw = response.getWriter();
+			if (image.getSize()/1024 >= 65) {
+				pw.write(Collections.singletonMap("commodityId", -2).toString().replaceAll("=", ":"));
+			} else {
+				pw.write(Collections.singletonMap("commodityId", commodityUpdate.getCommodityId()).toString().replaceAll("=", ":"));
+			}
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+//		return Collections.singletonMap("commodityId", commodityUpdate.getCommodityId());
 	}
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)

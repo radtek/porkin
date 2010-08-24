@@ -6,7 +6,7 @@
 </head>
 <body>
 <table id="commodityList"></table>
-<div id="commodityEdit" icon="icon-edit" style="width:500px;height:300px;display:none">
+<div id="commodityEdit" icon="icon-edit" style="width:500px;height:350px;display:none">
 	<div style="background: #fafafa; padding: 10px; text-align: center">
 		<form id="commodityForm" action="../commodity/create" method="post"	enctype="multipart/form-data">
 			  <div>
@@ -41,7 +41,7 @@
 	          <div>
 					<input type="hidden" name="MAX_FILE_SIZE" value="100000" /> 
 	              <input type="submit"  name="submitButton" value="确定" /> 
-	              <input type="reset"   name="resetButton " value="重置" />
+	              <input type="reset"   name="resetButton " value="重置" onClick="$('#image').empty();"/>
 	          </div> 
 		</form>
 	</div>

@@ -1,12 +1,14 @@
 //edit event
 function formSubmit(actionUrl) {
+	$('#loader').remove();
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'json', 
+		dataType:  'html', 
         success:   processJson,
         error:   function(err){
-			$('#image').empty();
+    		$('#loader').remove();
+	    	$.messager.alert('消息','更新操作失败！','error');
 		} 
 	});
 }
@@ -25,50 +27,70 @@ function validate(formData, jqForm, options) {
 	}
 	if (form.startDate.value.length == 0) {
     	$.messager.alert('消息','请选择开始时间！','info');
-		form.startDate.focus();
 		return false;
 	}
 	if (form.endDate.value.length == 0) {
     	$.messager.alert('消息','请选择结束时间！','info');
-		form.endDate.focus();
 		return false;
 	}
-	if (form.file.value.length == 0) {
+	if (form.startDate.value.replace(/\//g,'') > form.endDate.value.replace(/\//g,'')) {
+		$.messager.alert('消息','开始时间应大于结束时间！','info');
+		return false;
+	}
+	if ($('#image').children().length == 0 && form.file.value.length == 0) {
 		$.messager.alert('消息','请选择图片！','info');
 		form.file.focus();
 		return false;
 	}
 	var ext = form.file.value.split('.').pop().toLowerCase(); 
 	var allow = new Array('gif','png','jpg','jpeg'); 
-	if(jQuery.inArray(ext, allow) == -1) {
+	if(form.file.value.length > 0 && jQuery.inArray(ext, allow) == -1) {
 	
 	   $.messager.alert('消息','请选择图片格式为：gif,png,jpg,jpeg！','info');
 	   return false;
 	} 
-//	$.messager.alert('消息',"图片大小超过65K，不能上传！",'warning');
 //	var oas = new ActiveXObject("Scripting.FileSystemObject");
 //	var filePath = form.file.value;
 //	var fileContent = oas.getFile(filePath);
 //	var fileSize = fileContent.size;
 //	alert(fileSize + " bytes");
-	$('#image').append('<image src="../images/loader.gif"/> ');
+	$('#image').append('<image id="loader" src="../images/loader.gif"/> ');
+}
+/**
+ * 字符串转JSON对象
+ * @param strData
+ * @return
+ */
+function parseObj(strData){
+	return (new Function( "return " + strData ))();
 }
 
 function processJson(data) {
+	data = parseObj($(data).text().replace(/=/g,":"));
     if (data.commodityId == -1) {
+    	$('#loader').remove();
 		$.messager.alert('消息','商品已存在，请重新操作！','warning');
     	return;
     }
+    if (data.commodityId == -2) {
+    	$('#loader').remove();
+		$.messager.alert('消息','商品图片大小应小于65K，请重新操作！','warning');
+    	return;
+    }
+    var optMsg = "新增成功！";
+    if ($('input[name="commodityId"]').val() > 0) {
+    	optMsg = "更新成功！";
+    }
     $.messager.show({
 		title:'消息',
-		msg:'上传成功！',
+		msg:optMsg,
 		timeout:optSuccessTime,
 		showType:'slide'
 	});
     $('#commodityId').val(data.commodityId);
     var url = "../commodity/getImage?id=" +data.commodityId;
-    $('#image').empty().append('<img  src="'+url+'"/>');
-	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
+    $('#image').empty().append('<img width="100" height="100" src="'+url+'"/>');
+//	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	$('#commodityList').datagrid('reload');
 }
 
@@ -83,8 +105,8 @@ function onEditClickHandler(id) {
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
 		var url = "../commodity/getImage?id=" +id;
-		$('#image').empty().append('<img  src="'+url+'"/>');
-		$('#image').append('<image  onClick="onDeleteClickHandler(' + id + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
+		$('#image').empty().append('<img width="100" height="100" src="'+url+'"/>');
+//		$('#image').append('<image  onClick="onDeleteClickHandler(' + id + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	});
 	formSubmit('../commodity/update');
 }
@@ -128,7 +150,7 @@ $(function(){
 	$('#commodityList').datagrid({
 		title:'商品维护',
 		iconCls:'icon-edit',
-		width:1050,
+		width:950,
 		height:'auto',
 		singleSelect:true,
 		sortName: 'commodityName',
@@ -147,17 +169,17 @@ $(function(){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
-			{field:'commodityDescription',title:'描述',width:100,align:'center',sortable:true,
+//			{field:'commodityDescription',title:'描述',width:100,align:'center',sortable:true,
+//				sorter:function(a,b,order){
+//					return (a>b?1:-1)*(order=='asc'?1:-1);
+//				}
+//			},
+			{field:'startDate',title:'开始时间',width:120,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
-			{field:'startDate',title:'开始时间',width:130,align:'center',sortable:true,
-				sorter:function(a,b,order){
-					return (a>b?1:-1)*(order=='asc'?1:-1);
-				}
-			},
-			{field:'endDate',title:'结束时间',width:130,align:'center',sortable:true,
+			{field:'endDate',title:'结束时间',width:120,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
@@ -178,12 +200,12 @@ $(function(){
 				sorter:function(a,b,order){
 				return (a>b?1:-1)*(order=='asc'?1:-1);
 			}},
-			{field:'createdDate',title:'创建时间',width:130	,align:'center',sortable:true,
+			{field:'createdDate',title:'创建时间',width:120	,align:'center',sortable:true,
 					sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
-			{field:'opt',title:'操作',width:100,align:'center',
+			{field:'opt',title:'操作',width:80,align:'center',
 				formatter:function(value,rec){
 					return '<span><image onClick="onEditClickHandler(' + rec['commodityId'] + ')" onmouseover="this.style.cursor=\'pointer\';" src="../images/datagrid/icon_list_edit.gif"/>&nbsp;&nbsp;<image onClick="onDeleteClickHandler(' + rec['commodityId'] + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
 				}
