@@ -49,12 +49,7 @@ function validate(formData, jqForm, options) {
 	   $.messager.alert('消息','请选择图片格式为：gif,png,jpg,jpeg！','info');
 	   return false;
 	} 
-//	var oas = new ActiveXObject("Scripting.FileSystemObject");
-//	var filePath = form.file.value;
-//	var fileContent = oas.getFile(filePath);
-//	var fileSize = fileContent.size;
-//	alert(fileSize + " bytes");
-	$('#image').append('<image id="loader" src="../images/loader.gif"/> ');
+	$('#image').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
 }
 /**
  * 字符串转JSON对象
@@ -131,6 +126,7 @@ function onDeleteClickHandler(id) {
 		}
 	});
 }
+
 $(document).ready(function() {
 	//image click popup big pic
 	var $enlargedCover = $('<img/>')
@@ -139,14 +135,14 @@ $(document).ready(function() {
 	.css('cursor', 'pointer')
 	.hide()
 	.appendTo('body');
-	
+
 	$('#image').click(function(event) {
 	    var startPos = $(this).offset();
 	    startPos.width = $(this).width();
 	    startPos.height = $(this).height();
 	    var endPos = {};
-        endPos.width = startPos.width * 2;
-        endPos.height = startPos.height * 5;
+        endPos.width = startPos.width * 3;
+        endPos.height = startPos.height * 6;
         endPos.top = 50;
         endPos.left = ($('body').width() - endPos.width) / 2;
         $enlargedCover.attr('src', $(this).children().attr('src'))
@@ -169,9 +165,9 @@ $(document).ready(function() {
 		event.preventDefault();
 	})
 	.hover(function() {
-	  $enlargeRollover.appendTo(this).show();
+	    $(this).css('cursor', 'pointer');
 	}, function() {
-	  $enlargeRollover.hide();
+		$(this).css('cursor', '');
 	});
 });
 //list

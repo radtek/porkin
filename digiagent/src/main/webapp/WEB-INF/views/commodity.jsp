@@ -36,8 +36,7 @@
 	          <div>
 	              	<label for="name">图片: </label>
 					<input type="file" name="file" id="file"/> 
-	          </div>
-	          <div id="image" style="width:auto;height:auto"></div>
+	          <div id="image"></div>
 	          <div>
 					<input type="hidden" name="MAX_FILE_SIZE" value="100000" /> 
 	              <input type="submit"  name="submitButton" value="确定" /> 

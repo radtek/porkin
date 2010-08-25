@@ -13,8 +13,8 @@
 			"^.*/", "").replaceAll(".jsp", "");
 	if (!jspName.equals("admin")) {
 %>
-<link rel="stylesheet" type="text/css" href="../styles/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="../tyles/icon.css">
+<link rel="stylesheet" type="text/css" href="../styles/easyui.css">
+<link rel="stylesheet" type="text/css" href="../styles/icon.css">
 <script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="../scripts/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../scripts/jquery.form.js"></script>
@@ -22,8 +22,8 @@
 <%
 	} else {
 %>
-<link rel="stylesheet" type="text/css" href="styles/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="tyles/icon.css">
+<link rel="stylesheet" type="text/css" href="styles/easyui.css">
+<link rel="stylesheet" type="text/css" href="styles/icon.css">
 <script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="scripts/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="scripts/jquery.form.js"></script>
