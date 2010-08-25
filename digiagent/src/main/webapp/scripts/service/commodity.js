@@ -89,7 +89,7 @@ function processJson(data) {
 	});
     $('#commodityId').val(data.commodityId);
     var url = "../commodity/getImage?id=" +data.commodityId;
-    $('#image').empty().append('<img width="100" height="100" src="'+url+'"/>');
+    $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
 //	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	$('#commodityList').datagrid('reload');
 }
@@ -105,7 +105,7 @@ function onEditClickHandler(id) {
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
 		var url = "../commodity/getImage?id=" +id;
-		$('#image').empty().append('<img width="100" height="100" src="'+url+'"/>');
+		$('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
 //		$('#image').append('<image  onClick="onDeleteClickHandler(' + id + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	});
 	formSubmit('../commodity/update');
@@ -131,8 +131,49 @@ function onDeleteClickHandler(id) {
 		}
 	});
 }
-
-
+$(document).ready(function() {
+	//image click popup big pic
+	var $enlargedCover = $('<img/>')
+	.css('position', 'absolute')
+	.css('z-index', 9999)
+	.css('cursor', 'pointer')
+	.hide()
+	.appendTo('body');
+	
+	$('#image').click(function(event) {
+	    var startPos = $(this).offset();
+	    startPos.width = $(this).width();
+	    startPos.height = $(this).height();
+	    var endPos = {};
+        endPos.width = startPos.width * 2;
+        endPos.height = startPos.height * 5;
+        endPos.top = 50;
+        endPos.left = ($('body').width() - endPos.width) / 2;
+        $enlargedCover.attr('src', $(this).children().attr('src'))
+        .css(startPos)
+        .show();
+		var performAnimation = function() {
+		    $enlargedCover.animate(endPos, 'normal',
+		        function() {
+		      $enlargedCover.one('click', function() {
+		        $enlargedCover.fadeOut();
+		      });
+		    });
+		};
+		if ($enlargedCover[0].complete) {
+		  performAnimation();
+		}
+		else {
+		  $enlargedCover.bind('load', performAnimation);
+		}
+		event.preventDefault();
+	})
+	.hover(function() {
+	  $enlargeRollover.appendTo(this).show();
+	}, function() {
+	  $enlargeRollover.hide();
+	});
+});
 //list
 $(function(){
 	$('#startDate').datebox({
