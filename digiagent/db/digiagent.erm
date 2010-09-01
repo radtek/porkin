@@ -22,7 +22,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>521</y>
+	<y>99</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -105,7 +105,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2010-07-29 23:23:36</creation_date>
-			<updated_date>2010-08-28 22:34:01</updated_date>
+			<updated_date>2010-09-01 22:24:44</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -2621,7 +2621,7 @@
 			<connections>
 				<relation>
 					<id>4</id>
-					<source>7</source>
+					<source>1</source>
 					<target>8</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2638,7 +2638,7 @@
 				</relation>
 				<relation>
 					<id>5</id>
-					<source>1</source>
+					<source>7</source>
 					<target>8</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2691,7 +2691,7 @@
 				<normal_column>
 					<id>62</id>
 					<referenced_column>0</referenced_column>
-					<relation>5</relation>
+					<relation>4</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2719,7 +2719,7 @@
 				<normal_column>
 					<id>63</id>
 					<referenced_column>53</referenced_column>
-					<relation>4</relation>
+					<relation>5</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
