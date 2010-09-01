@@ -22,7 +22,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>865</y>
+	<y>521</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -92,7 +92,7 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>Tahoma</font_name>
+				<font_name>微软雅黑</font_name>
 				<font_size>9</font_size>
 			<x>50</x>
 			<y>50</y>
@@ -105,7 +105,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2010-07-29 23:23:36</creation_date>
-			<updated_date>2010-08-17 14:33:38</updated_date>
+			<updated_date>2010-08-28 22:34:01</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -128,9 +128,9 @@
 			</model_property>
 		</model_properties>
 		<table_properties>
-			<character_set></character_set>
+			<character_set>utf8</character_set>
 			<schema></schema>
-			<storage_engine></storage_engine>
+			<storage_engine>InnoDB</storage_engine>
 		</table_properties>
 		<environment_setting>
 			<environment>
@@ -575,6 +575,38 @@
 	<contents>
 		<table>
 			<id>0</id>
+			<height>75</height>
+			<width>123</width>
+				<font_name>微软雅黑</font_name>
+				<font_size>9</font_size>
+			<x>33</x>
+			<y>1227</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<physical_name>NEW_TABLE</physical_name>
+			<logical_name>NEW_TABLE</logical_name>
+			<description></description>
+			<constraint></constraint>
+			<primary_key_name></primary_key_name>
+			<columns>
+			</columns>
+			<indexes>
+			</indexes>
+			<complex_unique_key_list>
+			</complex_unique_key_list>
+			<table_properties>
+				<character_set></character_set>
+				<schema></schema>
+				<storage_engine></storage_engine>
+			</table_properties>
+		</table>
+		<table>
+			<id>1</id>
 			<height>252</height>
 			<width>275</width>
 				<font_name>微软雅黑</font_name>
@@ -589,8 +621,8 @@
 			<connections>
 				<relation>
 					<id>0</id>
-					<source>5</source>
-					<target>0</target>
+					<source>6</source>
+					<target>1</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -875,7 +907,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>1</id>
+			<id>2</id>
 			<height>206</height>
 			<width>277</width>
 				<font_name>微软雅黑</font_name>
@@ -1103,7 +1135,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>2</id>
+			<id>3</id>
 			<height>252</height>
 			<width>297</width>
 				<font_name>微软雅黑</font_name>
@@ -1118,8 +1150,8 @@
 			<connections>
 				<relation>
 					<id>1</id>
-					<source>8</source>
-					<target>2</target>
+					<source>9</source>
+					<target>3</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -1404,13 +1436,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>3</id>
+			<id>4</id>
 			<height>298</height>
 			<width>350</width>
 				<font_name>微软雅黑</font_name>
 				<font_size>9</font_size>
-			<x>9</x>
-			<y>1035</y>
+			<x>25</x>
+			<y>910</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -1744,7 +1776,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>4</id>
+			<id>5</id>
 			<height>252</height>
 			<width>293</width>
 				<font_name>微软雅黑</font_name>
@@ -1759,8 +1791,8 @@
 			<connections>
 				<relation>
 					<id>2</id>
-					<source>9</source>
-					<target>4</target>
+					<source>10</source>
+					<target>5</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -2045,7 +2077,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>5</id>
+			<id>6</id>
 			<height>130</height>
 			<width>286</width>
 				<font_name>微软雅黑</font_name>
@@ -2301,7 +2333,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>6</id>
+			<id>7</id>
 			<height>229</height>
 			<width>275</width>
 				<font_name>微软雅黑</font_name>
@@ -2316,8 +2348,8 @@
 			<connections>
 				<relation>
 					<id>3</id>
-					<source>1</source>
-					<target>6</target>
+					<source>2</source>
+					<target>7</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -2574,7 +2606,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>7</id>
+			<id>8</id>
 			<height>229</height>
 			<width>265</width>
 				<font_name>微软雅黑</font_name>
@@ -2589,8 +2621,8 @@
 			<connections>
 				<relation>
 					<id>4</id>
-					<source>6</source>
-					<target>7</target>
+					<source>7</source>
+					<target>8</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -2606,8 +2638,8 @@
 				</relation>
 				<relation>
 					<id>5</id>
-					<source>0</source>
-					<target>7</target>
+					<source>1</source>
+					<target>8</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -2864,7 +2896,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>8</id>
+			<id>9</id>
 			<height>229</height>
 			<width>321</width>
 				<font_name>微软雅黑</font_name>
@@ -3133,7 +3165,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>9</id>
+			<id>10</id>
 			<height>229</height>
 			<width>286</width>
 				<font_name>微软雅黑</font_name>
@@ -3148,8 +3180,8 @@
 			<connections>
 				<relation>
 					<id>6</id>
-					<source>2</source>
-					<target>9</target>
+					<source>3</source>
+					<target>10</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -3406,7 +3438,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>10</id>
+			<id>11</id>
 			<height>95</height>
 			<width>275</width>
 				<font_name>微软雅黑</font_name>
@@ -3421,8 +3453,8 @@
 			<connections>
 				<relation>
 					<id>7</id>
-					<source>9</source>
-					<target>10</target>
+					<source>8</source>
+					<target>11</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -3438,8 +3470,8 @@
 				</relation>
 				<relation>
 					<id>8</id>
-					<source>7</source>
-					<target>10</target>
+					<source>10</source>
+					<target>11</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
@@ -3463,7 +3495,7 @@
 				<normal_column>
 					<id>85</id>
 					<referenced_column>77</referenced_column>
-					<relation>7</relation>
+					<relation>8</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -3491,7 +3523,7 @@
 				<normal_column>
 					<id>86</id>
 					<referenced_column>61</referenced_column>
-					<relation>8</relation>
+					<relation>7</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
