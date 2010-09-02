@@ -13,8 +13,19 @@ import com.ibatis.sqlmap.engine.type.TypeHandler;
 
 
 /**
- * @author Administrator
+ * A simple interface for implementing custom type handlers.
  *
+ * <p/>
+ * <parameterMap id="storedprocParams" class="map">         
+ *   <parameter property="argument" mode="IN" jdbcType="ARRAY" typeHandler="ArrayTypeHandler"/>     
+ *   <parameter property="result" mode="OUT" jdbcType="ARRAY" typeHandler="ArrayTypeHandler"/>         
+ *   </parameterMap>     
+ *   <procedure id="arrayTest" parameterMap="storedprocParams">         
+ *   {call pkg_az_basic_dev.array_test(?, ? )}     
+ *   </procedure> 
+ * <p/>
+ * }
+ * </pre>
  */
 public class ArrayTypeHandler extends BaseTypeHandler implements TypeHandler {
 
