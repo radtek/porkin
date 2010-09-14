@@ -23,7 +23,7 @@
 		<javaModelGenerator targetPackage="net.cominfo.digiagent.persistence.domain"
 			targetProject="digiagent/src/main/java" />
 		<sqlMapGenerator targetPackage="net.cominfo.digiagent.persistence.sql"
-			targetProject="digiagent/src/main/java" />
+			targetProject="digiagent/src/main/resources" />
 		<daoGenerator targetPackage="net.cominfo.digiagent.persistence.sqlmapdao"
 			targetProject="digiagent/src/main/java" type="SPRING" />
 			
@@ -36,8 +36,13 @@
 		<table tableName="T_DA_SUPPLIER" domainObjectName="Supplier" />
 		<table tableName="T_DA_CITY" domainObjectName="City" />
 		<table tableName="T_DA_COMMODITY" domainObjectName="Commodity" />
+		<table tableName="T_DA_COMMODITYIMAGE" domainObjectName="CommodityImage" />
 		<table tableName="T_DA_COUNTRY" domainObjectName="Country" />
+		<table tableName="T_DA_HISTORY" domainObjectName="History" />
 		<table tableName="T_DA_PROVINCE" domainObjectName="Province" />
+		<table tableName="T_DA_ROLE" domainObjectName="Role" />
+		<table tableName="T_DA_USER" domainObjectName="User" />
+		<table tableName="T_DA_USERROLE" domainObjectName="UserRole" />
 
 	</ibatorContext>
 </ibatorConfiguration>
