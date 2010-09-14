@@ -19,6 +19,8 @@ import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
+import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.persistence.domain.UserRole;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +40,14 @@ public class SupplierService {
 	private SupplierProductDao supplierProductDao;
 	@Autowired
 	private ContactDao contactDao;
+	@Autowired
+	private UserService userService;
 
 	public int countSupplier() {
 		return supplierDao.countByExample(new SupplierCriteria());
 	}
 	
-	public Supplier getById(Integer id){
+	public SupplierWithBLOBs getById(Integer id){
 		return supplierDao.selectByPrimaryKey(id);
 	}
 	
@@ -89,23 +93,29 @@ public class SupplierService {
 		return supplierDao.count(page, "t_da_supplier_Custom.countByCondition");
 	}
 	
-	public Supplier insert(Supplier supplier) {
+	public SupplierWithBLOBs insert(SupplierWithBLOBs supplier, User user, UserRole userRole) {
 		supplier = validateSupplierName(supplier);
 		if (supplier.getSupplierId() != null) {
 			return supplier;
 		} else {
+			// FIXME Role default 企业会员[4]
+			user.setUserName(String.valueOf(new Date().getTime()));
+			user.setUserPassword(String.valueOf(new Date().getTime()));
+			user.setActiveFlag("N");
+			userRole.setRoleId(4);
+			userService.insert(user, userRole);
+			
+			supplier.setUserId(user.getUserId());
 			supplier.setCreatedBy("sj");
 			supplier.setCreatedDate(new Date());
 			supplier.setLastupdatedBy("sj");
 			supplier.setLastupdatedDate(new Date());
-			SupplierWithBLOBs supplierWithBlobs = new SupplierWithBLOBs();
-			supplierDao.insert(supplierWithBlobs);
-//			supplierDao.insert(supplier);
+			supplierDao.insert(supplier);
 			return supplier;
 		}
 	}
 	
-	public Supplier update(Supplier supplier) {
+	public SupplierWithBLOBs update(SupplierWithBLOBs supplier) {
 		supplier = validateSupplierName(supplier);
 		if (supplier.getSupplierId() == -1) {
 			return supplier;
@@ -131,7 +141,7 @@ public class SupplierService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private Supplier validateSupplierName(Supplier supplier) {
+	private SupplierWithBLOBs validateSupplierName(SupplierWithBLOBs supplier) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("cityId", supplier.getCityId());
 		paramMap.put("supplierName", supplier.getSupplierName());
@@ -168,6 +178,15 @@ public class SupplierService {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	public byte[] getSupplierImage(Integer supplierId) {
+		SupplierWithBLOBs supplier = supplierDao.selectByPrimaryKey(supplierId);
+		if (supplier != null) {
+			return supplier.getSupplierImage();
+		} else {
+			return null;
 		}
 	}
 }

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
 import net.cominfo.digiagent.persistence.domain.Supplier;
+import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
+import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.persistence.domain.UserRole;
 import net.cominfo.digiagent.service.SupplierService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -48,18 +52,32 @@ public class SupplierController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Supplier supplier,
-			HttpServletResponse response) {
-		Supplier supplierUpdate = supplierService.getById(supplier.getSupplierId());
+	public void update(@ModelAttribute SupplierWithBLOBs supplier,
+			@RequestParam("file") MultipartFile image,
+			HttpServletResponse response) throws IOException {
+		SupplierWithBLOBs supplierUpdate = supplierService.getById(supplier.getSupplierId());
 		if (supplier == null) {
 			new ResourceNotFoundException(new Long(supplierUpdate.getSupplierId()));
 		}
-		supplierUpdate.setCityId(supplier.getCityId());
-		supplierUpdate.setActiveFlag(supplier.getActiveFlag());
-		supplierUpdate.setSupplierName(supplier.getSupplierName());
-		supplierUpdate = supplierService.update(supplierUpdate);
-		return Collections.singletonMap("supplierId", supplierUpdate.getSupplierId());
+		supplier.setCreatedBy(supplierUpdate.getCreatedBy());
+		supplier.setCreatedDate(supplierUpdate.getCreatedDate());
+		supplier.setUserId(supplierUpdate.getUserId());
+		// MYSQL BLOB类型最大65K
+		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
+			supplier.setSupplierImage(image.getBytes());
+		}
+		try {
+			PrintWriter pw = response.getWriter();
+			if (image.getSize()/1024 >= 65) {
+				pw.write(Collections.singletonMap("supplierId", -2).toString().replaceAll("=", ":"));
+			} else {
+				supplier = supplierService.update(supplier);
+				pw.write(Collections.singletonMap("supplierId", supplier.getSupplierId()).toString().replaceAll("=", ":"));
+			}
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value="/get",method=RequestMethod.GET)
@@ -72,11 +90,30 @@ public class SupplierController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Supplier supplier,
-			HttpServletResponse response) {
-		Supplier supplierNew = supplierService.insert(supplier);
-		return Collections.singletonMap("supplierId", supplierNew.getSupplierId());
+	public void create(@ModelAttribute SupplierWithBLOBs supplier,
+			@RequestParam("file") MultipartFile image,
+			@ModelAttribute User user,
+			@ModelAttribute UserRole userRole,
+			HttpServletResponse response) throws IOException {
+		// MYSQL BLOB类型最大65K
+		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
+			supplier.setSupplierImage(image.getBytes());
+		}
+		try {
+			PrintWriter pw = response.getWriter();
+			if (image.getSize()/1024 >= 65) {
+				pw.write(Collections.singletonMap("supplierId", -2).toString().replaceAll("=", ":"));
+			} else {
+				supplier = supplierService.insert(supplier, user, userRole);
+				pw.write(Collections.singletonMap("supplierId", supplier.getSupplierId()).toString().replaceAll("=", ":"));
+			}
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+//		Supplier supplierNew = supplierService.insert(supplier);
+//		return Collections.singletonMap("supplierId", supplierNew.getSupplierId());
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -99,5 +136,11 @@ public class SupplierController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
+	public String output(@RequestParam Integer id, HttpServletResponse response, Model model) {
+		model.addAttribute("image", supplierService.getSupplierImage(id));
+		return "image";
 	}
 }

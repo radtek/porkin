@@ -28,7 +28,7 @@ function processJson(data) {
 		$.messager.alert('消息','品牌名称已存在，请重新操作！','warning');
     	return;
     }
-    var optMsg = "新成功！";
+    var optMsg = "新增成功！";
     if ($('input[name="brandId"]').val() > 0) {
     	optMsg = "更新成功！";
     }

@@ -86,5 +86,10 @@ var basicFunction = function() {
 				addTab($(this).text(), 'commodity/list');
 			});
 		}
+		if ($(map[key]).text().toLowerCase() == '用户维护') {
+			$(map[key]).click(function() {
+				addTab($(this).text(), 'user/list');
+			});
+		}
 	});
 };

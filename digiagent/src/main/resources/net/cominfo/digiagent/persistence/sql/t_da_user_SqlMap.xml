@@ -102,6 +102,9 @@
       #lastlogintime:TIMESTAMP#, #registertime:TIMESTAMP#, #logonsum:INTEGER#, #createdBy:VARCHAR#,
       #createdDate:TIMESTAMP#, #lastupdatedBy:VARCHAR#, #lastupdatedDate:TIMESTAMP#,
       #activeFlag:CHAR#)
+      <selectKey resultClass="Integer" keyProperty="userId">
+	      select last_insert_id() as userId
+	    </selectKey>
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="net.cominfo.digiagent.persistence.domain.User">
     <!--
