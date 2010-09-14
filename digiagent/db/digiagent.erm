@@ -22,7 +22,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>1087</y>
+	<y>936</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -105,7 +105,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2010-07-29 23:23:36</creation_date>
-			<updated_date>2010-09-14 21:17:09</updated_date>
+			<updated_date>2010-09-14 21:25:07</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -889,7 +889,7 @@
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
 			<args></args>
-			<description></description>
+			<description>用户名</description>
 			<logical_name>user_name</logical_name>
 			<physical_name>user_name</physical_name>
 			<type>nvarchar(n)</type>
@@ -4970,7 +4970,7 @@
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
+					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
 					<sequence>
@@ -5247,10 +5247,10 @@
 					<physical_name></physical_name>
 					<type>character(n)</type>
 					<constraint></constraint>
-					<default_value></default_value>
+					<default_value>N</default_value>
 					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
+					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
 					<sequence>
