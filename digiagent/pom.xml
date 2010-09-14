@@ -84,7 +84,6 @@
 			<groupId>org.apache.ibatis</groupId>
 			<artifactId>ibatis-sqlmap</artifactId>
 			<version>${ibatis.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Logging -->
@@ -192,6 +191,14 @@
 					<source>1.5</source>
 					<target>1.5</target>
 					<showWarnings>true</showWarnings>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
