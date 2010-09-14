@@ -143,6 +143,14 @@
 			<artifactId>urlrewritefilter</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
+		
+		<!--  JFreeChart  -->
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
+		</dependency>
 
 		<!-- Servlet -->
 		<dependency>
