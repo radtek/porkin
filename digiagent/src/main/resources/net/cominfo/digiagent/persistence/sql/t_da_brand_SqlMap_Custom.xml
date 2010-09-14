@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="t_da_brand_Custom">
+	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT t_da_brand.country_id as countryId,
+		       brand_id as brandId,
+		       brand_name as brandName,
+		       brand_english as brandEnglish,
+		       t_da_brand.created_by as createdBy,
+		       date_format(t_da_brand.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+		       t_da_brand.lastupdated_by as lastupdatedBy,
+		       date_format(t_da_brand.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
+		       t_da_brand.active_flag as activeFlag,
+		       t_da_country.country_name as countryName,
+		       t_da_country.country_abbreviation as countryAbbreviation
+		  FROM t_da_brand
+		  LEFT JOIN t_da_country ON t_da_brand.country_id = t_da_country.country_id
+		 WHERE brand_id > 0
+		 <isNotEmpty prepend="AND" property="param.brandName">
+			brand_name like '%$param.brandName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
+		 	$orderByStatement$
+		 </isNotEmpty>
+		 LIMIT $first$, $pageSize$;
+	</select>
+	
+	<select id="countByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT count(*) as total
+		FROM t_da_brand
+		  LEFT JOIN t_da_country ON t_da_brand.country_id = t_da_country.country_id
+		 WHERE brand_id > 0
+		 <isNotEmpty prepend="AND" property="param.brandName">
+			brand_name = '%$param.brandName$%'
+		</isNotEmpty>
+	</select>
+
+	<select id="listByCondition" parameterClass="HashMap"
+		resultClass="HashMap">
+		SELECT * FROM t_da_brand WHERE brand_id > 0
+		<isNotEmpty prepend="AND" property="brandName">
+			brand_name = '$brandName$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="countryId">
+			country_id = $countryId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="brandId">
+			brand_id != $brandId$
+		</isNotEmpty>
+	</select>
+</sqlMap>

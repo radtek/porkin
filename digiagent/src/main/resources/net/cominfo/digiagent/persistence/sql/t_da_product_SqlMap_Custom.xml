@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="t_da_product_Custom">
+	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT t_da_product.category_id as categoryId,
+		       product_id as productId,
+		       product_name as productName,
+		       t_da_product.created_by as createdBy,
+		       date_format(t_da_product.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+		       t_da_product.lastupdated_by as lastupdatedBy,
+		       date_format(t_da_product.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
+		       t_da_product.active_flag as activeFlag,
+		       t_da_category.category_name as categoryName
+		  FROM t_da_product
+		  LEFT JOIN t_da_category ON t_da_product.category_id = t_da_category.category_id
+		 WHERE product_id > 0
+		 <isNotEmpty prepend="AND" property="param.productName">
+			product_name like '%$param.productName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
+		 	$orderByStatement$
+		 </isNotEmpty>
+		 LIMIT $first$, $pageSize$;
+	</select>
+	
+	<select id="countByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT count(*) as total
+		FROM t_da_product
+		  LEFT JOIN t_da_category ON t_da_product.category_id = t_da_category.category_id
+		 WHERE product_id > 0
+		 <isNotEmpty prepend="AND" property="param.productName">
+			product_name = '%$param.productName$%'
+		</isNotEmpty>
+	</select>
+
+	<select id="listByCondition" parameterClass="HashMap"
+		resultClass="HashMap">
+		SELECT * FROM t_da_product WHERE product_id > 0
+		<isNotEmpty prepend="AND" property="productName">
+			product_name = '$productName$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="categoryId">
+			category_id = $categoryId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productId">
+			product_id != $productId$
+		</isNotEmpty>
+	</select>
+</sqlMap>

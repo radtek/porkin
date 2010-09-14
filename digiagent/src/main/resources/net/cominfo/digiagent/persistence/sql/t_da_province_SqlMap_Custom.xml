@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="t_da_province_Custom">
+	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT province_id as provinceId,
+		       province_name as provinceName,
+		       province_abbreviation as provinceAbbreviation,
+		       created_by as createdBy,
+		       date_format(created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+		       lastupdated_by as lastupdatedBy,
+		       date_format(lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
+		       active_flag as activeFlag
+		  FROM t_da_province
+		 WHERE province_id > 0
+		 <isNotEmpty prepend="AND" property="param.provinceName">
+			province_name like '%$param.provinceName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
+		 	$orderByStatement$
+		 </isNotEmpty>
+		 LIMIT $first$, $pageSize$;
+	</select>
+	
+	<select id="countByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
+		resultClass="HashMap">
+		SELECT count(*) as total
+		FROM t_da_province
+		 WHERE province_id > 0
+		 <isNotEmpty prepend="AND" property="param.provinceName">
+			province_name = '%$param.provinceName$%'
+		</isNotEmpty>
+	</select>
+</sqlMap>
