@@ -46,7 +46,7 @@ public class ContactService {
 		if (cityId != null && cityId > 0) {
 			criteria.andCityIdEqualTo(cityId);
 			example.setOrderByClause("SUPPLIER_NAME");
-			supplierList = supplierDao.selectByExample(example);
+			supplierList = supplierDao.selectByExampleWithoutBLOBs(example);
 			for (Supplier supplier : supplierList) {
 				buffer.append("<option value='");
 				buffer.append(supplier.getSupplierId());

@@ -74,8 +74,8 @@ public class ArrayTypeHandler extends BaseTypeHandler implements TypeHandler {
 			ps.setNull(i, Types.ARRAY);
 		} else {
 			Connection conn = ps.getConnection();
-			Array loc = conn.createArrayOf("myArrayType", (Object[]) param);
-			ps.setArray(i, loc);
+//			Array loc = conn.createArrayOf("myArrayType", (Object[]) param);
+//			ps.setArray(i, loc);
 		}
 	}
 

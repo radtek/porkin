@@ -69,7 +69,7 @@ public class CommodityService {
 		} else {
 			commodity.setLastupdatedBy("sj");
 			commodity.setLastupdatedDate(new Date());
-			commodityDao.updateByPrimaryKeyWithBLOBs(commodity);
+			commodityDao.updateByPrimaryKey(commodity);
 			return commodity;
 		}
 	}
@@ -86,7 +86,7 @@ public class CommodityService {
 		if (commodity.getCommodityId() != null) {
 			criteria.andCommodityIdNotEqualTo(commodity.getCommodityId());
 		}
-		List<Commodity> list = commodityDao.selectByExampleWithoutBLOBs(example);
+		List<Commodity> list = commodityDao.selectByExample(example);
 		if (list != null && list.size() > 0) {
 			commodity.setCommodityId(-1);
 			return commodity;
@@ -98,7 +98,8 @@ public class CommodityService {
 	public byte[] getCommodityImage(Integer commodityId) {
 		Commodity commodity = commodityDao.selectByPrimaryKey(commodityId);
 		if (commodity != null) {
-			return commodity.getCommodityImage();
+//			return commodity.getCommodityImage();
+			return null;
 		} else {
 			return null;
 		}

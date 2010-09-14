@@ -61,7 +61,7 @@ public class CommodityController{
 			@RequestParam("file") MultipartFile image, HttpServletResponse response) throws IOException {
 		// MYSQL BLOB类型最大65K
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
-			commodity.setCommodityImage(image.getBytes());
+//			commodity.setCommodityImage(image.getBytes());
 		}
 		try {
 			PrintWriter pw = response.getWriter();
@@ -92,7 +92,7 @@ public class CommodityController{
 		commodityUpdate.setCommodityDescription(commodity.getCommodityDescription());
 		// MYSQL BLOB类型最大65K
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
-			commodityUpdate.setCommodityImage(image.getBytes());
+//			commodityUpdate.setCommodityImage(image.getBytes());
 		}
 		commodityUpdate = commodityService.update(commodityUpdate);
 		try {

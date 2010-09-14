@@ -133,7 +133,7 @@ public class CityService {
 		SupplierCriteria example = new SupplierCriteria();
 		net.cominfo.digiagent.persistence.domain.SupplierCriteria.Criteria criteria = example.createCriteria();
 		criteria.andCityIdEqualTo(cityId);
-		List<Supplier> list = supplierDao.selectByExample(example);
+		List<Supplier> list = supplierDao.selectByExampleWithoutBLOBs(example);
 		if (list != null && list.size() > 0) {
 			return true;
 		} else {

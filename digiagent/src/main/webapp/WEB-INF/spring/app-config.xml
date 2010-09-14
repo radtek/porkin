@@ -22,6 +22,15 @@
 <!--	    <property name="maxUploadSize" value="100000"/>-->
 	</bean>
 	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+     <property name="interceptors">
+         <list>
+                <bean class="net.cominfo.digiagent.spring.AccessInterceptor" />
+         </list>
+     </property>
+    </bean>
+
+	
 	<!-- Configures Spring MVC -->
 	<import resource="mvc-config.xml" />
 	<import resource="db-config.xml" />

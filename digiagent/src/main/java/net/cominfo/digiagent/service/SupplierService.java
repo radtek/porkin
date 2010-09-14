@@ -18,6 +18,7 @@ import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
+import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,9 @@ public class SupplierService {
 			supplier.setCreatedDate(new Date());
 			supplier.setLastupdatedBy("sj");
 			supplier.setLastupdatedDate(new Date());
-			supplierDao.insert(supplier);
+			SupplierWithBLOBs supplierWithBlobs = new SupplierWithBLOBs();
+			supplierDao.insert(supplierWithBlobs);
+//			supplierDao.insert(supplier);
 			return supplier;
 		}
 	}
