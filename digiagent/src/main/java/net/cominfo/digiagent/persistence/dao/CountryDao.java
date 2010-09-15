@@ -1,8 +1,8 @@
 package net.cominfo.digiagent.persistence.dao;
 
-import org.springframework.stereotype.Repository;
-
 import net.cominfo.digiagent.persistence.sqlmapdao.CountryDAOImpl;
+
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class CountryDao extends CountryDAOImpl {
