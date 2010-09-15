@@ -69,9 +69,9 @@
 		</isNotEmpty>
 	</select>
 
-	<select id="searchByCondition" parameterClass="HashMap"
+	<select id="fixedSearchByCondition" parameterClass="HashMap"
 		resultClass="HashMap">
-		SELECT * FROM
+		SELECT T_DA_SUPPLIER.* FROM
 		T_DA_CATEGORY, T_DA_PRODUCT,
 		T_DA_PRODUCTBRAND,
 		T_DA_BRAND, T_DA_SUPPLIERPRODUCT, T_DA_SUPPLIER
@@ -84,6 +84,15 @@
 		AND
 		T_DA_PRODUCTBRAND.PRODUCTBRAND_ID =
 		T_DA_SUPPLIERPRODUCT.PRODUCTBRAND_ID
+		<isNotEmpty prepend="AND" property="categoryId">
+			T_DA_CATEGORY.CATEGORY_ID = $categoryId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productId">
+			T_DA_PRODUCT.PRODUCT_ID = $productId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="brandId">
+			T_DA_BRAND.BRAND_ID = $brandId$
+		</isNotEmpty>
 	</select>
 
 </sqlMap>

@@ -1,12 +1,6 @@
 package net.cominfo.digiagent.service;
 
-import static org.junit.Assert.fail;
-
-import java.util.Date;
-
 import junit.framework.TestCase;
-
-import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.utils.BeanLocatorUtil;
 
 import org.junit.After;
