@@ -1,0 +1,130 @@
+/* Styles Updated: 08/30/2010 @ 10:45 A.M. ！！-*/
+
+body{margin:0; padding:0; background:#FFF; font-family: verdana, Arial, Tahoma; height:100%; border: 0px; font-size:12px;}
+img {border:0;}
+a {text-decoration:none;font-size:12px;}
+a:hover{ text-decoration:underline;}
+form{margin:0px;display: inline}
+input, button, select { font-size:12px;}
+
+HTML{overflow-x:hidden; OVERFLOW-Y: auto; SCROLLBAR-FACE-COLOR: #ebebeb; SCROLLBAR-HIGHLIGHT-COLOR: #fff; SCROLLBAR-SHADOW-COLOR: #c0c0c0; SCROLLBAR-3DLIGHT-COLOR: #c8c8c8; SCROLLBAR-ARROW-COLOR: #bcbcbc; SCROLLBAR-TRACK-COLOR: #f3f3f3; SCROLLBAR-DARKSHADOW-COLOR: #eee;}
+
+/* =Head ----------------------------------*/
+.headTop{width:99%; margin:auto; background:url(../images/common/01_02.gif) repeat-x; height:146px;}
+.headCity{ width:100%; height:30px; margin:4px; background:#eef7fc; padding:5px 0px 0px 5px; }
+.btn_login { font-weight:bold; background: url(../images/common/b4.png); width:45px;cursor:pointer; color:#f65100; height:21px; border-style:none; }
+.logo{ float:left; background:url(../images/common/01_05.gif) no-repeat; height:65px; margin:0 0 0 20px; padding:0px;  padding:25px 0px 0px 30px; width:194px;}
+.rightLink{ float:right; color:#076ac5;}
+.redLine{ width:96%;border-top: 4px #ffb700 solid; margin:auto}
+#dfleft {
+	FLOAT: left; WIDTH: 180px; margin-left:10px;}
+#dfright {
+	FLOAT: left; WIDTH:500px; border:solid 1px #ccc;margin-left:10px;}
+#dfcenter {WIDTH:500px; border:solid 1px #ccc; margin:0 auto;}
+#loginCenter {WIDTH:500px; border:solid 1px #ccc; margin:0 auto; background:#f4fafd;}
+#loginCenter td{ font-weight:normal; line-height:18px; padding:5px; }
+.inputW100{ width:150px; height:16px;}
+.dfcenterTitle{WIDTH:480px; border:solid 1px #ccc; margin:1px auto; font-weight:bold; padding:10px; color:#076ac5; background:#f4fafd;}
+#dfright2 {
+	FLOAT: left; WIDTH:600px; margin-left:10px;}
+.sidebar {
+	BORDER-RIGHT: #eaf7ff 2px solid; BORDER-TOP: #eaf7ff 2px solid; BACKGROUND: #f4fafe; MARGIN-BOTTOM: 7px; BORDER-LEFT: #eaf7ff 2px solid; BORDER-BOTTOM: #eaf7ff 2px solid
+}
+.sidebar .blk {
+	BORDER-RIGHT: #b7d8ec 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #b7d8ec 1px solid; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; BORDER-LEFT: #b7d8ec 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #b7d8ec 1px solid
+}
+.sidebar .blk H3 {
+	PADDING-LEFT: 15px; FONT-WEIGHT: 700; FONT-SIZE: 14px; BACKGROUND: url(../images/common/skin_blue/b3.png) #eef5fe repeat-x; COLOR: #336699; LINE-HEIGHT: 26px; BORDER-BOTTOM: #b7d8ec 1px solid; HEIGHT: 26px; TEXT-ALIGN: left
+}
+
+.sidebar .blk .c {
+	PADDING: 5px; ; OVERFLOW: hidden; WIDTH: 164px;}
+
+
+.sidebar .blk .list2 LI {
+	PADDING-LEFT: 15px; OVERFLOW: hidden; WIDTH: 137px; LINE-HEIGHT: 24px; HEIGHT: 24px; TEXT-ALIGN: left
+}
+
+.sidebar .blk .tab {
+	HEIGHT: 27px
+}
+.sidebar .blk .tab H3 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; WIDTH: 86px; PADDING-TOP: 0px; POSITION: relative; TEXT-ALIGN: center
+}
+.sidebar .blk .tab H3.tab_active {
+	BACKGROUND: #fff; WIDTH: 86px; BORDER-BOTTOM: #fff 1px solid
+}
+.sidebar .blk2 H4 {
+	BORDER-TOP: #b9d9ed 1px solid; FONT-WEIGHT: 400; FONT-SIZE: 12px; BACKGROUND: url(http://i1.sinaimg.cn/hs/bbs/images/common/skin_blue/b3.png) 0px -36px; COLOR: #000000;}
+.sidebar .blk2 UL LI { list-style:none; line-height:30px;}
+.sidebar .blk2 UL LI:hover {BACKGROUND-COLOR: #cae7f6}
+.sidebar .blk2 UL LI A {COLOR: #1e5494; TEXT-DECORATION: none}
+
+.userInfo{  line-height:30px; font-size:14px; }
+.userInfo li{ list-style:none; border-bottom: solid 1px #eaeaea; margin:3px 20px 0 0;  }
+.userInfoBlue{ FLOAT: left; color:#076ac5; width:150px;}
+.userInfoYellow{FLOAT: left; color:#ff6600; width:150px; }
+.li_here {
+	BACKGROUND: #fff9df; CURSOR: pointer; HEIGHT: 50px
+}
+ .li_more {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 12px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; WIDTH: 323px; TEXT-ALIGN: right; BORDER-RIGHT-WIDTH: 0px
+}
+/* =tab style ！！！！！！！！！！！！！！！！！-*/
+OL LI {
+	MARGIN: 8px;
+}
+#con {
+	FONT-SIZE: 12px; MARGIN: 0px auto; WIDTH: 94%; padding:10px;
+}
+#tags {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px 0px; WIDTH: 100%px; PADDING-TOP: 0px; HEIGHT: 23px
+}
+#tags LI {
+	BACKGROUND: url(../images/common/tagleft.gif) no-repeat left bottom; FLOAT: left; MARGIN-RIGHT: 1px; LIST-STYLE-TYPE: none; HEIGHT: 23px
+}
+#tags LI A {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: url(../images/common/tagright.gif) no-repeat right bottom; FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #999; LINE-HEIGHT: 23px; PADDING-TOP: 0px; HEIGHT: 23px; TEXT-DECORATION: none
+}
+#tags LI.emptyTag {
+	BACKGROUND: none transparent scroll repeat 0% 0%; WIDTH: 4px
+}
+#tags LI.selectTag {
+	BACKGROUND-POSITION: left top; MARGIN-BOTTOM: -2px; POSITION: relative; HEIGHT: 24px;
+}
+#tags LI.selectTag A {
+	BACKGROUND-POSITION: right top; COLOR: #000; LINE-HEIGHT: 24px; HEIGHT: 24px; 
+}
+#tagContent {
+	BORDER-RIGHT: #aecbd4 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #aecbd4 1px solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; BORDER-LEFT: #aecbd4 1px solid; PADDING-TOP: 1px; BORDER-BOTTOM: #aecbd4 1px solid; BACKGROUND-COLOR: #fff
+}
+.tagContent {
+	PADDING-RIGHT: 10px; DISPLAY: none; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; WIDTH: 100%; COLOR: #474747; PADDING-TOP: 10px;
+}
+#tagContent DIV.selectTag {
+	DISPLAY: block
+}
+
+/* =button style ！！！！！！！！！！！！！！！！！-*/
+.button01
+{
+	color:#333;
+	BACKGROUND-COLOR: #FFF;
+	background-image: url(../images/common/button_bg_01.jpg);
+	border: 1px solid #C4CED6;
+	cursor:hand;
+	padding:3px 5px 0px 10px;
+	width:20px;
+}
+.button02
+{
+	color:#333;
+	BACKGROUND-COLOR: #FFF;
+	background-image: url(../images/common/button_bg_02.jpg);
+	border: 1px solid #C4CED6;
+	cursor:hand;
+	padding:3px 5px 0px 10px;
+	width:20px;
+}
+
+.tagContent tr{ height:20px;}
