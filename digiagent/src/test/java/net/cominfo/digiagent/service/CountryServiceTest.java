@@ -1,10 +1,6 @@
 package net.cominfo.digiagent.service;
 
-import static org.junit.Assert.fail;
-
-import java.util.Date;
-
-import net.cominfo.digiagent.persistence.domain.Country;
+import junit.framework.TestCase;
 import net.cominfo.digiagent.utils.BeanLocatorUtil;
 
 import org.junit.After;
@@ -26,16 +22,9 @@ public class CountryServiceTest {
 	}
 
 	@Test
-	public void testCreate() {
-		Country country = new Country();
-		country.setActiveFlag("N");
-		country.setCountryAbbreviation("CN");
-		country.setCountryName("China");
-		country.setCreatedBy("Porkin");
-		country.setCreatedDate(new Date());
-		country.setLastupdatedBy("Porkin");
-		country.setLastupdatedDate(new Date());
-		//cs.create(country);
+	public void testCount() {
+		int count = cs.countCountry();
+		TestCase.assertEquals(count, 12);
 	}
 	
 }

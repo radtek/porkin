@@ -4,6 +4,8 @@ import static org.junit.Assert.fail;
 
 import java.util.Date;
 
+import junit.framework.TestCase;
+
 import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.utils.BeanLocatorUtil;
 
@@ -24,17 +26,9 @@ public class BrandServiceTest {
 	}
 
 	@Test
-	public void testCreate() {
-		Brand brand = new Brand();
-		brand.setActiveFlag("Y");
-		brand.setBrandEnglish("Sony");
-		brand.setBrandName("Sony");
-		brand.setCreatedBy("Porkin");
-		brand.setCreatedDate(new Date());
-		brand.setLastupdatedBy("Porkin");
-		brand.setLastupdatedDate(new Date());
-		brand.setCountryId(1);
-//		bs.create(brand);
+	public void testCount() {
+		int count = bs.countBrand();
+		TestCase.assertEquals(count, 8);
 		
 	}
 
