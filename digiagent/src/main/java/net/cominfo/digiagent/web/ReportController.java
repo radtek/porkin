@@ -1,7 +1,5 @@
 package net.cominfo.digiagent.web;
 
-import java.awt.Font;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
