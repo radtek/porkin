@@ -29,7 +29,7 @@ var getCategoryJson = function() {
 			if (data.length==0) return;
 			$('<div id="categoryBar" style="height:30px"></div>').empty().append('类别: ').appendTo('#searchBar');
 			$.each(data, function(index, category) {
-				$('#categoryBar').append($('<a></a>').attr('href', '#').text(category.categoryName).click(function() {
+				$('#categoryBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(category.categoryName).click(function() {
 					var param = encodeURI($(this).text());
 			        getProductJson(param);
 		        }));
@@ -57,7 +57,7 @@ var getProductJson = function(categoryName) {
 			if (data.length==0) return;
 			$('<div id="productBar" style="height:30px"></div>').empty().append('产品: ').appendTo('#searchBar');
 			$.each(data, function(index, product) {
-		        $('#productBar').append($('<a></a>').attr('href', '#').text(product.productName).click(function() {
+		        $('#productBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
 		        	var param = encodeURI($(this).text());
 		        	getBrandJson(param);
 		        }));
@@ -84,7 +84,7 @@ var getBrandJson = function(productName) {
 			if (data.length==0) return;
 			$('<div id="brandBar" style="height:30px"></div>').empty().append('品牌: ').appendTo('#searchBar');
 			$.each(data, function(index, brand) {
-		        $('#brandBar').append($('<a></a>').attr('href', '#').text(brand.brandName).click(function() {
+		        $('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
 		        	var param = encodeURI($(this).text());
 		        	getSupplierJson(param);
 		        }));
@@ -123,7 +123,45 @@ var getSupplierJson = function(brandName) {
 		        $('<li></li>').text("简介：" + supplier.supplierDescription).appendTo("#contentRight_" + index);
 
 		        $('<div></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
-		        $('<img id="pic" width="100" height="100"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId).appendTo("#contentLeft_" + index);
+		        var $enlargedCover = $('<img/>')
+		    	.css('position', 'absolute')
+		    	.css('z-index', 9999)
+		    	.css('cursor', 'pointer')
+		    	.hide()
+		    	.appendTo('body');
+		        $('<img id="pic" width="100" height="100"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId).appendTo("#contentLeft_" + index).click(function(event) {
+		    	    var startPos = $(this).offset();
+		    	    startPos.width = $(this).width();
+		    	    startPos.height = $(this).height();
+		    	    var endPos = {};
+		            endPos.width = startPos.width * 6;
+		            endPos.height = startPos.height * 6;
+		            endPos.top = 50;
+		            endPos.left = ($('body').width() - endPos.width) / 2;
+		            $enlargedCover.attr('src', $(this).attr('src'))
+		            .css(startPos)
+		            .show();
+		    		var performAnimation = function() {
+		    		    $enlargedCover.animate(endPos, 'normal',
+		    		        function() {
+		    		      $enlargedCover.one('click', function() {
+		    		        $enlargedCover.fadeOut();
+		    		      });
+		    		    });
+		    		};
+		    		if ($enlargedCover[0].complete) {
+		    		  performAnimation();
+		    		}
+		    		else {
+		    		  $enlargedCover.bind('load', performAnimation);
+		    		}
+		    		event.preventDefault();
+		    	})
+		    	.hover(function() {
+		    	    $(this).css('cursor', 'pointer');
+		    	}, function() {
+		    		$(this).css('cursor', '');
+		    	});
 		    });
 		},
 		error: function(xhr, ajaxOptions, thrownError){
@@ -131,6 +169,7 @@ var getSupplierJson = function(brandName) {
         }
 	});
 };
+
 
 $(document).ready(function() {
 	getCategoryJson();
