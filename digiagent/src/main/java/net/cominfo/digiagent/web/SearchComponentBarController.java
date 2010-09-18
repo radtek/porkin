@@ -11,6 +11,7 @@ import net.cominfo.digiagent.service.ProductBrandService;
 import net.cominfo.digiagent.service.ProductService;
 import net.cominfo.digiagent.service.SupplierProductService;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,17 +34,12 @@ public class SearchComponentBarController {
 	@Autowired
 	private SupplierProductService supplierProductService;
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getCategoryList", method = RequestMethod.GET)
 	public void getCategoryList(HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
-			StringBuffer buffer = new StringBuffer();
-			for (Map map : categoryService.getCateogryList()) {
-				buffer.append(map.get("categoryName"));
-				buffer.append(",");
-			}
-			pw.write(buffer.toString().replaceAll(",$", ""));
+			String result = JSONArray.toJSONString(categoryService.getCateogryList());  
+			pw.write(result);
 			pw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,14 +51,10 @@ public class SearchComponentBarController {
 	public void getProductList(@RequestParam String categoryName, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
-			StringBuffer buffer = new StringBuffer();
 			Map param = new HashMap();
 			param.put("categoryName", java.net.URLDecoder.decode(categoryName,"UTF-8"));
-			for (Map map : productService.getProductList(param)) {
-				buffer.append(map.get("productName"));
-				buffer.append(",");
-			}
-			pw.write(buffer.toString().replaceAll(",$", ""));
+			String result = JSONArray.toJSONString(productService.getProductList(param));  
+			pw.write(result);
 			pw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,14 +66,10 @@ public class SearchComponentBarController {
 	public void getBrandList(@RequestParam String productName, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
-			StringBuffer buffer = new StringBuffer();
 			Map param = new HashMap();
 			param.put("productName", java.net.URLDecoder.decode(productName,"UTF-8"));
-			for (Map map : productBrandService.getBrandList(param)) {
-				buffer.append(map.get("brandName"));
-				buffer.append(",");
-			}
-			pw.write(buffer.toString().replaceAll(",$", ""));
+			String result = JSONArray.toJSONString(productBrandService.getBrandList(param));  
+			pw.write(result);
 			pw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,14 +82,10 @@ public class SearchComponentBarController {
 	public void getSupplierList(@RequestParam String brandName, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
-			StringBuffer buffer = new StringBuffer();
 			Map param = new HashMap();
 			param.put("brandName", java.net.URLDecoder.decode(brandName,"UTF-8"));
-			for (Map map : supplierProductService.getSupplierList(param)) {
-				buffer.append(map.get("supplierName"));
-				buffer.append(",");
-			}
-			pw.write(buffer.toString().replaceAll(",$", ""));
+			String result = JSONArray.toJSONString(supplierProductService.getSupplierList(param));  
+			pw.write(result);
 			pw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
