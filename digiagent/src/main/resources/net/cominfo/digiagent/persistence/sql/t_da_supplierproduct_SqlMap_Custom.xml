@@ -194,4 +194,23 @@
 			supplier_id = $supplierId$
 		</isNotEmpty>
 	</select>
+	
+	<select id="supplierInfoListByCondition" parameterClass="HashMap"
+		resultClass="HashMap">
+		SELECT distinct t_da_supplier.supplier_id as supplierId,
+		       t_da_supplier.supplier_name as supplierName
+		FROM t_da_supplierproduct, t_da_supplier, t_da_productbrand, t_da_brand  WHERE 
+		t_da_supplierproduct.productbrand_id = t_da_productbrand.productbrand_id
+		and t_da_brand.brand_id = t_da_productbrand.brand_id
+		and t_da_supplierproduct.supplier_id = t_da_supplier.supplier_id
+		<isNotEmpty prepend="AND" property="productId">
+			supplierproduct_id = '$productId$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="supplierId">
+			supplier_id = $supplierId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="brandName">
+			brand_name = '$brandName$'
+		</isNotEmpty>
+	</select>
 </sqlMap>

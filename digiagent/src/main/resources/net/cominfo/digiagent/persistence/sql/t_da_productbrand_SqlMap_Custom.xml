@@ -58,15 +58,22 @@
 
 	<select id="listByCondition" parameterClass="HashMap"
 		resultClass="HashMap">
-		SELECT * FROM t_da_productbrand WHERE productbrand_id > 0
+		SELECT t_da_productbrand.brand_id as brandId, t_da_brand.brand_name as brandName FROM t_da_productbrand, t_da_product, t_da_brand WHERE 
+		t_da_productbrand.brand_id = t_da_brand.brand_id and t_da_productbrand.product_id = t_da_product.product_id
+		<isNotEmpty prepend="AND" property="productId">
+			t_da_productbrand.product_id = $productId$
+		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="brandId">
-			brand_id = '$brandId$'
+			t_da_productbrand.brand_id = '$brandId$'
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="productId">
-			product_id = $productId$
+			t_da_productbrand.product_id = $productId$
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="productbrandId">
 			productbrand_id != $productbrandId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productName">
+			product_name = '$productName$'
 		</isNotEmpty>
 	</select>
 </sqlMap>

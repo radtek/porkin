@@ -1,5 +1,6 @@
 package net.cominfo.digiagent.service;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -125,5 +126,10 @@ public class SupplierProductService {
 			rstBuf.append(",");
 		}
 		return rstBuf.toString().replaceAll(",$", "");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map> getSupplierList(Map condition) throws SQLException {
+		return (List<Map>) supplierProductDao.getSqlMapClient().queryForList("t_da_supplierproduct_Custom.supplierInfoListByCondition", condition);
 	}
 }

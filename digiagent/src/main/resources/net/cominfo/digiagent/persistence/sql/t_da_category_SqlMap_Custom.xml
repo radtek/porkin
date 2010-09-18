@@ -30,4 +30,13 @@
 			category_name = '%$param.categoryName$%'
 		</isNotEmpty>
 	</select>
+	
+	
+	<select id="listByCondition" parameterClass="HashMap" resultClass="HashMap">
+		SELECT category_id as categoryId,
+		       category_name as categoryName
+		  FROM t_da_category
+		 WHERE active_flag = 'Y'
+		 ORDER BY category_name
+	</select>
 </sqlMap>

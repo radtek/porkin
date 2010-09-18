@@ -1,5 +1,6 @@
 package net.cominfo.digiagent.service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -138,5 +139,10 @@ public class ProductService {
 		} else {
 			return false;
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map> getProductList(Map condition) throws SQLException {
+		return (List<Map>) productDao.getSqlMapClient().queryForList("t_da_product_Custom.listByCondition", condition);
 	}
 }

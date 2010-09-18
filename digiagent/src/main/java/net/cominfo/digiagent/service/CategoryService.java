@@ -1,6 +1,8 @@
 package net.cominfo.digiagent.service;
 
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -114,5 +116,10 @@ public class CategoryService {
 		} else {
 			return false;
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map> getCateogryList() throws SQLException {
+		return (List<Map>) categoryDao.getSqlMapClient().queryForList("t_da_category_Custom.listByCondition", new HashMap());
 	}
 }

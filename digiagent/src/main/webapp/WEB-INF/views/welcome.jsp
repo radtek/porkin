@@ -11,7 +11,87 @@
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
 <script src="scripts/Calendar.js"></script>
 <script src="scripts/menu.js"></script>
+<script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
 <script language="javascript">
+var getCategoryList = function() {
+	$.get(
+		"searchComponentBar/getCategoryList",
+		function(data) {
+			var v = data.split(",");
+			$('<div id="categoryBar" style="height:30px"></div>').empty().append('类别: ').appendTo('#searchBar');
+			$.each(v, function(index, value) {
+		        $('#categoryBar').append($('<a></a>').attr('href', '#').text(value).click(function() {
+			        var param = encodeURI($(this).text());
+		        	getProductList(param);
+		        })).append(" | ");
+		    });
+		}   
+	);
+};
+
+var getProductList = function(categoryName) {
+	$('#supplierInfo').remove();
+	$('#brandBar').remove();
+	$('#productBar').remove();
+	$.get(
+		"searchComponentBar/getProductList",
+		{categoryName:categoryName},
+		function(data) {
+			if (data.length == 0) return;
+			var v = data.split(",");
+			$('<div id="productBar" style="height:30px"></div>').empty().append('产品: ').appendTo('#searchBar');
+			$.each(v, function(index, value) {
+		        $('#productBar').append($('<a></a>').attr('href', '#').text(value).click(function() {
+		        	var param = encodeURI($(this).text());
+		        	getBrandList(param);
+		        })).append(" | ");
+		    });
+		} 
+	);
+};
+
+var getBrandList = function(productName) {
+	$('#supplierInfo').remove();
+	$('#brandBar').remove();
+	$.get(
+		"searchComponentBar/getBrandList",
+		{productName:productName},
+		function(data) {
+			if (data.length == 0) return;
+			var v = data.split(",");
+			$('<div id="brandBar" style="height:30px"></div>').empty().append('品牌: ').appendTo('#searchBar');
+			$.each(v, function(index, value) {
+		        $('#brandBar').append($('<a></a>').attr('href', '#').text(value).click(function() {
+		        	var param = encodeURI($(this).text());
+		        	getSupplierList(param);
+		        })).append(" | ");
+		    });
+		} 
+	);
+};
+
+var getSupplierList = function(brandName) {
+	$('#supplierInfo').remove();
+	$.get(
+		"searchComponentBar/getSupplierList",
+		{brandName:brandName},
+		function(data) {
+			if (data.length == 0) return;
+			var v = data.split(",");
+			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().append('商家: ').appendTo('#searchBar');
+			$.each(v, function(index, value) {
+		        $('#supplierInfo').append($('<div style="height:100px; width:50%; border-color:maroon; border-style:solid; border-width:1px;float:left;"></a>').attr('href', '#').text(value).click(function() {
+			        alert($(this).text());
+		        }));
+		    });
+		} 
+	);
+};
+
+$(document).ready(function() {
+	getCategoryList();
+});
+
 function selectTag(showContent,selfObj){
 	// 操作标签
 	var tag = document.getElementById("tags").getElementsByTagName("li");
@@ -98,14 +178,14 @@ function selectTag(showContent,selfObj){
                   
         </tr>
         <tr>
-        	<td colspan="3">&nbsp;</td>
+        	<td colspan="3"><div id="searchBar"></div></td>
         </tr>
       </table>
     </div>
     <div class="tagContent" id="tagContent1">
      <table border="0" cellpadding="0" cellspacing="0" align="center">
         <tr>
-        	<td colspan="3">&nbsp;</td>
+        	<td colspan="3"></td>
         </tr>
         <tr>
           <td><input name="textfield" type="text" size="70" width="200px" /></td>
@@ -114,7 +194,7 @@ function selectTag(showContent,selfObj){
                   
         </tr>
         <tr>
-        	<td colspan="3">&nbsp;</td>
+        	<td colspan="3"></td>
         </tr>
       </table>
     </div>
