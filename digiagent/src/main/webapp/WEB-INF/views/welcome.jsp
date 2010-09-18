@@ -11,7 +11,7 @@
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
 <style>
 .supplierInfo {
-	height:100px; width:50%; border-color:maroon; border-style:solid; border-width:1px;float:left;
+	height:100px; width:100%; border-color:maroon; border-style:solid; border-width:1px;float:left;
 }
 li {list-style-type:none;}
 </style>
@@ -110,17 +110,20 @@ var getSupplierJson = function(brandName) {
 			if (data.length==0) return;
 			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().append('商家: ').appendTo('#searchBar');
 			$.each(data, function(index, supplier) {
-		        $('<div class="supplierInfo"></div>').appendTo('#supplierInfo').attr('id', "supplier_" + index).ready(function() {
+		        $('<div class="supplierInfo"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
 		        });
+		        $('<div style="float:left"></div>').attr('id', "contentRight_" + index).appendTo("#supplierInfo_" + index);
+		        $('<li></li>').text("供应商：" + supplier.supplierName).appendTo("#contentRight_" + index);
+		        $('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#contentRight_" + index);
+		        $('<li></li>').text("联系人：" + supplier.supplierContactname).appendTo("#contentRight_" + index);
+		        $('<li></li>').text("手机：" + supplier.supplierMobile).appendTo("#contentRight_" + index);
+		        $('<li></li>').text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
+		        $('<li></li>').text("传真：" + supplier.supplierFax).appendTo("#contentRight_" + index);
+		        $('<li></li>').text("邮编：" + supplier.supplierZip).appendTo("#contentRight_" + index);
+		        $('<li></li>').text("简介：" + supplier.supplierDescription).appendTo("#contentRight_" + index);
 
-		        $('<li></li>').text("供应商：" + supplier.supplierName).appendTo("#supplier_" + index);
-		        $('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#supplier_" + index);
-		        $('<li></li>').text("联系人：" + supplier.supplierContactname).appendTo("#supplier_" + index);
-		        $('<li></li>').text("手机：" + supplier.supplierMobile).appendTo("#supplier_" + index);
-		        $('<li></li>').text("联系电话：" + supplier.supplierTelephone).appendTo("#supplier_" + index);
-		        $('<li></li>').text("传真：" + supplier.supplierFax).appendTo("#supplier_" + index);
-		        $('<li></li>').text("邮编：" + supplier.supplierZip).appendTo("#supplier_" + index);
-		        $('<li></li>').text("简介：" + supplier.supplierDescription).appendTo("#supplier_" + index);
+		        $('<div></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
+		        $('<img id="pic" width="100" height="100"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId).appendTo("#contentLeft_" + index);
 		    });
 		},
 		error: function(xhr, ajaxOptions, thrownError){
