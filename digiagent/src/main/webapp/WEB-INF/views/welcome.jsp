@@ -11,7 +11,7 @@
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
 <style>
 .supplierInfo {
-	height:100px; width:100%; border-color:maroon; border-style:solid; border-width:1px;float:left;
+	width:100%; border-color:maroon; border-style:solid; border-width:1px;float:left;
 }
 li {list-style-type:none;}
 </style>
