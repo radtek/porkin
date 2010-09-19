@@ -153,6 +153,10 @@ public class SupplierService {
 			supplier.setSupplierId(-1);
 			return supplier;
 		} else {
+			if (supplier.getSupplierImage() == null) {
+				SupplierWithBLOBs oriSupplier = supplierDao.selectByPrimaryKey(supplier.getSupplierId());
+				supplier.setSupplierImage(oriSupplier.getSupplierImage());
+			}
 			return supplier;
 		}
 	}
