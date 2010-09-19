@@ -3,6 +3,7 @@
 <html>
 <head>
 	<script type="text/javascript" src="../scripts/service/supplier.js"></script>
+<script type="text/javascript" src="../scripts/common/common.js"></script>
 </head>
 <body>
 	<table id="supplierList"></table>

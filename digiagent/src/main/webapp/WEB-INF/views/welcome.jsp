@@ -19,6 +19,7 @@ li {list-style-type:none;}
 <script src="scripts/menu.js"></script>
 <script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="scripts/searchbar.js"></script>
+<script type="text/javascript" src="scripts/common/common.js"></script>
 <script language="javascript">
 function selectTag(showContent,selfObj){
 	// 操作标签

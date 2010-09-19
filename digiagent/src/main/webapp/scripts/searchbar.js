@@ -95,9 +95,11 @@ var getBrandJson = function(productName) {
  */
 var getSupplierJson = function(brandName) {
 	$('#supplierInfo').remove();
+	$('#pic').remove();
 	$.ajax({
 		url: "searchComponentBar/getSupplierList",
 		dataType: "json",
+		cache: false,
 		type: "GET",
 		data: {brandName:brandName},
 		success: function(data) {
@@ -125,7 +127,7 @@ var getSupplierJson = function(brandName) {
 		    	.hide()
 		    	.appendTo('body');
 		        // 加载放大镜事件驱动
-		        $('<img id="pic" width="100" height="100"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId).appendTo("#contentLeft_" + index).click(function(event) {
+		        $('<img id="pic" width="100" height="100"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index).click(function(event) {
 		    	    var startPos = $(this).offset();
 		    	    startPos.width = $(this).width();
 		    	    startPos.height = $(this).height();

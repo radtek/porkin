@@ -46,6 +46,7 @@ function formSubmit(actionUrl) {
 		beforeSubmit: validate, 
 		dataType:  'html', 
         success:   processJson,
+		cache: false,
         error:   function(err){
 			$('#loader').remove();
 	    	$.messager.alert('消息','更新操作失败！','error');
@@ -76,7 +77,7 @@ function processJson(data) {
 		showType:'slide'
 	});
     $('#supplierId').val(data.supplierId);
-    var url = "../supplier/getImage?id=" +data.supplierId;
+    var url = "../supplier/getImage?id=" +data.supplierId + "&uuid=" + createUUID();
     $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
 	//$('#supplierEdit').dialog('close');
     $('#supplierList').datagrid('reload');
