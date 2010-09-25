@@ -7,14 +7,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>Index</title>
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
-<style>
-.supplierInfo {
-	width:100%; border-color:maroon; border-style:solid; border-width:1px;float:left;
-}
-li {list-style-type:none;}
-</style>
 <script src="scripts/Calendar.js"></script>
 <script src="scripts/menu.js"></script>
 <script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
@@ -35,57 +29,39 @@ function selectTag(showContent,selfObj){
 	}
 	document.getElementById(showContent).style.display = "block";
 }</script>
+<script language="javascript">
+function whenDelete() {
+	var isDelete=true;
+	if (!confirm("sure to delete")) {
+		isDelete=false;
+	}
+	window.location = 'contractSearch.html'; 
+	return isDelete;
+}
+</script>
 </head>
 <body>
 <div class="headTop">
-    <div class="headCity">切换城市&nbsp;           
+    <div class="headCity">切换城市           
       <select name="select3" style="width:60px;">
         <option>大连</option>
         <option>上海</option>
-        </select>
-      &nbsp;您好,&nbsp;用户姓名&nbsp;
+      </select>
+      您好,用户姓名
       <select name="select4" style="width:80px;">
         <option>个人中心</option>
-        </select> 
-        &nbsp;
-      <input class="btn_login" type="submit" value="登录" />
+      </select> 
+        <input class="btn_login" type="submit" value="登录" />
+    <span class="leftLink">注册 | 忘记密码</span>
+    <span class="rightLink">帮助 | 设为首页</span>
     </div>
-  <div class="logo"></div>
-    <div class="rightLink">登录 | 注册 | 帮助</div>
-    <div class="redLine"></div>
+   
+	
 </div>
-
 <DIV style="CLEAR: both"></DIV>
-<DIV id=dfleft>
-<DIV class=sidebar>
-    <DIV class=blk>
-    <H3>用户操作</H3>
-        <DIV class=c>                   
-            <DIV class=blk2>                       
-                <UL>
-                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
-                  target=_blank>个人信息 </A></b>
-                  <ul>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=44127" 
-                  target=_blank>账户信息</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=36551" 
-                  target=_blank>会员相关</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9693" 
-                  target=_blank>个人资料</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9386" 
-                  target=_blank>兴趣爱好</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=28498" 
-                  target=_blank>上传头像</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=14214" 
-                  target=_blank>实名认证</A>
-                  </ul>
-                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=22866" 
-                  target=_blank>二手发布</A></b></LI></UL></DIV></DIV></DIV>
-        </DIV>
-    </DIV>
-</DIV>
-</DIV>
-<div id="dfright2">
+<div class="indexCenter">
+  <div class="logoCenter"></div>
+    <div id="dfright2">
 	<div id="con">
   <ul id="tags">
     <li class="selectTag"><a onclick="selectTag('tagContent0',this)" href="javascript:void(0)">&nbsp;搜索&nbsp;</a></li>
@@ -103,18 +79,24 @@ function selectTag(showContent,selfObj){
         <tr>
           <td><input name="textfield" type="text" size="70" width="200px" /></td>
           <td>&nbsp;</td>
-          <td width="80"> <input type="reset" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
+          <td width="80"> <input type="reset" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" onclick="window.location.href='purductList.html'" /></td>  
                   
         </tr>
+        
+        <tr>
+        	<td colspan="3">&nbsp;</td>
+        </tr>
+        
         <tr>
         	<td colspan="3"><div id="searchBar"></div></td>
         </tr>
+        
       </table>
     </div>
     <div class="tagContent" id="tagContent1">
      <table border="0" cellpadding="0" cellspacing="0" align="center">
         <tr>
-        	<td colspan="3"></td>
+        	<td colspan="3">&nbsp;</td>
         </tr>
         <tr>
           <td><input name="textfield" type="text" size="70" width="200px" /></td>
@@ -123,7 +105,7 @@ function selectTag(showContent,selfObj){
                   
         </tr>
         <tr>
-        	<td colspan="3"></td>
+        	<td colspan="3">&nbsp;</td>
         </tr>
       </table>
     </div>
@@ -223,6 +205,8 @@ function selectTag(showContent,selfObj){
     </div>
   </div>
 </div>
+</div>
+	
 </div>
 </body>
 </html>
