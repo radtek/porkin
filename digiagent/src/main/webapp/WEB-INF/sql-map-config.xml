@@ -39,6 +39,8 @@
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_userrole_SqlMap_Custom.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_user_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_user_SqlMap_Custom.xml" />
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_sequence_SqlMap.xml" />
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_sequence_SqlMap_Custom.xml" />
 </sqlMapConfig>
 
 
