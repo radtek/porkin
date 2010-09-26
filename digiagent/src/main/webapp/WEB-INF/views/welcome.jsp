@@ -52,7 +52,7 @@ function whenDelete() {
         <option>个人中心</option>
       </select> 
         <input class="btn_login" type="submit" value="登录" />
-    <span class="leftLink"><a href="user/registerForm">注册</a> | <a href="user/passwordForm">忘记密码</a></span>
+    <span class="leftLink"><a href="security/registerForm">注册</a> | <a href="security/passwordForm">忘记密码</a></span>
     <span class="rightLink">帮助 | 设为首页</span>
     </div>
    
