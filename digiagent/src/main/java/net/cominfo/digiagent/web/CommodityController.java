@@ -11,8 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
 import net.cominfo.digiagent.persistence.domain.Commodity;
+import net.cominfo.digiagent.persistence.domain.CommodityImage;
+import net.cominfo.digiagent.service.CommodityImageService;
 import net.cominfo.digiagent.service.CommodityService;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +33,28 @@ import org.springframework.web.multipart.MultipartFile;
 public class CommodityController{
 	@Autowired
 	private CommodityService commodityService;
+	@Autowired
+	private CommodityImageService commodityImageService;
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/queryCommodityList", method = RequestMethod.GET)
+	public void queryCommodityList(@RequestParam Map param, HttpServletResponse response) {
+		try {
+			Long total = commodityService.count(param);
+			PrintWriter pw = response.getWriter();
+			Integer page = Integer.valueOf((String)param.get("page"));
+			Integer rows = 10;
+			String resultList = JSONArray.toJSONString(commodityService.query(page, rows, param));
+			Map resultMap = new HashMap();
+			resultMap.put("total", total);
+			resultMap.put("resultList", resultList);
+			String result = JSONObject.toJSONString(resultMap);
+			pw.write(result);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getList(Model model) {
@@ -40,10 +66,10 @@ public class CommodityController{
 	public @ResponseBody
 	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
 		Long total = commodityService.count(param);
-		List<Commodity> brandList = commodityService.query(page, rows, param);
+		List<Commodity> commodityList = commodityService.query(page, rows, param);
 		Map map = new HashMap();
 		map.put("total", total);
-		map.put("rows", brandList);
+		map.put("rows", commodityList);
 		return Collections.singletonList(map).get(0);
 	}
 	
@@ -59,9 +85,10 @@ public class CommodityController{
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public void create(@ModelAttribute Commodity commodity,
 			@RequestParam("file") MultipartFile image, HttpServletResponse response) throws IOException {
+		CommodityImage commodityImage = new CommodityImage();
 		// MYSQL BLOB类型最大65K
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
-//			commodity.setCommodityImage(image.getBytes());
+			commodityImage.setCommodityimageContent(image.getBytes());
 		}
 		try {
 			PrintWriter pw = response.getWriter();
@@ -69,6 +96,8 @@ public class CommodityController{
 				pw.write(Collections.singletonMap("commodityId", -2).toString().replaceAll("=", ":"));
 			} else {
 				commodity = commodityService.insert(commodity);
+				commodityImage.setCommodityId(commodity.getCommodityId());
+				commodityImageService.insert(commodityImage);
 				pw.write(Collections.singletonMap("commodityId", commodity.getCommodityId()).toString().replaceAll("=", ":"));
 			}
 			pw.close();
@@ -81,6 +110,7 @@ public class CommodityController{
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public void update(@ModelAttribute Commodity commodity,
 			@RequestParam("file") MultipartFile image, HttpServletResponse response)  throws IOException {
+		CommodityImage commodityImage = new CommodityImage();
 		Commodity commodityUpdate = commodityService.getById(commodity.getCommodityId());
 		if (commodity == null) {
 			new ResourceNotFoundException(new Long(commodityUpdate.getCommodityId()));
@@ -92,7 +122,9 @@ public class CommodityController{
 		commodityUpdate.setCommodityDescription(commodity.getCommodityDescription());
 		// MYSQL BLOB类型最大65K
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
-//			commodityUpdate.setCommodityImage(image.getBytes());
+			commodityImage.setCommodityimageContent(image.getBytes());
+			commodityImage.setCommodityId(commodity.getCommodityId());
+			commodityImageService.insert(commodityImage);
 		}
 		commodityUpdate = commodityService.update(commodityUpdate);
 		try {
@@ -119,7 +151,7 @@ public class CommodityController{
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-		model.addAttribute("image", commodityService.getCommodityImage(id));
+		model.addAttribute("image", commodityImageService.getCommodityImage(id));
 		return "image";
 	}
 	
