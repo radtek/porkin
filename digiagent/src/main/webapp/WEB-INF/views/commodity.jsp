@@ -6,7 +6,7 @@
 </head>
 <body>
 <table id="commodityList"></table>
-<div id="commodityEdit" icon="icon-edit" style="width:500px;height:350px;display:none">
+<div id="commodityEdit" icon="icon-edit" style="width:500px;height:380px;display:none">
 	<div style="background: #fafafa; padding: 10px; text-align: center">
 		<form id="commodityForm" action="../commodity/create" method="post"	enctype="multipart/form-data">
 			  <div>
@@ -25,6 +25,17 @@
 	          <div>
 	              	<label for="name">结束时间:</label>
 	              	<input id="endDate" name="endDate" class="easyui-datebox" required="true" readonly="readonly"/>
+	          </div> 
+	          <div>
+	              	<label for="name">商品类型:</label>
+	              	<select class="easyui-validatebox" id="commodityType" name="commodityType"> 
+	                      <option value="S">二手</option> 
+	                      <option value="P">促销</option>
+	              	</select>
+	          </div> 
+	          <div>
+	              	<label for="name">价格:</label>
+	              	<input class="easyui-validatebox" type="text" id="commodityPrice" name="commodityPrice" maxlength="20"/>
 	          </div> 
 	          <div>
 	              	<label for="name">状态:</label>
