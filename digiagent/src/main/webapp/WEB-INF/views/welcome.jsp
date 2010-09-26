@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Index</title>
+<title>首页</title>
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
 <script src="scripts/Calendar.js"></script>
 <script src="scripts/menu.js"></script>
@@ -52,7 +52,7 @@ function whenDelete() {
         <option>个人中心</option>
       </select> 
         <input class="btn_login" type="submit" value="登录" />
-    <span class="leftLink">注册 | 忘记密码</span>
+    <span class="leftLink"><a href="user/registerForm">注册</a> | <a href="user/passwordForm">忘记密码</a></span>
     <span class="rightLink">帮助 | 设为首页</span>
     </div>
    

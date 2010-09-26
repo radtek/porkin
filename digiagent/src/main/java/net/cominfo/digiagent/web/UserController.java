@@ -105,4 +105,14 @@ public class UserController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value = "/registerForm", method = RequestMethod.GET)
+	public String register(HttpServletResponse response) {
+		return "register";
+	}
+	
+	@RequestMapping(value = "/passwordForm", method = RequestMethod.GET)
+	public String password(HttpServletResponse response) {
+		return "password";
+	}
 }
