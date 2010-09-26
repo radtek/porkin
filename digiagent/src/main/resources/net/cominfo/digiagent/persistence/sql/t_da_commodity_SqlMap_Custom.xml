@@ -3,21 +3,47 @@
 <sqlMap namespace="t_da_commodity_Custom">
 	<select id="pageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
 		resultClass="HashMap">
-		SELECT commodity_id as commodityId,
-		       commodity_name as commodityName,
-		       commodity_Description as commodityDescription,
-		       date_format(start_date, '%Y/%m/%d %H:%i:%s') as startDate,
-		       date_format(end_date, '%Y/%m/%d %H:%i:%s') as endDate,
-		       created_by as createdBy,
-		       date_format(created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
-		       lastupdated_by as lastupdatedBy,
-		       date_format(lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
-		       active_flag as activeFlag
-		  FROM t_da_commodity
-		 WHERE commodity_id > 0
+		SELECT t_da_commodity.commodity_id as commodityId,
+		       t_da_commodity.commodity_name as commodityName,
+		       t_da_commodity.commodity_Description as commodityDescription,
+		       date_format(t_da_commodity.start_date, '%Y/%m/%d %H:%i:%s') as startDate,
+		       date_format(t_da_commodity.end_date, '%Y/%m/%d %H:%i:%s') as endDate,
+		       t_da_commodity.created_by as createdBy,
+		       date_format(t_da_commodity.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+		       t_da_commodity.lastupdated_by as lastupdatedBy,
+		       date_format(t_da_commodity.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
+		       t_da_commodity.commodity_price as commodityPrice,
+		       t_da_commodity.commodity_type as commodityType,
+		       t_da_commodity.active_flag as activeFlag,
+		       t_da_supplier.supplier_name as supplierName,
+		       t_da_supplier.supplier_contactname as supplierContactname,
+		       t_da_supplier.supplier_telephone as supplierTelephone,
+		       t_da_supplier.supplier_mobile as supplierMobile,
+		       t_da_supplier.supplier_address as supplierAddress,
+		       t_da_supplier.supplier_description as supplierDescription,
+		       t_da_user.user_email as userEmail,
+			   imageId		
+			  FROM t_da_commodity
+			  left join t_da_user
+			  on t_da_commodity.user_id = t_da_user.user_id
+			  left join t_da_supplier
+			  on t_da_supplier.user_id = t_da_user.user_id
+			  left join (
+	                    select max(commodityimage_id) imageId, commodity_id
+	                           from t_da_commodityimage
+			                   group by commodity_id
+	               ) image
+			  on image.commodity_id = t_da_commodity.commodity_id
+		 WHERE t_da_commodity.commodity_id > 0
+		 <isNotEmpty prepend="AND" property="param.commodityType">
+			commodity_type = '$param.commodityType$'
+         </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.commodityName">
 			commodity_name like '%$param.commodityName$%'
          </isNotEmpty>
+         <isEmpty prepend="ORDER BY" property="orderByStatement">
+         	t_da_commodity.commodity_name
+         </isEmpty>
 		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
 		 	$orderByStatement$
 		 </isNotEmpty>
