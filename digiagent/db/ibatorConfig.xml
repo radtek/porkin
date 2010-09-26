@@ -43,6 +43,7 @@
 		<table tableName="T_DA_ROLE" domainObjectName="Role" />
 		<table tableName="T_DA_USER" domainObjectName="User" />
 		<table tableName="T_DA_USERROLE" domainObjectName="UserRole" />
+		<table tableName="T_DA_SEQUENCE" domainObjectName="Sequence" />
 
 	</ibatorContext>
 </ibatorConfiguration>
