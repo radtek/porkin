@@ -34,6 +34,7 @@ public class MathExpresionParser {
 	private final static int PREC_TOKEN_MULTIPLY = 3;
 	private final static int PREC_TOKEN_DIVIDE = 2;
 
+	@SuppressWarnings("unchecked")
 	public MathExpresionParser(String expresion) {
 		query = expresion == null ? "" : expresion;
 		opstack = new Stack();
@@ -104,6 +105,7 @@ public class MathExpresionParser {
 		current_index--;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void insert(String token_type, String token) {
 		Token topStack = new Token();
 		console(token_type + " is " + token);

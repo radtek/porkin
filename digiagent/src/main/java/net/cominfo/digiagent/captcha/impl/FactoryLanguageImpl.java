@@ -120,6 +120,7 @@ public class FactoryLanguageImpl extends IWordFactory {
 		return ""+out.hashCode(); 	
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void load(){
 		BufferedReader bis=null;
 		BufferedReader encodingReader=null;		
