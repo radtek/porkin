@@ -53,6 +53,7 @@ public class CommodityService {
 		if (commodity.getCommodityId() != null) {
 			return commodity;
 		} else {
+			commodity.setUserId(16);
 			commodity.setCreatedBy("sj");
 			commodity.setCreatedDate(new Date());
 			commodity.setLastupdatedBy("sj");
