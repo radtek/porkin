@@ -97,6 +97,8 @@ function onEditClickHandler(id) {
 		$('input[name="startDate"]').val(new Date(data.startDate).format('yyyy/MM/dd'));
 		$('input[name="endDate"]').val(new Date(data.endDate).format('yyyy/MM/dd'));
 		$('select[name="activeFlag"]').val(data.activeFlag);
+		$('input[name="commodityPrice"]').val(data.commodityPrice);
+		$('select[name="commodityType"]').val(data.commodityType);
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
 		var url = "../commodity/getImage?id=" +id;
@@ -221,6 +223,23 @@ $(function(){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
+			{field:'commodityPrice',title:'价格',width:50,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'commodityType',title:'商品类型',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				},
+				formatter:function(value,rec){
+					if (value == 'S') {
+						return '二手';
+					} else {
+						return '促销';
+					}
+				}
+			},
 			{field:'activeFlag',title:'状态',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
@@ -259,7 +278,9 @@ $(function(){
 					$('input[name="commodityDescription"]').val('');
 					$('input[name="startDate"]').val('');
 					$('input[name="endDate"]').val('');
+					$('input[name="commodityPrice"]').val('');
 					$('input[name="file"]').val('');
+					$('select[name="commodityType"]').val('S');
 					$('#image').empty();
 					$('select[name="activeFlag"]').val('Y');
 					$('#commodityEdit').css('display','block');
