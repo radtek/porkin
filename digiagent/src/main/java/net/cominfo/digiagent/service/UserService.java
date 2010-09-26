@@ -84,20 +84,23 @@ public class UserService {
 	}
 	
 	public User insert(User user, UserRole userRole) {
-		user = validateUserName(user);
+		user.setCreatedBy("sj");
+		user.setCreatedDate(new Date());
+		user.setLastupdatedBy("sj");
+		user.setLastupdatedDate(new Date());
+		user.setLastlogintime(new Date());
+		user.setRegistertime(new Date());
+		user.setLogonsum(0);
+		user.setActiveFlag("Y");
+		userDao.insert(user);		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userName", user.getUserName());
+		
 		if (user.getUserId() != null) {
-			return user;
-		} else {
-			user.setCreatedBy("sj");
-			user.setCreatedDate(new Date());
-			user.setLastupdatedBy("sj");
-			user.setLastupdatedDate(new Date());
-			user.setLastlogintime(new Date());
-			user.setRegistertime(new Date());
-			user.setLogonsum(0);
-			userDao.insert(user);
 			userRole.setUserId(user.getUserId());
 			userRoleDao.insert(userRole);
+			return user;
+		} else {
 			return user;
 		}
 	}
@@ -146,6 +149,7 @@ public class UserService {
 			return user;
 		}
 	}
+	
 	
 	@SuppressWarnings("unused")
 	private boolean isReferenceRoleUser(Integer userId) {

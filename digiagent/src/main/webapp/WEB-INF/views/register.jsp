@@ -48,45 +48,45 @@ function whenDelete() {
 </DIV>
 <div class="dfcenterTitle">用户注册</div>
 <div id="loginCenter">
-
+<form action="register" method="post">
   <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="3"><strong>以下信息为必填项</strong></td>
     </tr>
     <tr>
       <td>用户类型</td>
-      <td colspan="2"><input type="radio" name="radio" id="radio" value="radio" />
+      <td colspan="2"><input type="radio" name="type" id="radio1" value="个人会员" />
       个人用户
-        <input type="radio" name="radio" id="radio2" value="radio" />
+        <input type="radio" name="type" id="radio2" value="企业会员" />
 
       企业用户</td>
     </tr>
     <tr>
       <td>输入帐号</td>
-      <td><input type="text" name="textfield2" id="textfield2" class="inputW100" /></td>
+      <td><input type="text" name="username" id="username" class="inputW100" /></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
 
       <td>输入密码</td>
-      <td><input type="password" name="textfield" id="textfield" class="inputW100" /></td>
+      <td><input type="password" name="password" id="password" class="inputW100" /></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>确认密码</td>
-      <td><input type="password" name="textfield3" id="textfield3" class="inputW100" /></td>
+      <td><input type="password" name="password0" id="password0" class="inputW100" /></td>
       <td>请再一次输入密码</td>
 
     </tr>
     <tr>
       <td>电子邮箱</td>
-      <td><input type="text" name="textfield4" id="textfield4" class="inputW100" /></td>
+      <td><input type="text" name="email" id="email" class="inputW100" /></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>随机验证</td>
 
-      <td><input type="text" name="textfield5" id="textfield5" class="inputW100" /></td>
+      <td><input type="text" name="captcha" id="captcha" class="inputW100" /></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
@@ -104,6 +104,7 @@ function whenDelete() {
       <td>&nbsp;</td>
     </tr>
   </table>
+</form>
   <p class="tagContent">&nbsp;</p>
 
 </div>
