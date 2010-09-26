@@ -20,6 +20,7 @@ public class Driver {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 		Properties props = new Properties();
 		String ext = "png";

@@ -38,6 +38,7 @@ public final class Producer {
 	 *      www.javageeks.com/Papers/ClassForName/ClassForName.pdf+Class.forName&
 	 *      hl=en&ct=clnk&cd=3&gl=us&client=firefox-a
 	 */
+	@SuppressWarnings("unchecked")
 	public static IWordFactory forName(String className) throws Exception {
 		Thread t = Thread.currentThread();
 		ClassLoader cl = t.getContextClassLoader();
@@ -64,6 +65,7 @@ public final class Producer {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	private static Method findGetInstance(Class cls) throws Exception {
 		java.lang.reflect.Method[] methods = cls.getMethods();
 		for (int i = 0; i < methods.length; i++) {
@@ -111,10 +113,13 @@ public final class Producer {
 	 * @param props
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private static BufferedImage renderImage(IWordFactory inst, Properties props) {
 		IBackgroundProducer BackGroundProducer;
 		int fontSize = 25;
 		int min_width = -1;
+		
+		@SuppressWarnings("unused")
 		int min_height = -1;
 		String text = inst.getWord().toUpperCase();
 
