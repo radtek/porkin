@@ -74,5 +74,5 @@ public class SecurityService {
 		Role result = roleList.get(0);
 		return result;
 	}
-
+	
 }

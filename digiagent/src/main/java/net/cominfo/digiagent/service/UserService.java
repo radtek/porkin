@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.RoleDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.dao.UserDao;
 import net.cominfo.digiagent.persistence.dao.UserRoleDao;
 import net.cominfo.digiagent.persistence.domain.Role;
@@ -20,37 +21,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @Transactional
 public class UserService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private RoleDao roleDao;
-	
+
 	@Autowired
 	private UserRoleDao userRoleDao;
+
+	@Autowired
+	private SequenceDao sequenceDao;
 
 	public int countUser() {
 		return userDao.countByExample(new UserCriteria());
 	}
-	
-	public User getById(Integer id){
+
+	public User getById(Integer id) {
 		return userDao.selectByPrimaryKey(id);
 	}
-	
 
 	@SuppressWarnings("unchecked")
-	public Map getUserInfo(Map condition){
+	public Map getUserInfo(Map condition) {
 		return userDao.getUserInfo(condition);
 	}
-	
+
 	public String getRoleList() {
 		RoleCriteria example = new RoleCriteria();
-		net.cominfo.digiagent.persistence.domain.RoleCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.RoleCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andActiveFlagEqualTo("Y");
 		example.setOrderByClause("ROLE_NAME");
 		List<Role> roleList = roleDao.selectByExample(example);
@@ -65,24 +68,51 @@ public class UserService {
 		}
 		return buffer.toString();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<User> query(int pageNo, int pageSize, Map<String, Object> param){
+	public List<User> query(int pageNo, int pageSize, Map<String, Object> param) {
 		Page<User> page = new Page<User>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		page.setOrderBy("USER_NAME");
 		page.setOrder("ASC");
 		page.setParam(param);
-		return (List<User>) userDao.findPage(page, "t_da_user_Custom.pageByCondition").getResult();
+		return (List<User>) userDao.findPage(page,
+				"t_da_user_Custom.pageByCondition").getResult();
 	}
-	
-	public Long count(Map<String, Object> param){
+
+	public Long count(Map<String, Object> param) {
 		Page<User> page = new Page<User>();
 		page.setParam(param);
 		return userDao.count(page, "t_da_user_Custom.countByCondition");
 	}
-	
+
+	public User register(User user, int roleId) {
+
+		user = validateUserName(user);
+
+		user.setCreatedBy("sj");
+		user.setCreatedDate(new Date());
+		user.setLastupdatedBy("sj");
+		user.setLastupdatedDate(new Date());
+		user.setLastlogintime(new Date());
+		user.setRegistertime(new Date());
+		user.setLogonsum(0);
+		user.setActiveFlag("Y");
+		int userId = sequenceDao.getUserNexId();
+		user.setUserId(userId);
+
+		userDao.insert(user);
+
+		UserRole userRole = new UserRole();
+		userRole.setRoleId(roleId);
+		userRole.setUserId(userId);
+
+		userRoleDao.insert(userRole);
+
+		return user;
+	}
+
 	public User insert(User user, UserRole userRole) {
 		user.setCreatedBy("sj");
 		user.setCreatedDate(new Date());
@@ -92,10 +122,10 @@ public class UserService {
 		user.setRegistertime(new Date());
 		user.setLogonsum(0);
 		user.setActiveFlag("Y");
-		userDao.insert(user);		
+		userDao.insert(user);
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userName", user.getUserName());
-		
+
 		if (user.getUserId() != null) {
 			userRole.setUserId(user.getUserId());
 			userRoleDao.insert(userRole);
@@ -104,7 +134,7 @@ public class UserService {
 			return user;
 		}
 	}
-	
+
 	public User update(User user, UserRole userRole) {
 		user = validateUserName(user);
 		if (user.getUserId() == -1) {
@@ -114,32 +144,34 @@ public class UserService {
 			user.setLastupdatedDate(new Date());
 			userDao.updateByPrimaryKey(user);
 			UserRoleCriteria example = new UserRoleCriteria();
-			net.cominfo.digiagent.persistence.domain.UserRoleCriteria.Criteria criteria = example.createCriteria();
+			net.cominfo.digiagent.persistence.domain.UserRoleCriteria.Criteria criteria = example
+					.createCriteria();
 			criteria.andUserIdEqualTo(userRole.getUserId());
 			userRoleDao.updateByExample(userRole, example);
 			return user;
 		}
 	}
-	
-	public String delete(Integer id){
+
+	public String delete(Integer id) {
 		// 是否有用户角色关联
-//		if (isReferenceRoleUser(id)) {
-			UserRoleCriteria example = new UserRoleCriteria();
-			net.cominfo.digiagent.persistence.domain.UserRoleCriteria.Criteria criteria = example.createCriteria();
-			criteria.andUserIdEqualTo(id);
-			userRoleDao.deleteByExample(example);
-//			return "reference";
-//		} 
+		// if (isReferenceRoleUser(id)) {
+		UserRoleCriteria example = new UserRoleCriteria();
+		net.cominfo.digiagent.persistence.domain.UserRoleCriteria.Criteria criteria = example
+				.createCriteria();
+		criteria.andUserIdEqualTo(id);
+		userRoleDao.deleteByExample(example);
+		// return "reference";
+		// }
 		userDao.deleteByPrimaryKey(id);
 		return "success";
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private User validateUserName(User user) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userName", user.getUserName());
 		if (user.getUserId() != null) {
-			paramMap.put("userId",user.getUserId());
+			paramMap.put("userId", user.getUserId());
 		}
 		List<Map> list = userDao.findByCondition(paramMap);
 		if (list != null && list.size() > 0) {
@@ -149,12 +181,12 @@ public class UserService {
 			return user;
 		}
 	}
-	
-	
+
 	@SuppressWarnings("unused")
 	private boolean isReferenceRoleUser(Integer userId) {
 		UserRoleCriteria example = new UserRoleCriteria();
-		net.cominfo.digiagent.persistence.domain.UserRoleCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.UserRoleCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andUserIdEqualTo(userId);
 		List<UserRole> list = userRoleDao.selectByExample(example);
 		if (list != null && list.size() > 0) {

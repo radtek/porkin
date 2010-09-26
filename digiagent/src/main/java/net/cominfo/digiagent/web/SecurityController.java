@@ -32,19 +32,17 @@ public class SecurityController {
 	
 	@Autowired
 	private UserService userService;
-	
+		
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String login(@RequestParam String type, @RequestParam String username, @RequestParam String password,@RequestParam String email) {
+	public String register(@RequestParam String type, @RequestParam String username, @RequestParam String password,@RequestParam String email) {
 		
 		Role role = securityService.getRoleByName(type);
-		UserRole userRole = new UserRole();
-		userRole.setRoleId(role.getRoleId());
 		
 		User user = new User();
 		user.setUserName(username);
 		user.setUserPassword(password);
 		user.setUserEmail(email);
-		userService.insert(user, userRole);
+		userService.register(user, role.getRoleId());
 		
 		return "welcome";
 	}
