@@ -17,6 +17,12 @@
 <script type="text/javascript" src="scripts/commoditylist.js"></script>
 <script type="text/javascript" src="scripts/login.js"></script>
 <script type="text/javascript" src="scripts/index.js"></script>
+<style>
+.supplierInfo {
+	width:100%; border-color:maroon; border-style:solid; border-width:1px;float:left;
+}
+li {list-style-type:none;}
+</style>
 </head>
 <body>
 <div class="headTop">
@@ -116,13 +122,13 @@
       </table>
     </div>
     <div class="tagContent" id="tagContent2">
-    	<table id="commodityP">
-	    </table>
+    	<div id="commodityP">
+	    </div>
 	    <div></div>
     </div>
     <div class="tagContent" id="tagContent3">
-      	<table id="commodityS">
-	    </table>
+      	<div id="commodityS">
+	    </div>
 	    <div></div>
     </div>
     <div class="tagContent" id="tagContent4">
