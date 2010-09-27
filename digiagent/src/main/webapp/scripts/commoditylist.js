@@ -60,10 +60,10 @@ function queryCommodityList(pageNum, commodityType) {
 				str = str.replace(/supplierAddress/g, commodity.supplierAddress == null ? '暂无' : commodity.supplierAddress);
 				str = str.replace(/userEmail/g, commodity.userEmail == null ? '暂无' : commodity.userEmail);
 				if (commodityType == 'S') {
-					$('#commodityS').append('<tr><td>' + str + '</td></tr>');
+					$('#commodityS').append('<div class="supplierInfo">' + str + '</div>');
 				}
 				if (commodityType == 'P') {
-					$('#commodityP').append('<tr><td>' + str + '</td></tr>');
+					$('#commodityP').append('<div class="supplierInfo"c>' + str + '</div>');
 				}
 		    });
 			var totalPage = Math.ceil(data.total/10.0);

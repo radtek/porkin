@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CommodityDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria.Criteria;
@@ -21,6 +22,9 @@ public class CommodityService {
 
 	@Autowired
 	private CommodityDao commodityDao;
+	
+	@Autowired
+	private SequenceDao sequenceDao;
 
 	public int countCommodity() {
 		return commodityDao.countByExample(new CommodityCriteria());
@@ -53,7 +57,9 @@ public class CommodityService {
 		if (commodity.getCommodityId() != null) {
 			return commodity;
 		} else {
-			commodity.setUserId(16);
+			int commodityId = sequenceDao.getCommodityNexId();
+			commodity.setCommodityId(commodityId);
+			commodity.setUserId(1);
 			commodity.setCreatedBy("sj");
 			commodity.setCreatedDate(new Date());
 			commodity.setLastupdatedBy("sj");

@@ -55,8 +55,11 @@
 		SELECT count(*) as total
 		FROM t_da_commodity
 		 WHERE commodity_id > 0
+		 <isNotEmpty prepend="AND" property="param.commodityType">
+			commodity_type = '$param.commodityType$'
+         </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.commodityName">
-			commodity_name = '%$param.commodityName$%'
-		</isNotEmpty>
+			commodity_name like '%$param.commodityName$%'
+         </isNotEmpty>
 	</select>
 </sqlMap>

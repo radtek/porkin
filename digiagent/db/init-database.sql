@@ -586,3 +586,21 @@ ALTER TABLE `t_da_userrole`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+insert into t_da_sequence(name,nextid) value('brand',1);
+insert into t_da_sequence(name,nextid) value('category',1);
+insert into t_da_sequence(name,nextid) value('city',1);
+insert into t_da_sequence(name,nextid) value('commodity',1);
+insert into t_da_sequence(name,nextid) value('commodityimage',1);
+insert into t_da_sequence(name,nextid) value('contact',1);
+insert into t_da_sequence(name,nextid) value('country',1);
+insert into t_da_sequence(name,nextid) value('history',1);
+insert into t_da_sequence(name,nextid) value('product',1);
+insert into t_da_sequence(name,nextid) value('productbrand',1);
+insert into t_da_sequence(name,nextid) value('province',1);
+insert into t_da_sequence(name,nextid) value('role',1);
+insert into t_da_sequence(name,nextid) value('supplier',1);
+insert into t_da_sequence(name,nextid) value('supplierproduct',1);
+insert into t_da_sequence(name,nextid) value('user',1);
+insert into t_da_sequence(name,nextid) value('userrole',1);

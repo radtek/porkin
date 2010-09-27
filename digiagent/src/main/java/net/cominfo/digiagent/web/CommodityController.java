@@ -104,7 +104,6 @@ public class CommodityController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		return Collections.singletonMap("commodityId", commodity.getCommodityId());
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -124,7 +123,7 @@ public class CommodityController{
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
 			commodityImage.setCommodityimageContent(image.getBytes());
 			commodityImage.setCommodityId(commodity.getCommodityId());
-			commodityImageService.insert(commodityImage);
+			commodityImageService.update(commodityImage);
 		}
 		commodityUpdate = commodityService.update(commodityUpdate);
 		try {
@@ -138,19 +137,10 @@ public class CommodityController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		return Collections.singletonMap("commodityId", commodityUpdate.getCommodityId());
 	}
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
 	public String output(@RequestParam Integer id, HttpServletResponse response, Model model) {
-//		try {
-//			ServletOutputStream sos = response.getOutputStream();
-//			sos.write(commodityService.getCommodityImage(id));
-//			sos.flush();  
-//			sos.close();  
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 		model.addAttribute("image", commodityImageService.getCommodityImage(id));
 		return "image";
 	}

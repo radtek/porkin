@@ -8,6 +8,7 @@ import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CityDao;
 import net.cominfo.digiagent.persistence.dao.ContactDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.City;
@@ -42,6 +43,9 @@ public class SupplierService {
 	private ContactDao contactDao;
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private SequenceDao sequenceDao;
 
 	public int countSupplier() {
 		return supplierDao.countByExample(new SupplierCriteria());
@@ -99,13 +103,16 @@ public class SupplierService {
 			return supplier;
 		} else {
 			// FIXME Role default 企业会员[4]
+			user.setUserId(sequenceDao.getUserNexId());
 			user.setUserName(String.valueOf(new Date().getTime()));
 			user.setUserPassword(String.valueOf(new Date().getTime()));
 			user.setActiveFlag("N");
 			userRole.setRoleId(4);
 			userService.insert(user, userRole);
 			
-			supplier.setUserId(user.getUserId());
+			supplier.setSupplierId(sequenceDao.getSupplierNexId());
+//			supplier.setUserId(user.getUserId());
+			supplier.setUserId(1);
 			supplier.setCreatedBy("sj");
 			supplier.setCreatedDate(new Date());
 			supplier.setLastupdatedBy("sj");
