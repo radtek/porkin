@@ -3,14 +3,14 @@
 <%@ page session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
-<link href="../styles/main.css" rel="stylesheet" type="text/css" />
-<script src="../scripts/Calendar.js"></script>
-<script src="../scripts/menu.js"></script>
+<link href="styles/main.css" rel="stylesheet" type="text/css" />
+<script src="scripts/Calendar.js"></script>
+<script src="scripts/menu.js"></script>
 
 <script language="javascript">
 
@@ -31,12 +31,8 @@ function whenDelete() {
         <option>大连</option>
         <option>上海</option>
       </select>
-    您好,用户姓名
-    <select name="select4" style="width:80px;">
-      <option>个人中心</option>
-    </select>
-    <input class="btn_login" type="submit" value="登录" />
-    <span class="leftLink">注册 | 忘记密码</span> <span class="rightLink">帮助 | 设为首页</span> </div>
+     <span class="leftLink"><a href="">首页</a></span>
+     <span class="rightLink">帮助 | 设为首页</span> </div>
   <div class="logo"></div>
 </div>
 <div class="redLine"></div>

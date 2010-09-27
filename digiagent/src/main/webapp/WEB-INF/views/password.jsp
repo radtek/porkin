@@ -8,9 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
-<link href="../styles/main.css" rel="stylesheet" type="text/css" />
-<script src="../scripts/Calendar.js"></script>
-<script src="../scripts/menu.js"></script>
+<link href="styles/main.css" rel="stylesheet" type="text/css" />
+<script src="scripts/Calendar.js"></script>
+<script src="scripts/menu.js"></script>
 <script language="javascript">
 
 function whenDelete() {
@@ -25,22 +25,15 @@ function whenDelete() {
 </head>
 <body>
 <div class="headTop">
-    <div class="headCity">切换城市           
-      <select name="select3" style="width:60px;">
+  <div class="headCity">切换城市
+    <select name="select3" style="width:60px;">
         <option>大连</option>
         <option>上海</option>
-        </select>
-      您好,用户姓名
-      <select name="select4" style="width:80px;">
-        <option>个人中心</option>
-        </select> 
-        <input class="btn_login" type="submit" value="登录" />
-    </div>
-	<div class="logo"></div>
-    <div class="rightLink">登录 | 注册 | 帮助</div>
-    <div class="redLine"></div>
+      </select>
+     <span class="rightLink">帮助 | 设为首页</span> </div>
+  <div class="logo"></div>
 </div>
-
+<div class="redLine"></div>
 <DIV style="CLEAR: both"></DIV>
 </DIV>
 </DIV>

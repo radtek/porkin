@@ -14,7 +14,35 @@
 <script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="scripts/searchbar.js"></script>
 <script type="text/javascript" src="scripts/common/common.js"></script>
+
 <script language="javascript">
+
+function login(username,password) {
+	$.ajax({
+		url: "security/login",
+		dataType: "text",
+		type: "POST",
+		data:{username:username, password:password},
+		success: function(data) {
+			if(data==null){
+				alert("用户名或密码错误！");
+			}
+			else{
+				alert(22);
+				//window.location.href("/");
+			}		
+		},
+		error: function(xhr, ajaxOptions, thrownError){
+			 alert("数据读取失败！");
+        }
+	});
+}
+
+function validate() {
+	var username = $("input[name='username']").val();
+	var password = $("input[name='password']").val();
+	login(username, password);
+}
 function selectTag(showContent,selfObj){
 	// 操作标签
 	var tag = document.getElementById("tags").getElementsByTagName("li");
@@ -43,16 +71,24 @@ function whenDelete() {
 <body>
 <div class="headTop">
     <div class="headCity">切换城市           
-      <select name="select3" style="width:60px;">
+      <select name="city" style="width:60px;">
         <option>大连</option>
         <option>上海</option>
       </select>
-      您好,用户姓名
-      <select name="select4" style="width:80px;">
-        <option>个人中心</option>
-      </select> 
-        <input class="btn_login" type="submit" value="登录" />
-    <span class="leftLink"><a href="security/registerForm">注册</a> | <a href="security/passwordForm">忘记密码</a></span>
+      <c:choose>
+      <c:when test="${sessionScope.username}==null">
+     <form name="loginForm" action="login" method="post">
+      用户<input type="text" name="username" size="10" width="10"/>&nbsp;
+      密码<input type="password" name="password" size="10" width="10"/>&nbsp;
+      <input class="btn_login" type="submit" value="登录" "/>
+      </form>
+    <span class="leftLink"><a href="registerForm">注册</a> | <a href="passwordForm">忘记密码</a></span>
+      </c:when>
+      <c:otherwise>
+       <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.username}" /> | <a href="member">会员</a> | <a href="logout">退出</a></span>
+      </c:otherwise>
+      </c:choose>
+      
     <span class="rightLink">帮助 | 设为首页</span>
     </div>
    
