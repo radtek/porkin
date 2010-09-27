@@ -23,6 +23,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author 703006677
+ *
+ */
 @Service
 @Transactional
 public class SecurityService {
@@ -75,4 +79,22 @@ public class SecurityService {
 		return result;
 	}
 	
+	
+	/**
+	 * @param userName
+	 * @param userPassword
+	 * @return 
+	 */
+	public boolean login(String userName, String userPassword) {
+		boolean result = false;
+		UserCriteria criteria = new UserCriteria();
+		criteria.createCriteria().andUserNameEqualTo(userName)
+				.andUserPasswordEqualTo(userPassword);
+		List<User> userList = userDao.selectByExample(criteria);
+		if (userList != null & userList.size() > 0) {
+			result = true;
+		}
+		return result;
+	}
+
 }
