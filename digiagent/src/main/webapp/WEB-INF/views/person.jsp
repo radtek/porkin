@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>个人会员</title>
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
 <script src="scripts/Calendar.js"></script>
 <script src="scripts/menu.js"></script>
@@ -25,22 +25,16 @@ function whenDelete() {
 </head>
 <body>
 <div class="headTop">
-    <div class="headCity">切换城市           
-      <select name="select3" style="width:60px;">
+  <div class="headCity">切换城市
+    <select name="select3" style="width:60px;">
         <option>大连</option>
         <option>上海</option>
-        </select>
-      您好,用户姓名
-      <select name="select4" style="width:80px;">
-        <option>个人中心</option>
-        </select> 
-        <input class="btn_login" type="submit" value="登录" />
-    </div>
-	<div class="logo"></div>
-    <div class="rightLink">登录 | 注册 | 帮助</div>
-    <div class="redLine"></div>
+      </select>
+     <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.username}" /> | <a href="member">会员</a> | <a href="logout">退出</a></span>
+     <span class="rightLink">帮助 | 设为首页</span> </div>
+  <div class="logo"></div>
 </div>
-
+<div class="redLine"></div>
 <DIV style="CLEAR: both"></DIV>
 <DIV id=dfleft>
 <DIV class=sidebar>
