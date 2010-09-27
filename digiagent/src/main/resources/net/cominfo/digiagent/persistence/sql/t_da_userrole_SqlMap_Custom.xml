@@ -2,13 +2,20 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="t_da_userrole_Custom">
 
-	<select id="getRoleNameListByUsername"  parameterClass="HashMap"
-		resultClass="HashMap">
-		select role_name from t_da_user, t_da_userrole, t_da_role
+	<select id="getRoleNameListByUsername"  parameterClass="java.lang.String" resultClass="java.lang.String" >
+		select t_da_role.role_name from t_da_user, t_da_userrole, t_da_role
 		where t_da_user.user_id = t_da_userrole.user_id and
 		t_da_role.role_id =
 		t_da_userrole.role_id and
-		t_da_user.username= #value#
+		t_da_user.user_name= #value#
+  </select>
+  
+  <select id="getRoleIdListByUsername"  parameterClass="java.lang.String" resultClass="java.lang.String" >
+		select t_da_role.role_id from t_da_user, t_da_userrole, t_da_role
+		where t_da_user.user_id = t_da_userrole.user_id and
+		t_da_role.role_id =
+		t_da_userrole.role_id and
+		t_da_user.user_name= #value#
   </select>
 
 </sqlMap>

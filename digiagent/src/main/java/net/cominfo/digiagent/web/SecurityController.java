@@ -1,6 +1,7 @@
 package net.cominfo.digiagent.web;
 
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
 import net.cominfo.digiagent.captcha.render.Producer;
 import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.service.UserRoleService;
 import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.security.SecurityService;
 
@@ -20,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -32,15 +33,46 @@ public class SecurityController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserRoleService userRoleService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, @RequestParam String username,
 			@RequestParam String password, HttpSession session) {
-		String userName = securityService.login(username, password);
-		if (userName != null) {
-			session.setAttribute("username", userName);
+		User user = securityService.login(username, password);
+		if (user != null) {
+			session.setAttribute("username", user.getUserName());
+			//session.setAttribute("userId", user.getUserId());
 		}
 		return "welcome";
+	}
+	
+	
+	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	public String member(HttpSession session) {
+		String username = (String)session.getAttribute("username");
+		List<String> roleIdList = userRoleService.getRoleIdListByUserName(username);
+		String roleId = null;
+		
+		String result = "welcome";
+		if(roleIdList!=null){
+			roleId = roleIdList.get(0);
+			if(roleId.equals("1") || roleId.equals("2") || roleId.equals("3")){
+				result = "/admin";
+			}
+			else if (roleId.equals("4")){
+				result = "company";
+			}
+			else if (roleId.equals("5")){
+				result = "person";
+			}
+			else{
+				result = "welcome";
+			}
+		}
+		
+		return result;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
