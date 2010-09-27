@@ -85,14 +85,14 @@ public class SecurityService {
 	 * @param userPassword
 	 * @return 
 	 */
-	public boolean login(String userName, String userPassword) {
-		boolean result = false;
+	public String login(String userName, String userPassword) {
+		String result = null;
 		UserCriteria criteria = new UserCriteria();
 		criteria.createCriteria().andUserNameEqualTo(userName)
 				.andUserPasswordEqualTo(userPassword);
 		List<User> userList = userDao.selectByExample(criteria);
 		if (userList != null & userList.size() > 0) {
-			result = true;
+			result = userName;
 		}
 		return result;
 	}
