@@ -1,4 +1,4 @@
-/* Styles Updated: 08/30/2010 @ 10:45 A.M. ¡ª¡ª-*/
+/* Styles Updated: 08/30/2010 @ 10:45 A.M. â€”â€”-*/
 
 body{margin:0; padding:0; background:#FFF; font-family: verdana, Arial, Tahoma; height:100%; border: 0px; font-size:12px;}
 img {border:0;}
@@ -23,7 +23,7 @@ HTML{overflow-x:hidden; OVERFLOW-Y: auto; SCROLLBAR-FACE-COLOR: #ebebeb; SCROLLB
 .logo{ float:left; background:url(../images/common/01_05.gif) no-repeat; height:65px; margin:0 0 0 20px; padding:0px;  padding:25px 0px 0px 30px; width:194px;}
 .leftLink{  color:#076ac5; padding-left:20px;}
 .rightLink{ color:#076ac5; float:right;  vertical-align: top;}
-.redLine{ width:96%;border-top: 4px #ffb700 solid; margin:auto}
+.redLine{ width:96%;border-top: 4px #ffb700 solid; margin:5px auto}
 #dfleft {	FLOAT: left; WIDTH: 180px; margin-left:10px;}
 #dfright {	FLOAT: left; WIDTH:500px; border:solid 1px #ccc;margin-left:10px;}
 #dfcenter {WIDTH:500px; border:solid 1px #ccc; margin:0 auto;}
@@ -75,7 +75,7 @@ HTML{overflow-x:hidden; OVERFLOW-Y: auto; SCROLLBAR-FACE-COLOR: #ebebeb; SCROLLB
  .li_more {
 	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 12px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; WIDTH: 323px; TEXT-ALIGN: right; BORDER-RIGHT-WIDTH: 0px
 }
-/* =tab style ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª-*/
+/* =tab style â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”-*/
 OL LI {
 	MARGIN: 8px;
 }
@@ -108,7 +108,7 @@ OL LI {
 	DISPLAY: block
 }
 
-/* =button style ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª-*/
+/* =button style â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”-*/
 .button01
 {
 	color:#333;
@@ -152,7 +152,7 @@ idth:200px; }
 .link1 {FONT-SIZE: 14px; WIDTH: 200px; LINE-HEIGHT: 20px; float:left; padding:20px 0 0 100px ;   }
 .link_c {	WIDTH: 350px}
 .hong14b {	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #cc0000; }
-.listInfo{ width:500px; height:100px;}
+.listInfo{ width:700px; height:200px;}
 
 .div_body{ clear:both; margin:0 auto; width:950px;}
 .bodyW {
@@ -287,16 +287,16 @@ idth:200px; }
 	PADDING-RIGHT: 10px; FLOAT: right
 }
 .sjcx DD A:link {
-	FONT-FAMILY: "ËÎÌå"; TEXT-DECORATION: underline
+	FONT-FAMILY: "å®‹ä½“"; TEXT-DECORATION: underline
 }
 .sjcx DD A:visited {
-	FONT-FAMILY: "ËÎÌå"; TEXT-DECORATION: underline
+	FONT-FAMILY: "å®‹ä½“"; TEXT-DECORATION: underline
 }
 .sjcx DD A:hover {
-	FONT-FAMILY: "ËÎÌå"; TEXT-DECORATION: underline
+	FONT-FAMILY: "å®‹ä½“"; TEXT-DECORATION: underline
 }
 .sjcx DD A:active {
-	FONT-FAMILY: "ËÎÌå"; TEXT-DECORATION: underline
+	FONT-FAMILY: "å®‹ä½“"; TEXT-DECORATION: underline
 }
 .sjcxmenu {
 	PADDING-LEFT: 6px; BACKGROUND: url(http://image.tianjimedia.com/TLimages/common2009/yesky/images/common/product/product_index_bg09081.gif) repeat-x 0px -143px; WIDTH: 212px; HEIGHT: 23px
@@ -339,7 +339,6 @@ idth:200px; }
 .plphbox LI {  WIDTH: 140px; padding-left:15px; line-height:23px; }
 
 
-/* my style */
-.liststyle { border:#aad5ef 1px solid; background:url(../images/common/dibg5.jpg) repeat-x 50% top; WIDTH: 450px; }
+
 
 
