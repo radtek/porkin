@@ -40,28 +40,29 @@ function whenDelete() {
 <DIV id=dfleft>
 <DIV class=sidebar>
     <DIV class=blk>
-    <H3>用户操作</H3>
+    <H3>企业会员</H3>
         <DIV class=c>                   
             <DIV class=blk2>                       
                 <UL>
                   <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
-                  target=_blank>个人信息 </A></b>
-                  <ul>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=44127" 
-                  target=_blank>账户信息</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=36551" 
-                  target=_blank>会员相关</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9693" 
-                  target=_blank>个人资料</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9386" 
-                  target=_blank>兴趣爱好</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=28498" 
-                  target=_blank>上传头像</A>
-                  <LI><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=14214" 
-                  target=_blank>实名认证</A>
-                  </ul>
+                  target=_blank>基本信息 </A></b>
+                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
+                  target=_blank>密码管理 </A></b>
+                   <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
+                  target=_blank>电子邮件 </A></b>
+                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
+                  target=_blank>公司简介 </A></b>
+                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
+                  target=_blank>联系方式 </A></b>
+                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
+                  target=_blank>代理申请</A></b>
+                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
+                  target=_blank>资质认证 </A></b>
+                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
+                  target=_blank>促销发布 </A></b>	
                   <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=22866" 
-                  target=_blank>二手发布</A></b></LI></UL></DIV></DIV></DIV>
+                  target=_blank>促销历史</A></b></LI></UL></DIV></DIV></DIV>
+                  
         </DIV>
     </DIV>
 </DIV>
