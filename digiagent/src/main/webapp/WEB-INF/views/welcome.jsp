@@ -1,6 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@page pageEncoding="UTF-8"%>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -76,7 +76,7 @@ function whenDelete() {
         <option>上海</option>
       </select>
       <c:choose>
-      <c:when test="${sessionScope.username}==null">
+      <c:when test="${empty sessionScope.username}">
      <form name="loginForm" action="login" method="post">
       用户<input type="text" name="username" size="10" width="10"/>&nbsp;
       密码<input type="password" name="password" size="10" width="10"/>&nbsp;

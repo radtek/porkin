@@ -25,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/")
-@SessionAttributes("username")
 public class SecurityController {
 
 	@Autowired
@@ -33,22 +32,24 @@ public class SecurityController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public  String login(Model model,@RequestParam String username, @RequestParam String password) {
+	public String login(Model model, @RequestParam String username,
+			@RequestParam String password, HttpSession session) {
 		String userName = securityService.login(username, password);
-		if(userName!=null){
-			model.addAttribute("username", username);
+		if (userName != null) {
+			session.setAttribute("username", userName);
 		}
-		return  "welcome";
+		return "welcome";
 	}
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public  String logout(Model model, HttpSession session) {
+	public String logout(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		session.removeAttribute("usrename");
 		session.invalidate();
-		return  "redirect:/";
+		return "welcome";
 	}
-	
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(@RequestParam String type,
