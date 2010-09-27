@@ -11,7 +11,6 @@ import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
 import net.cominfo.digiagent.captcha.render.Producer;
 import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.User;
-import net.cominfo.digiagent.persistence.domain.UserRole;
 import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.security.SecurityService;
 
@@ -22,28 +21,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
 @Controller
 @RequestMapping(value = "/security")
 public class SecurityController {
-	
+
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
 	private UserService userService;
-		
+	
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(@RequestParam String username, @RequestParam String password) {
+		boolean loginFlag = securityService.login(username, password);
+		return "welcome";
+	}
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(@RequestParam String type, @RequestParam String username, @RequestParam String password,@RequestParam String email) {
-		
+	public String register(@RequestParam String type,
+			@RequestParam String username, @RequestParam String password,
+			@RequestParam String email) {
+
 		Role role = securityService.getRoleByName(type);
-		
+
 		User user = new User();
 		user.setUserName(username);
 		user.setUserPassword(password);
 		user.setUserEmail(email);
 		userService.register(user, role.getRoleId());
-		
+
 		return "welcome";
 	}
 
@@ -63,20 +70,22 @@ public class SecurityController {
 
 		Properties props = new Properties();
 		String ext = "jpg";
-		props.put("format", ext); 
-		props.put("font", "Helvetica"); 
-		props.put("fontsize", "28"); 
-		props.put("min-width", "180"); 
-		props.put("padding-x", "25"); 
-		props.put("padding-y", "25"); 
-		
+		props.put("format", ext);
+		props.put("font", "Helvetica");
+		props.put("fontsize", "28");
+		props.put("min-width", "180");
+		props.put("padding-x", "25");
+		props.put("padding-y", "25");
+
 		try {
 			OutputStream os = response.getOutputStream();
-			FactoryRandomImpl inst=(FactoryRandomImpl)Producer.forName("net.cominfo.digiagent.captcha.impl.FactoryRandomImpl");
+			FactoryRandomImpl inst = (FactoryRandomImpl) Producer
+					.forName("net.cominfo.digiagent.captcha.impl.FactoryRandomImpl");
 			inst.setSize(6);
 			Producer.render(os, inst, props);
 			HttpSession session = request.getSession();
-			session.setAttribute("icaptcha", inst.getHashCode(inst.getLastWord()));
+			session.setAttribute("icaptcha", inst.getHashCode(inst
+					.getLastWord()));
 
 		} catch (Exception e) {
 
