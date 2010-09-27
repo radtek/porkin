@@ -3,14 +3,15 @@
 <%@ page session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>用户注册</title>
+<title>Untitled Document</title>
 <link href="../styles/main.css" rel="stylesheet" type="text/css" />
 <script src="../scripts/Calendar.js"></script>
 <script src="../scripts/menu.js"></script>
+
 <script language="javascript">
 
 function whenDelete() {
@@ -25,30 +26,26 @@ function whenDelete() {
 </head>
 <body>
 <div class="headTop">
-    <div class="headCity">切换城市           
-      <select name="select3" style="width:60px;">
-
+  <div class="headCity">切换城市
+    <select name="select3" style="width:60px;">
         <option>大连</option>
         <option>上海</option>
-        </select>
-      您好,用户姓名
-      <select name="select4" style="width:80px;">
-        <option>个人中心</option>
-        </select> 
-        <input class="btn_login" type="submit" value="登录" />
-
-    </div>
-	<div class="logo"></div>
-    <div class="rightLink">登录 | 注册 | 帮助</div>
-    <div class="redLine"></div>
+      </select>
+    您好,用户姓名
+    <select name="select4" style="width:80px;">
+      <option>个人中心</option>
+    </select>
+    <input class="btn_login" type="submit" value="登录" />
+    <span class="leftLink">注册 | 忘记密码</span> <span class="rightLink">帮助 | 设为首页</span> </div>
+  <div class="logo"></div>
 </div>
-
+<div class="redLine"></div>
 <DIV style="CLEAR: both"></DIV>
 </DIV>
 </DIV>
 <div class="dfcenterTitle">用户注册</div>
 <div id="loginCenter">
-<form action="register" method="post">
+  <form action="register" method="post">
   <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="3"><strong>以下信息为必填项</strong></td>
@@ -106,7 +103,23 @@ function whenDelete() {
   </table>
 </form>
   <p class="tagContent">&nbsp;</p>
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
