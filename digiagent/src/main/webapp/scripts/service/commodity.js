@@ -90,7 +90,9 @@ function processJson(data) {
 }
 
 function onEditClickHandler(id) {
-	$.get('../commodity/get', { id: id } ,function(data) {
+	$.get('../commodity/get', { id: id } ,function(result) {
+		var data = result.commodity;
+		var image = result.commodityImage;
 		$('input[name="commodityId"]').val(id);
 		$('input[name="commodityName"]').val(data.commodityName);
 		$('input[name="commodityDescription"]').val(data.commodityDescription);
@@ -101,7 +103,8 @@ function onEditClickHandler(id) {
 		$('select[name="commodityType"]').val(data.commodityType);
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
-		var url = "../commodity/getImage?id=" +id;
+		$('input[name="commodityimageId"]').val(image.commodityimageId);
+		var url = "../commodity/getImage?id=" +image.commodityimageId;
 		$('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
 //		$('#image').append('<image  onClick="onDeleteClickHandler(' + id + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	});
@@ -280,6 +283,7 @@ $(function(){
 					$('input[name="endDate"]').val('');
 					$('input[name="commodityPrice"]').val('');
 					$('input[name="file"]').val('');
+					$('input[name="commodityimageId"]').val('');
 					$('select[name="commodityType"]').val('S');
 					$('#image').empty();
 					$('select[name="activeFlag"]').val('Y');

@@ -19,7 +19,7 @@
 <script type="text/javascript" src="scripts/index.js"></script>
 <style>
 .supplierInfo {
-	width:100%; border-color:maroon; border-style:solid; border-width:1px;float:left;
+	width:100%; border-color:maroon; float:left;
 }
 li {list-style-type:none;}
 </style>
@@ -55,14 +55,14 @@ li {list-style-type:none;}
 
 <!-- commodity layout template start -->
 <div id="commodityTemplate">
-   <div class="liststyle">
-    	<div style="float:left; width:100px; padding:20px; height:auto">
-        	<div>
+   <div class="Q_9 listInfo">
+    	<div class="Q_11">
+        	<div class="imgProduct">
 				<span>rowNum</span><img src="commodity/getImage?id=imageId" width="80" height="80" style="cursor:pointer" alt="commodityName"/>
 			</div>
 			<div style="paddingTop:5px;text-align:center">￥commodityPrice</div>
 		</div>  
-		<div>
+		<div class="link1">
 			<div>商品名称：commodityName</div>
 			<div>联 系 人：supplierContactname</div>
 			<div>联系电话：<span class=hong14b>supplierMobile</span></div>

@@ -35,14 +35,14 @@ public class CommodityService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Commodity> query(int pageNo, int pageSize, Map<String, Object> param){
+	public List<Map> query(int pageNo, int pageSize, Map<String, Object> param){
 		Page<Commodity> page = new Page<Commodity>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		page.setOrderBy("COMMODITY_NAME");
 		page.setOrder("ASC");
 		page.setParam(param);
-		return (List<Commodity>) commodityDao.findPage(page, "t_da_commodity_Custom.pageByCondition").getResult();
+		return (List<Map>) commodityDao.findPage(page, "t_da_commodity_Custom.pageByCondition").getResult();
 	}
 	
 	public Long count(Map<String, Object> param){

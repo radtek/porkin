@@ -34,6 +34,14 @@ public class CommodityImageService {
 		return commodityImageDao.selectByPrimaryKey(id);
 	}
 	
+	public List<CommodityImage> getListByCommodityId(Integer commodityId){
+		CommodityImageCriteria example = new CommodityImageCriteria();
+		Criteria criteria = example.createCriteria();
+		criteria.andCommodityIdEqualTo(commodityId);
+		List<CommodityImage> imageList = commodityImageDao.selectByExampleWithoutBLOBs(example);
+		return imageList;
+	}
+	
 	
 	
 	public CommodityImage insert(CommodityImage commodityImage) {
@@ -56,14 +64,9 @@ public class CommodityImageService {
 	}
 	
 	
-	public byte[] getCommodityImage(Integer commodityId) {
-		CommodityImageCriteria example = new CommodityImageCriteria();
-		Criteria criteria = example.createCriteria();
-		criteria.andCommodityIdEqualTo(commodityId);
-		List<CommodityImage> imageList = commodityImageDao.selectByExampleWithoutBLOBs(example);
-		
-		if (imageList != null && imageList.size() > 0) {
-			CommodityImage commodityImage = imageList.get(0);
+	public byte[] getCommodityImage(Integer commodityImageId) {
+		CommodityImage commodityImage = commodityImageDao.selectByPrimaryKey(commodityImageId);
+		if (commodityImage != null) {
 			return commodityImage.getCommodityimageContent();
 		} else {
 			return null;

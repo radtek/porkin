@@ -66,7 +66,7 @@ public class CommodityController{
 	public @ResponseBody
 	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
 		Long total = commodityService.count(param);
-		List<Commodity> commodityList = commodityService.query(page, rows, param);
+		List<Map> commodityList = commodityService.query(page, rows, param);
 		Map map = new HashMap();
 		map.put("total", total);
 		map.put("rows", commodityList);
@@ -74,12 +74,18 @@ public class CommodityController{
 	}
 	
 	@RequestMapping(value="/get",method=RequestMethod.GET)
-	public @ResponseBody Commodity get(@RequestParam Integer id) {
+	public @ResponseBody Map get(@RequestParam Integer id) {
+		Map map = new HashMap();
 		Commodity commodity = commodityService.getById(id);
 		if (commodity == null) {
 			new ResourceNotFoundException(new Long(id));
 		}
-		return commodity;
+		map.put("commodity", commodity);
+		List<CommodityImage> imageList = commodityImageService.getListByCommodityId(id);
+		if (imageList != null && imageList.size() > 0) {
+			map.put("commodityImage", imageList.get(0));
+		}
+		return map;
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -107,9 +113,8 @@ public class CommodityController{
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public void update(@ModelAttribute Commodity commodity,
+	public void update(@ModelAttribute Commodity commodity, @ModelAttribute CommodityImage commodityImage,
 			@RequestParam("file") MultipartFile image, HttpServletResponse response)  throws IOException {
-		CommodityImage commodityImage = new CommodityImage();
 		Commodity commodityUpdate = commodityService.getById(commodity.getCommodityId());
 		if (commodity == null) {
 			new ResourceNotFoundException(new Long(commodityUpdate.getCommodityId()));

@@ -12,6 +12,7 @@
 			  <div>
 	              	<label for="name">商品名称:</label>
 					<input id="commodityId" name="commodityId" type="hidden" /> 
+					<input id="commodityimageId" name="commodityimageId" type="hidden" />
 	              	<input class="easyui-validatebox" type="text" name="commodityName" maxlength="20"/>
 	          </div> 
 	          <div>
