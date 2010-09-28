@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -142,5 +143,18 @@ public class SupplierController {
 	public String output(@RequestParam Integer id, HttpServletResponse response, Model model) {
 		model.addAttribute("image", supplierService.getSupplierImage(id));
 		return "image";
+	}
+	
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public String show(@PathVariable Integer id, HttpServletResponse response, Model model) {
+		Supplier supplier = supplierService.getById(id);
+		if(supplier!=null){
+			model.addAttribute("supplier", supplierService.getById(id));
+			return "supplierDetail";
+		}
+		else{
+			return "no_supplier";
+		}
+		
 	}
 }
