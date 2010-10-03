@@ -4,7 +4,7 @@ function formSubmit(actionUrl) {
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'html', 
+		dataType:  'text', 
         success:   processJson,
         error:   function(err){
     		$('#loader').remove();
@@ -61,7 +61,7 @@ function parseObj(strData){
 }
 
 function processJson(data) {
-	data = parseObj($(data).text().replace(/=/g,":"));
+	data = parseObj(data.replace(/<[^>].*?>/g,""));
     if (data.commodityId == -1) {
     	$('#loader').remove();
 		$.messager.alert('消息','商品已存在，请重新操作！','warning');
@@ -83,7 +83,7 @@ function processJson(data) {
 		showType:'slide'
 	});
     $('#commodityId').val(data.commodityId);
-    var url = "../commodity/getImage?id=" +data.commodityId;
+    var url = "../commodity/getImage?id=" +data.commodityImage + "&uuid=" + createUUID();
     $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
 //	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	$('#commodityList').datagrid('reload');
@@ -103,9 +103,15 @@ function onEditClickHandler(id) {
 		$('select[name="commodityType"]').val(data.commodityType);
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
-		$('input[name="commodityimageId"]').val(image.commodityimageId);
-		var url = "../commodity/getImage?id=" +image.commodityimageId;
-		$('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+		if (image==undefined) {
+			$('#image').empty();
+			$('input[name="commodityimageId"]').val('');
+		} else {
+			$('input[name="commodityimageId"]').val(image.commodityimageId);
+			$('input[name="commodityimageId"]').val(image.commodityimageId);
+			var url = "../commodity/getImage?id=" +image.commodityimageId + "&uuid=" + createUUID();
+			$('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+		}
 //		$('#image').append('<image  onClick="onDeleteClickHandler(' + id + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	});
 	formSubmit('../commodity/update');
@@ -192,7 +198,7 @@ $(function(){
 	$('#commodityList').datagrid({
 		title:'商品维护',
 		iconCls:'icon-edit',
-		width:950,
+		width:'auto',
 		height:'auto',
 		singleSelect:true,
 		sortName: 'commodityName',

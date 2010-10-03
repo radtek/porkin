@@ -41,6 +41,9 @@
 		 <isNotEmpty prepend="AND" property="param.commodityName">
 			commodity_name like '%$param.commodityName$%'
          </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.activeFlag">
+			t_da_commodity.active_flag = '$param.activeFlag$'
+         </isNotEmpty>
          <isEmpty prepend="ORDER BY" property="orderByStatement">
          	t_da_commodity.commodity_name
          </isEmpty>

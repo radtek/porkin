@@ -55,6 +55,15 @@ public class CommodityImageService {
 	}
 	
 	public int update(CommodityImage commodityImage) {
+		if (commodityImage.getCommodityimageId() == null) {
+			return insert(commodityImage).getCommodityimageId();
+		}
+		Object image = commodityImageDao.selectByPrimaryKey(commodityImage.getCommodityimageId());
+		if (image == null) {
+			return insert(commodityImage).getCommodityimageId();
+		}
+		commodityImage.setLastupdatedBy("sj");
+		commodityImage.setLastupdatedDate(new Date());
 		return commodityImageDao.updateByPrimaryKeyWithBLOBs(commodityImage);
 	}
 	

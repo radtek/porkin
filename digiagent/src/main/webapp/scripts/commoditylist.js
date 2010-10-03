@@ -36,7 +36,7 @@ function queryCommodityList(pageNum, commodityType) {
 	$.ajax({
 		url:"commodity/queryCommodityList",
 		dataType:"json",
-		data:"page=" + pageNum + "&commodityType=" + commodityType,
+		data:"page=" + pageNum + "&commodityType=" + commodityType + "&activeFlag=Y",
 		type: "GET",
 		success: function(data) {
 			if (data.total==0) return;
@@ -53,7 +53,7 @@ function queryCommodityList(pageNum, commodityType) {
 				str = str.replace('rowNum', (pageNum - 1) * 10 + index + 1);
 				str = str.replace(/commodityName/g, commodity.commodityName == null ? '暂无' : commodity.commodityName);
 				str = str.replace(/commodityPrice/g, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
-				str = str.replace(/imageId/g, commodity.imageId);
+				str = str.replace(/imageId/g, commodity.imageId + "&uuid=" + createUUID());
 				str = str.replace(/supplierContactname/g, commodity.supplierContactname == null ? '暂无' : commodity.supplierContactname);
 				str = str.replace(/supplierMobile/g, commodity.supplierMobile == null ? '暂无' : commodity.supplierMobile);
 				str = str.replace(/supplierTelephone/g, commodity.supplierTelephone == null ? '暂无' : commodity.supplierTelephone);

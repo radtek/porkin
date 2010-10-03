@@ -73,6 +73,7 @@ public class CommodityController{
 		return Collections.singletonList(map).get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/get",method=RequestMethod.GET)
 	public @ResponseBody Map get(@RequestParam Integer id) {
 		Map map = new HashMap();
@@ -88,33 +89,33 @@ public class CommodityController{
 		return map;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public void create(@ModelAttribute Commodity commodity,
-			@RequestParam("file") MultipartFile image, HttpServletResponse response) throws IOException {
+	public @ResponseBody String create(@ModelAttribute Commodity commodity,
+			@RequestParam("file") MultipartFile image) throws IOException {
+		Map map = new HashMap();
 		CommodityImage commodityImage = new CommodityImage();
 		// MYSQL BLOB类型最大65K
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
 			commodityImage.setCommodityimageContent(image.getBytes());
 		}
-		try {
-			PrintWriter pw = response.getWriter();
-			if (image.getSize()/1024 >= 65) {
-				pw.write(Collections.singletonMap("commodityId", -2).toString().replaceAll("=", ":"));
-			} else {
-				commodity = commodityService.insert(commodity);
-				commodityImage.setCommodityId(commodity.getCommodityId());
-				commodityImageService.insert(commodityImage);
-				pw.write(Collections.singletonMap("commodityId", commodity.getCommodityId()).toString().replaceAll("=", ":"));
-			}
-			pw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (image.getSize()/1024 >= 65) {
+			map.put("commodityId", -2);
+		} else {
+			commodity = commodityService.insert(commodity);
+			commodityImage.setCommodityId(commodity.getCommodityId());
+			commodityImageService.insert(commodityImage);
+			map.put("commodityId", commodity.getCommodityId());
+			map.put("commodityImage", commodityImage.getCommodityimageId());
 		}
+		return JSONObject.toJSONString(map);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public void update(@ModelAttribute Commodity commodity, @ModelAttribute CommodityImage commodityImage,
-			@RequestParam("file") MultipartFile image, HttpServletResponse response)  throws IOException {
+	public @ResponseBody String update(@ModelAttribute Commodity commodity, @ModelAttribute CommodityImage commodityImage,
+			@RequestParam("file") MultipartFile image)  throws IOException {
+		Map map = new HashMap();
 		Commodity commodityUpdate = commodityService.getById(commodity.getCommodityId());
 		if (commodity == null) {
 			new ResourceNotFoundException(new Long(commodityUpdate.getCommodityId()));
@@ -131,17 +132,13 @@ public class CommodityController{
 			commodityImageService.update(commodityImage);
 		}
 		commodityUpdate = commodityService.update(commodityUpdate);
-		try {
-			PrintWriter pw = response.getWriter();
-			if (image.getSize()/1024 >= 65) {
-				pw.write(Collections.singletonMap("commodityId", -2).toString().replaceAll("=", ":"));
-			} else {
-				pw.write(Collections.singletonMap("commodityId", commodityUpdate.getCommodityId()).toString().replaceAll("=", ":"));
-			}
-			pw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (image.getSize()/1024 >= 65) {
+			map.put("commodityId", -2);
+		} else {
+			map.put("commodityId", commodityUpdate.getCommodityId());
+			map.put("commodityImage", commodityImage.getCommodityimageId());
 		}
+		return JSONObject.toJSONString(map);
 	}
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
