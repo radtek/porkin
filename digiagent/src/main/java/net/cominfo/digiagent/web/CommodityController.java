@@ -2,6 +2,7 @@ package net.cominfo.digiagent.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,8 @@ public class CommodityController{
 			PrintWriter pw = response.getWriter();
 			Integer page = Integer.valueOf((String)param.get("page"));
 			Integer rows = 10;
-			String resultList = JSONArray.toJSONString(commodityService.query(page, rows, param));
+			List<Map> commodityList = commodityService.query(page, rows, param);
+			String resultList = JSONArray.toJSONString(commodityList);
 			Map resultMap = new HashMap();
 			resultMap.put("total", total);
 			resultMap.put("resultList", resultList);
@@ -156,5 +158,42 @@ public class CommodityController{
 		} else {
 			return commodityService.delete(id);
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/release", method = RequestMethod.POST)
+	public @ResponseBody String release(@ModelAttribute Commodity commodity,
+			@RequestParam("file1") MultipartFile image1, 
+			@RequestParam("file2") MultipartFile image2,
+			@RequestParam("file3") MultipartFile image3,
+			@RequestParam("file4") MultipartFile image4,
+			@RequestParam("file5") MultipartFile image5) throws IOException {
+		List<MultipartFile> imageList = new ArrayList<MultipartFile>();
+		List<CommodityImage> commodityImageList = new ArrayList<CommodityImage>();
+		imageList.add(image1);
+		imageList.add(image2);
+		imageList.add(image3);
+		imageList.add(image4);
+		imageList.add(image5);
+		Map map = new HashMap();
+		for (MultipartFile image : imageList) {
+			if (image == null || image.getSize() == 0) continue;
+			if (image.getSize()/1024 >= 65) {
+				map.put("commodityId", -2);
+			}
+			CommodityImage commodityImage = new CommodityImage();
+			// MYSQL BLOB类型最大65K
+			if (image.getSize() > 0 && image.getSize()/1024 < 65) {
+				commodityImage.setCommodityimageContent(image.getBytes());
+				commodityImageList.add(commodityImage);
+			}
+		}
+		if (map.size() > 0) {
+			return JSONObject.toJSONString(map);
+		} else {
+			commodity = commodityService.release(commodity, commodityImageList);
+			map.put("commodityId", commodity.getCommodityId());
+		}
+		return JSONObject.toJSONString(map);
 	}
 }

@@ -1,71 +1,57 @@
-<%@page contentType="text/html;charset=UTF-8"%>
-<%@page pageEncoding="UTF-8"%>
-<%@ page session="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>个人会员</title>
-<link href="styles/main.css" rel="stylesheet" type="text/css" />
-<script src="scripts/Calendar.js"></script>
-<script src="scripts/menu.js"></script>
-<script language="javascript">
+<script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
+<script>
+$(document).ready(function() {
+	$(".blk2 li").bind("click", tabChange);
+});
 
-function whenDelete() {
-	var isDelete=true;
-	if (!confirm("sure to delete")) {
-		isDelete=false;
+var tabChange = function(event) {
+	var index = $("li").index(this);
+	switch (index) {
+	case 0:
+		$("#myframe").attr('src','personInfo');
+		break;
+	case 1:
+		alert("暂未开通此功能！");
+		break;
+	case 2:
+		alert("暂未开通此功能！");
+		break;
+	case 3:
+		$("#myframe").attr('src','infoRelease');
+		break;
+	default:
+		alert("暂未开通此功能！");
+		break;
 	}
-	window.location = 'contractSearch.html'; 
-	return isDelete;
-}
+};
 </script>
+<title>个人会员</title>
 </head>
 <body>
-<div class="headTop">
-  <div class="headCity">切换城市
-    <select name="select3" style="width:60px;">
-        <option>大连</option>
-        <option>上海</option>
-      </select>
-     <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.username}" /> | <a href="member">会员</a> | <a href="logout">退出</a></span>
-     <span class="rightLink">帮助 | 设为首页</span> </div>
-  <div class="logo"></div>
+<jsp:include page="header.jsp"></jsp:include>
+<div id=dfleft>
+<div class=sidebar>
+    <div class=blk>
+    <h3>用户操作</h3>
+        <div class=c>                   
+            <div class=blk2>                       
+                <ul>
+                  <li><b><a href="javascript:void(0)">基本信息 </a></b></li>
+                  <li><b><a href="javascript:void(0)">密码管理 </a></b></li>
+                  <li><b><a href="javascript:void(0)">电子邮件 </a></b></li>
+                  <li><b><a href="javascript:void(0)">二手发布 </a></b></li>
+                  <li><b><a href="javascript:void(0)">二手历史</a></b></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="redLine"></div>
-<DIV style="CLEAR: both"></DIV>
-<DIV id=dfleft>
-<DIV class=sidebar>
-    <DIV class=blk>
-    <H3>用户操作</H3>
-        <DIV class=c>                   
-            <DIV class=blk2>                       
-                <UL>
-                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
-                  target=_blank>基本信息 </A></b>
-                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
-                  target=_blank>密码管理 </A></b>
-                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
-                  target=_blank>电子邮件 </A></b>
-                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=9395" 
-                  target=_blank>二手发布 </A></b>
-                  <LI><b><A href="http://dl.bbs.house.sina.com.cn/forumdisplay.php?fid=22866" 
-                  target=_blank>二手历史</A></b></LI></UL></DIV></DIV></DIV>
-        </DIV>
-    </DIV>
-</DIV>
-</DIV>
-<div id="dfright">
-	<ul class="userInfo">
-    	<li onmousemove=splash(this); ><span class="userInfoBlue">用户昵称</span><span class="userInfoYellow">Porkin</span></li>
-        <li onmousemove=splash(this); ><span class="userInfoBlue">用户类型</span><span class="userInfoYellow">高级VIP用户</span></li>
-        <li onmousemove=splash(this); ><span class="userInfoBlue">上次登录时间</span><span class="userInfoYellow">2010-08-25  19:45</span></li>
-		<li onmousemove=splash(this); ><span class="userInfoBlue">注册时间</span><span class="userInfoYellow">06-05-06   19:45</span></li>
-		<li onmousemove=splash(this); ><span class="userInfoBlue">登录次数</span><span class="userInfoYellow">12</span></li>
-    </ul>
 </div>
-
-</body>
+    <iframe name="framename" id="myframe" src="personInfo" width="70%" onload="parent.document.all('myframe').style.height=document.body.scrollHeight;"></iframe>
+	</body>
 </html>

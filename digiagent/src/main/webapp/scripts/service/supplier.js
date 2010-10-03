@@ -302,6 +302,8 @@ $(function(){
 					$('input[name="userEmail"]').val('');
 					$('input[name="supplierFax"]').val('');
 					$('select[name="activeFlag"]').val('Y');
+					$('#loader').remove();
+					$('#image').empty();
 					$('#supplierEdit').css('display','block');
 					$('#supplierEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../supplier/create');

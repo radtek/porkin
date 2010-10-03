@@ -222,6 +222,7 @@ $(function(){
 //					return (a>b?1:-1)*(order=='asc'?1:-1);
 //				}
 //			},
+			/*
 			{field:'startDate',title:'开始时间',width:120,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
@@ -232,6 +233,7 @@ $(function(){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
+			*/
 			{field:'commodityPrice',title:'价格',width:50,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);

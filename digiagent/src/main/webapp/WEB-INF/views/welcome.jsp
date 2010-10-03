@@ -1,16 +1,9 @@
-<%@page contentType="text/html;charset=UTF-8"%>
-<%@page pageEncoding="UTF-8"%>
-<%@ page session="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>首页</title>
-<link href="styles/main.css" rel="stylesheet" type="text/css" />
-<script src="scripts/Calendar.js"></script>
-<script src="scripts/menu.js"></script>
 <script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="scripts/searchbar.js"></script>
 <script type="text/javascript" src="scripts/common/common.js"></script>
@@ -25,55 +18,8 @@ li {list-style-type:none;}
 </style>
 </head>
 <body>
-<div class="headTop">
-    <div class="headCity">切换城市           
-      <select name="city" style="width:60px;">
-        <option>大连</option>
-        <option>上海</option>
-      </select>
-      <c:choose>
-      <c:when test="${empty sessionScope.username}">
-     <form name="loginForm" action="login" method="post">
-      用户<input type="text" name="username" size="10" width="10"/>&nbsp;
-      密码<input type="password" name="password" size="10" width="10"/>&nbsp;
-      <input class="btn_login" type="submit" value="登录" "/>
-      </form>
-    <span class="leftLink"><a href="registerForm">注册</a> | <a href="passwordForm">忘记密码</a></span>
-      </c:when>
-      <c:otherwise>
-       <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.username}" /> | <a href="member">会员</a> | <a href="logout">退出</a></span>
-      </c:otherwise>
-      </c:choose>
-      
-    <span class="rightLink">帮助 | 设为首页</span>
-    </div>
-   
-	
-</div>
-<div class="redLine"></div>
-<div style="clear: both"></div>
-
-<!-- commodity layout template start -->
-<div id="commodityTemplate">
-   <div class="Q_9 listInfo">
-    	<div class="Q_11">
-        	<div class="imgProduct">
-				<span>rowNum</span><img src="commodity/getImage?id=imageId" width="80" height="80" style="cursor:pointer" alt="commodityName"/>
-			</div>
-			<div style="paddingTop:5px;text-align:center">￥commodityPrice</div>
-		</div>  
-		<div class="link1">
-			<div>商品名称：commodityName</div>
-			<div>联 系 人：supplierContactname</div>
-			<div>联系电话：<span class=hong14b>supplierMobile</span></div>
-			<div>手机号码：<span class=hong14b>supplierTelephone</span></div>
-			<div>电子邮箱：userEmail</div>
-			<div>联系地址：supplierAddress</div>
-		</div>
-	</div>
-</div>
-<!-- commodity layout template end -->
-
+<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="commodityTemplate.jsp"></jsp:include>
 <div class="indexCenter">
   <div class="logoCenter"></div>
     <div id="dfright2">

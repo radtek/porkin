@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CommodityDao;
+import net.cominfo.digiagent.persistence.dao.CommodityImageDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria;
+import net.cominfo.digiagent.persistence.domain.CommodityImage;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria.Criteria;
 import net.cominfo.digiagent.utils.Page;
 
@@ -22,6 +24,9 @@ public class CommodityService {
 
 	@Autowired
 	private CommodityDao commodityDao;
+
+	@Autowired
+	private CommodityImageDao commodityImageDao;
 	
 	@Autowired
 	private SequenceDao sequenceDao;
@@ -59,6 +64,7 @@ public class CommodityService {
 		} else {
 			int commodityId = sequenceDao.getCommodityNexId();
 			commodity.setCommodityId(commodityId);
+			// FIXME GET CURRENT LOGIN USER ID
 			commodity.setUserId(1);
 			commodity.setCreatedBy("sj");
 			commodity.setCreatedDate(new Date());
@@ -110,6 +116,30 @@ public class CommodityService {
 		} else {
 			return null;
 		}
+	}
+	
+	public Commodity release(Commodity commodity, List<CommodityImage> commodityImageList) {
+		commodity.setCommodityId(sequenceDao.getCommodityNexId());
+		// FIXME GET CURRENT LOGIN USER ID
+		commodity.setUserId(1);
+		// FIXME DEFAULT ACTIVE_FLAG IS N
+		commodity.setActiveFlag("N");
+		commodity.setCreatedBy("sj");
+		commodity.setCreatedDate(new Date());
+		commodity.setLastupdatedBy("sj");
+		commodity.setLastupdatedDate(new Date());
+		commodityDao.insert(commodity);
+		for (CommodityImage commodityImage : commodityImageList) {
+			commodityImage.setCommodityimageId(sequenceDao.getCommodityimageNexId());
+			commodityImage.setCreatedBy("sj");
+			commodityImage.setCreatedDate(new Date());
+			commodityImage.setLastupdatedBy("sj");
+			commodityImage.setLastupdatedDate(new Date());
+			commodityImage.setActiveFlag("N");
+			commodityImage.setCommodityId(commodity.getCommodityId());
+			commodityImageDao.insert(commodityImage);
+		}
+		return commodity;
 	}
 	
 }
