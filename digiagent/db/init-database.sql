@@ -604,3 +604,4 @@ insert into t_da_sequence(name,nextid) value('supplier',1);
 insert into t_da_sequence(name,nextid) value('supplierproduct',1);
 insert into t_da_sequence(name,nextid) value('user',1);
 insert into t_da_sequence(name,nextid) value('userrole',1);
+insert into t_da_sequence(name,nextid) value('comments',1);
