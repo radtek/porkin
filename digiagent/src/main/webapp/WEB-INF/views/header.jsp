@@ -1,13 +1,22 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@page pageEncoding="UTF-8"%>
 <%@ page session="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ include file="/common/taglibs.jsp" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>个人会员</title>
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
+
+<script language="javascript">
+
+function logout() {
+	var url = "${ctx}/logout";
+	//document.location.href = "${ctx}/logout";
+	window.parent.location.href= url;
+
+}
+</script>
 </head>
 <body>
 <div class="headTop">
@@ -26,11 +35,11 @@
    			<span class="leftLink"><a href="registerForm">注册</a> | <a href="passwordForm">忘记密码</a></span>
       </c:when>
       <c:otherwise>
-       <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.username}" /> | <a href="member">会员</a> | <a href="logout">退出</a></span>
+       <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.username}" /> | <a href="member">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></>退出</a></span>
       </c:otherwise>
       </c:choose>
       
-    <span class="rightLink">帮助 | 设为首页</span>
+    <span class="rightLink">关于我们 | 设为首页</span>
     </div>
  
 </div>
