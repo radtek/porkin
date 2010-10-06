@@ -17,8 +17,8 @@ import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.ContactCriteria;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
+import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
-import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.persistence.domain.UserRole;
@@ -172,7 +172,7 @@ public class SupplierService {
 		SupplierProductCriteria example = new SupplierProductCriteria();
 		net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria criteria = example.createCriteria();
 		criteria.andSupplierIdEqualTo(supplierId);
-		List<SupplierProductKey> list = supplierProductDao.selectByExample(example);
+		List<SupplierProduct> list = supplierProductDao.selectByExample(example);
 		if (list != null && list.size() > 0) {
 			return true;
 		} else {

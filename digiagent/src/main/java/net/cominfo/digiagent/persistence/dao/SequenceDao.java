@@ -42,6 +42,8 @@ public class SequenceDao extends SequenceDAOImpl {
 	
 	private final String USERROLE_KEY = "userrole";
 	
+	private final String COMMENTS_KEY = "comments";
+	
 	/**
 	 * This is a generic sequence ID generator that is based on a database table
 	 * called 'SEQUENCE', which contains two columns (NAME, NEXTID). This
@@ -145,6 +147,10 @@ public class SequenceDao extends SequenceDAOImpl {
 
 	public int getUserroleNexId() {
 		return getNextId(USERROLE_KEY);
+	}
+	
+	public int getCommentsNexId() {
+		return getNextId(COMMENTS_KEY);
 	}
 	
 	

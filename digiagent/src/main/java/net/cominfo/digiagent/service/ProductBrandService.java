@@ -17,8 +17,8 @@ import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.ProductBrandCriteria;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
+import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
-import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,7 +166,7 @@ public class ProductBrandService {
 		SupplierProductCriteria example = new SupplierProductCriteria();
 		net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria criteria = example.createCriteria();
 		criteria.andProductbrandIdEqualTo(productBrandId);
-		List<SupplierProductKey> list = supplierProductDao.selectByExample(example);
+		List<SupplierProduct> list = supplierProductDao.selectByExample(example);
 		if (list != null && list.size() > 0) {
 			return true;
 		} else {

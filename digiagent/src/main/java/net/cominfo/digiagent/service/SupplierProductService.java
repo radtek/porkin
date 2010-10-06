@@ -7,9 +7,9 @@ import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
+import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
-import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class SupplierProductService {
 				buffer.append(productBrandId);
 				buffer.append(",");
 			} else {
-				SupplierProductKey supplierProduct = new SupplierProductKey();
+				SupplierProduct supplierProduct = new SupplierProduct();
 				supplierProduct.setProductbrandId(productBrandId);
 				supplierProduct.setSupplierId(supplierId);
 				supplierProductDao.insert(supplierProduct);
@@ -105,11 +105,12 @@ public class SupplierProductService {
 	
 	private boolean validateProductBrandIsExist(Integer productBrandId, Integer supplierId) {
 		SupplierProductCriteria example = new SupplierProductCriteria();
-		Criteria criteria = example.createCriteria();
-		criteria.andProductbrandIdEqualTo(productBrandId);
-		criteria.andSupplierIdEqualTo(supplierId);
-		List<SupplierProductKey> supplierProductList = supplierProductDao.selectByExample(example);
-		if (supplierProductList != null && supplierProductList.size() > 0) {
+		
+		SupplierProductKey spKey = new SupplierProductKey();
+		spKey.setProductbrandId(productBrandId);
+		spKey.setSupplierId(supplierId);
+		SupplierProduct supplierProduct = supplierProductDao.selectByPrimaryKey(spKey);
+		if (supplierProduct != null) {
 			return true;
 		} else {
 			return false;
