@@ -56,7 +56,7 @@ public class SecurityController {
 		String roleId = null;
 		
 		String result = "welcome";
-		if(roleIdList!=null){
+		if(roleIdList!=null && roleIdList.size()>0){
 			roleId = roleIdList.get(0);
 			if(roleId.equals("1") || roleId.equals("2") || roleId.equals("3")){
 				result = "/admin";
