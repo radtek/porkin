@@ -13,5 +13,44 @@ public class CompanyController {
 	public String menu(Model model) {
 		return "company/menu";
 	}
+	
+	@RequestMapping(value = "/basicInfo", method = RequestMethod.GET)
+	public String basicInfo(Model model) {
+		return "company/basicInfo";
+	}
+	
+	@RequestMapping(value = "/password", method = RequestMethod.GET)
+	public String password(Model model) {
+		return "company/menu";
+	}
+	
+	@RequestMapping(value = "/email", method = RequestMethod.GET)
+	public String email(Model model) {
+		return "company/menu";
+	}
+	
+	@RequestMapping(value = "/introduction", method = RequestMethod.GET)
+	public String introduction(Model model) {
+		return "company/menu";
+	}
 
+	@RequestMapping(value = "/contact", method = RequestMethod.GET)
+	public String contact(Model model) {
+		return "company/menu";
+	}
+	
+	@RequestMapping(value = "/agent", method = RequestMethod.GET)
+	public String agent(Model model) {
+		return "company/menu";
+	}
+	
+	@RequestMapping(value = "/qualify", method = RequestMethod.GET)
+	public String qualify(Model model) {
+		return "company/menu";
+	}
+	
+	@RequestMapping(value = "/promotion", method = RequestMethod.GET)
+	public String promotion(Model model) {
+		return "company/menu";
+	}
 }

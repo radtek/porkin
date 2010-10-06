@@ -24,17 +24,32 @@ function whenDelete() {
 </script>
 </head>
 <body>
-<div id="dfright">
-	<ul class="userInfo">
-    	<li onmousemove=splash(this); ><span class="userInfoBlue">ç¨æ·æµç§°</span><span class="userInfoYellow">Porkin</span></li>
-        <li onmousemove=splash(this); ><span class="userInfoBlue">ç¨æ·ç±»å</span><span class="userInfoYellow">é«çº§VIPç¨æ·</span></li>
-        <li onmousemove=splash(this); ><span class="userInfoBlue">ä¸æ¬¡ç»å½æ¶é´</span><span class="userInfoYellow">2010-08-25  19:45</span></li>
-		<li onmousemove=splash(this); ><span class="userInfoBlue">æ³¨åæ¶é´</span><span class="userInfoYellow">06-05-06   19:45</span></li>
-		<li onmousemove=splash(this); ><span class="userInfoBlue">ç»å½æ¬¡æ°</span><span class="userInfoYellow">12</span></li>
-    </ul>
+<div class="dfcenterTitle">用户找回密码</div>
+<div id="loginCenter">
+  <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td colspan="2"><strong>用户类型</strong></td>
+    </tr>
+    <tr>
+      <td>输入帐号</td>
+      <td><input type="text" name="textfield" id="textfield" /></td>
+    </tr>
+    <tr>
+      <td>随机验证</td>
+      <td><input type="text" name="textfield3" id="textfield3" /></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><span class="headCity">
+        <input class="btn_login" type="submit" value="注册" />
+            </span><span class="headCity">
+      <input class="btn_login" type="submit" value="取消" />
+                  </span></td>
+    </tr>
+  </table>
+  <p class="tagContent">&nbsp;</p>
 </div>
-
-
+</body>
+</html>
 
 
 
