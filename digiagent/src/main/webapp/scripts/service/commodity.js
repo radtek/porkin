@@ -4,7 +4,7 @@ function formSubmit(actionUrl) {
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'text', 
+		dataType:  'json', 
         success:   processJson,
         error:   function(err){
     		$('#loader').remove();
@@ -61,7 +61,6 @@ function parseObj(strData){
 }
 
 function processJson(data) {
-	data = parseObj(data.replace(/<[^>].*?>/g,""));
     if (data.commodityId == -1) {
     	$('#loader').remove();
 		$.messager.alert('消息','商品已存在，请重新操作！','warning');

@@ -139,14 +139,4 @@ public class SecurityController {
 		return null;
 	}
 	
-	@RequestMapping(value = "/personInfo", method = RequestMethod.GET)
-	public String personInfo(HttpServletResponse response) {
-		return "member/personInfo";
-	}
-	
-
-	@RequestMapping(value = "/infoRelease", method = RequestMethod.GET)
-	public String infoRelease(HttpServletResponse response) {
-		return "member/infoRelease";
-	}
 }
