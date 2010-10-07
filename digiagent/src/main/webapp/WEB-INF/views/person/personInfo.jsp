@@ -1,5 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<link href="styles/main.css" rel="stylesheet" type="text/css" />
+<link href="../styles/main.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="scripts/menu.js"></script>
 <div id="dfright">
 	<ul class="userInfo">

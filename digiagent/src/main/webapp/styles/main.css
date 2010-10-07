@@ -152,7 +152,7 @@ idth:200px; }
 .link1 {FONT-SIZE: 14px; WIDTH: 200px; LINE-HEIGHT: 20px; float:left; padding:20px 0 0 100px ;   }
 .link_c {	WIDTH: 350px}
 .hong14b {	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #cc0000; }
-.listInfo{ width:700px; height:200px;}
+.listInfo{ width:600px; height:200px;}
 
 .div_body{ clear:both; margin:0 auto; width:950px;}
 .bodyW {
@@ -337,6 +337,11 @@ idth:200px; }
 .plphbox {BACKGROUND-POSITION: -473px -35px;  PADDING-BOTTOM: 3px;  PADDING-TOP: 16px}
 .plphbox LI SPAN {  WIDTH: 50px; }
 .plphbox LI {  WIDTH: 140px; padding-left:15px; line-height:23px; }
+
+
+.companyTitle{WIDTH:480px; border:solid 1px #ccc; margin-left:10px; font-weight:bold; padding:10px; color:#076ac5; background:#f4fafd;}
+#companyLeft {WIDTH:500px; border:solid 1px #ccc; margin-left:10px; background:#f4fafd;}
+#companyLeft td{ font-weight:normal; line-height:18px; padding:5px; }
 
 
 

@@ -13,7 +13,7 @@ var tabChange = function(event) {
 	var index = $("li").index(this);
 	switch (index) {
 	case 0:
-		$("#myframe").attr('src','personInfo');
+		$("#myframe").attr('src','person/personInfo');
 		break;
 	case 1:
 		alert("暂未开通此功能！");
@@ -22,7 +22,10 @@ var tabChange = function(event) {
 		alert("暂未开通此功能！");
 		break;
 	case 3:
-		$("#myframe").attr('src','infoRelease');
+		$("#myframe").attr('src','person/infoRelease');
+		break;
+	case 4:
+		$("#myframe").attr('src','person/infoRelease');
 		break;
 	default:
 		alert("暂未开通此功能！");

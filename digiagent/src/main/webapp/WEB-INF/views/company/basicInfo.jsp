@@ -24,8 +24,8 @@ function whenDelete() {
 </script>
 </head>
 <body>
-<div class="dfcenterTitle">用户找回密码</div>
-<div id="loginCenter">
+<div class="companyTitle">用户找回密码</div>
+<div id="companyLeft">
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2"><strong>用户类型</strong></td>
