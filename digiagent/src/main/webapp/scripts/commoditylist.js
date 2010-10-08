@@ -1,4 +1,9 @@
 /**
+ * 全局变量定义
+ */
+var prefix = "";
+
+/**
  * 验证输入页码
  * @param oInput
  * @return
@@ -23,18 +28,25 @@ function go(obj, commodityType, totalPage) {
 	if (obj.value - 0 < 1) {
 		obj.value = 1;
     }
-	queryCommodityList(obj.value, commodityType);
+	queryCommodityList(obj.value, commodityType, prefix);
 }
 
 /**
  * 查询商品信息列表
  * @param pageNum
  * 		跳转页码
+ * @param commodityType
+ * 		商品类型
+ * @param isParentPath
+ * 		是否上级路径
  * @return
  */
-function queryCommodityList(pageNum, commodityType) {
+function queryCommodityList(pageNum, commodityType, isParentPath) {
+	if (isParentPath) {
+		prefix = "../";
+	}
 	$.ajax({
-		url:"commodity/queryCommodityList",
+		url:prefix + "commodity/queryCommodityList",
 		dataType:"json",
 		data:"page=" + pageNum + "&commodityType=" + commodityType + "&activeFlag=Y",
 		type: "GET",
@@ -53,7 +65,7 @@ function queryCommodityList(pageNum, commodityType) {
 				str = str.replace('rowNum', (pageNum - 1) * 10 + index + 1);
 				str = str.replace(/commodityName/g, commodity.commodityName == null ? '暂无' : commodity.commodityName);
 				str = str.replace(/commodityPrice/g, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
-				str = str.replace(/imageId/g, commodity.imageId + "&uuid=" + createUUID());
+				str = str.replace(/imageSrc/g, prefix + "commodity/getImage?id=" + commodity.imageId + "&uuid=" + createUUID());
 				str = str.replace(/supplierContactname/g, commodity.supplierContactname == null ? '暂无' : commodity.supplierContactname);
 				str = str.replace(/supplierMobile/g, commodity.supplierMobile == null ? '暂无' : commodity.supplierMobile);
 				str = str.replace(/supplierTelephone/g, commodity.supplierTelephone == null ? '暂无' : commodity.supplierTelephone);
@@ -63,7 +75,7 @@ function queryCommodityList(pageNum, commodityType) {
 					$('#commodityS').append('<div class="supplierInfo">' + str + '</div>');
 				}
 				if (commodityType == 'P') {
-					$('#commodityP').append('<div class="supplierInfo"c>' + str + '</div>');
+					$('#commodityP').append('<div class="supplierInfo">' + str + '</div>');
 				}
 		    });
 			var totalPage = Math.ceil(data.total/10.0);

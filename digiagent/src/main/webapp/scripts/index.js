@@ -16,13 +16,13 @@ function selectTag(showContent,selfObj){
 	for(i=0; j=document.getElementById("tagContent"+i); i++){
 		j.style.display = "none";
 	}
-	// 二手商品
-	if (showContent == 'tagContent2') {
-		queryCommodityList(1, 'P');
-	}
 	// 促销商品
+	if (showContent == 'tagContent2') {
+		queryCommodityList(1, 'P', false);
+	}
+	// 二手商品
 	if (showContent == 'tagContent3') {
-		queryCommodityList(1, 'S');
+		queryCommodityList(1, 'S', false);
 	}
 	document.getElementById(showContent).style.display = "block";
 }

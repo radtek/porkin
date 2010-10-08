@@ -1,7 +1,7 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <!-- commodity layout template start -->
 <div id="commodityTemplate">
-   <div class="Q_9 listInfo">
+   <div id="companyLeft">
     	<div class="Q_11">
         	<div class="imgProduct">
 				<span>rowNum</span><img src="imageSrc" width="80" height="80" style="cursor:pointer" alt="commodityName"/>
