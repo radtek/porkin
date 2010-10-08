@@ -15,7 +15,7 @@ function releaseInfo() {
 	$('#commodityForm').ajaxForm({ 
 		url: "../commodity/release",
 		beforeSubmit: validate, 
-		dataType:  'text', 
+		dataType:  'json', 
         success:   processJson,
         error:   function(err){
         	alert(err);
@@ -28,6 +28,16 @@ function validate(formData, jqForm, options) {
 	if (form.commodityName.value.length == 0) {
     	alert('请输入商品名称！');
 		form.commodityName.focus();
+		return false;
+	}
+	if (form.commodityPrice.value.length == 0) {
+    	alert('请输入商品单价！');
+		form.commodityPrice.focus();
+		return false;
+	}
+	if (!/^\d+\.{0,}\d{0,}$/.test(form.commodityPrice.value)) {
+    	alert('商品单价格式错误！');
+		form.commodityPrice.focus();
 		return false;
 	}
 	if (form.commodityDescription.value.length == 0) {
@@ -81,7 +91,6 @@ function validate(formData, jqForm, options) {
 }
 
 function processJson(data) {
-	data = data.replace(/<[^>].*?>/g,"");
     if (data.commodityId == -1) {
 		alert('商品已存在，请重新操作！');
     	return;

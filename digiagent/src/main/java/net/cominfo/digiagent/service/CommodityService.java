@@ -123,7 +123,7 @@ public class CommodityService {
 		// FIXME GET CURRENT LOGIN USER ID
 		commodity.setUserId(1);
 		// FIXME DEFAULT ACTIVE_FLAG IS N
-		commodity.setActiveFlag("N");
+		commodity.setActiveFlag("Y");
 		commodity.setCreatedBy("sj");
 		commodity.setCreatedDate(new Date());
 		commodity.setLastupdatedBy("sj");
@@ -135,7 +135,7 @@ public class CommodityService {
 			commodityImage.setCreatedDate(new Date());
 			commodityImage.setLastupdatedBy("sj");
 			commodityImage.setLastupdatedDate(new Date());
-			commodityImage.setActiveFlag("N");
+			commodityImage.setActiveFlag("Y");
 			commodityImage.setCommodityId(commodity.getCommodityId());
 			commodityImageDao.insert(commodityImage);
 		}

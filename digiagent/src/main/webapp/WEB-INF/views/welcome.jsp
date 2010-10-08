@@ -68,11 +68,13 @@ li {list-style-type:none;}
       </table>
     </div>
     <div class="tagContent" id="tagContent2">
+    	<div id="searchBar2"></div>
     	<div id="commodityP">
 	    </div>
 	    <div></div>
     </div>
     <div class="tagContent" id="tagContent3">
+    	<div id="searchBar3"></div>
       	<div id="commodityS">
 	    </div>
 	    <div></div>

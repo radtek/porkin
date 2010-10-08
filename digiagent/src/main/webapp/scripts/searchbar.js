@@ -1,22 +1,32 @@
 /**
+ * 全局变量
+ */
+var target = null;
+var categoryId = null;
+var productBarId = null;
+
+/**
  * 提取所有类别列表
  * @return
  */
-var getCategoryJson = function() {
+var getCategoryJson = function(_target) {
+	target = _target;
+	$(target).empty();
 	$.ajax({
 		url:"searchComponentBar/getCategoryList",
 		dataType:"json",
 		type: "GET",
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="categoryBar" style="height:30px"></div>').empty().append('类别: ').appendTo('#searchBar');
+			categoryId = target + "_categoryBar";
+			$('<div style="height:30px"></div>').attr('id', categoryId.replace(/#/g,'')).empty().append('类别: ').appendTo(target);
 			$.each(data, function(index, category) {
-				$('#categoryBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(category.categoryName).click(function() {
+				$(categoryId).append($('<a></a>').attr('href', 'javascript:void(0)').text(category.categoryName).click(function() {
 					var param = encodeURI($(this).text());
 			        getProductJson(param);
 		        }));
 		        if ((index + 1) < data.length) {
-		        	$('#categoryBar').append(" | ");
+		        	$(categoryId).append(" | ");
 		        }
 		    });
 		},
@@ -33,7 +43,7 @@ var getCategoryJson = function() {
 var getProductJson = function(categoryName) {
 	$('#supplierInfo').remove();
 	$('#brandBar').remove();
-	$('#productBar').remove();
+	$(productBarId).remove();
 	$.ajax({
 		url: "searchComponentBar/getProductList",
 		dataType: "json",
@@ -41,14 +51,21 @@ var getProductJson = function(categoryName) {
 		data:{categoryName:categoryName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="productBar" style="height:30px"></div>').empty().append('产品: ').appendTo('#searchBar');
+			productBarId = target + "_productBar";
+			$('<div style="height:30px"></div>').attr('id', productBarId.replace(/#/g,'')).empty().append('产品: ').appendTo(categoryId);
 			$.each(data, function(index, product) {
-		        $('#productBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
-		        	var param = encodeURI($(this).text());
-		        	getBrandJson(param);
-		        }));
-		        if ((index + 1) < data.length) {
-		        	$('#productBar').append(" | ");
+				// 搜索TAB
+				if (target == "#searchBar") {
+			        $(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
+			        	var param = encodeURI($(this).text());
+			        	getBrandJson(param);
+			        }));
+				} else {
+					// 其它TAB
+					$(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName));
+				}
+				if ((index + 1) < data.length) {
+		        	$(productBarId).append(" | ");
 		        }
 		    });
 		},
@@ -72,7 +89,7 @@ var getBrandJson = function(productName) {
 		data: {productName:productName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="brandBar" style="height:30px"></div>').empty().append('品牌: ').appendTo('#searchBar');
+			$('<div id="brandBar" style="height:30px"></div>').empty().append('品牌: ').appendTo(productBarId);
 			$.each(data, function(index, brand) {
 		        $('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
 		        	var param = encodeURI($(this).text());
@@ -104,7 +121,7 @@ var getSupplierJson = function(brandName) {
 		data: {brandName:brandName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().append('商家: ').appendTo('#searchBar');
+			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().append('商家: ').appendTo(target);
 			$.each(data, function(index, supplier) {
 		        $('<div class="supplierInfo"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
 		        });
@@ -172,5 +189,5 @@ var getSupplierJson = function(brandName) {
  * 页面加载初始化
  */
 $(document).ready(function() {
-	getCategoryJson();
+	getCategoryJson('#searchBar');
 });
