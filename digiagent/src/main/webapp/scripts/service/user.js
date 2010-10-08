@@ -77,13 +77,14 @@ function validate(formData, jqForm, options) {
 	}
 }
 function onEditClickHandler(id) {
-	$.get('../user/get', { id: id } ,function(data) {alert(data.roleId);
+	$.get('../user/get', { id: id } ,function(data) {
 		setRoleSelect(data.roleId);
 		$('input[name="userId"]').val(id);
 		$('input[name="userName"]').val(data.userName);
 		$('input[name="userPassword"]').val(data.userPassword);
 		$('input[name="userPassword2"]').val(data.userPassword);
 		$('input[name="userEmail"]').val(data.userEmail);
+		$('select[name="roleId"]').val(data.roleId);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#userEdit').css('display','block');
 		$('#userEdit').dialog({title:'修改', modal: true});

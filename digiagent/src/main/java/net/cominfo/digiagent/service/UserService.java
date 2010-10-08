@@ -114,6 +114,7 @@ public class UserService {
 	}
 
 	public User insert(User user, UserRole userRole) {
+		user.setUserId(sequenceDao.getUserNexId());
 		user.setCreatedBy("sj");
 		user.setCreatedDate(new Date());
 		user.setLastupdatedBy("sj");

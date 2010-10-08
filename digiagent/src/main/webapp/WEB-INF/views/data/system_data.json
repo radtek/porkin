@@ -4,7 +4,7 @@
 	"iconCls":"icon-ok",
 	"children":[{
 		"id":2,
-		"text":"用户列表",
+		"text":"用户维护",
 		"checked":true
 	},{
 		"id":3,

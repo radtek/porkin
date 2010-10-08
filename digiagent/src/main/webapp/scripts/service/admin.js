@@ -21,6 +21,18 @@ $(document).ready(function() {
 			case "Basic data":
 				basicFunction();
 				break;
+			case "报表管理":
+				reportFunction();
+				break;
+			case "Report manage":
+				reportFunction();
+				break;
+			case "系统设置":
+				systemFunction();
+				break;
+			case "System config":
+				systemFunction();
+				break;
 			default:
 				break;
 			}
@@ -86,6 +98,23 @@ var basicFunction = function() {
 				addTab($(this).text(), 'commodity/list');
 			});
 		}
+	});
+};
+
+var reportFunction = function() {
+	var map = $('#system').find('.tree-title');
+	$.each(map, function(key) {
+		if ($(map[key]).text().toLowerCase() == '用户维护') {
+			$(map[key]).click(function() {
+				addTab($(this).text(), 'user/list');
+			});
+		}
+	});
+};
+
+var systemFunction = function() {
+	var map = $('#system').find('.tree-title');
+	$.each(map, function(key) {
 		if ($(map[key]).text().toLowerCase() == '用户维护') {
 			$(map[key]).click(function() {
 				addTab($(this).text(), 'user/list');

@@ -49,6 +49,16 @@ public class CompanyController {
 		return "company/menu";
 	}
 	
+	@RequestMapping(value = "/infoRelease", method = RequestMethod.GET)
+	public String infoRelease(Model model) {
+		return "company/infoRelease";
+	}
+	
+	@RequestMapping(value = "/commodityList", method = RequestMethod.GET)
+	public String commodityList(Model model) {
+		return "company/commodityList";
+	}
+	
 	@RequestMapping(value = "/promotion", method = RequestMethod.GET)
 	public String promotion(Model model) {
 		return "company/menu";
