@@ -8,10 +8,9 @@ import net.cominfo.digiagent.persistence.dao.RoleDao;
 import net.cominfo.digiagent.persistence.dao.UserDao;
 import net.cominfo.digiagent.persistence.dao.UserRoleDao;
 import net.cominfo.digiagent.persistence.domain.Role;
+import net.cominfo.digiagent.persistence.domain.RoleCriteria;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.persistence.domain.UserCriteria;
-import net.cominfo.digiagent.persistence.domain.RoleCriteria;
-import net.cominfo.digiagent.persistence.domain.UserRole;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,6 +92,10 @@ public class SecurityService {
 		List<User> userList = userDao.selectByExample(criteria);
 		if (userList != null & userList.size() > 0) {
 			result = userList.get(0);
+			int newLogonSum = result.getLogonsum()+1;
+			result.setLogonsum(newLogonSum);
+			result.setLastlogintime(new Date());
+			userDao.updateByPrimaryKey(result);
 		}
 		return result;
 	}
