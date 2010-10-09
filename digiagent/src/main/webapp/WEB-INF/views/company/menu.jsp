@@ -31,7 +31,7 @@ function whenDelete() {
         <DIV class=blk2>                       
         <UL>
           <LI><b><A href="${ctx}/company/basicInfo" target="mainFrame" title="基本信息">基本信息 </A></b>                 
-          <LI><b><A href="password.html" target="mainFrame" title="密码管理">密码管理</A></b></LI>                  
+          <LI><b><A href="${ctx}/company/passwordForm" target="mainFrame" title="密码管理">密码管理</A></b></LI>                  
           <LI><b><A href="right.html" target="mainFrame">电子邮件</A></b></LI>
           <LI><b><A href="right.html" target="mainFrame">公司简介</A></b></LI>
           <LI><b><A href="right.html" target="mainFrame">联系方式</A></b></LI>

@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>基本信息</title>
+<title>用户基本信息</title>
 <link href="${ctx}/styles/main.css" rel="stylesheet" type="text/css" />
 <script src="${ctx}/scripts/Calendar.js"></script>
 <script src="${ctx}/scripts/menu.js"></script>
@@ -24,8 +24,9 @@ function whenDelete() {
 </script>
 </head>
 <body>
-<div class="companyTitle">用户基本信息</div>
+<div class="companyTitle">用户密码管理</div>
 <div id="companyLeft">
+<form action="${ctx}/company/chnagepassword" method="post">
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
 <!--    <tr>-->
 <!--      <td colspan="2"><strong>用户基本信息</strong></td>-->
@@ -34,36 +35,32 @@ function whenDelete() {
       <td></td>
     </tr>
     <tr>
-      <td>用户帐号：</td>
-      <td><c:out value="${user.userId}" /></td>
+      <td>请输入旧密码</td>
+      <td><input type="password" name="oldpassword" id="oldpassword" /></td>
     </tr>
     <tr>
-      <td>用户类型：</td>
-      <td>企业会员</td>
+      <td>请输入新密码</td>
+      <td><input type="password" name="newpassword1" id="newpassword1" /></td>
     </tr>
     <tr>
-      <td>电子邮件：</td>
-      <td><c:out value="${user.userEmail}" /></td>
-    </tr>
-    <tr>
-      <td>最后登录时间：</td>
-      <td><fmt:formatDate value="${user.lastlogintime}" pattern="yyyy/MM/dd"/></td>
-    </tr>
-    <tr>
-      <td>登录次数：</td>
-      <td><c:out value="${user.logonsum}" /></td>
+      <td>再确认新密码</td>
+      <td><input type="password" name="newpassword2" id="newpassword1" /></td>
     </tr>
     <tr>
       <td></td>
     </tr>
-<!--    <tr>-->
-<!--      <td colspan="2" align="center"><span class="headCity">-->
-<!--        <input class="btn_login" type="submit" value="注册" />-->
-<!--            </span><span class="headCity">-->
-<!--      <input class="btn_login" type="submit" value="取消" />-->
-<!--                  </span></td>-->
-<!--    </tr>-->
+    <tr>
+      <td colspan="2" align="center"><span class="headCity">
+        <input class="btn_login" type="submit" value="提交" />
+            </span><span class="headCity">
+      <input class="btn_login" type="reset" value="取消" />
+                  </span></td>
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
   </table>
+</form>
   <p class="tagContent">&nbsp;</p>
 </div>
 </body>

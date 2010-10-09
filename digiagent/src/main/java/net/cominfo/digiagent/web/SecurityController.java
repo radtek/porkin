@@ -19,13 +19,17 @@ import net.cominfo.digiagent.spring.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/")
+@SessionAttributes({"userId","userName"})
 public class SecurityController {
 
 	@Autowired
@@ -39,20 +43,21 @@ public class SecurityController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, @RequestParam String username,
-			@RequestParam String password, HttpSession session) {
+			@RequestParam String password) {
 		User user = securityService.login(username, password);
 		if (user != null) {
-			session.setAttribute("username", user.getUserName());
+			//session.setAttribute("username", user.getUserName());
 			//session.setAttribute("userId", user.getUserId());
+			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("userName", user.getUserName());		
 		}
 		return "welcome";
 	}
 	
 	
 	@RequestMapping(value = "/member", method = RequestMethod.GET)
-	public String member(HttpSession session) {
-		String username = (String)session.getAttribute("username");
-		List<String> roleIdList = userRoleService.getRoleIdListByUserName(username);
+	public String member(@ModelAttribute("userName") String userName) {
+		List<String> roleIdList = userRoleService.getRoleIdListByUserName(userName);
 		String roleId = null;
 		
 		String result = "welcome";
@@ -76,10 +81,8 @@ public class SecurityController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		session.removeAttribute("usrename");
-		session.invalidate();
+	public String logout(SessionStatus status) {
+		status.setComplete();
 		return "welcome";
 	}
 

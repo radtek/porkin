@@ -26,7 +26,7 @@ function logout() {
         <option>上海</option>
       </select>
       <c:choose>
-      <c:when test="${empty sessionScope.username}">
+      <c:when test="${empty sessionScope.userName}">
      <form name="loginForm" action="login" method="post">
       用户<input type="text" name="username" size="10" width="10"/>&nbsp;
       密码<input type="password" name="password" size="10" width="10"/>&nbsp;
@@ -35,7 +35,7 @@ function logout() {
    			<span class="leftLink"><a href="registerForm">注册</a> | <a href="passwordForm">忘记密码</a></span>
       </c:when>
       <c:otherwise>
-       <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.username}" /> | <a href="member">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></>退出</a></span>
+       <span class="leftLink">欢迎您 ，<c:out value="${sessionScope.userName}" /> | <a href="member">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></>退出</a></span>
       </c:otherwise>
       </c:choose>
       
