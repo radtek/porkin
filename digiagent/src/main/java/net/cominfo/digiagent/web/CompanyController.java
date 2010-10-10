@@ -1,6 +1,11 @@
 package net.cominfo.digiagent.web;
 
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
 import net.cominfo.digiagent.persistence.domain.Supplier;
+import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CompanyService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
@@ -92,9 +97,56 @@ public class CompanyController {
 	}
 
 	@RequestMapping(value = "/introductionForm", method = RequestMethod.GET)
-	public String introductionForm(@ModelAttribute("userId") Integer userId,Model model) {
+	public String introductionForm(@ModelAttribute("userId") Integer userId,
+			Model model) {
 		Supplier supplier = companyService.getCompanyByUserId(userId);
 		model.addAttribute("supplier", supplier);
+		return "company/introduction";
+	}
+
+	@RequestMapping(value = "/introduction", method = RequestMethod.POST)
+	public String introduction(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName, Model model,
+			HttpServletRequest request) {
+		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
+
+		String supplierName = (String) request.getParameter("supplierName");
+		supplier.setSupplierName(supplierName);
+
+		String supplierContactname = (String) request
+				.getParameter("supplierContactname");
+		supplier.setSupplierContactname(supplierContactname);
+
+		String supplierZip = (String) request.getParameter("supplierZip");
+		supplier.setSupplierZip(supplierZip);
+
+		String supplierAddress = (String) request
+				.getParameter("supplierContactname");
+		supplier.setSupplierAddress(supplierAddress);
+
+		String supplierTelephone = (String) request
+				.getParameter("supplierName");
+		supplier.setSupplierTelephone(supplierTelephone);
+
+		String supplierMobile = (String) request.getParameter("supplierMobile");
+		supplier.setSupplierMobile(supplierMobile);
+
+		String supplierFax = (String) request.getParameter("supplierFax");
+		supplier.setSupplierFax(supplierFax);
+
+		String supplierDescription = (String) request
+				.getParameter("supplierDescription");
+		supplier.setSupplierDescription(supplierDescription);
+
+		supplier.setLastupdatedBy(userName);
+		supplier.setLastupdatedDate(new Date());
+
+		companyService.updateSupplier(supplier);
+		
+		model.addAttribute("message", new Message(MessageType.success,
+				"supplier.update.success"));
+		model.addAttribute("supplier", supplier);
+
 		return "company/introduction";
 	}
 

@@ -26,7 +26,7 @@ function whenDelete() {
 <body>
 <div class="companyTitle">公司情况</div>
 <div id="companyLeft">
-<form action="${ctx}/company/changePassword" method="post">
+<form action="${ctx}/company/introduction" method="post">
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2">

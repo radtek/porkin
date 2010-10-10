@@ -35,7 +35,7 @@ function whenDelete() {
     </tr>
     <tr>
       <td>用户帐号：</td>
-      <td><c:out value="${user.userId}" /></td>
+      <td><c:out value="${user.userName}" /></td>
     </tr>
     <tr>
       <td>用户类型：</td>

@@ -5,9 +5,10 @@ import java.util.List;
 
 import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.dao.UserDao;
+import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
-import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
+import net.cominfo.digiagent.persistence.domain.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,10 @@ public class CompanyService {
 		}
 		return result;
 	}
+	
+	public void updateSupplier(SupplierWithBLOBs supplier){
+		supplierDao.updateByPrimaryKey(supplier);
+	}
+		
 
 }
