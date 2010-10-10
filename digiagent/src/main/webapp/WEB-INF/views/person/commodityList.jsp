@@ -14,7 +14,7 @@
 <script type="text/javascript" src="${ctx}/scripts/common/common.js"></script>
 <script>
 $(document).ready(function() {
-	queryCommodityList(1, 'S', true);
+	queryCommodityList(1, 'S', true, '');
 });
 </script>
 </head>

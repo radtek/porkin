@@ -22,8 +22,16 @@
 		       t_da_supplier.supplier_address as supplierAddress,
 		       t_da_supplier.supplier_description as supplierDescription,
 		       t_da_user.user_email as userEmail,
+		       t_da_commodity.product_id as productId,
+		       t_da_product.category_id as categoryId,
+		       t_da_product.product_name as productName,
+		       t_da_category.category_name as categoryName,
 			   imageId		
 			  FROM t_da_commodity
+			  left join t_da_product
+			  on t_da_product.product_id = t_da_commodity.product_id
+			  left join t_da_category
+			  on t_da_product.category_id = t_da_category.category_id
 			  left join t_da_user
 			  on t_da_commodity.user_id = t_da_user.user_id
 			  left join t_da_supplier
@@ -44,6 +52,9 @@
 		 <isNotEmpty prepend="AND" property="param.activeFlag">
 			t_da_commodity.active_flag = '$param.activeFlag$'
          </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.productName">
+			t_da_product.product_name = '$param.productName$'
+         </isNotEmpty>
          <isEmpty prepend="ORDER BY" property="orderByStatement">
          	t_da_commodity.commodity_name
          </isEmpty>
@@ -57,12 +68,19 @@
 		resultClass="HashMap">
 		SELECT count(*) as total
 		FROM t_da_commodity
+		  left join t_da_product
+		  on t_da_product.product_id = t_da_commodity.product_id
+		  left join t_da_category
+		  on t_da_product.category_id = t_da_category.category_id
 		 WHERE commodity_id > 0
 		 <isNotEmpty prepend="AND" property="param.commodityType">
 			commodity_type = '$param.commodityType$'
          </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.commodityName">
 			commodity_name like '%$param.commodityName$%'
+         </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.productName">
+			t_da_product.product_name = '$param.productName$'
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.activeFlag">
 			t_da_commodity.active_flag = '$param.activeFlag$'

@@ -18,13 +18,23 @@ function releaseInfo() {
 		dataType:  'json', 
         success:   processJson,
         error:   function(err){
-        	alert(err);
+        	alert('数据操作失败！');
 		} 
 	});
 }
 
 function validate(formData, jqForm, options) {
-	var form = jqForm[0]; 
+	var form = jqForm[0];  
+	if (form.categoryId.value.length == 0) {
+    	alert('请选择类别！');
+		form.categoryId.focus();
+		return false;
+	}
+	if (form.productId.value.length == 0) {
+    	alert('请选择产品！');
+		form.productId.focus();
+		return false;
+	}
 	if (form.commodityName.value.length == 0) {
     	alert('请输入商品名称！');
 		form.commodityName.focus();
@@ -102,3 +112,40 @@ function processJson(data) {
     alert("新增成功！");
     $('#commodityId').val(data.commodityId);
 }
+
+function setProductSelect(productId) {
+	$.ajax({
+		url:"../productBrand/getProductList",
+		data:"id=" + $('select[name="categoryId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="productId"]').empty().append(data).val(productId);
+		},
+		error:function(err) {
+	    	alert('数据读取失败！');
+		}
+	});
+}
+
+function setCategorySelect(categoryId, productId) {
+	$.ajax({
+		url:"../product/getCategoryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="categoryId"]').empty().append(data).val(categoryId);
+			if (productId > 0) {
+				setProductSelect(productId);
+			}
+		},
+		error:function(err) {
+	    	alert('数据读取失败！');
+		}
+	});
+}
+
+$(document).ready(function() {
+	$('select[name="categoryId"]').bind('change', setProductSelect);
+	setCategorySelect('', -1);
+});

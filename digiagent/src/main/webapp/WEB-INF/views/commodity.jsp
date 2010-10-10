@@ -11,6 +11,14 @@
 	<div style="background: #fafafa; padding: 10px; text-align: center">
 		<form id="commodityForm" action="../commodity/create" method="post"	enctype="multipart/form-data">
 			  <div>
+          		<label for="name">类别:</label>
+              	<select id="categoryId" name="categoryId"> 
+              	</select>
+              	<label for="name">产品:</label>
+              	<select id="productId" name="productId"> 
+              	</select>
+          	  </div> 
+			  <div>
 	              	<label for="name">商品名称:</label>
 					<input id="commodityId" name="commodityId" type="hidden" /> 
 					<input id="commodityimageId" name="commodityimageId" type="hidden" />

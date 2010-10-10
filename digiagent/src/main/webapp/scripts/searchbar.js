@@ -44,6 +44,16 @@ var getProductJson = function(categoryName) {
 	$('#supplierInfo').remove();
 	$('#brandBar').remove();
 	$(productBarId).remove();
+	// 促销商品
+	if (target == '#searchBar2') {
+		$('#commodityP').next().empty();
+		$('#commodityP').empty();
+	} 
+	// 二手商品
+	if (target == '#searchBar3') {
+		$('#commodityS').next().empty();
+		$('#commodityS').empty();
+	}
 	$.ajax({
 		url: "searchComponentBar/getProductList",
 		dataType: "json",
@@ -62,7 +72,19 @@ var getProductJson = function(categoryName) {
 			        }));
 				} else {
 					// 其它TAB
-					$(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName));
+					$(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
+			        	var productName = encodeURI($(this).text());
+			        	var commodityType = "";
+			        	// 促销商品
+			        	if (target == '#searchBar2') {
+			        		commodityType = "P";
+			        	} 
+			        	// 二手商品
+			        	if (target == '#searchBar3') {
+			        		commodityType = "S";
+			        	}
+		        		queryCommodityList(1, commodityType, false, productName);
+			        }));
 				}
 				if ((index + 1) < data.length) {
 		        	$(productBarId).append(" | ");

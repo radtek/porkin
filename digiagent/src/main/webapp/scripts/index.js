@@ -23,12 +23,14 @@ function selectTag(showContent,selfObj){
 	// 促销商品
 	if (showContent == 'tagContent2') {
 		getCategoryJson('#searchBar2');
-		queryCommodityList(1, 'P', false);
+		$('#commodityP').next().empty();
+		$('#commodityP').empty();
 	}
 	// 二手商品
 	if (showContent == 'tagContent3') {
 		getCategoryJson('#searchBar3');
-		queryCommodityList(1, 'S', false);
+		$('#commodityS').next().empty();
+		$('#commodityS').empty();
 	}
 	document.getElementById(showContent).style.display = "block";
 }

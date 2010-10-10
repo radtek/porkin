@@ -9,7 +9,10 @@
 			<div style="paddingTop:5px;text-align:center">￥commodityPrice</div>
 		</div>  
 		<div class="link1">
+			<div>类别：categoryName</div>
+			<div>产品：productName</div>
 			<div>商品名称：commodityName</div>
+			<div>商品单价：commodityPrice</div>
 			<div>联 系 人：supplierContactname</div>
 			<div>联系电话：<span class=hong14b>supplierMobile</span></div>
 			<div>手机号码：<span class=hong14b>supplierTelephone</span></div>

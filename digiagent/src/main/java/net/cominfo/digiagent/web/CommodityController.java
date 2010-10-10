@@ -39,8 +39,11 @@ public class CommodityController{
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/queryCommodityList", method = RequestMethod.GET)
-	public void queryCommodityList(@RequestParam Map param, HttpServletResponse response) {
+	public void queryCommodityList(@RequestParam Map param, @RequestParam String productName, HttpServletResponse response) {
 		try {
+			if (productName != null && productName.length() > 0) {
+				param.put("productName", java.net.URLDecoder.decode(productName, "UTF-8"));
+			}
 			Long total = commodityService.count(param);
 			PrintWriter pw = response.getWriter();
 			Integer page = Integer.valueOf((String)param.get("page"));
@@ -122,6 +125,7 @@ public class CommodityController{
 		if (commodity == null) {
 			new ResourceNotFoundException(new Long(commodityUpdate.getCommodityId()));
 		}
+		commodityUpdate.setProductId(commodity.getProductId());
 		commodityUpdate.setActiveFlag(commodity.getActiveFlag());
 		commodityUpdate.setStartDate(commodity.getStartDate());
 		commodityUpdate.setEndDate(commodity.getEndDate());

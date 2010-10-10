@@ -1,3 +1,41 @@
+function setProductSelect(productId) {
+	$.ajax({
+		url:"../productBrand/getProductList",
+		data:"id=" + $('select[name="categoryId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="productId"]').empty().append(data).val(productId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setCategorySelect(categoryId, productId) {
+	$.ajax({
+		url:"../product/getCategoryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="categoryId"]').empty().append(data).val(categoryId);
+			if (productId > 0) {
+				setProductSelect(productId);
+			}
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setCategoryByProductId(productId) {
+	$.get('../product/get', { id: productId } ,function(data) {
+		setCategorySelect(data.categoryId, productId);
+	});
+}
+
 //edit event
 function formSubmit(actionUrl) {
 	$('#loader').remove();
@@ -15,6 +53,16 @@ function formSubmit(actionUrl) {
 
 function validate(formData, jqForm, options) {
 	var form = jqForm[0]; 
+	if (form.categoryId.value.length == 0) {
+    	$.messager.alert('消息','请选择类别！','info');
+		form.categoryId.focus();
+		return false;
+	}
+	if (form.productId.value.length == 0) {
+    	$.messager.alert('消息','请选择产品！','info');
+		form.productId.focus();
+		return false;
+	}
 	if (form.commodityName.value.length == 0) {
     	$.messager.alert('消息','请输入商品名称！','info');
 		form.commodityName.focus();
@@ -93,6 +141,8 @@ function onEditClickHandler(id) {
 		var data = result.commodity;
 		var image = result.commodityImage;
 		$('input[name="commodityId"]').val(id);
+		setCategoryByProductId(data.productId);
+		setTimeout("setProductSelect("+data.productId+")", 500);
 		$('input[name="commodityName"]').val(data.commodityName);
 		$('input[name="commodityDescription"]').val(data.commodityDescription);
 		$('input[name="startDate"]').val(new Date(data.startDate).format('yyyy/MM/dd'));
@@ -138,6 +188,8 @@ function onDeleteClickHandler(id) {
 }
 
 $(document).ready(function() {
+	$('select[name="categoryId"]').bind('change', setProductSelect);
+	
 	//image click popup big pic
 	var $enlargedCover = $('<img/>')
 	.css('position', 'absolute')
@@ -210,7 +262,17 @@ $(function(){
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
-			{field:'commodityId',title:'编号',width:80,align:'center'},
+			{field:'commodityId',title:'编号',width:50,align:'center'},
+			{field:'categoryName',title:'类别',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'productName',title:'产品',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
 			{field:'commodityName',title:'商品名称',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
@@ -262,7 +324,7 @@ $(function(){
 					}
 				}
 			},
-			{field:'createdBy',title:'创建人',width:100,align:'center',sortable:true,
+			{field:'createdBy',title:'创建人',width:80,align:'center',sortable:true,
 				sorter:function(a,b,order){
 				return (a>b?1:-1)*(order=='asc'?1:-1);
 			}},
@@ -284,6 +346,9 @@ $(function(){
 				iconCls:'icon-add',
 				handler:function(){
 					$('input[name="commodityId"]').val('');
+					$('select[name="categoryId"]').val('');
+					setCategorySelect('', -1);
+					setTimeout("setProductSelect('')", 500);
 					$('input[name="commodityName"]').val('');
 					$('input[name="commodityDescription"]').val('');
 					$('input[name="startDate"]').val('');

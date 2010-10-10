@@ -14,10 +14,12 @@
 <script type="text/javascript" src="${ctx}/scripts/infoRelease.js"></script>
 </head>
 <body>
-	<div class="companyTitle">二手发布 </div>
+	<div class="companyTitle">二手发布 </div>	
 	<div id="companyLeft">
 	<form id="commodityForm" name="commodityForm" action="commodity/release" method="post" enctype="multipart/form-data">
 	<ul style="list-style:none; line-height:30px;">
+		<li>类别<select id="categoryId" name="categoryId"></select></li>
+		<li>产品<select id="productId" name="productId"></select></li>
     	<li>商品名称<input type="hidden" name="commodityId" id="commodityId" size="30"/><input type="text" name="commodityName" id="commodityName" size="30"/></li>
         <li>商品单价<input type="text" name="commodityPrice" id="commodityPrice" size="30"/></li>
         <li>开始时间<input type="text" name="startDate" id="startDate" size="30" readonly="readonly" onclick="SelectDate(this,'yyyy/MM/dd');"/></li>

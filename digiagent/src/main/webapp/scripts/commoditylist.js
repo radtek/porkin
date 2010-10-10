@@ -2,6 +2,7 @@
  * 全局变量定义
  */
 var prefix = "";
+var productName = "";
 
 /**
  * 验证输入页码
@@ -28,7 +29,17 @@ function go(obj, commodityType, totalPage) {
 	if (obj.value - 0 < 1) {
 		obj.value = 1;
     }
-	queryCommodityList(obj.value, commodityType, prefix);
+	queryCommodityList(obj.value, commodityType, prefix, productName);
+}
+
+/**
+ * 翻页
+ * @param pageNum
+ * @param commodityType
+ * @return
+ */
+function skip(pageNum, commodityType) {
+	queryCommodityList(pageNum, commodityType, prefix, productName);
 }
 
 /**
@@ -41,28 +52,33 @@ function go(obj, commodityType, totalPage) {
  * 		是否上级路径
  * @return
  */
-function queryCommodityList(pageNum, commodityType, isParentPath) {
+function queryCommodityList(pageNum, commodityType, isParentPath, _productName) {
+	productName = _productName;
 	if (isParentPath) {
 		prefix = "../";
 	}
 	$.ajax({
 		url:prefix + "commodity/queryCommodityList",
 		dataType:"json",
-		data:"page=" + pageNum + "&commodityType=" + commodityType + "&activeFlag=Y",
+		data: {page:pageNum, commodityType:commodityType, activeFlag:'Y', productName:productName},
 		type: "GET",
 		success: function(data) {
-			if (data.total==0) return;
 			if (commodityType == 'S') {
+				$('#commodityS').next().empty();
 				$('#commodityS').empty();
 			}
 			if (commodityType == 'P') {
+				$('#commodityP').next().empty();
 				$('#commodityP').empty();
 			}
+			if (data.total==0) return;
 			var result = jQuery.parseJSON(data.resultList);
 			if (result.length == 0) return;
 			$.each(result, function(index, commodity) {
 				var str = $('#commodityTemplate').html();
 				str = str.replace('rowNum', (pageNum - 1) * 10 + index + 1);
+				str = str.replace(/categoryName/g, commodity.categoryName == null ? '暂无' : commodity.categoryName);
+				str = str.replace(/productName/g, commodity.commodityName == null ? '暂无' : commodity.productName);
 				str = str.replace(/commodityName/g, commodity.commodityName == null ? '暂无' : commodity.commodityName);
 				str = str.replace(/commodityPrice/g, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
 				str = str.replace(/imageSrc/g, prefix + "commodity/getImage?id=" + commodity.imageId + "&uuid=" + createUUID());
@@ -83,10 +99,10 @@ function queryCommodityList(pageNum, commodityType, isParentPath) {
 			var nextPageNum = (pageNum + 1 > totalPage) ? totalPage : pageNum + 1;
 			
 			if (commodityType == 'S') {
-				$('#commodityS').next().empty().append('<a href="javascript:void(0)" onclick="queryCommodityList(1, \''+commodityType+'\')">首页</a>&nbsp;<a href="javascript:void(0)" onclick="queryCommodityList('+prePageNum+', \''+commodityType+'\')">前一页</a>&nbsp;共<input type="text" name="pageNum" size=2 value="'+pageNum+'" onkeyup="CheckInputInt(this);" onchange="go(this, \''+commodityType+'\', '+totalPage+');"/>/' + totalPage + '页&nbsp;<a href="javascript:void(0)" onclick="queryCommodityList('+nextPageNum+', \''+commodityType+'\')">后一页</a>&nbsp;<a href="javascript:void(0)" onclick="queryCommodityList('+totalPage+', \''+commodityType+'\')">末页</a>&nbsp;共'+data.total+'条记录');
+				$('#commodityS').next().empty().append('<a href="javascript:void(0)" onclick="skip(1, \''+commodityType+'\')">首页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+prePageNum+', \''+commodityType+'\')">前一页</a>&nbsp;共<input type="text" name="pageNum" size=2 value="'+pageNum+'" onkeyup="CheckInputInt(this);" onchange="go(this, \''+commodityType+'\', '+totalPage+');"/>/' + totalPage + '页&nbsp;<a href="javascript:void(0)" onclick="skip('+nextPageNum+', \''+commodityType+'\')">后一页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+totalPage+', \''+commodityType+'\')">尾页</a>&nbsp;共'+data.total+'条记录');
 			}
 			if (commodityType == 'P') {
-				$('#commodityP').next().empty().append('<a href="javascript:void(0)" onclick="queryCommodityList(1, \''+commodityType+'\')">首页</a>&nbsp;<a href="javascript:void(0)" onclick="queryCommodityList('+prePageNum+', \''+commodityType+'\')">前一页</a>&nbsp;共<input type="text" name="pageNum" size=2 value="'+pageNum+'" onkeyup="CheckInputInt(this);" onchange="go(this, \''+commodityType+'\', '+totalPage+');"/>/' + totalPage + '页&nbsp;<a href="javascript:void(0)" onclick="queryCommodityList('+nextPageNum+', \''+commodityType+'\')">后一页</a>&nbsp;<a href="javascript:void(0)" onclick="queryCommodityList('+totalPage+', \''+commodityType+'\')">末页</a>&nbsp;共'+data.total+'条记录');
+				$('#commodityP').next().empty().append('<a href="javascript:void(0)" onclick="skip(1, \''+commodityType+'\')">首页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+prePageNum+', \''+commodityType+'\')">前一页</a>&nbsp;共<input type="text" name="pageNum" size=2 value="'+pageNum+'" onkeyup="CheckInputInt(this);" onchange="go(this, \''+commodityType+'\', '+totalPage+');"/>/' + totalPage + '页&nbsp;<a href="javascript:void(0)" onclick="skip('+nextPageNum+', \''+commodityType+'\')">后一页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+totalPage+', \''+commodityType+'\')">尾页</a>&nbsp;共'+data.total+'条记录');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError){
