@@ -7,10 +7,12 @@ import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.RoleDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
+import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.dao.UserDao;
 import net.cominfo.digiagent.persistence.dao.UserRoleDao;
 import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.RoleCriteria;
+import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.persistence.domain.UserCriteria;
 import net.cominfo.digiagent.persistence.domain.UserRole;
@@ -22,7 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class UserService {
 
 	@Autowired
@@ -36,6 +38,9 @@ public class UserService {
 
 	@Autowired
 	private SequenceDao sequenceDao;
+	
+	@Autowired
+	private SupplierDao supplierDao;
 
 	public int countUser() {
 		return userDao.countByExample(new UserCriteria());
@@ -87,7 +92,7 @@ public class UserService {
 		return userDao.count(page, "t_da_user_Custom.countByCondition");
 	}
 
-	public User register(User user, int roleId) {
+	public User register(User user, int roleId,boolean flag) {
 
 		user = validateUserName(user);
 
@@ -109,6 +114,36 @@ public class UserService {
 		userRole.setUserId(userId);
 
 		userRoleDao.insert(userRole);
+		
+		if(flag){
+			SupplierWithBLOBs supplier = new SupplierWithBLOBs();
+			int supplierId = sequenceDao.getSupplierNexId();
+			supplier.setSupplierId(supplierId);
+			
+			supplier.setSupplierAccess(0);
+			supplier.setSupplierScore(0);
+			
+			supplier.setSupplierAddress("");
+			supplier.setSupplierContactname("");
+			supplier.setSupplierDescription("");
+			supplier.setSupplierFax("");
+			supplier.setSupplierMobile("");
+			supplier.setSupplierName("");
+			supplier.setSupplierTelephone("");
+			supplier.setSupplierZip("");
+			supplier.setSupplierImage(new byte[]{0,0,0});
+			
+			supplier.setCreatedBy(user.getUserName());
+			supplier.setCreatedDate(new Date());
+			supplier.setLastupdatedBy(user.getUserName());
+			supplier.setLastupdatedDate(new Date());
+			supplier.setActiveFlag("Y");
+			
+			supplier.setCityId(1);
+			supplier.setUserId(userId);
+			
+			supplierDao.insert(supplier);
+		}
 
 		return user;
 	}

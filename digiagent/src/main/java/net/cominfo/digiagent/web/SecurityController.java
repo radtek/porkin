@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
 import net.cominfo.digiagent.captcha.render.Producer;
+import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.UserRoleService;
 import net.cominfo.digiagent.service.UserService;
@@ -88,10 +89,15 @@ public class SecurityController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(Model model, @RequestParam String type,
-			@RequestParam String username, @RequestParam String password1,@RequestParam String password2,
-			@RequestParam String email, @RequestParam String captcha, @RequestParam String agree,  HttpSession session) {
-
+	public String register(Model model, HttpServletRequest request, HttpSession session) {
+		
+		String type = request.getParameter("type");
+		String username = request.getParameter("username");
+		String password1 = request.getParameter("password1");
+		String password2 = request.getParameter("password2");
+		String email = request.getParameter("email");
+		String captcha = request.getParameter("captcha");
+		
 		boolean existFlag = securityService.isExistByName(username);
 		String forward = "register";
 		boolean hasError = false;
@@ -103,7 +109,7 @@ public class SecurityController {
 			model.addAttribute("password", new Message(MessageType.success,"register.password.error"));
 			hasError = true;
 		}
-		if(email==null || email.equals("")){
+		if(email == null || email.equals("")){
 			model.addAttribute("email", new Message(MessageType.success,"register.email.error"));
 			hasError = true;
 		}
@@ -112,24 +118,24 @@ public class SecurityController {
 			model.addAttribute("captcha", new Message(MessageType.success,"register.captcha.error"));
 			hasError = true;
 		}
-		
-		if(!agree.equalsIgnoreCase("Y")){
-			model.addAttribute("agree", new Message(MessageType.success,"register.agree.checked"));
-			hasError = true;
-		}
+//		
+//		if(!agree.equalsIgnoreCase("Y")){
+//			model.addAttribute("agree", new Message(MessageType.success,"register.agree.checked"));
+//			hasError = true;
+//		}
 		
 		if(hasError){
 			forward = "register";
 		}
 		else{
-//			Role role = securityService.getRoleByName(type);
-//			User user = new User();
-//			user.setUserName(username);
-//			user.setUserPassword(password1);
-//			user.setUserEmail(email);
-//			int roleId = role.getRoleId();
-//			userService.register(user, role.getRoleId());
-//			if(roleId==1){
+			Role role = securityService.getRoleByName(type);
+			User user = new User();
+			user.setUserName(username);
+			user.setUserPassword(password1);
+			user.setUserEmail(email);
+			int roleId = role.getRoleId();
+			boolean companyFlag = (roleId==4)?true:false;
+			userService.register(user, role.getRoleId(),companyFlag);
 			forward = "welcome";
 		}	
 		return forward;
