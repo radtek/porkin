@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>用户基本信息</title>
+<title>公司情况</title>
 <link href="${ctx}/styles/main.css" rel="stylesheet" type="text/css" />
 <script src="${ctx}/scripts/Calendar.js"></script>
 <script src="${ctx}/scripts/menu.js"></script>
@@ -24,9 +24,9 @@ function whenDelete() {
 </script>
 </head>
 <body>
-<div class="companyTitle">用户电子邮件</div>
+<div class="companyTitle">公司情况</div>
 <div id="companyLeft">
-<form action="${ctx}/company/changeEmail" method="post">
+<form action="${ctx}/company/changePassword" method="post">
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2">
@@ -41,12 +41,36 @@ function whenDelete() {
       <td></td>
     </tr>
     <tr>
-      <td>原有的电子邮件</td>
-      <td><input type="hidden" name="oldEmail" id="oldEmail" value='<c:out value="${email}" />' /><c:out value="${email}" /></td>
+      <td>公司名称</td>
+      <td><input type="text" name="supplierName" id="supplierName" value='<c:out value="${supplier.supplierName}" />' /></td>
     </tr>
     <tr>
-      <td>请输入新的电子邮件</td>
-      <td><input type="text" name="newEmail" id="newEmail" /></td>
+      <td>联系人姓名</td>
+      <td><input type="text" name="supplierContactname" id="supplierContactname" value='<c:out value="${supplier.supplierContactname}" />' /></td>
+    </tr>
+    <tr>
+      <td>邮政编码</td>
+      <td><input type="text" name="supplierZip" id="supplierZip" value='<c:out value="${supplier.supplierZip}" />' /></td>
+    </tr>
+    <tr>
+      <td>联系地址</td>
+      <td><input type="text" name="supplierAddress" id="supplierAddress" value='<c:out value="${supplier.supplierAddress}" />' /></td>
+    </tr>
+    <tr>
+      <td>联系电话</td>
+      <td><input type="text" name="supplierTelephone" id="supplierTelephone" value='<c:out value="${supplier.supplierTelephone}" />' /></td>
+    </tr>
+    <tr>
+      <td>手机</td>
+      <td><input type="text" name="supplierMobile" id="supplierMobile" value='<c:out value="${supplier.supplierMobile}" />' /></td>
+    </tr>
+    <tr>
+      <td>传真</td>
+      <td><input type="text" name="supplierFax" id="supplierFax" value='<c:out value="${supplier.supplierFax}" />' /></td>
+    </tr>
+     <tr>
+      <td>简介</td>
+      <td><input type="text" name="supplierDescription" id="supplierDescription" value='<c:out value="${supplier.supplierDescription}" />' /></td>
     </tr>
     <tr>
       <td></td>
@@ -68,3 +92,19 @@ function whenDelete() {
 </body>
 </html>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

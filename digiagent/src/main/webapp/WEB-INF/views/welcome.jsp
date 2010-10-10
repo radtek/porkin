@@ -1,15 +1,17 @@
-<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
+<%@ include file="/common/taglibs.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>首页</title>
-<script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="scripts/searchbar.js"></script>
-<script type="text/javascript" src="scripts/common/common.js"></script>
-<script type="text/javascript" src="scripts/commoditylist.js"></script>
-<script type="text/javascript" src="scripts/login.js"></script>
-<script type="text/javascript" src="scripts/index.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/searchbar.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/common/common.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/commoditylist.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/login.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/index.js"></script>
 <style>
 .supplierInfo {
 	width:100%; border-color:maroon; float:left;

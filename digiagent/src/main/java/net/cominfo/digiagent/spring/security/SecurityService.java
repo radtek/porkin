@@ -99,5 +99,17 @@ public class SecurityService {
 		}
 		return result;
 	}
+	
+	public boolean isExistByName(String userName){
+		boolean result = false;
+		UserCriteria criteria = new UserCriteria();
+		criteria.createCriteria().andUserNameEqualTo(userName);
+		List<User> userList = userDao.selectByExample(criteria);
+		if(null!=userList && userList.size()>0 ){
+			result = true;
+		}
+		
+		return result;
+	}
 
 }

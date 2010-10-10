@@ -1,11 +1,11 @@
 package net.cominfo.digiagent.web;
 
+import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CompanyService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 
-import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +33,6 @@ public class CompanyController {
 			Model model) {
 		User user = companyService.getUserById(userId);
 		model.addAttribute("user", user);
-		user.getLastlogintime();
-		user.getLogonsum();
 		return "company/basicInfo";
 	}
 
@@ -93,9 +91,11 @@ public class CompanyController {
 		return "company/email";
 	}
 
-	@RequestMapping(value = "/introduction", method = RequestMethod.GET)
-	public String introduction(Model model) {
-		return "company/menu";
+	@RequestMapping(value = "/introductionForm", method = RequestMethod.GET)
+	public String introductionForm(@ModelAttribute("userId") Integer userId,Model model) {
+		Supplier supplier = companyService.getCompanyByUserId(userId);
+		model.addAttribute("supplier", supplier);
+		return "company/introduction";
 	}
 
 	@RequestMapping(value = "/contact", method = RequestMethod.GET)

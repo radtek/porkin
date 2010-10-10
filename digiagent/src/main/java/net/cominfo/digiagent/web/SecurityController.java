@@ -10,10 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
 import net.cominfo.digiagent.captcha.render.Producer;
-import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.UserRoleService;
 import net.cominfo.digiagent.service.UserService;
+import net.cominfo.digiagent.spring.FlashMap.Message;
+import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,19 +88,51 @@ public class SecurityController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(@RequestParam String type,
-			@RequestParam String username, @RequestParam String password,
-			@RequestParam String email) {
+	public String register(Model model, @RequestParam String type,
+			@RequestParam String username, @RequestParam String password1,@RequestParam String password2,
+			@RequestParam String email, @RequestParam String captcha, @RequestParam String agree,  HttpSession session) {
 
-		Role role = securityService.getRoleByName(type);
-
-		User user = new User();
-		user.setUserName(username);
-		user.setUserPassword(password);
-		user.setUserEmail(email);
-		userService.register(user, role.getRoleId());
-
-		return "welcome";
+		boolean existFlag = securityService.isExistByName(username);
+		String forward = "register";
+		boolean hasError = false;
+		if(existFlag){
+			model.addAttribute("username", new Message(MessageType.success,"register.username.exist"));
+			hasError = true;
+		}
+		if(!password1.equals(password2) || password1==null || password1.equals("")){
+			model.addAttribute("password", new Message(MessageType.success,"register.password.error"));
+			hasError = true;
+		}
+		if(email==null || email.equals("")){
+			model.addAttribute("email", new Message(MessageType.success,"register.email.error"));
+			hasError = true;
+		}
+		String original = (String)session.getAttribute("icaptcha");
+		if(!captcha.equals(original)){
+			model.addAttribute("captcha", new Message(MessageType.success,"register.captcha.error"));
+			hasError = true;
+		}
+		
+		if(!agree.equalsIgnoreCase("Y")){
+			model.addAttribute("agree", new Message(MessageType.success,"register.agree.checked"));
+			hasError = true;
+		}
+		
+		if(hasError){
+			forward = "register";
+		}
+		else{
+//			Role role = securityService.getRoleByName(type);
+//			User user = new User();
+//			user.setUserName(username);
+//			user.setUserPassword(password1);
+//			user.setUserEmail(email);
+//			int roleId = role.getRoleId();
+//			userService.register(user, role.getRoleId());
+//			if(roleId==1){
+			forward = "welcome";
+		}	
+		return forward;
 	}
 
 	@RequestMapping(value = "/registerForm", method = RequestMethod.GET)
@@ -107,14 +140,9 @@ public class SecurityController {
 		return "register";
 	}
 
-	@RequestMapping(value = "/passwordForm", method = RequestMethod.GET)
-	public String password(HttpServletResponse response) {
-		return "password";
-	}
-
 	@RequestMapping(value = "/captcha", method = RequestMethod.GET)
 	public ModelAndView captcha(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,HttpSession session) {
 
 		Properties props = new Properties();
 		String ext = "jpg";
@@ -122,8 +150,8 @@ public class SecurityController {
 		props.put("font", "Helvetica");
 		props.put("fontsize", "28");
 		props.put("min-width", "180");
-		props.put("padding-x", "25");
-		props.put("padding-y", "25");
+		props.put("padding-x", "20");
+		props.put("padding-y", "20");
 
 		try {
 			OutputStream os = response.getOutputStream();
@@ -131,9 +159,8 @@ public class SecurityController {
 					.forName("net.cominfo.digiagent.captcha.impl.FactoryRandomImpl");
 			inst.setSize(6);
 			Producer.render(os, inst, props);
-			HttpSession session = request.getSession();
-			session.setAttribute("icaptcha", inst.getHashCode(inst
-					.getLastWord()));
+			session = request.getSession();
+			session.setAttribute("icaptcha", inst.getLastWord());
 
 		} catch (Exception e) {
 
