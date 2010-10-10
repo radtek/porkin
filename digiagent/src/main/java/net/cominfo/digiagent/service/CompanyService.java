@@ -1,5 +1,7 @@
 package net.cominfo.digiagent.service;
 
+import java.util.Date;
+
 import net.cominfo.digiagent.persistence.dao.UserDao;
 import net.cominfo.digiagent.persistence.domain.User;
 
@@ -23,6 +25,22 @@ public class CompanyService {
 		User user = userDao.selectByPrimaryKey(userId);
 		result = user.getUserPassword().equals(password);
 		return result;
+	}
+	
+	public void changePassword(Integer userId, String password){
+		User user = userDao.selectByPrimaryKey(userId);
+		user.setUserPassword(password);
+		user.setLastupdatedBy(user.getUserName());
+		user.setLastupdatedDate(new Date());
+		userDao.updateByPrimaryKey(user);
+	}
+	
+	public void changeEmail(Integer userId, String email){
+		User user = userDao.selectByPrimaryKey(userId);
+		user.setUserEmail(email);
+		user.setLastupdatedBy(user.getUserName());
+		user.setLastupdatedDate(new Date());
+		userDao.updateByPrimaryKey(user);
 	}
 
 }

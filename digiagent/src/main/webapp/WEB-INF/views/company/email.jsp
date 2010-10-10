@@ -24,9 +24,9 @@ function whenDelete() {
 </script>
 </head>
 <body>
-<div class="companyTitle">用户密码管理</div>
+<div class="companyTitle">用户电子邮件</div>
 <div id="companyLeft">
-<form action="${ctx}/company/changePassword" method="post">
+<form action="${ctx}/company/changeEmail" method="post">
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2">
@@ -41,16 +41,12 @@ function whenDelete() {
       <td></td>
     </tr>
     <tr>
-      <td>请输入旧密码</td>
-      <td><input type="password" name="oldpassword" id="oldpassword" /></td>
+      <td>原有的电子邮件</td>
+      <td><input type="hidden" name="oldEmail" id="oldEmail" value='<c:out value="${email}" />' /><c:out value="${email}" /></td>
     </tr>
     <tr>
-      <td>请输入新密码</td>
-      <td><input type="password" name="newpassword1" id="newpassword1" /></td>
-    </tr>
-    <tr>
-      <td>再确认新密码</td>
-      <td><input type="password" name="newpassword2" id="newpassword1" /></td>
+      <td>请输入新的电子邮件</td>
+      <td><input type="text" name="newEmail" id="newEmail" /></td>
     </tr>
     <tr>
       <td></td>
