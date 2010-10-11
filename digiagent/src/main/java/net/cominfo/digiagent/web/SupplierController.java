@@ -56,6 +56,8 @@ public class SupplierController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public void update(@ModelAttribute SupplierWithBLOBs supplier,
 			@RequestParam("file") MultipartFile image,
+			@RequestParam("file1") MultipartFile image1,
+			@RequestParam("file2") MultipartFile image2,
 			HttpServletResponse response) throws IOException {
 		SupplierWithBLOBs supplierUpdate = supplierService.getById(supplier.getSupplierId());
 		if (supplier == null) {
@@ -68,9 +70,17 @@ public class SupplierController {
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
 			supplier.setSupplierImage(image.getBytes());
 		}
+		// MYSQL BLOB类型最大65K--实名认证
+		if (image1.getSize() > 0 && image1.getSize()/1024 < 65) {
+			supplier.setSupplierCertify(image1.getBytes());
+		}
+		// MYSQL BLOB类型最大65K--资质认证
+		if (image2.getSize() > 0 && image2.getSize()/1024 < 65) {
+			supplier.setSupplierQualify(image2.getBytes());
+		}
 		try {
 			PrintWriter pw = response.getWriter();
-			if (image.getSize()/1024 >= 65) {
+			if (image.getSize()/1024 >= 65 || image1.getSize()/1024 >= 65 || image2.getSize()/1024 >= 65) {
 				pw.write(Collections.singletonMap("supplierId", -2).toString().replaceAll("=", ":"));
 			} else {
 				supplier = supplierService.update(supplier);
@@ -94,6 +104,8 @@ public class SupplierController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public void create(@ModelAttribute SupplierWithBLOBs supplier,
 			@RequestParam("file") MultipartFile image,
+			@RequestParam("file1") MultipartFile image1,
+			@RequestParam("file2") MultipartFile image2,
 			@ModelAttribute User user,
 			@ModelAttribute UserRole userRole,
 			HttpServletResponse response) throws IOException {
@@ -101,9 +113,17 @@ public class SupplierController {
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
 			supplier.setSupplierImage(image.getBytes());
 		}
+		// MYSQL BLOB类型最大65K--实名认证
+		if (image1.getSize() > 0 && image1.getSize()/1024 < 65) {
+			supplier.setSupplierCertify(image1.getBytes());
+		}
+		// MYSQL BLOB类型最大65K--资质认证
+		if (image2.getSize() > 0 && image2.getSize()/1024 < 65) {
+			supplier.setSupplierQualify(image2.getBytes());
+		}
 		try {
 			PrintWriter pw = response.getWriter();
-			if (image.getSize()/1024 >= 65) {
+			if (image.getSize()/1024 >= 65 || image1.getSize()/1024 >= 65 || image2.getSize()/1024 >= 65) {
 				pw.write(Collections.singletonMap("supplierId", -2).toString().replaceAll("=", ":"));
 			} else {
 				supplier = supplierService.insert(supplier, user, userRole);
@@ -142,7 +162,35 @@ public class SupplierController {
 	
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
 	public String output(@RequestParam Integer id, HttpServletResponse response, Model model) {
-		model.addAttribute("image", supplierService.getSupplierImage(id));
+		model.addAttribute("image", supplierService.getSupplierImage(id, 0));
+		return "image";
+	}
+	
+
+	/**
+	 * 实名认证
+	 * @param id
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/getImage1", method = RequestMethod.GET)
+	public String output1(@RequestParam Integer id, HttpServletResponse response, Model model) {
+		model.addAttribute("image", supplierService.getSupplierImage(id, 1));
+		return "image";
+	}
+	
+
+	/**
+	 * 资质认证
+	 * @param id
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/getImage2", method = RequestMethod.GET)
+	public String output2(@RequestParam Integer id, HttpServletResponse response, Model model) {
+		model.addAttribute("image", supplierService.getSupplierImage(id, 2));
 		return "image";
 	}
 	
