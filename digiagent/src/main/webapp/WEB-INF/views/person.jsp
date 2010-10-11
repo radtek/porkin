@@ -13,7 +13,7 @@
   <frame src="${ctx}/header" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame" />
   <frameset cols="200,*" frameborder="no" border="0" framespacing="0">
     <frame src="${ctx}/person/menu" name="leftFrame" scrolling="No" noresize="noresize" id="leftFrame" title="leftFrame" />
-    <frame src="${ctx}/person/basicInfo" name="mainFrame" id="mainFrame" title="mainFrame" />
+    <frame src="${ctx}/company/basicInfo" name="mainFrame" id="mainFrame" title="mainFrame" />
   </frameset>
 </frameset>
 </html>

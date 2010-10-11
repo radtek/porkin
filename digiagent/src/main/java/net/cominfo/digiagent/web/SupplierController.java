@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
+import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
@@ -147,9 +148,11 @@ public class SupplierController {
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public String show(@PathVariable Integer id, HttpServletResponse response, Model model) {
-		Supplier supplier = supplierService.getById(id);
+		SupplierWithBLOBs supplier = supplierService.getById(id);
 		if(supplier!=null){
-			model.addAttribute("supplier", supplierService.getById(id));
+			List<Contact> qqList = supplierService.getSupplierQQ(id);
+			model.addAttribute("supplier", supplier);
+			model.addAttribute("qqList", qqList);
 			return "supplierDetail";
 		}
 		else{

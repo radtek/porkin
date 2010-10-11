@@ -2,6 +2,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <%@ include file="/common/taglibs.jsp" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -37,20 +38,7 @@ function whenDelete() {
 </script>
 </head>
 <body>
-<div class="headTop">
-  <div class="headCity">切换城市
-    <select name="select3" style="width:60px;">
-        <option>大连</option>
-        <option>上海</option>
-      </select>
-    您好,用户姓名
-    <select name="select4" style="width:80px;">
-      <option>个人中心</option>
-    </select>
-    <input class="btn_login" type="submit" value="登录" />
-    <span class="leftLink">注册 | 忘记密码</span> <span class="rightLink">帮助 | 设为首页</span> </div>
-  <div class="logo"></div>
-</div>
+<jsp:include page="header.jsp"></jsp:include>
 <div class="redLine"></div>
 <DIV style="CLEAR: both"></DIV>
 <div class="div_body">

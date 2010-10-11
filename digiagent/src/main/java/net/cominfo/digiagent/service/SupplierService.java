@@ -200,4 +200,21 @@ public class SupplierService {
 			return null;
 		}
 	}
+	
+	public List<Contact> getContactBySupplierId(Integer supplierId,String type){
+		ContactCriteria criteria = new ContactCriteria();
+		criteria.createCriteria().andSupplierIdEqualTo(supplierId).andContactTypeEqualTo(type);
+		return contactDao.selectByExample(criteria);
+	}
+	
+	public List<Contact> getSupplierQQ(Integer supplierId){
+		return getContactBySupplierId(supplierId,"Q");
+	}
+	
+	public List<Contact> getSupplierEmail(Integer supplierId){
+		return getContactBySupplierId(supplierId,"E");
+	}
+	
+	
+	
 }

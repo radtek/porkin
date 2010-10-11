@@ -19,9 +19,9 @@
         <div class=c>                   
             <div class=blk2>                       
                 <ul>
-                  <li><b><a href="${ctx}/person/basicInfo" target="mainFrame" title="基本信息">基本信息 </a></b></li>
-                  <li><b><a href="javascript:void(0)">密码管理 </a></b></li>
-                  <li><b><a href="javascript:void(0)">电子邮件 </a></b></li>
+                  <li><b><a href="${ctx}/company/basicInfo" target="mainFrame" title="基本信息">基本信息 </a></b></li>
+                  <li><b><A href="${ctx}/company/passwordForm" target="mainFrame" title="密码管理">密码管理</A></b></li>
+                  <LI><b><A href="${ctx}/company/emailForm" target="mainFrame" title="电子邮件">电子邮件</A></b></LI>
                   <li><b><a href="${ctx}/person/infoRelease" target="mainFrame" title="二手发布 ">二手发布 </a></b></li>
                   <li><b><a href="${ctx}/person/commodityList" target="mainFrame" title="二手历史 ">二手历史</a></b></li>
                 </ul>
