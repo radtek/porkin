@@ -192,10 +192,24 @@ public class SupplierService {
 		}
 	}
 	
-	public byte[] getSupplierImage(Integer supplierId) {
+	/**
+	 * @param supplierId
+	 * @param type
+	 * 		1:实名2：资质
+	 * @return
+	 */
+	public byte[] getSupplierImage(Integer supplierId, Integer type) {
 		SupplierWithBLOBs supplier = supplierDao.selectByPrimaryKey(supplierId);
 		if (supplier != null) {
-			return supplier.getSupplierImage();
+			switch (type) {
+			case 1:
+				return supplier.getSupplierCertify();
+			case 2:
+				return supplier.getSupplierQualify();
+			default:
+				return supplier.getSupplierImage();
+			}
+			
 		} else {
 			return null;
 		}

@@ -21,6 +21,8 @@
           <div>
               	<label for="name">商家名称:</label>
               	<input type="hidden" name="supplierId"/>
+              	<input type="hidden" name="supplierAccess"/>
+              	<input type="hidden" name="supplierScore"/>
               	<input class="easyui-validatebox" type="text" name="supplierName" maxlength="20"/>
           		<label for="name">联系人:</label>
               	<input class="easyui-validatebox" type="text" name="supplierContactname" maxlength="30"/>
@@ -43,11 +45,21 @@
           		<label for="name">联系地址:</label>
               	<input class="easyui-validatebox" type="text" name="supplierAddress" maxlength="30"/>
           </div> 
-	          <div>
-	              	<label for="name">图片: </label>
-					<input type="file" name="file" id="file"/> 
-	          <div id="image"></div>
-	          </div>
+	      <div>
+             	<label for="name">图片: </label>
+		  		<input type="file" name="file" id="file"/> 
+	          	<div id="image"></div>
+	      </div>
+	      <div>
+             	<label for="name">实名认证: </label>
+		  		<input type="file" name="file1" id="file1"/> 
+	          	<div id="image1"></div>
+	      </div>
+	      <div>
+             	<label for="name">资质认证: </label>
+		  		<input type="file" name="file2" id="file2"/> 
+	          	<div id="image2"></div>
+	      </div>
 	      <div>
               	<label for="name">简介:</label>
               	<textarea rows="5" cols="20" name="supplierDescription" id="supplierDescription"></textarea>

@@ -79,6 +79,10 @@ function processJson(data) {
     $('#supplierId').val(data.supplierId);
     var url = "../supplier/getImage?id=" +data.supplierId + "&uuid=" + createUUID();
     $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+    var url1 = "../supplier/getImage1?id=" +data.supplierId + "&uuid=" + createUUID();
+    $('#image1').empty().append('<img id="pic1" width="100" height="100" src="'+url1+'"/>');
+    var url2 = "../supplier/getImage2?id=" +data.supplierId + "&uuid=" + createUUID();
+    $('#image2').empty().append('<img id="pic2" width="100" height="100" src="'+url2+'"/>');
 	//$('#supplierEdit').dialog('close');
     $('#supplierList').datagrid('reload');
 }
@@ -159,6 +163,8 @@ function validate(formData, jqForm, options) {
 	   return false;
 	} 
 	$('#image').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
+	$('#image1').append('<image id="loader1" src="../images/datagrid/tree_loading.gif"/> ');
+	$('#image2').append('<image id="loader2" src="../images/datagrid/tree_loading.gif"/> ');
 }
 function onEditClickHandler(id) {
 	$.get('../supplier/get', { id: id } ,function(data) {
@@ -173,12 +179,18 @@ function onEditClickHandler(id) {
 		$('input[name="supplierTelephone"]').val(data.supplierTelephone);
 		$('input[name="supplierFax"]').val(data.supplierFax);
 		$('input[name="supplierAddress"]').val(data.supplierAddress);
+		$('input[name="supplierAccess"]').val(data.supplierAccess);
+		$('input[name="supplierScore"]').val(data.supplierScore);
 		$('input[name="userEmail"]').val('abc');
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#supplierEdit').css('display','block');
 		$('#supplierEdit').dialog({title:'修改', modal: true});
 		var url = "../supplier/getImage?id=" +id;
 		$('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+		var url1 = "../supplier/getImage1?id=" +id;
+		$('#image1').empty().append('<img id="pic1" width="100" height="100" src="'+url1+'"/>');
+		var url2 = "../supplier/getImage2?id=" +id;
+		$('#image2').empty().append('<img id="pic2" width="100" height="100" src="'+url2+'"/>');
 	});
 	formSubmit('../supplier/update');
 }
@@ -298,6 +310,8 @@ $(function(){
 					$('input[name="supplierMobile"]').val('');
 					$('input[name="supplierTelephone"]').val('');
 					$('input[name="supplierAddress"]').val('');
+					$('input[name="supplierAccess"]').val('0');
+					$('input[name="supplierScore"]').val('0');
 					$('input[name="file"]').val('');
 					$('input[name="userEmail"]').val('');
 					$('input[name="supplierFax"]').val('');
