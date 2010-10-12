@@ -1,13 +1,16 @@
 package net.cominfo.digiagent.web;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CompanyService;
+import net.cominfo.digiagent.service.SupplierService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 
@@ -27,6 +30,9 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyService companyService;
+
+	@Autowired
+	private SupplierService supplierService;
 
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public String menu(Model model) {
@@ -142,7 +148,7 @@ public class CompanyController {
 		supplier.setLastupdatedDate(new Date());
 
 		companyService.updateSupplier(supplier);
-		
+
 		model.addAttribute("message", new Message(MessageType.success,
 				"supplier.update.success"));
 		model.addAttribute("supplier", supplier);
@@ -150,9 +156,22 @@ public class CompanyController {
 		return "company/introduction";
 	}
 
-	@RequestMapping(value = "/contact", method = RequestMethod.GET)
-	public String contact(Model model) {
-		return "company/menu";
+	@RequestMapping(value = "/contactForm", method = RequestMethod.GET)
+	public String contactForm(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName, Model model) {
+		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
+		if(supplier==null){
+			supplier = companyService.createDefaulutSupplier(userId, userName);
+		}
+		int supplierId = supplier.getSupplierId();
+		List<Contact> contactList = supplierService.getContactBySupplierId(supplierId);
+		model.addAttribute("contactList", contactList);
+		return "company/contact";
+	}
+
+	@RequestMapping(value = "/contactCreate", method = RequestMethod.GET)
+	public String contactCreate(Model model) {
+		return "company/contact";
 	}
 
 	@RequestMapping(value = "/agent", method = RequestMethod.GET)

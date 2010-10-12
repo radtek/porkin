@@ -145,6 +145,12 @@ public class SecurityController {
 	public String register(HttpServletResponse response) {
 		return "register";
 	}
+	
+	
+	@RequestMapping(value = "/passwordForm", method = RequestMethod.GET)
+	public String passwordForm(HttpServletResponse response) {
+		return "password";
+	}
 
 	@RequestMapping(value = "/captcha", method = RequestMethod.GET)
 	public ModelAndView captcha(HttpServletRequest request,
