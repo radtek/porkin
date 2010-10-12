@@ -3,6 +3,7 @@ package net.cominfo.digiagent.service;
 import java.util.Date;
 import java.util.List;
 
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.dao.UserDao;
 import net.cominfo.digiagent.persistence.domain.Supplier;
@@ -20,6 +21,9 @@ public class CompanyService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private SequenceDao sequenceDao;
 	
 	@Autowired
 	private SupplierDao supplierDao;
@@ -64,6 +68,35 @@ public class CompanyService {
 	
 	public void updateSupplier(SupplierWithBLOBs supplier){
 		supplierDao.updateByPrimaryKey(supplier);
+	}
+	
+	public SupplierWithBLOBs createDefaulutSupplier(Integer userId, String userName){
+		
+		SupplierWithBLOBs supplier = new SupplierWithBLOBs();
+		supplier.setSupplierId(sequenceDao.getSupplierNexId());
+		supplier.setSupplierAccess(0);
+		supplier.setSupplierAddress(" ");
+		supplier.setSupplierContactname(" ");
+		supplier.setSupplierDescription(" ");
+		supplier.setSupplierFax(" ");
+		supplier.setSupplierImage(new byte[]{0,0});
+		supplier.setSupplierMobile(" ");
+		supplier.setSupplierName(" ");
+		supplier.setSupplierScore(0);
+		supplier.setSupplierTelephone(" ");
+		supplier.setSupplierZip(" ");
+		
+		supplier.setCityId(1);
+		supplier.setCreatedBy(userName);
+		supplier.setCreatedDate(new Date());
+		supplier.setLastupdatedBy(userName);
+		supplier.setLastupdatedDate(new Date());
+		supplier.setActiveFlag("Y");
+		supplier.setUserId(userId);
+		
+		supplierDao.insert(supplier);
+		
+		return supplier;
 	}
 		
 

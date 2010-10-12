@@ -10,6 +10,7 @@ import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria;
 import net.cominfo.digiagent.persistence.domain.CommodityImage;
+import net.cominfo.digiagent.persistence.domain.CommodityImageCriteria;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria.Criteria;
 import net.cominfo.digiagent.utils.Page;
 
@@ -88,6 +89,9 @@ public class CommodityService {
 	}
 	
 	public String delete(Integer id){
+		CommodityImageCriteria criteria = new CommodityImageCriteria();
+		criteria.createCriteria().andCommodityIdEqualTo(id);
+		commodityImageDao.deleteByExample(criteria);
 		commodityDao.deleteByPrimaryKey(id);
 		return "success";
 	}

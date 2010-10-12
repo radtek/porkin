@@ -3,6 +3,7 @@ package net.cominfo.digiagent.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -215,20 +216,72 @@ public class SupplierService {
 		}
 	}
 	
-	public List<Contact> getContactBySupplierId(Integer supplierId,String type){
+	/**
+	 * @param supplierId
+	 * @param type 联系方式类型
+	 * 	T：电话,Q:QQ, E:Email M：手机
+	 * @return
+	 */
+	public List<String> getContactBySupplierId(Integer supplierId,String type){
 		ContactCriteria criteria = new ContactCriteria();
 		criteria.createCriteria().andSupplierIdEqualTo(supplierId).andContactTypeEqualTo(type);
-		return contactDao.selectByExample(criteria);
+		List<Contact> contactList = contactDao.selectByExample(criteria);
+		ArrayList<String> result = new ArrayList<String>();
+		Iterator<Contact> iterator = contactList.iterator();
+		Contact temp = null;
+		while(iterator.hasNext()){
+			temp = iterator.next();
+			result.add(temp.getContactContent());
+		}
+		return result;
 	}
 	
-	public List<Contact> getSupplierQQ(Integer supplierId){
+	public List<String> getSupplierQQList(Integer supplierId){
 		return getContactBySupplierId(supplierId,"Q");
 	}
 	
-	public List<Contact> getSupplierEmail(Integer supplierId){
+	public List<String> getSupplierEmailList(Integer supplierId){
 		return getContactBySupplierId(supplierId,"E");
 	}
 	
+	public List<String> getSupplierTelephoneList(Integer supplierId,String telephone){
+		List<String> result = getContactBySupplierId(supplierId,"T");
+		if(telephone!=null){
+			result.add(telephone);
+		}
+		return result;
+	}
 	
+	public List<String> getSupplierMobileList(Integer supplierId,String mobile){
+		List<String> result = getContactBySupplierId(supplierId,"M");
+		if(mobile!=null){
+			result.add(mobile);
+		}
+		return result;
+	}
+	
+	public List<Contact> getContactBySupplierId(Integer supplierId){
+		ContactCriteria criteria = new ContactCriteria();
+		criteria.createCriteria().andSupplierIdEqualTo(supplierId);
+		return contactDao.selectByExample(criteria);
+	}
+	
+	
+	
+	/**
+	 * 更新访问次数
+	 * @param supplier
+	 */
+	public void access(SupplierWithBLOBs supplier){
+		int access = supplier.getSupplierAccess();
+		++access;
+		supplier.setSupplierAccess(access);
+		supplierDao.updateByPrimaryKey(supplier);
+		
+	}
+	
+	public String getAreaInfoBySupplierId(Integer supplierid){
+		return supplierDao.getSupplierAreaInfo(supplierid);
+	}
 	
 }

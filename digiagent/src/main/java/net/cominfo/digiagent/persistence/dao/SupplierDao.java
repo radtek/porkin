@@ -22,4 +22,11 @@ public class SupplierDao extends SupplierDAOImpl {
 				"t_da_supplier_Custom.fixedSearchByCondition", condition);
 	}
 
+	public String getSupplierAreaInfo(final Integer supplierId) {
+		return (String) getSqlMapClientTemplate()
+				.queryForObject(
+						"t_da_supplier_Custom.supplierAreaInfoBySupplierId",
+						supplierId);
+	}
+
 }
