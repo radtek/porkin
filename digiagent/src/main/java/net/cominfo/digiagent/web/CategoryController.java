@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value = "/category")
+@SessionAttributes({"userId","userName"})
 public class CategoryController {
 
 	@Autowired
@@ -46,7 +48,7 @@ public class CategoryController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Category category,
+	Map<String, ? extends Object> update(@ModelAttribute("userName") String userName,@ModelAttribute Category category,
 			HttpServletResponse response) {
 		Category categoryUpdate = categoryService.getById(category.getCategoryId());
 		if (category == null) {
@@ -54,7 +56,7 @@ public class CategoryController {
 		}
 		categoryUpdate.setActiveFlag(category.getActiveFlag());
 		categoryUpdate.setCategoryName(category.getCategoryName());
-		categoryUpdate = categoryService.update(categoryUpdate);
+		categoryUpdate = categoryService.update(categoryUpdate,userName);
 		return Collections.singletonMap("categoryId", categoryUpdate.getCategoryId());
 	}
 	
@@ -69,9 +71,9 @@ public class CategoryController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Category category,
+	Map<String, ? extends Object> create(@ModelAttribute("userName") String userName,@ModelAttribute Category category,
 			HttpServletResponse response) {
-		Category categoryNew = categoryService.insert(category);
+		Category categoryNew = categoryService.insert(category,userName);
 		return Collections.singletonMap("categoryId", categoryNew.getCategoryId());
 	}
 

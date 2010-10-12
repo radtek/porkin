@@ -28,11 +28,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
 @RequestMapping(value="/supplier")
+@SessionAttributes({"userId","userName"})
 public class SupplierController {
 	
 	@Autowired
@@ -104,7 +106,7 @@ public class SupplierController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public void create(@ModelAttribute SupplierWithBLOBs supplier,
+	public void create(@ModelAttribute("userName") String userName,@ModelAttribute SupplierWithBLOBs supplier,
 			@RequestParam("file") MultipartFile image,
 			@RequestParam("file1") MultipartFile image1,
 			@RequestParam("file2") MultipartFile image2,
@@ -128,7 +130,7 @@ public class SupplierController {
 			if (image.getSize()/1024 >= 65 || image1.getSize()/1024 >= 65 || image2.getSize()/1024 >= 65) {
 				pw.write(Collections.singletonMap("supplierId", -2).toString().replaceAll("=", ":"));
 			} else {
-				supplier = supplierService.insert(supplier, user, userRole);
+				supplier = supplierService.insert(supplier, user, userRole,userName);
 				pw.write(Collections.singletonMap("supplierId", supplier.getSupplierId()).toString().replaceAll("=", ":"));
 			}
 			pw.close();

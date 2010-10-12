@@ -54,26 +54,26 @@ public class CategoryService {
 		return categoryDao.count(page, "t_da_category_Custom.countByCondition");
 	}
 	
-	public Category insert(Category category) {
+	public Category insert(Category category, String userName) {
 		category = validateCategoryName(category);
 		if (category.getCategoryId() != null) {
 			return category;
 		} else {
-			category.setCreatedBy("sj");
+			category.setCreatedBy(userName);
 			category.setCreatedDate(new Date());
-			category.setLastupdatedBy("sj");
+			category.setLastupdatedBy(userName);
 			category.setLastupdatedDate(new Date());
 			categoryDao.insert(category);
 			return category;
 		}
 	}
 	
-	public Category update(Category category) {
+	public Category update(Category category,String userName) {
 		category = validateCategoryName(category);
 		if (category.getCategoryId() == -1) {
 			return category;
 		} else {
-			category.setLastupdatedBy("sj");
+			category.setLastupdatedBy(userName);
 			category.setLastupdatedDate(new Date());
 			categoryDao.updateByPrimaryKey(category);
 			return category;

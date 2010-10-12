@@ -148,11 +148,11 @@ public class UserService {
 		return user;
 	}
 
-	public User insert(User user, UserRole userRole) {
+	public User insert(User user, UserRole userRole, String userName) {
 		user.setUserId(sequenceDao.getUserNexId());
-		user.setCreatedBy("sj");
+		user.setCreatedBy(userName);
 		user.setCreatedDate(new Date());
-		user.setLastupdatedBy("sj");
+		user.setLastupdatedBy(userName);
 		user.setLastupdatedDate(new Date());
 		user.setLastlogintime(new Date());
 		user.setRegistertime(new Date());
@@ -171,12 +171,12 @@ public class UserService {
 		}
 	}
 
-	public User update(User user, UserRole userRole) {
+	public User update(User user, UserRole userRole,String userName) {
 		user = validateUserName(user);
 		if (user.getUserId() == -1) {
 			return user;
 		} else {
-			user.setLastupdatedBy("sj");
+			user.setLastupdatedBy(userName);
 			user.setLastupdatedDate(new Date());
 			userDao.updateByPrimaryKey(user);
 			UserRoleCriteria example = new UserRoleCriteria();

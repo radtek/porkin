@@ -98,7 +98,7 @@ public class SupplierService {
 		return supplierDao.count(page, "t_da_supplier_Custom.countByCondition");
 	}
 	
-	public SupplierWithBLOBs insert(SupplierWithBLOBs supplier, User user, UserRole userRole) {
+	public SupplierWithBLOBs insert(SupplierWithBLOBs supplier, User user, UserRole userRole,String userName) {
 		supplier = validateSupplierName(supplier);
 		if (supplier.getSupplierId() != null) {
 			return supplier;
@@ -109,14 +109,14 @@ public class SupplierService {
 			user.setUserPassword(String.valueOf(new Date().getTime()));
 			user.setActiveFlag("N");
 			userRole.setRoleId(4);
-			userService.insert(user, userRole);
+			userService.insert(user, userRole, userName);
 			
 			supplier.setSupplierId(sequenceDao.getSupplierNexId());
 //			supplier.setUserId(user.getUserId());
 			supplier.setUserId(1);
-			supplier.setCreatedBy("sj");
+			supplier.setCreatedBy(userName);
 			supplier.setCreatedDate(new Date());
-			supplier.setLastupdatedBy("sj");
+			supplier.setLastupdatedBy(userName);
 			supplier.setLastupdatedDate(new Date());
 			supplierDao.insert(supplier);
 			return supplier;
