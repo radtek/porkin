@@ -220,4 +220,6 @@
 			brand_name = '$brandName$'
 		</isNotEmpty>
 	</select>
+	
+	
 </sqlMap>

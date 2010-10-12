@@ -34,7 +34,7 @@ function whenDelete() {
           <LI><b><A href="${ctx}/company/passwordForm" target="mainFrame" title="密码管理">密码管理</A></b></LI>                  
           <LI><b><A href="${ctx}/company/emailForm" target="mainFrame" title="电子邮件">电子邮件</A></b></LI>
           <LI><b><A href="${ctx}/company/introductionForm" target="mainFrame" title="公司简介">公司简介</A></b></LI>
-          <LI><b><A href="right.html" target="mainFrame">联系方式</A></b></LI>
+          <LI><b><A href="${ctx}/company/contactForm" target="mainFrame" title="联系方式">联系方式</A></b></LI>
           <LI><b><A href="right.html" target="mainFrame">代理申请</A></b></LI>
           <LI><b><A href="right.html" target="mainFrame">资质认证</A></b></LI>
           <LI><b><A href="${ctx}/company/infoRelease" target="mainFrame" title="促销发布">促销发布</A></b></LI>

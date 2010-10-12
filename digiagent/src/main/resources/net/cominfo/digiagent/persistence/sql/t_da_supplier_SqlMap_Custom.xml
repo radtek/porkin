@@ -88,11 +88,23 @@
 			T_DA_CATEGORY.CATEGORY_ID = $categoryId$
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="productId">
-			T_DA_PRODUCT.PRODUCT_ID = $productId$
+			T_DA_PRODUCT.PRODUCT_ID
+			= $productId$
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="brandId">
-			T_DA_BRAND.BRAND_ID = $brandId$
+			T_DA_BRAND.BRAND_ID =
+			$brandId$
 		</isNotEmpty>
 	</select>
-
+	
+	<select id="supplierAreaInfoBySupplierId" parameterClass="int"
+		resultClass="string">
+		select CONCAT(t_da_province.province_name,
+		t_da_city.city_name)
+		from t_da_supplier, t_da_province, t_da_city
+		where
+		t_da_supplier.city_id = t_da_city.city_id and
+		t_da_city.province_id = t_da_province.province_id and
+		t_da_supplier.supplier_id = #value#
+	</select>
 </sqlMap>
