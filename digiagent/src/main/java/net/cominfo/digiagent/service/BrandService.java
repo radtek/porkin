@@ -75,26 +75,26 @@ public class BrandService {
 		return brandDao.count(page, "t_da_brand_Custom.countByCondition");
 	}
 	
-	public Brand insert(Brand brand) {
+	public Brand insert(Brand brand,String userName) {
 		brand = validateBrandName(brand);
 		if (brand.getBrandId() != null) {
 			return brand;
 		} else {
-			brand.setCreatedBy("sj");
+			brand.setCreatedBy(userName);
 			brand.setCreatedDate(new Date());
-			brand.setLastupdatedBy("sj");
+			brand.setLastupdatedBy(userName);
 			brand.setLastupdatedDate(new Date());
 			brandDao.insert(brand);
 			return brand;
 		}
 	}
 	
-	public Brand update(Brand brand) {
+	public Brand update(Brand brand,String userName) {
 		brand = validateBrandName(brand);
 		if (brand.getBrandId() == -1) {
 			return brand;
 		} else {
-			brand.setLastupdatedBy("sj");
+			brand.setLastupdatedBy(userName);
 			brand.setLastupdatedDate(new Date());
 			brandDao.updateByPrimaryKey(brand);
 			return brand;

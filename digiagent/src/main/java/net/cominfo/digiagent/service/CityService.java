@@ -76,26 +76,26 @@ public class CityService {
 		return cityDao.count(page, "t_da_city_Custom.countByCondition");
 	}
 	
-	public City insert(City city) {
+	public City insert(City city,String userName) {
 		city = validateCityName(city);
 		if (city.getCityId() != null) {
 			return city;
 		} else {
-			city.setCreatedBy("sj");
+			city.setCreatedBy(userName);
 			city.setCreatedDate(new Date());
-			city.setLastupdatedBy("sj");
+			city.setLastupdatedBy(userName);
 			city.setLastupdatedDate(new Date());
 			cityDao.insert(city);
 			return city;
 		}
 	}
 	
-	public City update(City city) {
+	public City update(City city,String userName) {
 		city = validateCityName(city);
 		if (city.getCityId() == -1) {
 			return city;
 		} else {
-			city.setLastupdatedBy("sj");
+			city.setLastupdatedBy(userName);
 			city.setLastupdatedDate(new Date());
 			cityDao.updateByPrimaryKey(city);
 			return city;

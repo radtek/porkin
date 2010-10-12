@@ -44,25 +44,25 @@ public class CommodityImageService {
 	
 	
 	
-	public CommodityImage insert(CommodityImage commodityImage) {
+	public CommodityImage insert(CommodityImage commodityImage,String userName) {
 		commodityImage.setCommodityimageId(sequenceDao.getCommodityimageNexId());
-		commodityImage.setCreatedBy("sj");
+		commodityImage.setCreatedBy(userName);
 		commodityImage.setCreatedDate(new Date());
-		commodityImage.setLastupdatedBy("sj");
+		commodityImage.setLastupdatedBy(userName);
 		commodityImage.setLastupdatedDate(new Date());
 		commodityImageDao.insert(commodityImage);
 		return commodityImage;
 	}
 	
-	public int update(CommodityImage commodityImage) {
+	public int update(CommodityImage commodityImage,String userName) {
 		if (commodityImage.getCommodityimageId() == null) {
-			return insert(commodityImage).getCommodityimageId();
+			return insert(commodityImage,userName).getCommodityimageId();
 		}
 		Object image = commodityImageDao.selectByPrimaryKey(commodityImage.getCommodityimageId());
 		if (image == null) {
-			return insert(commodityImage).getCommodityimageId();
+			return insert(commodityImage,userName).getCommodityimageId();
 		}
-		commodityImage.setLastupdatedBy("sj");
+		commodityImage.setLastupdatedBy(userName);
 		commodityImage.setLastupdatedDate(new Date());
 		return commodityImageDao.updateByPrimaryKeyWithBLOBs(commodityImage);
 	}

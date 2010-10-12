@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
 @RequestMapping(value="/commodity")
+@SessionAttributes({"userId","userName"})
 public class CommodityController{
 	@Autowired
 	private CommodityService commodityService;
@@ -96,7 +98,7 @@ public class CommodityController{
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody String create(@ModelAttribute Commodity commodity,
+	public @ResponseBody String create(@ModelAttribute("userName") String userName,@ModelAttribute Commodity commodity,
 			@RequestParam("file") MultipartFile image) throws IOException {
 		Map map = new HashMap();
 		CommodityImage commodityImage = new CommodityImage();
@@ -109,7 +111,7 @@ public class CommodityController{
 		} else {
 			commodity = commodityService.insert(commodity);
 			commodityImage.setCommodityId(commodity.getCommodityId());
-			commodityImageService.insert(commodityImage);
+			commodityImageService.insert(commodityImage,userName);
 			map.put("commodityId", commodity.getCommodityId());
 			map.put("commodityImage", commodityImage.getCommodityimageId());
 		}
@@ -118,7 +120,7 @@ public class CommodityController{
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody String update(@ModelAttribute Commodity commodity, @ModelAttribute CommodityImage commodityImage,
+	public @ResponseBody String update(@ModelAttribute("userName") String userName,@ModelAttribute Commodity commodity, @ModelAttribute CommodityImage commodityImage,
 			@RequestParam("file") MultipartFile image)  throws IOException {
 		Map map = new HashMap();
 		Commodity commodityUpdate = commodityService.getById(commodity.getCommodityId());
@@ -135,7 +137,7 @@ public class CommodityController{
 		if (image.getSize() > 0 && image.getSize()/1024 < 65) {
 			commodityImage.setCommodityimageContent(image.getBytes());
 			commodityImage.setCommodityId(commodity.getCommodityId());
-			commodityImageService.update(commodityImage);
+			commodityImageService.update(commodityImage,userName);
 		}
 		commodityUpdate = commodityService.update(commodityUpdate);
 		if (image.getSize()/1024 >= 65) {

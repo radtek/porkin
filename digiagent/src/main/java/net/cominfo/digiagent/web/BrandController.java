@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 @Controller
 @RequestMapping(value="/brand")
+@SessionAttributes({"userId","userName"})
 public class BrandController {
 	
 	@Autowired
@@ -49,7 +51,7 @@ public class BrandController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Brand brand,
+	Map<String, ? extends Object> update(@ModelAttribute("userName") String userName,@ModelAttribute Brand brand,
 			HttpServletResponse response) {
 		Brand brandUpdate = brandService.getById(brand.getBrandId());
 		if (brand == null) {
@@ -59,7 +61,7 @@ public class BrandController {
 		brandUpdate.setActiveFlag(brand.getActiveFlag());
 		brandUpdate.setBrandName(brand.getBrandName());
 		brandUpdate.setBrandEnglish(brand.getBrandEnglish());
-		brandUpdate = brandService.update(brandUpdate);
+		brandUpdate = brandService.update(brandUpdate,userName);
 		return Collections.singletonMap("brandId", brandUpdate.getBrandId());
 	}
 	
@@ -74,9 +76,9 @@ public class BrandController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Brand brand,
+	Map<String, ? extends Object> create(@ModelAttribute("userName") String userName,@ModelAttribute Brand brand,
 			HttpServletResponse response) {
-		Brand brandNew = brandService.insert(brand);
+		Brand brandNew = brandService.insert(brand,userName);
 		return Collections.singletonMap("brandId", brandNew.getBrandId());
 	}
 

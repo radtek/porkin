@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@RequestMapping(value="/city")
+@RequestMapping(value = "/city")
+@SessionAttributes( { "userId", "userName" })
 public class CityController {
-	
+
 	@Autowired
 	private CityService cityService;
 
@@ -34,11 +35,12 @@ public class CityController {
 	public String getList(Model model) {
 		return "city";
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
-	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
+	Map query(@RequestParam Integer page, @RequestParam Integer rows,
+			@RequestParam Map param) {
 		Long total = cityService.count(param);
 		List<City> cityList = cityService.query(page, rows, param);
 		Map map = new HashMap();
@@ -46,11 +48,12 @@ public class CityController {
 		map.put("rows", cityList);
 		return Collections.singletonList(map).get(0);
 	}
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute City city,
-			HttpServletResponse response) {
+	Map<String, ? extends Object> update(
+			@ModelAttribute("userName") String userName,
+			@ModelAttribute City city, HttpServletResponse response) {
 		City cityUpdate = cityService.getById(city.getCityId());
 		if (city == null) {
 			new ResourceNotFoundException(new Long(cityUpdate.getCityId()));
@@ -59,12 +62,13 @@ public class CityController {
 		cityUpdate.setActiveFlag(city.getActiveFlag());
 		cityUpdate.setCityName(city.getCityName());
 		cityUpdate.setCityAbbreviation(city.getCityAbbreviation());
-		cityUpdate = cityService.update(cityUpdate);
+		cityUpdate = cityService.update(cityUpdate, userName);
 		return Collections.singletonMap("cityId", cityUpdate.getCityId());
 	}
-	
-	@RequestMapping(value="/get",method=RequestMethod.GET)
-	public @ResponseBody City get(@RequestParam Integer id) {
+
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public @ResponseBody
+	City get(@RequestParam Integer id) {
 		City city = cityService.getById(id);
 		if (city == null) {
 			new ResourceNotFoundException(new Long(id));
@@ -74,14 +78,16 @@ public class CityController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute City city,
-			HttpServletResponse response) {
-		City cityNew = cityService.insert(city);
+	Map<String, ? extends Object> create(
+			@ModelAttribute("userName") String userName,
+			@ModelAttribute City city, HttpServletResponse response) {
+		City cityNew = cityService.insert(city, userName);
 		return Collections.singletonMap("cityId", cityNew.getCityId());
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public @ResponseBody String delete(@RequestParam Integer id) {
+	public @ResponseBody
+	String delete(@RequestParam Integer id) {
 		City city = cityService.getById(id);
 		if (city == null) {
 			new ResourceNotFoundException(new Long(id));
@@ -90,7 +96,7 @@ public class CityController {
 			return cityService.delete(id);
 		}
 	}
-	
+
 	@RequestMapping(value = "/getProvinceList", method = RequestMethod.GET)
 	public void getProvinceList(HttpServletResponse response) {
 		try {
