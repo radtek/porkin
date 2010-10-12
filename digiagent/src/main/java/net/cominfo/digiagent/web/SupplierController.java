@@ -2,8 +2,10 @@ package net.cominfo.digiagent.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -198,9 +200,55 @@ public class SupplierController {
 	public String show(@PathVariable Integer id, HttpServletResponse response, Model model) {
 		SupplierWithBLOBs supplier = supplierService.getById(id);
 		if(supplier!=null){
-			List<Contact> qqList = supplierService.getSupplierQQ(id);
+			
+			String telephone = supplier.getSupplierTelephone();
+			ArrayList<String> telephoneList = new ArrayList<String>();
+			if(telephone!=null){
+				telephoneList.add(telephone);
+			}
+			
+			String mobile = supplier.getSupplierMobile();
+			ArrayList<String> mobileList = new ArrayList<String>();
+			if(mobile!=null){
+				mobileList.add(mobile);
+			}
+			
+			ArrayList<String> emailList = new ArrayList<String>();
+			ArrayList<String> qqList = new ArrayList<String>();
+			
+			List<Contact> contactList = supplierService.getContactBySupplierId(id);
+			Iterator<Contact> iterator = contactList.iterator();
+			Contact contact = null;
+			String contactContent = null;
+			String contactType = null;
+			while(iterator.hasNext()){
+				contact = iterator.next();
+				contactContent = contact.getContactContent();
+				contactType = contact.getContactType();	
+				if(contactType.equalsIgnoreCase("E")){
+					emailList.add(contactContent);
+				}
+				else if(contactType.equalsIgnoreCase("M")){
+					mobileList.add(contactContent);
+				}
+				else if(contactType.equalsIgnoreCase("T")){
+					telephoneList.add(contactContent);
+				}
+				else if(contactType.equalsIgnoreCase("Q")){
+					qqList.add(contactContent);
+				}
+			}
+			
+			supplierService.access(supplier);
+			String area = supplierService.getAreaInfoBySupplierId(id);
+			
 			model.addAttribute("supplier", supplier);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("mobileList", mobileList);
+			model.addAttribute("telephoneList", telephoneList);
+			model.addAttribute("area", area);
 			model.addAttribute("qqList", qqList);
+			
 			return "supplierDetail";
 		}
 		else{
