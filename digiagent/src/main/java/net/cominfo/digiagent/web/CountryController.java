@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value = "/country")
+@SessionAttributes({"userId","userName"})
 public class CountryController {
 
 	@Autowired
@@ -46,7 +48,7 @@ public class CountryController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Country country,
+	Map<String, ? extends Object> update(@ModelAttribute("userName") String userName,@ModelAttribute Country country,
 			HttpServletResponse response) {
 		Country countryUpdate = countryService.getById(country.getCountryId());
 		if (country == null) {
@@ -55,7 +57,7 @@ public class CountryController {
 		countryUpdate.setActiveFlag(country.getActiveFlag());
 		countryUpdate.setCountryAbbreviation(country.getCountryAbbreviation());
 		countryUpdate.setCountryName(country.getCountryName());
-		countryUpdate = countryService.update(countryUpdate);
+		countryUpdate = countryService.update(countryUpdate,userName);
 		return Collections.singletonMap("countryId", countryUpdate.getCountryId());
 	}
 	
@@ -70,9 +72,9 @@ public class CountryController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Country country,
+	Map<String, ? extends Object> create(@ModelAttribute("userName") String userName,@ModelAttribute Country country,
 			HttpServletResponse response) {
-		Country countryNew = countryService.insert(country);
+		Country countryNew = countryService.insert(country,userName);
 		return Collections.singletonMap("countryId", countryNew.getCountryId());
 	}
 

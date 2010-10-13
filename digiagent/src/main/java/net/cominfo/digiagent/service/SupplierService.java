@@ -123,12 +123,12 @@ public class SupplierService {
 		}
 	}
 	
-	public SupplierWithBLOBs update(SupplierWithBLOBs supplier) {
+	public SupplierWithBLOBs update(SupplierWithBLOBs supplier,String userName) {
 		supplier = validateSupplierName(supplier);
 		if (supplier.getSupplierId() == -1) {
 			return supplier;
 		} else {
-			supplier.setLastupdatedBy("sj");
+			supplier.setLastupdatedBy(userName);
 			supplier.setLastupdatedDate(new Date());
 			supplierDao.updateByPrimaryKey(supplier);
 			return supplier;

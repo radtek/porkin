@@ -75,26 +75,26 @@ public class ContactService {
 		return contactDao.count(page, "t_da_contact_Custom.countByCondition");
 	}
 	
-	public Contact insert(Contact contact) {
+	public Contact insert(Contact contact,String userName) {
 		contact = validateContactName(contact);
 		if (contact.getContactId() != null) {
 			return contact;
 		} else {
-			contact.setCreatedBy("sj");
+			contact.setCreatedBy(userName);
 			contact.setCreatedDate(new Date());
-			contact.setLastupdatedBy("sj");
+			contact.setLastupdatedBy(userName);
 			contact.setLastupdatedDate(new Date());
 			contactDao.insert(contact);
 			return contact;
 		}
 	}
 	
-	public Contact update(Contact contact) {
+	public Contact update(Contact contact,String userName) {
 		contact = validateContactName(contact);
 		if (contact.getContactId() == -1) {
 			return contact;
 		} else {
-			contact.setLastupdatedBy("sj");
+			contact.setLastupdatedBy(userName);
 			contact.setLastupdatedDate(new Date());
 			contactDao.updateByPrimaryKey(contact);
 			return contact;

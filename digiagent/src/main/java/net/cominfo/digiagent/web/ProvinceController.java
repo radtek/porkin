@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value = "/province")
+@SessionAttributes({"userId","userName"})
 public class ProvinceController {
 
 	@Autowired
@@ -46,7 +48,7 @@ public class ProvinceController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Province province,
+	Map<String, ? extends Object> update(@ModelAttribute("userName") String userName,@ModelAttribute Province province,
 			HttpServletResponse response) {
 		Province provinceUpdate = provinceService.getById(province.getProvinceId());
 		if (province == null) {
@@ -55,7 +57,7 @@ public class ProvinceController {
 		provinceUpdate.setActiveFlag(province.getActiveFlag());
 		provinceUpdate.setProvinceAbbreviation(province.getProvinceAbbreviation());
 		provinceUpdate.setProvinceName(province.getProvinceName());
-		provinceUpdate = provinceService.update(provinceUpdate);
+		provinceUpdate = provinceService.update(provinceUpdate,userName);
 		return Collections.singletonMap("provinceId", provinceUpdate.getProvinceId());
 	}
 	
@@ -70,9 +72,9 @@ public class ProvinceController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Province province,
+	Map<String, ? extends Object> create(@ModelAttribute("userName") String userName,@ModelAttribute Province province,
 			HttpServletResponse response) {
-		Province provinceNew = provinceService.insert(province);
+		Province provinceNew = provinceService.insert(province,userName);
 		return Collections.singletonMap("provinceId", provinceNew.getProvinceId());
 	}
 

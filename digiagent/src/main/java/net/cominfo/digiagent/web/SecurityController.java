@@ -89,7 +89,7 @@ public class SecurityController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(Model model, HttpServletRequest request, HttpSession session) {
+	public String register(@ModelAttribute("userName") String userName,Model model, HttpServletRequest request, HttpSession session) {
 		
 		String type = request.getParameter("type");
 		String username = request.getParameter("username");
@@ -135,7 +135,7 @@ public class SecurityController {
 			user.setUserEmail(email);
 			int roleId = role.getRoleId();
 			boolean companyFlag = (roleId==4)?true:false;
-			userService.register(user, role.getRoleId(),companyFlag);
+			userService.register(user, role.getRoleId(),companyFlag,userName);
 			forward = "welcome";
 		}	
 		return forward;

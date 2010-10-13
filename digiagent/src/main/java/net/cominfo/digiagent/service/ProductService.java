@@ -76,7 +76,7 @@ public class ProductService {
 		return productDao.count(page, "t_da_product_Custom.countByCondition");
 	}
 	
-	public Product insert(Product product) {
+	public Product insert(Product product,String userName) {
 		product = validateProductName(product);
 		if (product.getProductId() != null) {
 			return product;
@@ -90,7 +90,7 @@ public class ProductService {
 		}
 	}
 	
-	public Product update(Product product) {
+	public Product update(Product product,String userName) {
 		product = validateProductName(product);
 		if (product.getProductId() == -1) {
 			return product;

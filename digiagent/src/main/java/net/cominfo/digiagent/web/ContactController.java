@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 @Controller
 @RequestMapping(value="/contact")
+@SessionAttributes({"userId","userName"})
 public class ContactController {
 	
 	@Autowired
@@ -38,7 +40,7 @@ public class ContactController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public @ResponseBody
-	Map query(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
+	Map query(@ModelAttribute("userName") String userName,@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Map param) {
 		Long total = contactService.count(param);
 		List<Contact> contactList = contactService.query(page, rows, param);
 		Map map = new HashMap();
@@ -49,7 +51,7 @@ public class ContactController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Contact contact,
+	Map<String, ? extends Object> update(@ModelAttribute("userName") String userName,@ModelAttribute Contact contact,
 			HttpServletResponse response) {
 		Contact contactUpdate = contactService.getById(contact.getContactId());
 		if (contact == null) {
@@ -59,7 +61,7 @@ public class ContactController {
 		contactUpdate.setActiveFlag(contact.getActiveFlag());
 		contactUpdate.setContactContent(contact.getContactContent());
 		contactUpdate.setContactType(contact.getContactType());
-		contactUpdate = contactService.update(contactUpdate);
+		contactUpdate = contactService.update(contactUpdate,userName);
 		return Collections.singletonMap("contactId", contactUpdate.getContactId());
 	}
 	
@@ -74,9 +76,9 @@ public class ContactController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Contact contact,
+	Map<String, ? extends Object> create(@ModelAttribute("userName") String userName,@ModelAttribute Contact contact,
 			HttpServletResponse response) {
-		Contact contactNew = contactService.insert(contact);
+		Contact contactNew = contactService.insert(contact,userName);
 		return Collections.singletonMap("contactId", contactNew.getContactId());
 	}
 

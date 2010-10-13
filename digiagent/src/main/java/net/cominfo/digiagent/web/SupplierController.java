@@ -58,7 +58,7 @@ public class SupplierController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public void update(@ModelAttribute SupplierWithBLOBs supplier,
+	public void update(@ModelAttribute SupplierWithBLOBs supplier,@ModelAttribute("userName") String userName,
 			@RequestParam("file") MultipartFile image,
 			@RequestParam("file1") MultipartFile image1,
 			@RequestParam("file2") MultipartFile image2,
@@ -87,7 +87,7 @@ public class SupplierController {
 			if (image.getSize()/1024 >= 65 || image1.getSize()/1024 >= 65 || image2.getSize()/1024 >= 65) {
 				pw.write(Collections.singletonMap("supplierId", -2).toString().replaceAll("=", ":"));
 			} else {
-				supplier = supplierService.update(supplier);
+				supplier = supplierService.update(supplier,userName);
 				pw.write(Collections.singletonMap("supplierId", supplier.getSupplierId()).toString().replaceAll("=", ":"));
 			}
 			pw.close();

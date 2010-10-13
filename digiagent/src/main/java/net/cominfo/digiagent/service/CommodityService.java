@@ -58,7 +58,7 @@ public class CommodityService {
 	}
 	
 	
-	public Commodity insert(Commodity commodity) {
+	public Commodity insert(Commodity commodity, String userName) {
 		commodity = validateCommodityName(commodity);
 		if (commodity.getCommodityId() != null) {
 			return commodity;
@@ -67,21 +67,21 @@ public class CommodityService {
 			commodity.setCommodityId(commodityId);
 			// FIXME GET CURRENT LOGIN USER ID
 			commodity.setUserId(1);
-			commodity.setCreatedBy("sj");
+			commodity.setCreatedBy(userName);
 			commodity.setCreatedDate(new Date());
-			commodity.setLastupdatedBy("sj");
+			commodity.setLastupdatedBy(userName);
 			commodity.setLastupdatedDate(new Date());
 			commodityDao.insert(commodity);
 			return commodity;
 		}
 	}
 	
-	public Commodity update(Commodity commodity) {
+	public Commodity update(Commodity commodity, String userName) {
 		commodity = validateCommodityName(commodity);
 		if (commodity.getCommodityId() == -1) {
 			return commodity;
 		} else {
-			commodity.setLastupdatedBy("sj");
+			commodity.setLastupdatedBy(userName);
 			commodity.setLastupdatedDate(new Date());
 			commodityDao.updateByPrimaryKey(commodity);
 			return commodity;
@@ -122,22 +122,22 @@ public class CommodityService {
 		}
 	}
 	
-	public Commodity release(Commodity commodity, List<CommodityImage> commodityImageList) {
+	public Commodity release(Commodity commodity, List<CommodityImage> commodityImageList,String userName) {
 		commodity.setCommodityId(sequenceDao.getCommodityNexId());
 		// FIXME GET CURRENT LOGIN USER ID
 		commodity.setUserId(1);
 		// FIXME DEFAULT ACTIVE_FLAG IS N
 		commodity.setActiveFlag("Y");
-		commodity.setCreatedBy("sj");
+		commodity.setCreatedBy(userName);
 		commodity.setCreatedDate(new Date());
-		commodity.setLastupdatedBy("sj");
+		commodity.setLastupdatedBy(userName);
 		commodity.setLastupdatedDate(new Date());
 		commodityDao.insert(commodity);
 		for (CommodityImage commodityImage : commodityImageList) {
 			commodityImage.setCommodityimageId(sequenceDao.getCommodityimageNexId());
-			commodityImage.setCreatedBy("sj");
+			commodityImage.setCreatedBy(userName);
 			commodityImage.setCreatedDate(new Date());
-			commodityImage.setLastupdatedBy("sj");
+			commodityImage.setLastupdatedBy(userName);
 			commodityImage.setLastupdatedDate(new Date());
 			commodityImage.setActiveFlag("Y");
 			commodityImage.setCommodityId(commodity.getCommodityId());

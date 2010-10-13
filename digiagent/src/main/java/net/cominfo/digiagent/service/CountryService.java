@@ -51,26 +51,26 @@ public class CountryService {
 		return countryDao.count(page, "t_da_country_Custom.countByCondition");
 	}
 	
-	public Country insert(Country country) {
+	public Country insert(Country country,String userName) {
 		country = validateCountryName(country);
 		if (country.getCountryId() != null) {
 			return country;
 		} else {
-			country.setCreatedBy("sj");
+			country.setCreatedBy(userName);
 			country.setCreatedDate(new Date());
-			country.setLastupdatedBy("sj");
+			country.setLastupdatedBy(userName);
 			country.setLastupdatedDate(new Date());
 			countryDao.insert(country);
 			return country;
 		}
 	}
 	
-	public Country update(Country country) {
+	public Country update(Country country,String userName) {
 		country = validateCountryName(country);
 		if (country.getCountryId() == -1) {
 			return country;
 		} else {
-			country.setLastupdatedBy("sj");
+			country.setLastupdatedBy(userName);
 			country.setLastupdatedDate(new Date());
 			countryDao.updateByPrimaryKey(country);
 			return country;

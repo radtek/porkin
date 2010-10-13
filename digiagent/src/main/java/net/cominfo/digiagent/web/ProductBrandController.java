@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 @Controller
 @RequestMapping(value="/productBrand")
+@SessionAttributes({"userId","userName"})
 public class ProductBrandController {
 	
 	@Autowired
@@ -49,7 +51,7 @@ public class ProductBrandController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute ProductBrand productBrand,
+	Map<String, ? extends Object> update(@ModelAttribute("userName") String userName,@ModelAttribute ProductBrand productBrand,
 			HttpServletResponse response) {
 		ProductBrand productBrandUpdate = productBrandService.getById(productBrand.getProductbrandId());
 		if (productBrand == null) {
@@ -58,7 +60,7 @@ public class ProductBrandController {
 		productBrandUpdate.setProductId(productBrand.getProductId());
 		productBrandUpdate.setActiveFlag(productBrand.getActiveFlag());
 		productBrandUpdate.setBrandId(productBrand.getBrandId());
-		productBrandUpdate = productBrandService.update(productBrandUpdate);
+		productBrandUpdate = productBrandService.update(productBrandUpdate,userName);
 		return Collections.singletonMap("productBrandId", productBrandUpdate.getProductbrandId());
 	}
 	
@@ -73,9 +75,9 @@ public class ProductBrandController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute ProductBrand productBrand,
+	Map<String, ? extends Object> create(@ModelAttribute("userName") String userName,@ModelAttribute ProductBrand productBrand,
 			HttpServletResponse response) {
-		ProductBrand productBrandNew = productBrandService.insert(productBrand);
+		ProductBrand productBrandNew = productBrandService.insert(productBrand,userName);
 		return Collections.singletonMap("productBrandId", productBrandNew.getProductbrandId());
 	}
 

@@ -51,26 +51,26 @@ public class ProvinceService {
 		return provinceDao.count(page, "t_da_province_Custom.countByCondition");
 	}
 	
-	public Province insert(Province province) {
+	public Province insert(Province province,String userName) {
 		province = validateProvinceName(province);
 		if (province.getProvinceId() != null) {
 			return province;
 		} else {
-			province.setCreatedBy("sj");
+			province.setCreatedBy(userName);
 			province.setCreatedDate(new Date());
-			province.setLastupdatedBy("sj");
+			province.setLastupdatedBy(userName);
 			province.setLastupdatedDate(new Date());
 			provinceDao.insert(province);
 			return province;
 		}
 	}
 	
-	public Province update(Province province) {
+	public Province update(Province province,String userName) {
 		province = validateProvinceName(province);
 		if (province.getProvinceId() == -1) {
 			return province;
 		} else {
-			province.setLastupdatedBy("sj");
+			province.setLastupdatedBy(userName);
 			province.setLastupdatedDate(new Date());
 			provinceDao.updateByPrimaryKey(province);
 			return province;

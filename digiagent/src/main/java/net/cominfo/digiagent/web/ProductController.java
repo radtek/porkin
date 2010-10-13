@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value = "/product")
+@SessionAttributes({"userId","userName"})
 public class ProductController {
 
 	@Autowired
@@ -48,7 +50,7 @@ public class ProductController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> update(@ModelAttribute Product product,
+	Map<String, ? extends Object> update(@ModelAttribute("userName") String userName,@ModelAttribute Product product,
 			HttpServletResponse response) {
 		Product productUpdate = productService.getById(product.getProductId());
 		if (product == null) {
@@ -57,7 +59,7 @@ public class ProductController {
 		productUpdate.setCategoryId(product.getCategoryId());
 		productUpdate.setActiveFlag(product.getActiveFlag());
 		productUpdate.setProductName(product.getProductName());
-		productUpdate = productService.update(productUpdate);
+		productUpdate = productService.update(productUpdate,userName);
 		return Collections.singletonMap("productId", productUpdate.getProductId());
 	}
 	
@@ -72,9 +74,9 @@ public class ProductController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	Map<String, ? extends Object> create(@ModelAttribute Product product,
+	Map<String, ? extends Object> create(@ModelAttribute("userName") String userName,@ModelAttribute Product product,
 			HttpServletResponse response) {
-		Product productNew = productService.insert(product);
+		Product productNew = productService.insert(product,userName);
 		return Collections.singletonMap("productId", productNew.getProductId());
 	}
 

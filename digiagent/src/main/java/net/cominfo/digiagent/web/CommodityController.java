@@ -109,7 +109,7 @@ public class CommodityController{
 		if (image.getSize()/1024 >= 65) {
 			map.put("commodityId", -2);
 		} else {
-			commodity = commodityService.insert(commodity);
+			commodity = commodityService.insert(commodity,userName);
 			commodityImage.setCommodityId(commodity.getCommodityId());
 			commodityImageService.insert(commodityImage,userName);
 			map.put("commodityId", commodity.getCommodityId());
@@ -139,7 +139,7 @@ public class CommodityController{
 			commodityImage.setCommodityId(commodity.getCommodityId());
 			commodityImageService.update(commodityImage,userName);
 		}
-		commodityUpdate = commodityService.update(commodityUpdate);
+		commodityUpdate = commodityService.update(commodityUpdate,userName);
 		if (image.getSize()/1024 >= 65) {
 			map.put("commodityId", -2);
 		} else {
@@ -168,7 +168,7 @@ public class CommodityController{
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
-	public @ResponseBody String release(@ModelAttribute Commodity commodity,
+	public @ResponseBody String release(@ModelAttribute("userName") String userName,@ModelAttribute Commodity commodity,
 			@RequestParam("file1") MultipartFile image1, 
 			@RequestParam("file2") MultipartFile image2,
 			@RequestParam("file3") MultipartFile image3,
@@ -197,7 +197,7 @@ public class CommodityController{
 		if (map.size() > 0) {
 			return JSONObject.toJSONString(map);
 		} else {
-			commodity = commodityService.release(commodity, commodityImageList);
+			commodity = commodityService.release(commodity, commodityImageList,userName);
 			map.put("commodityId", commodity.getCommodityId());
 		}
 		return JSONObject.toJSONString(map);

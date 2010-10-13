@@ -92,13 +92,13 @@ public class UserService {
 		return userDao.count(page, "t_da_user_Custom.countByCondition");
 	}
 
-	public User register(User user, int roleId,boolean flag) {
+	public User register(User user, int roleId,boolean flag,String userName) {
 
 		user = validateUserName(user);
 
-		user.setCreatedBy("sj");
+		user.setCreatedBy(userName);
 		user.setCreatedDate(new Date());
-		user.setLastupdatedBy("sj");
+		user.setLastupdatedBy(userName);
 		user.setLastupdatedDate(new Date());
 		user.setLastlogintime(new Date());
 		user.setRegistertime(new Date());
