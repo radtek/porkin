@@ -65,7 +65,8 @@
 		       t_da_brand.brand_english as brandEnglish,
 		       t_da_country.country_id as countryId,
 		       t_da_country.country_name as countryName,
-		       t_da_country.country_abbreviation as countryAbbreviation
+		       t_da_country.country_abbreviation as countryAbbreviation,
+		       t_da_supplierproduct.create_date as createDate
 		  FROM t_da_supplierproduct
 		  LEFT JOIN t_da_productbrand ON t_da_supplierproduct.productbrand_id = t_da_productbrand.productbrand_id
 		  LEFT JOIN t_da_product ON t_da_productbrand.product_id = t_da_product.product_id
@@ -74,7 +75,7 @@
 		  LEFT JOIN t_da_country ON t_da_brand.country_id = t_da_country.country_id
 		  WHERE t_da_supplierproduct.productbrand_id > 0
 		 <isNotEmpty prepend="AND" property="param.supplierId">
-			t_da_supplierproduct.supplier_id like '%$param.supplierId$%'
+			t_da_supplierproduct.supplier_id = '$param.supplierId$'
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.productName">
 			t_da_brand.product_name like '%$param.productName$%'

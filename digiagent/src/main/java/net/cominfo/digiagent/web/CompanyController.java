@@ -1,15 +1,20 @@
 package net.cominfo.digiagent.web;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import net.cominfo.digiagent.persistence.domain.Contact;
+import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CompanyService;
+import net.cominfo.digiagent.service.ProductBrandService;
+import net.cominfo.digiagent.service.SupplierProductService;
 import net.cominfo.digiagent.service.SupplierService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
@@ -33,6 +38,12 @@ public class CompanyController {
 
 	@Autowired
 	private SupplierService supplierService;
+
+	@Autowired
+	private SupplierProductService supplierProductService;
+
+	@Autowired
+	private ProductBrandService productBrandService;
 
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public String menu(Model model) {
@@ -175,8 +186,38 @@ public class CompanyController {
 	}
 
 	@RequestMapping(value = "/agent", method = RequestMethod.GET)
-	public String agent(Model model) {
-		return "company/menu";
+	public String agent(@ModelAttribute("userId") Integer userId, @ModelAttribute("userName") String userName,
+			@RequestParam Map<String, Object> param, Model model) {
+		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
+		if(supplier==null){
+			supplier = companyService.createDefaulutSupplier(userId, userName);
+		}
+		int supplierId = supplier.getSupplierId();
+		param.put("supplierId", supplierId);
+		int pageNo = (Integer)(param.get("pageNo") == null ? 1 : param.get("pageNo"));
+		int pageSize = (Integer)(param.get("pageSize") == null ? 10 : param.get("pageSize"));
+		List<ProductBrand> supplierProductList = supplierProductService.queryProduct(pageNo, pageSize, param);
+		model.addAttribute("supplierProductList", supplierProductList);
+		return "company/agent";
+	}
+	
+	@RequestMapping(value = "/productBrandList", method = RequestMethod.GET)
+	public String productBrandList(@ModelAttribute("userId") Integer userId, @ModelAttribute("userName") String userName,
+			@RequestParam Map<String, Object> param, Model model) {
+		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
+		if(supplier==null){
+			supplier = companyService.createDefaulutSupplier(userId, userName);
+		}
+		int supplierId = supplier.getSupplierId();
+		param.put("supplierId", supplierId);
+		param.put("activeFlag", "Y");
+//		String[] str = new String[]{"1", "2"};
+//		param.put("productbrandIds",  Arrays.asList(str));
+		int pageNo = (Integer)(param.get("pageNo") == null ? 1 : param.get("pageNo"));
+		int pageSize = (Integer)(param.get("pageSize") == null ? 10 : param.get("pageSize"));
+		List<ProductBrand> productBrandList = productBrandService.query(pageNo, pageSize, param);
+		model.addAttribute("productBrandList", productBrandList);
+		return "company/productBrandList";
 	}
 
 	@RequestMapping(value = "/qualify", method = RequestMethod.GET)

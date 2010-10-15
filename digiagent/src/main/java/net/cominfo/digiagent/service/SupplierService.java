@@ -112,8 +112,7 @@ public class SupplierService {
 			userService.insert(user, userRole, userName);
 			
 			supplier.setSupplierId(sequenceDao.getSupplierNexId());
-//			supplier.setUserId(user.getUserId());
-			supplier.setUserId(1);
+			supplier.setUserId(user.getUserId());
 			supplier.setCreatedBy(userName);
 			supplier.setCreatedDate(new Date());
 			supplier.setLastupdatedBy(userName);

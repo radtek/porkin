@@ -32,6 +32,12 @@
 		 <isNotEmpty prepend="AND" property="param.activeFlag">
 			t_da_productbrand.active_flag = '$param.activeFlag$'
          </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.supplierId">
+			t_da_productbrand.productbrand_id not in 
+			(
+				select t_da_supplierproduct.productbrand_id from t_da_supplierproduct where t_da_supplierproduct.supplier_id = '$param.supplierId$'
+			)
+         </isNotEmpty>
 		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
 		 	$orderByStatement$
 		 </isNotEmpty>
