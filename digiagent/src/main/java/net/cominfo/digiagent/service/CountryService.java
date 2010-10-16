@@ -65,6 +65,12 @@ public class CountryService {
 		}
 	}
 	
+	public List<Country> getAllCountry(){
+		CountryCriteria example = new CountryCriteria();
+		example.createCriteria();
+		return countryDao.selectByExample(example);
+	}
+	
 	public Country update(Country country,String userName) {
 		country = validateCountryName(country);
 		if (country.getCountryId() == -1) {

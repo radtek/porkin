@@ -36,7 +36,7 @@ var agentAddClickHandler = function() {
 	</strong>
 </td>
     </tr>
-    <tr><td>已代理的商品</td></tr>
+    <tr><td>代理商品申请</td></tr>
  	<tr>
       <td>
       <table>
@@ -75,7 +75,7 @@ var agentAddClickHandler = function() {
     <tr>
       <td colspan="8" align="center"><span class="headCity">
       <form action="${ctx}/company/agent/form" >
-        <input name="btnAdd" type="submit" value="增加"/>
+        <input name="btnAdd" type="submit" value="追加代理商品"/>
        </form>
             </span>
       	</td>

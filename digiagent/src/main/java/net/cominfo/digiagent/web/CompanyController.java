@@ -7,12 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import net.cominfo.digiagent.persistence.domain.Contact;
+import net.cominfo.digiagent.persistence.domain.Country;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CompanyService;
 import net.cominfo.digiagent.service.ContactService;
+import net.cominfo.digiagent.service.CountryService;
 import net.cominfo.digiagent.service.ProductBrandService;
 import net.cominfo.digiagent.service.SupplierProductService;
 import net.cominfo.digiagent.service.SupplierService;
@@ -39,6 +41,9 @@ public class CompanyController {
 
 	@Autowired
 	private SupplierService supplierService;
+	
+	@Autowired
+	private CountryService countryService;
 	
 	@Autowired
 	private ContactService contactService;
@@ -240,6 +245,14 @@ public class CompanyController {
 				.queryProduct(pageNo, pageSize, param);
 		model.addAttribute("supplierProductList", supplierProductList);
 		return "company/agent";
+	}
+	
+	
+	@RequestMapping(value = "/agent/form", method = RequestMethod.GET)
+	public String agentForm(@ModelAttribute("userId") Integer userId,@ModelAttribute("userName") String userName,Model model) {
+		List<Country> countryList = countryService.getAllCountry();
+		model.addAttribute("countryList",countryList);
+		return "company/agent/form";
 	}
 
 	@RequestMapping(value = "/productBrandList", method = RequestMethod.GET)

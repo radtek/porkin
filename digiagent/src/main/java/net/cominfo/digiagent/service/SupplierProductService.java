@@ -2,6 +2,7 @@ package net.cominfo.digiagent.service;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,7 @@ public class SupplierProductService {
 				SupplierProduct supplierProduct = new SupplierProduct();
 				supplierProduct.setProductbrandId(productBrandId);
 				supplierProduct.setSupplierId(supplierId);
+				supplierProduct.setCreateDate(new Date());
 				supplierProductDao.insert(supplierProduct);
 			}
 		}
