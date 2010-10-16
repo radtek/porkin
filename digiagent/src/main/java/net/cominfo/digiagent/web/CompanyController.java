@@ -1,6 +1,5 @@
 package net.cominfo.digiagent.web;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CompanyService;
+import net.cominfo.digiagent.service.ContactService;
 import net.cominfo.digiagent.service.ProductBrandService;
 import net.cominfo.digiagent.service.SupplierProductService;
 import net.cominfo.digiagent.service.SupplierService;
@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,9 @@ public class CompanyController {
 
 	@Autowired
 	private SupplierService supplierService;
+	
+	@Autowired
+	private ContactService contactService;
 
 	@Autowired
 	private SupplierProductService supplierProductService;
@@ -118,6 +122,7 @@ public class CompanyController {
 			Model model) {
 		Supplier supplier = companyService.getCompanyByUserId(userId);
 		model.addAttribute("supplier", supplier);
+		model.addAttribute("cityList", companyService.getAllCity());
 		return "company/introduction";
 	}
 
@@ -126,6 +131,9 @@ public class CompanyController {
 			@ModelAttribute("userName") String userName, Model model,
 			HttpServletRequest request) {
 		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
+
+		String cityId = (String) (String) request.getParameter("cityId");
+		supplier.setCityId(Integer.valueOf(cityId));
 
 		String supplierName = (String) request.getParameter("supplierName");
 		supplier.setSupplierName(supplierName);
@@ -138,11 +146,11 @@ public class CompanyController {
 		supplier.setSupplierZip(supplierZip);
 
 		String supplierAddress = (String) request
-				.getParameter("supplierContactname");
+				.getParameter("supplierAddress");
 		supplier.setSupplierAddress(supplierAddress);
 
 		String supplierTelephone = (String) request
-				.getParameter("supplierName");
+				.getParameter("supplierTelephone");
 		supplier.setSupplierTelephone(supplierTelephone);
 
 		String supplierMobile = (String) request.getParameter("supplierMobile");
@@ -162,60 +170,97 @@ public class CompanyController {
 
 		model.addAttribute("message", new Message(MessageType.success,
 				"supplier.update.success"));
+
 		model.addAttribute("supplier", supplier);
 
 		return "company/introduction";
 	}
 
-	@RequestMapping(value = "/contactForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/contact/list", method = RequestMethod.GET)
 	public String contactForm(@ModelAttribute("userId") Integer userId,
 			@ModelAttribute("userName") String userName, Model model) {
 		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
-		if(supplier==null){
+		if (supplier == null) {
 			supplier = companyService.createDefaulutSupplier(userId, userName);
 		}
 		int supplierId = supplier.getSupplierId();
-		List<Contact> contactList = supplierService.getContactBySupplierId(supplierId);
+		List<Contact> contactList = supplierService
+				.getContactBySupplierId(supplierId);
 		model.addAttribute("contactList", contactList);
 		return "company/contact";
 	}
 
-	@RequestMapping(value = "/contactCreate", method = RequestMethod.GET)
-	public String contactCreate(Model model) {
-		return "company/contact";
+	@RequestMapping(value = "/contact/delete/{id}", method = RequestMethod.GET)
+	public String contactForm(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName,
+			@PathVariable Integer id, Model model) {
+		supplierService.deleteContactById(id);
+		
+		return "redirect:/company/contact/list";
+	}
+
+	@RequestMapping(value = "/contact/form", method = RequestMethod.GET)
+	public String contactCreateFrom(Model model) {
+		return "company/contact/create";
+	}
+	
+	@RequestMapping(value = "/contact/create", method = RequestMethod.GET)
+	public String contactCreate(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName, @RequestParam String contactType,
+			@RequestParam String contactContent,Model model) {
+		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
+		if (supplier == null) {
+			supplier = companyService.createDefaulutSupplier(userId, userName);
+		}
+		int supplierId = supplier.getSupplierId();
+		Contact contact = new Contact();
+		contact.setSupplierId(supplierId);
+		contact.setContactContent(contactContent);
+		contact.setContactType(contactType);
+		contact.setActiveFlag("Y");
+		contactService.insert(contact, userName);
+		return "redirect:/company/contact/list";
 	}
 
 	@RequestMapping(value = "/agent", method = RequestMethod.GET)
-	public String agent(@ModelAttribute("userId") Integer userId, @ModelAttribute("userName") String userName,
+	public String agent(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName,
 			@RequestParam Map<String, Object> param, Model model) {
 		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
-		if(supplier==null){
+		if (supplier == null) {
 			supplier = companyService.createDefaulutSupplier(userId, userName);
 		}
 		int supplierId = supplier.getSupplierId();
 		param.put("supplierId", supplierId);
-		int pageNo = (Integer)(param.get("pageNo") == null ? 1 : param.get("pageNo"));
-		int pageSize = (Integer)(param.get("pageSize") == null ? 10 : param.get("pageSize"));
-		List<ProductBrand> supplierProductList = supplierProductService.queryProduct(pageNo, pageSize, param);
+		int pageNo = (Integer) (param.get("pageNo") == null ? 1 : param
+				.get("pageNo"));
+		int pageSize = (Integer) (param.get("pageSize") == null ? 10 : param
+				.get("pageSize"));
+		List<ProductBrand> supplierProductList = supplierProductService
+				.queryProduct(pageNo, pageSize, param);
 		model.addAttribute("supplierProductList", supplierProductList);
 		return "company/agent";
 	}
-	
+
 	@RequestMapping(value = "/productBrandList", method = RequestMethod.GET)
-	public String productBrandList(@ModelAttribute("userId") Integer userId, @ModelAttribute("userName") String userName,
+	public String productBrandList(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName,
 			@RequestParam Map<String, Object> param, Model model) {
 		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
-		if(supplier==null){
+		if (supplier == null) {
 			supplier = companyService.createDefaulutSupplier(userId, userName);
 		}
 		int supplierId = supplier.getSupplierId();
 		param.put("supplierId", supplierId);
 		param.put("activeFlag", "Y");
-//		String[] str = new String[]{"1", "2"};
-//		param.put("productbrandIds",  Arrays.asList(str));
-		int pageNo = (Integer)(param.get("pageNo") == null ? 1 : param.get("pageNo"));
-		int pageSize = (Integer)(param.get("pageSize") == null ? 10 : param.get("pageSize"));
-		List<ProductBrand> productBrandList = productBrandService.query(pageNo, pageSize, param);
+		// String[] str = new String[]{"1", "2"};
+		// param.put("productbrandIds", Arrays.asList(str));
+		int pageNo = (Integer) (param.get("pageNo") == null ? 1 : param
+				.get("pageNo"));
+		int pageSize = (Integer) (param.get("pageSize") == null ? 10 : param
+				.get("pageSize"));
+		List<ProductBrand> productBrandList = productBrandService.query(pageNo,
+				pageSize, param);
 		model.addAttribute("productBrandList", productBrandList);
 		return "company/productBrandList";
 	}

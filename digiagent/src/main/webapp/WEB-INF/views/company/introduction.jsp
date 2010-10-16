@@ -44,8 +44,26 @@ function whenDelete() {
       <td>公司名称</td>
       <td><input type="text" name="supplierName" id="supplierName" value='<c:out value="${supplier.supplierName}" />' /></td>
     </tr>
+    
     <tr>
-      <td>联系人姓名</td>
+      <td>所在城市</td>
+      <td> <select id="cityId" name="cityId">
+      		<c:forEach items="${cityList}" var="city">
+      			<c:choose>
+      				<c:when test="${city.cityId eq supplier.cityId}">
+      					<option value='<c:out value="${city.cityId}" />' SELECTED><c:out value="${city.cityName}" /></option>
+      				</c:when>
+      				<c:otherwise>
+      					<option value='<c:out value="${city.cityId}" />' ><c:out value="${city.cityName}" /></option>
+      				</c:otherwise>
+      			</c:choose>
+      		</c:forEach>
+     
+                </select>
+</td>
+    </tr>
+    <tr>
+      <td>联系人</td>
       <td><input type="text" name="supplierContactname" id="supplierContactname" value='<c:out value="${supplier.supplierContactname}" />' /></td>
     </tr>
     <tr>

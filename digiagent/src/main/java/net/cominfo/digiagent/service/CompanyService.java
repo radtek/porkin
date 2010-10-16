@@ -3,10 +3,12 @@ package net.cominfo.digiagent.service;
 import java.util.Date;
 import java.util.List;
 
+import net.cominfo.digiagent.persistence.dao.CityDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.dao.UserDao;
-import net.cominfo.digiagent.persistence.domain.Supplier;
+import net.cominfo.digiagent.persistence.domain.City;
+import net.cominfo.digiagent.persistence.domain.CityCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
@@ -27,6 +29,9 @@ public class CompanyService {
 	
 	@Autowired
 	private SupplierDao supplierDao;
+	
+	@Autowired
+	private CityDao cityDao;
 
 	public User getUserById(Integer userId) {
 		return userDao.selectByPrimaryKey(userId);
@@ -98,6 +103,13 @@ public class CompanyService {
 		
 		return supplier;
 	}
+	
+	public List<City> getAllCity(){
+		CityCriteria example = new CityCriteria();
+		example.createCriteria();
+		return cityDao.selectByExample(example);
 		
+	}
+	
 
 }

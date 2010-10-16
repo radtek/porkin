@@ -26,7 +26,7 @@ function whenDelete() {
 <body>
 <div class="companyTitle">公司情况</div>
 <div id="companyLeft">
-
+<form action="${ctx}/company/contact/create" >
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2">
@@ -41,59 +41,37 @@ function whenDelete() {
       <td></td>
     </tr>
     <tr>
-      <td><strong>联系类别</strong></td>
-      <td><strong>联系方式</strong></td>
-      <td><strong></strong></td>
-
+      <td>联系类别</td>
+      <td>
+	      <select id="contactType" name="contactType">
+	      	<option value='Q' SELECTED>QQ</option>
+	      	<option value='E' >电子邮件</option>
+	      	<option value='T' >电话</option>
+	      	<option value='M' >手机</option>
+	      </select>
+	  </td>
+    </tr>
+    <tr>
+      <td>联系方式</td>
+      <td>
+	      <input type="text" name="contactContent" id="contactContent"  />
+	  </td>
     </tr>
    
-    <c:choose>
-    	<c:when test="${empty contactList}">
-    	 <tr>
-    		<td>暂无数据!</td><td></td>
-    	</tr>
-    	</c:when>
-    	<c:otherwise>
-    		<c:forEach items="${contactList}" var="contact">
-    			<tr>
-    			<c:if test="${contact.contactType eq 'Q'}">
-    				<td>QQ</td>
-    			</c:if>
-    			<c:if test="${contact.contactType eq 'E'}">
-    				<td>电子邮件</td>
-    			</c:if>
-    			<c:if test="${contact.contactType eq 'T'}">
-    				<td>电话</td>
-    			</c:if>
-    			<c:if test="${contact.contactType eq 'M'}">
-    				<td>手机</td>
-    			</c:if>
-    			<td><c:out value="${contact.contactContent}" /></td>
-    			<td>
-    			<span class="headCity">
-    				<a href="${ctx}/company/contact/delete/<c:out value="${contact.contactId}"/>" onclick="javascript:confirm('您确认要删除?')">删除</a>
-    			 
-    			 </span>
-    			</tr>
-    		</c:forEach>
-    	</c:otherwise>
-    </c:choose>
-    </tr>
  
     <tr>
-    <form action="${ctx}/company/contact/form" />
       <td colspan="2" align="center">
       	<span class="headCity">
         	<input class="btn_login" type="submit" value="新增" />
         </span>
+ 
       </td>
-    </form> 
     </tr>
     <tr>
       <td></td>
     </tr>
   </table>
-
+</form>
   <p class="tagContent">&nbsp;</p>
 </div>
 </body>

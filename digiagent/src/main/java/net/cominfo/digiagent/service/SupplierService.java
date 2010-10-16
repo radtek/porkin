@@ -283,4 +283,8 @@ public class SupplierService {
 		return supplierDao.getSupplierAreaInfo(supplierid);
 	}
 	
+	public void deleteContactById(Integer contactId){
+		contactDao.deleteByPrimaryKey(contactId);
+	}
+	
 }
