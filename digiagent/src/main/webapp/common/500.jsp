@@ -1,22 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-
-<html>
-<head>
-	<title>403 Error</title>
-</head>
-
-<body>
-<div>
-
-
-	403 No Permission.
-</div>
-</body>
-</html><%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-	<title>403 ~ Page Not Found</title>
+	<title>500 ~ Page Not Found</title>
 </head>
 
 <body>
