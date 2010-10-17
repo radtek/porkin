@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+
+	<context:component-scan base-package="com.volkswagen.stab.flex" />
+	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+	<!--++++++++++ Send Email Configuration Start ++++++++++++++++++++-->
+	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+	<!--================ Mail Configuration ========================-->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+		<property name="host" value="58.2.221.13" />
+		<property name="username" value="800021189" />
+		<property name="password" value="G@28032008t" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- vilocity config -->
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="resourceLoaderPath" value="WEB-INF/mailTemplate" />
+		<property name="velocityProperties">
+			<props>
+				<prop key="default.contentType">text/html; charset=GB2312</prop>
+				<prop key="output.encoding">GB2312</prop>
+				<prop key="input.encoding">UTF-8</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="Workflow-Center.China@genpact.com" />
+	</bean>
+
+	<bean id="mailEngine" class="com.volkswagen.stab.utils.mail.MailEngine">
+		<property name="mailSender" ref="mailSender" />
+		<property name="velocityEngine" ref="velocityEngine" />
+	</bean>
+
+	<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+	<!--+++++++ Send Email Configuration End ++++++++++++++++++++++++-->
+	<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+</beans>
