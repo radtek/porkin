@@ -104,7 +104,7 @@ public class ProductService {
 		if (product.getProductId() == -1) {
 			return product;
 		} else {
-			product.setLastupdatedBy("sj");
+			product.setLastupdatedBy(userName);
 			product.setLastupdatedDate(new Date());
 			productDao.updateByPrimaryKey(product);
 			return product;

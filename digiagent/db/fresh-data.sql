@@ -79,7 +79,7 @@ INSERT INTO `t_da_user` (`USER_ID`, `USER_NAME`, `USER_EMAIL`, `USER_PASSWORD`, 
 
 -- roleuser
 INSERT INTO `t_da_userrole` (`USER_ID`, `ROLE_ID`) VALUES
-(1, 2);
+(1, 1);
 
 
 
