@@ -8,6 +8,7 @@ import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.CategoryDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
@@ -20,13 +21,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class CategoryService {
 
 	@Autowired
 	private CategoryDao categoryDao;
+
 	@Autowired
 	private ProductDao productDao;
+
+	@Autowired
+	private SequenceDao sequenceDao;
 
 	public int countCategory() {
 		return categoryDao.countByExample(new CategoryCriteria());
@@ -60,6 +65,7 @@ public class CategoryService {
 		if (category.getCategoryId() != null) {
 			return category;
 		} else {
+			category.setCategoryId(sequenceDao.getCategoryNexId());
 			category.setCreatedBy(userName);
 			category.setCreatedDate(new Date());
 			category.setLastupdatedBy(userName);

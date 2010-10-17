@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class CommodityService {
 
 	@Autowired
@@ -58,15 +58,16 @@ public class CommodityService {
 	}
 	
 	
-	public Commodity insert(Commodity commodity, String userName) {
+	public Commodity insert(Commodity commodity, String userName, Integer userId) {
 		commodity = validateCommodityName(commodity);
 		if (commodity.getCommodityId() != null) {
 			return commodity;
 		} else {
-			int commodityId = sequenceDao.getCommodityNexId();
-			commodity.setCommodityId(commodityId);
+			commodity.setCommodityId(sequenceDao.getCommentsNexId());
+			
 			// FIXME GET CURRENT LOGIN USER ID
-			commodity.setUserId(1);
+			// commodity.setUserId(1);
+			commodity.setUserId(userId);
 			commodity.setCreatedBy(userName);
 			commodity.setCreatedDate(new Date());
 			commodity.setLastupdatedBy(userName);

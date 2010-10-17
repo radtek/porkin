@@ -29,19 +29,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class SupplierService {
 
 	@Autowired
 	private SupplierDao supplierDao;
+
 	@Autowired
 	private CityDao cityDao;
+
 	@Autowired
 	private SupplierProductDao supplierProductDao;
+
 	@Autowired
 	private ContactDao contactDao;
+
 	@Autowired
 	private UserService userService;
 
@@ -51,15 +54,15 @@ public class SupplierService {
 	public int countSupplier() {
 		return supplierDao.countByExample(new SupplierCriteria());
 	}
-	
-	public SupplierWithBLOBs getById(Integer id){
+
+	public SupplierWithBLOBs getById(Integer id) {
 		return supplierDao.selectByPrimaryKey(id);
 	}
-	
 
 	public String getCityList(Integer provinceId) {
 		CityCriteria example = new CityCriteria();
-		net.cominfo.digiagent.persistence.domain.CityCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.CityCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andActiveFlagEqualTo("Y");
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<option value='' selected='selected'>请选择...</option>");
@@ -77,28 +80,31 @@ public class SupplierService {
 				buffer.append("</option>");
 			}
 		}
-		return buffer.toString(); 
-		
+		return buffer.toString();
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Supplier> query(int pageNo, int pageSize, Map<String, Object> param){
+	public List<Supplier> query(int pageNo, int pageSize,
+			Map<String, Object> param) {
 		Page<Supplier> page = new Page<Supplier>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		page.setOrderBy("PROVINCE_NAME,CITY_NAME,SUPPLIER_NAME");
 		page.setOrder("ASC,ASC,ASC");
 		page.setParam(param);
-		return (List<Supplier>) supplierDao.findPage(page, "t_da_supplier_Custom.pageByCondition").getResult();
+		return (List<Supplier>) supplierDao.findPage(page,
+				"t_da_supplier_Custom.pageByCondition").getResult();
 	}
-	
-	public Long count(Map<String, Object> param){
+
+	public Long count(Map<String, Object> param) {
 		Page<Supplier> page = new Page<Supplier>();
 		page.setParam(param);
 		return supplierDao.count(page, "t_da_supplier_Custom.countByCondition");
 	}
-	
-	public SupplierWithBLOBs insert(SupplierWithBLOBs supplier, User user, UserRole userRole,String userName) {
+
+	public SupplierWithBLOBs insert(SupplierWithBLOBs supplier, User user,
+			UserRole userRole, String userName) {
 		supplier = validateSupplierName(supplier);
 		if (supplier.getSupplierId() != null) {
 			return supplier;
@@ -110,7 +116,7 @@ public class SupplierService {
 			user.setActiveFlag("N");
 			userRole.setRoleId(4);
 			userService.insert(user, userRole, userName);
-			
+
 			supplier.setSupplierId(sequenceDao.getSupplierNexId());
 			supplier.setUserId(user.getUserId());
 			supplier.setCreatedBy(userName);
@@ -121,8 +127,8 @@ public class SupplierService {
 			return supplier;
 		}
 	}
-	
-	public SupplierWithBLOBs update(SupplierWithBLOBs supplier,String userName) {
+
+	public SupplierWithBLOBs update(SupplierWithBLOBs supplier, String userName) {
 		supplier = validateSupplierName(supplier);
 		if (supplier.getSupplierId() == -1) {
 			return supplier;
@@ -133,8 +139,8 @@ public class SupplierService {
 			return supplier;
 		}
 	}
-	
-	public String delete(Integer id){
+
+	public String delete(Integer id) {
 		// 是否有商家产品关联
 		if (isReferenceSupplierProduct(id)) {
 			return "referenceSupplierProduct";
@@ -146,14 +152,14 @@ public class SupplierService {
 			return "success";
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private SupplierWithBLOBs validateSupplierName(SupplierWithBLOBs supplier) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("cityId", supplier.getCityId());
 		paramMap.put("supplierName", supplier.getSupplierName());
 		if (supplier.getSupplierId() != null) {
-			paramMap.put("supplierId",supplier.getSupplierId());
+			paramMap.put("supplierId", supplier.getSupplierId());
 		}
 		List<Map> list = supplierDao.findByCondition(paramMap);
 		if (list != null && list.size() > 0) {
@@ -161,28 +167,32 @@ public class SupplierService {
 			return supplier;
 		} else {
 			if (supplier.getSupplierImage() == null) {
-				SupplierWithBLOBs oriSupplier = supplierDao.selectByPrimaryKey(supplier.getSupplierId());
+				SupplierWithBLOBs oriSupplier = supplierDao
+						.selectByPrimaryKey(supplier.getSupplierId());
 				supplier.setSupplierImage(oriSupplier.getSupplierImage());
 			}
 			return supplier;
 		}
 	}
-	
+
 	private boolean isReferenceSupplierProduct(Integer supplierId) {
 		SupplierProductCriteria example = new SupplierProductCriteria();
-		net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andSupplierIdEqualTo(supplierId);
-		List<SupplierProduct> list = supplierProductDao.selectByExample(example);
+		List<SupplierProduct> list = supplierProductDao
+				.selectByExample(example);
 		if (list != null && list.size() > 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	private boolean isReferenceContact(Integer supplierId) {
 		ContactCriteria example = new ContactCriteria();
-		net.cominfo.digiagent.persistence.domain.ContactCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.ContactCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andSupplierIdEqualTo(supplierId);
 		List<Contact> list = contactDao.selectByExample(example);
 		if (list != null && list.size() > 0) {
@@ -191,11 +201,11 @@ public class SupplierService {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * @param supplierId
 	 * @param type
-	 * 		1:实名2：资质
+	 *            1:实名2：资质
 	 * @return
 	 */
 	public byte[] getSupplierImage(Integer supplierId, Integer type) {
@@ -209,82 +219,83 @@ public class SupplierService {
 			default:
 				return supplier.getSupplierImage();
 			}
-			
+
 		} else {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * @param supplierId
-	 * @param type 联系方式类型
-	 * 	T：电话,Q:QQ, E:Email M：手机
+	 * @param type
+	 *            联系方式类型 T：电话,Q:QQ, E:Email M：手机
 	 * @return
 	 */
-	public List<String> getContactBySupplierId(Integer supplierId,String type){
+	public List<String> getContactBySupplierId(Integer supplierId, String type) {
 		ContactCriteria criteria = new ContactCriteria();
-		criteria.createCriteria().andSupplierIdEqualTo(supplierId).andContactTypeEqualTo(type);
+		criteria.createCriteria().andSupplierIdEqualTo(supplierId)
+				.andContactTypeEqualTo(type);
 		List<Contact> contactList = contactDao.selectByExample(criteria);
 		ArrayList<String> result = new ArrayList<String>();
 		Iterator<Contact> iterator = contactList.iterator();
 		Contact temp = null;
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			temp = iterator.next();
 			result.add(temp.getContactContent());
 		}
 		return result;
 	}
-	
-	public List<String> getSupplierQQList(Integer supplierId){
-		return getContactBySupplierId(supplierId,"Q");
+
+	public List<String> getSupplierQQList(Integer supplierId) {
+		return getContactBySupplierId(supplierId, "Q");
 	}
-	
-	public List<String> getSupplierEmailList(Integer supplierId){
-		return getContactBySupplierId(supplierId,"E");
+
+	public List<String> getSupplierEmailList(Integer supplierId) {
+		return getContactBySupplierId(supplierId, "E");
 	}
-	
-	public List<String> getSupplierTelephoneList(Integer supplierId,String telephone){
-		List<String> result = getContactBySupplierId(supplierId,"T");
-		if(telephone!=null){
+
+	public List<String> getSupplierTelephoneList(Integer supplierId,
+			String telephone) {
+		List<String> result = getContactBySupplierId(supplierId, "T");
+		if (telephone != null) {
 			result.add(telephone);
 		}
 		return result;
 	}
-	
-	public List<String> getSupplierMobileList(Integer supplierId,String mobile){
-		List<String> result = getContactBySupplierId(supplierId,"M");
-		if(mobile!=null){
+
+	public List<String> getSupplierMobileList(Integer supplierId, String mobile) {
+		List<String> result = getContactBySupplierId(supplierId, "M");
+		if (mobile != null) {
 			result.add(mobile);
 		}
 		return result;
 	}
-	
-	public List<Contact> getContactBySupplierId(Integer supplierId){
+
+	public List<Contact> getContactBySupplierId(Integer supplierId) {
 		ContactCriteria criteria = new ContactCriteria();
 		criteria.createCriteria().andSupplierIdEqualTo(supplierId);
 		return contactDao.selectByExample(criteria);
 	}
-	
-	
-	
+
 	/**
 	 * 更新访问次数
+	 * 
 	 * @param supplier
 	 */
-	public void access(SupplierWithBLOBs supplier){
+	public void access(SupplierWithBLOBs supplier) {
 		int access = supplier.getSupplierAccess();
 		++access;
 		supplier.setSupplierAccess(access);
 		supplierDao.updateByPrimaryKey(supplier);
-		
+
 	}
-	
-	public String getAreaInfoBySupplierId(Integer supplierid){
+
+	public String getAreaInfoBySupplierId(Integer supplierid) {
 		return supplierDao.getSupplierAreaInfo(supplierid);
 	}
-	
-	public void deleteContactById(Integer contactId){
+
+	public void deleteContactById(Integer contactId) {
 		contactDao.deleteByPrimaryKey(contactId);
 	}
-	
+
 }

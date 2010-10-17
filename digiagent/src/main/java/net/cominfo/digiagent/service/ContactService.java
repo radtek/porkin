@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.ContactDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.dao.SupplierDao;
 import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.ContactCriteria;
@@ -20,13 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ContactService {
 
 	@Autowired
 	private ContactDao contactDao;
+	
 	@Autowired
 	private SupplierDao supplierDao;
+	
+	@Autowired
+	private SequenceDao sequenceDao;
 
 	public int countContact() {
 		return contactDao.countByExample(new ContactCriteria());
@@ -80,6 +85,7 @@ public class ContactService {
 		if (contact.getContactId() != null) {
 			return contact;
 		} else {
+			contact.setContactId(sequenceDao.getContactNexId());
 			contact.setCreatedBy(userName);
 			contact.setCreatedDate(new Date());
 			contact.setLastupdatedBy(userName);

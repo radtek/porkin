@@ -9,6 +9,7 @@ import java.util.Map;
 import net.cominfo.digiagent.persistence.dao.CategoryDao;
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
@@ -21,29 +22,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ProductService {
 
 	@Autowired
 	private ProductDao productDao;
+
 	@Autowired
 	private CategoryDao categoryDao;
+
 	@Autowired
 	private ProductBrandDao productBrandDao;
+
+	@Autowired
+	private SequenceDao sequenceDao;
 
 	public int countProduct() {
 		return productDao.countByExample(new ProductCriteria());
 	}
-	
-	public Product getById(Integer id){
+
+	public Product getById(Integer id) {
 		return productDao.selectByPrimaryKey(id);
 	}
-	
+
 	public String getCategoryList() {
 		CategoryCriteria example = new CategoryCriteria();
-		net.cominfo.digiagent.persistence.domain.CategoryCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.CategoryCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andActiveFlagEqualTo("Y");
 		example.setOrderByClause("CATEGORY_NAME");
 		List<Category> categoryList = categoryDao.selectByExample(example);
@@ -58,39 +64,42 @@ public class ProductService {
 		}
 		return buffer.toString();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Product> query(int pageNo, int pageSize, Map<String, Object> param){
+	public List<Product> query(int pageNo, int pageSize,
+			Map<String, Object> param) {
 		Page<Product> page = new Page<Product>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		page.setOrderBy("CATEGORY_NAME,PRODUCT_NAME");
 		page.setOrder("ASC,ASC");
 		page.setParam(param);
-		return (List<Product>) productDao.findPage(page, "t_da_product_Custom.pageByCondition").getResult();
+		return (List<Product>) productDao.findPage(page,
+				"t_da_product_Custom.pageByCondition").getResult();
 	}
-	
-	public Long count(Map<String, Object> param){
+
+	public Long count(Map<String, Object> param) {
 		Page<Product> page = new Page<Product>();
 		page.setParam(param);
 		return productDao.count(page, "t_da_product_Custom.countByCondition");
 	}
-	
-	public Product insert(Product product,String userName) {
+
+	public Product insert(Product product, String userName) {
 		product = validateProductName(product);
 		if (product.getProductId() != null) {
 			return product;
 		} else {
-			product.setCreatedBy("sj");
+			product.setProductId(sequenceDao.getProductNexId());
+			product.setCreatedBy(userName);
 			product.setCreatedDate(new Date());
-			product.setLastupdatedBy("sj");
+			product.setLastupdatedBy(userName);
 			product.setLastupdatedDate(new Date());
 			productDao.insert(product);
 			return product;
 		}
 	}
-	
-	public Product update(Product product,String userName) {
+
+	public Product update(Product product, String userName) {
 		product = validateProductName(product);
 		if (product.getProductId() == -1) {
 			return product;
@@ -101,8 +110,8 @@ public class ProductService {
 			return product;
 		}
 	}
-	
-	public String delete(Integer id){
+
+	public String delete(Integer id) {
 		// 是否有品牌产品关联
 		if (isReferenceProductBrand(id)) {
 			return "reference";
@@ -111,14 +120,14 @@ public class ProductService {
 			return "success";
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Product validateProductName(Product product) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("categoryId", product.getCategoryId());
 		paramMap.put("productName", product.getProductName());
 		if (product.getCategoryId() != null) {
-			paramMap.put("productId",product.getProductId());
+			paramMap.put("productId", product.getProductId());
 		}
 		List<Map> list = productDao.findByCondition(paramMap);
 		if (list != null && list.size() > 0) {
@@ -128,10 +137,11 @@ public class ProductService {
 			return product;
 		}
 	}
-	
+
 	private boolean isReferenceProductBrand(Integer productId) {
 		ProductBrandCriteria example = new ProductBrandCriteria();
-		net.cominfo.digiagent.persistence.domain.ProductBrandCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.ProductBrandCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andProductIdEqualTo(productId);
 		List<ProductBrand> list = productBrandDao.selectByExample(example);
 		if (list != null && list.size() > 0) {
@@ -140,9 +150,10 @@ public class ProductService {
 			return false;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Map> getProductList(Map condition) throws SQLException {
-		return (List<Map>) productDao.getSqlMapClient().queryForList("t_da_product_Custom.listByCondition", condition);
+		return (List<Map>) productDao.getSqlMapClient().queryForList(
+				"t_da_product_Custom.listByCondition", condition);
 	}
 }

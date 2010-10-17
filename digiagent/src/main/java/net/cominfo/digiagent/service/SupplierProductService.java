@@ -16,48 +16,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class SupplierProductService {
+
 	@Autowired
 	private SupplierProductDao supplierProductDao;
-	
+
 	@SuppressWarnings("unchecked")
-	public List<SupplierProductKey> query(int pageNo, int pageSize, Map<String, Object> param){
+	public List<SupplierProductKey> query(int pageNo, int pageSize,
+			Map<String, Object> param) {
 		Page<SupplierProductKey> page = new Page<SupplierProductKey>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		page.setOrderBy("PROVINCE_NAME,CITY_NAME,SUPPLIER_NAME,PRODUCT_COUNT");
 		page.setOrder("ASC,ASC,ASC,DESC");
 		page.setParam(param);
-		return (List<SupplierProductKey>) supplierProductDao.findPage(page, "t_da_supplierproduct_Custom.supplierPageByCondition").getResult();
+		return (List<SupplierProductKey>) supplierProductDao.findPage(page,
+				"t_da_supplierproduct_Custom.supplierPageByCondition")
+				.getResult();
 	}
-	
-	public Long count(Map<String, Object> param){
+
+	public Long count(Map<String, Object> param) {
 		Page<SupplierProductKey> page = new Page<SupplierProductKey>();
 		page.setParam(param);
-		return supplierProductDao.count(page, "t_da_supplierproduct_Custom.supplierCountByCondition");
+		return supplierProductDao.count(page,
+				"t_da_supplierproduct_Custom.supplierCountByCondition");
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<ProductBrand> queryProduct(int pageNo, int pageSize, Map<String, Object> param){
+	public List<ProductBrand> queryProduct(int pageNo, int pageSize,
+			Map<String, Object> param) {
 		Page<ProductBrand> page = new Page<ProductBrand>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		page.setOrderBy("COUNTRY_NAME,BRAND_NAME,CATEGORY_NAME,PRODUCT_NAME");
 		page.setOrder("ASC,ASC,ASC,DESC");
 		page.setParam(param);
-		return (List<ProductBrand>) supplierProductDao.findPage(page, "t_da_supplierproduct_Custom.productPageByCondition").getResult();
+		return (List<ProductBrand>) supplierProductDao.findPage(page,
+				"t_da_supplierproduct_Custom.productPageByCondition")
+				.getResult();
 	}
-	
-	public Long countProduct(Map<String, Object> param){
+
+	public Long countProduct(Map<String, Object> param) {
 		Page<ProductBrand> page = new Page<ProductBrand>();
 		page.setParam(param);
-		return supplierProductDao.count(page, "t_da_supplierproduct_Custom.productCountByCondition");
+		return supplierProductDao.count(page,
+				"t_da_supplierproduct_Custom.productCountByCondition");
 	}
-	
-	public String addSupplierProduct(String[] productBrandIds, String supplierIdStr) {
+
+	public String addSupplierProduct(String[] productBrandIds,
+			String supplierIdStr) {
 		StringBuffer buffer = new StringBuffer();
 		Integer supplierId = Integer.valueOf(supplierIdStr);
 		for (String productBrandIdStr : productBrandIds) {
@@ -80,7 +89,7 @@ public class SupplierProductService {
 			return "success";
 		}
 	}
-	
+
 	public String updateSupplierProduct(SupplierProduct supplierProduct) {
 		try {
 			supplierProductDao.updateByPrimaryKeySelective(supplierProduct);
@@ -89,8 +98,9 @@ public class SupplierProductService {
 			return "fail";
 		}
 	}
-	
-	public String deleteSupplierProduct(String[] productBrandIds, String supplierIdStr) {
+
+	public String deleteSupplierProduct(String[] productBrandIds,
+			String supplierIdStr) {
 		StringBuffer buffer = new StringBuffer();
 		Integer supplierId = Integer.valueOf(supplierIdStr);
 		for (String productBrandIdStr : productBrandIds) {
@@ -112,30 +122,33 @@ public class SupplierProductService {
 			return "success";
 		}
 	}
-	
-	public void deleteSupplierProduct(Integer productBrandId, Integer supplierId){
+
+	public void deleteSupplierProduct(Integer productBrandId, Integer supplierId) {
 		SupplierProductKey supplierProduct = new SupplierProductKey();
 		supplierProduct.setProductbrandId(productBrandId);
 		supplierProduct.setSupplierId(supplierId);
 		supplierProductDao.deleteByPrimaryKey(supplierProduct);
 	}
-	
-	private boolean validateProductBrandIsExist(Integer productBrandId, Integer supplierId) {
+
+	private boolean validateProductBrandIsExist(Integer productBrandId,
+			Integer supplierId) {
 		SupplierProductKey spKey = new SupplierProductKey();
 		spKey.setProductbrandId(productBrandId);
 		spKey.setSupplierId(supplierId);
-		SupplierProduct supplierProduct = supplierProductDao.selectByPrimaryKey(spKey);
+		SupplierProduct supplierProduct = supplierProductDao
+				.selectByPrimaryKey(spKey);
 		if (supplierProduct != null) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private String getProductNames(String productBrandIds) {
 		List productBrandIdList = Arrays.asList(productBrandIds.split(","));
-		List<Map> productNameList = (List<Map>)supplierProductDao.getProductListByCondition(productBrandIdList);
+		List<Map> productNameList = (List<Map>) supplierProductDao
+				.getProductListByCondition(productBrandIdList);
 		StringBuffer rstBuf = new StringBuffer();
 		for (Map map : productNameList) {
 			rstBuf.append(map.get("productName"));
@@ -143,9 +156,11 @@ public class SupplierProductService {
 		}
 		return rstBuf.toString().replaceAll(",$", "");
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Map> getSupplierList(Map condition) throws SQLException {
-		return (List<Map>) supplierProductDao.getSqlMapClient().queryForList("t_da_supplierproduct_Custom.supplierInfoListByCondition", condition);
+		return (List<Map>) supplierProductDao.getSqlMapClient().queryForList(
+				"t_da_supplierproduct_Custom.supplierInfoListByCondition",
+				condition);
 	}
 }
