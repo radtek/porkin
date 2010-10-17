@@ -17,7 +17,6 @@ import net.cominfo.digiagent.service.CategoryService;
 import net.cominfo.digiagent.service.CompanyService;
 import net.cominfo.digiagent.service.ContactService;
 import net.cominfo.digiagent.service.CountryService;
-import net.cominfo.digiagent.service.ProductBrandService;
 import net.cominfo.digiagent.service.SupplierProductService;
 import net.cominfo.digiagent.service.SupplierService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
@@ -55,9 +54,6 @@ public class CompanyController {
 
 	@Autowired
 	private SupplierProductService supplierProductService;
-
-	@Autowired
-	private ProductBrandService productBrandService;
 
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public String menu(Model model) {
@@ -275,32 +271,16 @@ public class CompanyController {
 		supplierProductService.deleteSupplierProduct(id, supplierId);
 		return "redirect:/company/agent?page=1";
 	}
+	
 
-	@RequestMapping(value = "/productBrandList", method = RequestMethod.GET)
-	public String productBrandList(@ModelAttribute("userId") Integer userId,
-			@ModelAttribute("userName") String userName,
-			@RequestParam Map<String, Object> param, Model model) {
-		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
-		if (supplier == null) {
-			supplier = companyService.createDefaulutSupplier(userId, userName);
-		}
-		int supplierId = supplier.getSupplierId();
-		param.put("supplierId", supplierId);
-		param.put("activeFlag", "Y");
-		// String[] str = new String[]{"1", "2"};
-		// param.put("productbrandIds", Arrays.asList(str));
-		int pageNo = (Integer) (param.get("pageNo") == null ? 1 : param
-				.get("pageNo"));
-		int pageSize = (Integer) (param.get("pageSize") == null ? 10 : param
-				.get("pageSize"));
-		List<ProductBrand> productBrandList = productBrandService.query(pageNo,
-				pageSize, param);
-		model.addAttribute("productBrandList", productBrandList);
-		return "company/productBrandList";
+	@RequestMapping(value = "/picture", method = RequestMethod.GET)
+	public String picture(Model model) {
+		return "company/picture";
 	}
 
 	@RequestMapping(value = "/qualify", method = RequestMethod.GET)
-	public String qualify(Model model) {
+	public String qualify(@ModelAttribute("supplierId") Integer supplierId, Model model) {
+		model.addAttribute("supplierId", supplierId);
 		return "company/menu";
 	}
 

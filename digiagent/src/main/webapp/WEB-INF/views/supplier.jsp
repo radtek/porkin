@@ -72,6 +72,7 @@
               	</select>
           </div>
           <div>
+              	<input type="hidden" name="supplierWebsite" value="NONE"/>
               <input type="submit"  name="submitButton" value="确定" /> 
               <input type="reset"   name="resetButton " value="重置" />
           </div> 

@@ -258,4 +258,35 @@ public class SupplierController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
+	public void updatePicture(@ModelAttribute SupplierWithBLOBs supplier,@ModelAttribute("userName") String userName,
+			@RequestParam("file1") MultipartFile image1,
+			@RequestParam("file2") MultipartFile image2,
+			HttpServletResponse response) throws IOException {
+		supplier = supplierService.getById(supplier.getSupplierId());
+		if (supplier == null) {
+			new ResourceNotFoundException(new Long(supplier.getSupplierId()));
+		}
+		// MYSQL BLOB类型最大65K--实名认证
+		if (image1.getSize() > 0 && image1.getSize()/1024 < 65) {
+			supplier.setSupplierCertify(image1.getBytes());
+		}
+		// MYSQL BLOB类型最大65K--资质认证
+		if (image2.getSize() > 0 && image2.getSize()/1024 < 65) {
+			supplier.setSupplierQualify(image2.getBytes());
+		}
+		try {
+			PrintWriter pw = response.getWriter();
+			if (image1.getSize()/1024 >= 65 || image2.getSize()/1024 >= 65) {
+				pw.write(Collections.singletonMap("supplierId", -2).toString().replaceAll("=", ":"));
+			} else {
+				supplier = supplierService.update(supplier,userName);
+				pw.write(Collections.singletonMap("supplierId", supplier.getSupplierId()).toString().replaceAll("=", ":"));
+			}
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
