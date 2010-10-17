@@ -19,6 +19,7 @@ import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
+import net.cominfo.digiagent.utils.mail.MailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,9 @@ public class SecurityController {
 
 	@Autowired
 	private UserRoleService userRoleService;
+	
+	@Autowired
+	private MailService mailService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, @RequestParam String username,
@@ -167,6 +171,31 @@ public class SecurityController {
 	public String passwordForm(HttpServletResponse response) {
 		return "password";
 	}
+	
+	@RequestMapping(value = "/password", method = RequestMethod.GET)
+	public String assword(Model model, @RequestParam String username,
+			@RequestParam String captcha,HttpSession session) {
+		
+		String forward = "password";
+		boolean existFlag = securityService.isExistByName(username);
+		if(existFlag){
+			String original = (String) session.getAttribute("icaptcha");
+			if (!captcha.equals(original)) {
+				model.addAttribute("captcha", new Message(MessageType.success,
+						"password.captcha.error"));
+			}
+			else{
+				// Send mail
+				//mailService.doPost(to, cc, subject, mailTemplate, data)
+				forward = "success";
+			}
+		}
+		else{
+			model.addAttribute("captcha", new Message(MessageType.success,
+			"password.userName.notExist"));
+		}
+		return forward;
+	}
 
 	@RequestMapping(value = "/captcha", method = RequestMethod.GET)
 	public ModelAndView captcha(HttpServletRequest request,
@@ -193,7 +222,6 @@ public class SecurityController {
 		} catch (Exception e) {
 
 		}
-
 		return null;
 	}
 
