@@ -14,9 +14,9 @@
 	<!--================ Mail Configuration ========================-->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 
-		<property name="host" value="58.2.221.13" />
-		<property name="username" value="800021189" />
-		<property name="password" value="G@28032008t" />
+		<property name="host" value="smtp.126.com" />
+		<property name="username" value="digiagent" />
+		<property name="password" value="digiagent_123" />
 		<property name="defaultEncoding" value="UTF-8"></property>
 		<property name="javaMailProperties">
 			<props>
@@ -39,10 +39,10 @@
 	</bean>
 
 	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
-		<property name="from" value="Workflow-Center.China@genpact.com" />
+		<property name="from" value="digiagent@126.com" />
 	</bean>
 
-	<bean id="mailEngine" class="com.volkswagen.stab.utils.mail.MailEngine">
+	<bean id="mailEngine" class="net.cominfo.digiagent.utils.mail.MailEngine">
 		<property name="mailSender" ref="mailSender" />
 		<property name="velocityEngine" ref="velocityEngine" />
 	</bean>

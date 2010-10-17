@@ -38,5 +38,6 @@
 	<!-- Configures Spring MVC -->
 	<import resource="mvc-config.xml" />
 	<import resource="db-config.xml" />
+	<import resource="email-config.xml" />
 
 </beans>
