@@ -59,7 +59,11 @@ var agentAddClickHandler = function() {
 						<td>
 							<fmt:formatDate value="${supplierProduct.startDate}" pattern="yyyy/MM/dd"/>
 						</td>
-						<td><img src="${ctx}/images/datagrid/icon_list_edit.gif"/>&nbsp;<img src="${ctx}/images/datagrid/icon_list_delete.gif"/></td>
+						<td>
+							<form action="${ctx}/company/agent/delete/${supplierProduct.productbrandId}">
+								<input type="image"  src="${ctx}/images/datagrid/icon_list_delete.gif" onclick="javascript:confirm('您确认要删除?')" />
+							</form>
+						</td>
 					</tr>
 			</c:forEach>
 		</c:when>

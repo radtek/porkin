@@ -24,7 +24,7 @@ function whenDelete() {
 </script>
 </head>
 <body>
-<div class="companyTitle">公司情况</div>
+<div class="companyTitle">联系方式</div>
 <div id="companyLeft">
 
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -41,9 +41,9 @@ function whenDelete() {
       <td></td>
     </tr>
     <tr>
-      <td><strong>联系类别</strong></td>
-      <td><strong>联系方式</strong></td>
-      <td><strong></strong></td>
+      <th>联系类别</th>
+      <th>联系方式</th>
+      <th>操作</td>
 
     </tr>
    
@@ -71,13 +71,18 @@ function whenDelete() {
     			<td><c:out value="${contact.contactContent}" /></td>
     			<td>
     			<span class="headCity">
-    				<a href="${ctx}/company/contact/delete/<c:out value="${contact.contactId}"/>" onclick="javascript:confirm('您确认要删除?')">删除</a>
-    			 
+    				<form action="${ctx}/company/contact/delete/<c:out value="${contact.contactId}"/>" >
+    					<input type="image"  src="${ctx}/images/datagrid/icon_list_delete.gif" onclick="javascript:confirm('您确认要删除?')" />
+    				</form>
     			 </span>
     			</tr>
     		</c:forEach>
     	</c:otherwise>
     </c:choose>
+    </tr>
+    
+    <tr>
+    	<td></td>
     </tr>
  
     <tr>

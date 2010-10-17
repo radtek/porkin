@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @Transactional
 public class CategoryService {
@@ -32,28 +31,30 @@ public class CategoryService {
 	public int countCategory() {
 		return categoryDao.countByExample(new CategoryCriteria());
 	}
-	
-	public Category getById(Integer id){
+
+	public Category getById(Integer id) {
 		return categoryDao.selectByPrimaryKey(id);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Category> query(int pageNo, int pageSize, Map<String, Object> param){
+	public List<Category> query(int pageNo, int pageSize,
+			Map<String, Object> param) {
 		Page<Category> page = new Page<Category>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		page.setOrderBy("CATEGORY_NAME");
 		page.setOrder("ASC");
 		page.setParam(param);
-		return (List<Category>) categoryDao.findPage(page, "t_da_category_Custom.pageByCondition").getResult();
+		return (List<Category>) categoryDao.findPage(page,
+				"t_da_category_Custom.pageByCondition").getResult();
 	}
-	
-	public Long count(Map<String, Object> param){
+
+	public Long count(Map<String, Object> param) {
 		Page<Category> page = new Page<Category>();
 		page.setParam(param);
 		return categoryDao.count(page, "t_da_category_Custom.countByCondition");
 	}
-	
+
 	public Category insert(Category category, String userName) {
 		category = validateCategoryName(category);
 		if (category.getCategoryId() != null) {
@@ -67,8 +68,8 @@ public class CategoryService {
 			return category;
 		}
 	}
-	
-	public Category update(Category category,String userName) {
+
+	public Category update(Category category, String userName) {
 		category = validateCategoryName(category);
 		if (category.getCategoryId() == -1) {
 			return category;
@@ -79,8 +80,8 @@ public class CategoryService {
 			return category;
 		}
 	}
-	
-	public String delete(Integer id){
+
+	public String delete(Integer id) {
 		// 是否有产品关联
 		if (isReferenceProduct(id)) {
 			return "reference";
@@ -89,7 +90,7 @@ public class CategoryService {
 			return "success";
 		}
 	}
-	
+
 	private Category validateCategoryName(Category category) {
 		CategoryCriteria example = new CategoryCriteria();
 		Criteria criteria = example.createCriteria();
@@ -105,10 +106,11 @@ public class CategoryService {
 			return category;
 		}
 	}
-	
+
 	private boolean isReferenceProduct(Integer categoryId) {
 		ProductCriteria example = new ProductCriteria();
-		net.cominfo.digiagent.persistence.domain.ProductCriteria.Criteria criteria = example.createCriteria();
+		net.cominfo.digiagent.persistence.domain.ProductCriteria.Criteria criteria = example
+				.createCriteria();
 		criteria.andCategoryIdEqualTo(categoryId);
 		List<Product> list = productDao.selectByExample(example);
 		if (list != null && list.size() > 0) {
@@ -117,9 +119,16 @@ public class CategoryService {
 			return false;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Map> getCateogryList() throws SQLException {
-		return (List<Map>) categoryDao.getSqlMapClient().queryForList("t_da_category_Custom.listByCondition", new HashMap());
+		return (List<Map>) categoryDao.getSqlMapClient().queryForList(
+				"t_da_category_Custom.listByCondition", new HashMap());
+	}
+
+	public List<Category> getAllCategory() {
+		CategoryCriteria criteria = new CategoryCriteria();
+		criteria.createCriteria();
+		return categoryDao.selectByExample(criteria);
 	}
 }

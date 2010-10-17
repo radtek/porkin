@@ -105,6 +105,13 @@ public class SupplierProductService {
 		}
 	}
 	
+	public void deleteSupplierProduct(Integer productBrandId, Integer supplierId){
+		SupplierProductKey supplierProduct = new SupplierProductKey();
+		supplierProduct.setProductbrandId(productBrandId);
+		supplierProduct.setSupplierId(supplierId);
+		supplierProductDao.deleteByPrimaryKey(supplierProduct);
+	}
+	
 	private boolean validateProductBrandIsExist(Integer productBrandId, Integer supplierId) {
 		SupplierProductCriteria example = new SupplierProductCriteria();
 		

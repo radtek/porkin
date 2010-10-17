@@ -6,12 +6,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.Country;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.service.CategoryService;
 import net.cominfo.digiagent.service.CompanyService;
 import net.cominfo.digiagent.service.ContactService;
 import net.cominfo.digiagent.service.CountryService;
@@ -33,18 +35,21 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value = "/company")
-@SessionAttributes( { "userId", "userName" })
+@SessionAttributes( { "userId", "userName", "supplierId" })
 public class CompanyController {
 
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	@Autowired
 	private SupplierService supplierService;
-	
+
 	@Autowired
 	private CountryService countryService;
-	
+
 	@Autowired
 	private ContactService contactService;
 
@@ -182,13 +187,9 @@ public class CompanyController {
 	}
 
 	@RequestMapping(value = "/contact/list", method = RequestMethod.GET)
-	public String contactForm(@ModelAttribute("userId") Integer userId,
-			@ModelAttribute("userName") String userName, Model model) {
-		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
-		if (supplier == null) {
-			supplier = companyService.createDefaulutSupplier(userId, userName);
-		}
-		int supplierId = supplier.getSupplierId();
+	public String contactList(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName,
+			@ModelAttribute("supplierId") Integer supplierId, Model model) {
 		List<Contact> contactList = supplierService
 				.getContactBySupplierId(supplierId);
 		model.addAttribute("contactList", contactList);
@@ -196,11 +197,11 @@ public class CompanyController {
 	}
 
 	@RequestMapping(value = "/contact/delete/{id}", method = RequestMethod.GET)
-	public String contactForm(@ModelAttribute("userId") Integer userId,
+	public String contactDelete(@ModelAttribute("userId") Integer userId,
 			@ModelAttribute("userName") String userName,
 			@PathVariable Integer id, Model model) {
 		supplierService.deleteContactById(id);
-		
+
 		return "redirect:/company/contact/list";
 	}
 
@@ -208,16 +209,13 @@ public class CompanyController {
 	public String contactCreateFrom(Model model) {
 		return "company/contact/create";
 	}
-	
+
 	@RequestMapping(value = "/contact/create", method = RequestMethod.GET)
 	public String contactCreate(@ModelAttribute("userId") Integer userId,
-			@ModelAttribute("userName") String userName, @RequestParam String contactType,
-			@RequestParam String contactContent,Model model) {
-		SupplierWithBLOBs supplier = companyService.getCompanyByUserId(userId);
-		if (supplier == null) {
-			supplier = companyService.createDefaulutSupplier(userId, userName);
-		}
-		int supplierId = supplier.getSupplierId();
+			@ModelAttribute("userName") String userName,
+			@ModelAttribute("supplierId") Integer supplierId,
+			@RequestParam String contactType,
+			@RequestParam String contactContent, Model model) {
 		Contact contact = new Contact();
 		contact.setSupplierId(supplierId);
 		contact.setContactContent(contactContent);
@@ -246,13 +244,36 @@ public class CompanyController {
 		model.addAttribute("supplierProductList", supplierProductList);
 		return "company/agent";
 	}
-	
-	
+
 	@RequestMapping(value = "/agent/form", method = RequestMethod.GET)
-	public String agentForm(@ModelAttribute("userId") Integer userId,@ModelAttribute("userName") String userName,Model model) {
+	public String agentForm(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName, Model model) {
 		List<Country> countryList = countryService.getAllCountry();
-		model.addAttribute("countryList",countryList);
+		List<Category> categoryList = categoryService.getAllCategory();
+		model.addAttribute("countryList", countryList);
+		model.addAttribute("categoryList", categoryList);
 		return "company/agent/form";
+	}
+	
+	@RequestMapping(value = "/agent/create", method = RequestMethod.GET)
+	public String agentCreate(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName, 
+			@ModelAttribute("supplierId") Integer supplierId,
+			@RequestParam Integer brandId,
+			@RequestParam Integer productId,
+			Model model) {
+		
+		companyService.applySupplier(supplierId, brandId, productId, userName);
+		return "redirect:/company/agent?page=1";
+	}
+
+	@RequestMapping(value = "/agent/delete/{id}", method = RequestMethod.GET)
+	public String agentDelete(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName,
+			@ModelAttribute("supplierId") Integer supplierId,
+			@PathVariable Integer id, Model model) {
+		supplierProductService.deleteSupplierProduct(id, supplierId);
+		return "redirect:/company/agent?page=1";
 	}
 
 	@RequestMapping(value = "/productBrandList", method = RequestMethod.GET)

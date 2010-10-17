@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
-<%@ page session="true" %>
-<%@ include file="/common/taglibs.jsp" %>
+<%@ page session="true"%>
+<%@ include file="/common/taglibs.jsp"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,78 +13,106 @@
 <script src="${ctx}/scripts/menu.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
 <script>
-$(document).ready(function() {
-	$('img').css('cursor', 'pointer');
-	$('input[name="btnAdd"]').bind('click', agentAddClickHandler);
-});
+function setProductSelect(productId) {
+	$.ajax({
+		url:"${ctx}/productBrand/getProductList",
+		data:"id=" + $('select[name="categoryId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="productId"]').empty().append(data).val(productId);
+		},
+		error:function(err) {
+	    	alert('数据读取失败！');
+		}
+	});
+}
 
-var agentAddClickHandler = function() {
-	window.location.href='productBrandList';
-};
+function setBrandSelect(brandId) {
+	$.ajax({
+		url:"${ctx}/productBrand/getBrandList",
+		data:"id=" + $('select[name="countryId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="brandId"]').empty().append(data).val(brandId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
 </script>
 </head>
 <body>
 <div class="companyTitle">代理申请</div>
 <div id="companyLeft">
-  <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td colspan="2">
-      <strong>
-      	<c:if test="${not empty message}">
+<form action="${ctx}/company/agent/create">
+<table width="80%" border="0" align="center" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td colspan="2"><strong> <c:if
+			test="${not empty message}">
 			<fmt:message key="${message.text}" />
-		 </c:if>
-	</strong>
-</td>
-    </tr>
-    <tr><td>代理商品申请</td></tr>
- 	<tr>
-      <td>
-      <table>
-      <tr>
-      	<th>国家</th>
-      	<th>品牌</th>
-      	<th>类别</th>
-      	<th>产品</th>
-      	<th>开始时间</th>
-      	<th>操作</th>
-      </tr>
-      <c:choose>
-	      <c:when test="${not empty supplierProductList}">
-			<c:forEach items="${supplierProductList}" var="supplierProduct">
-					<tr>
-						<td>${supplierProduct.countryName}</td>
-						<td>${supplierProduct.brandName}</td>
-						<td>${supplierProduct.categoryName}</td>
-						<td>${supplierProduct.productName}</td>
-						<td>
-							<fmt:formatDate value="${supplierProduct.startDate}" pattern="yyyy/MM/dd"/>
-						</td>
-						<td><img src="${ctx}/images/datagrid/icon_list_edit.gif"/>&nbsp;<img src="${ctx}/images/datagrid/icon_list_delete.gif"/></td>
-					</tr>
-			</c:forEach>
-		</c:when>
-		<c:otherwise>
+		</c:if> </strong></td>
+	</tr>
+	<tr>
+		<td>代理商品申请</td>
+	</tr>
+	<tr>
+		<td>
+		
+		<table>
 			<tr>
-				<td>暂无数据</td>
+				<td><strong>国家</strong></td>
+				<td><select name="countryId" id="countryId" onchange="setBrandSelect()">
+					<option value="0" selected>请选择</option>
+					<c:forEach items="${countryList}" var="country">
+						<option value="${country.countryId}">${country.countryName}</option>
+					</c:forEach>
+				</select></td>
+
+				<td><strong>品牌</strong></td>
+				<td><select name="brandId" id="brandId"></select></td>
 			</tr>
-		</c:otherwise>
-  	</c:choose>
-	</table>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="8" align="center"><span class="headCity">
-      <form action="${ctx}/company/agent/form" >
-        <input name="btnAdd" type="submit" value="追加代理商品"/>
-       </form>
-            </span>
-      	</td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-  </table>
-  <p class="tagContent">&nbsp;</p>
+			<tr>
+				<td><strong>类别</strong></td>
+				<td>
+					<select name="categoryId" id="categoryId" onchange="setProductSelect()" >
+						<option value="0" selected>请选择</option>
+							<c:forEach items="${categoryList}" var="category">
+								<option value="${category.categoryId}">${category.categoryName}</option>
+							</c:forEach>
+						</select>
+					</td>
+				<td><strong>产品</strong></td>
+				<td><select name="productId" id="productId"></select></td>
+
+			</tr>
+
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="8" align="center">
+			<span class="headCity">
+
+					<input class="btn_login" type="submit" value="确认" />
+			</span>
+		</td>
+		<td>
+		</td>
+		
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+</table>
+</form>
+<p class="tagContent">&nbsp;</p>
 </div>
 </body>
 </html>

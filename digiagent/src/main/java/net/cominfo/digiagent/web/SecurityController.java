@@ -11,7 +11,9 @@ import javax.servlet.http.HttpSession;
 import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
 import net.cominfo.digiagent.captcha.render.Producer;
 import net.cominfo.digiagent.persistence.domain.Role;
+import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.service.CompanyService;
 import net.cominfo.digiagent.service.UserRoleService;
 import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
@@ -31,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/")
-@SessionAttributes({"userId","userName"})
+@SessionAttributes( { "userId", "userName", "supplierId" })
 public class SecurityController {
 
 	@Autowired
@@ -39,7 +41,10 @@ public class SecurityController {
 
 	@Autowired
 	private UserService userService;
-	
+
+	@Autowired
+	private CompanyService companyService;
+
 	@Autowired
 	private UserRoleService userRoleService;
 
@@ -48,37 +53,43 @@ public class SecurityController {
 			@RequestParam String password) {
 		User user = securityService.login(username, password);
 		if (user != null) {
-			//session.setAttribute("username", user.getUserName());
-			//session.setAttribute("userId", user.getUserId());
 			model.addAttribute("userId", user.getUserId());
-			model.addAttribute("userName", user.getUserName());		
+			model.addAttribute("userName", user.getUserName());
+			model.addAttribute("supplierId", new Integer(0));
 		}
 		return "welcome";
 	}
-	
-	
+
 	@RequestMapping(value = "/member", method = RequestMethod.GET)
-	public String member(@ModelAttribute("userName") String userName) {
-		List<String> roleIdList = userRoleService.getRoleIdListByUserName(userName);
+	public String member(@ModelAttribute("userId") Integer userId,
+			@ModelAttribute("userName") String userName,
+			@ModelAttribute("supplierId") Integer supplierId, Model model) {
+		List<String> roleIdList = userRoleService
+				.getRoleIdListByUserName(userName);
 		String roleId = null;
-		
+
 		String result = "welcome";
-		if(roleIdList!=null && roleIdList.size()>0){
+		if (roleIdList != null && roleIdList.size() > 0) {
 			roleId = roleIdList.get(0);
-			if(roleId.equals("1") || roleId.equals("2") || roleId.equals("3")){
+			if (roleId.equals("1") || roleId.equals("2") || roleId.equals("3")) {
 				result = "/admin";
-			}
-			else if (roleId.equals("4")){
+			} else if (roleId.equals("4")) {
+				SupplierWithBLOBs supplier = companyService
+						.getCompanyByUserId(userId);
+				if (supplier == null) {
+					supplier = companyService.createDefaulutSupplier(userId,
+							userName);
+				}
+				model.addAttribute("supplierId", supplier.getSupplierId());
 				result = "company";
-			}
-			else if (roleId.equals("5")){
+
+			} else if (roleId.equals("5")) {
 				result = "person";
-			}
-			else{
+			} else {
 				result = "welcome";
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -89,55 +100,61 @@ public class SecurityController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(@ModelAttribute("userName") String userName,Model model, HttpServletRequest request, HttpSession session) {
-		
+	public String register(@ModelAttribute("userName") String userName,
+			Model model, HttpServletRequest request, HttpSession session) {
+
 		String type = request.getParameter("type");
 		String username = request.getParameter("username");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
 		String email = request.getParameter("email");
 		String captcha = request.getParameter("captcha");
-		
+
 		boolean existFlag = securityService.isExistByName(username);
 		String forward = "register";
 		boolean hasError = false;
-		if(existFlag){
-			model.addAttribute("username", new Message(MessageType.success,"register.username.exist"));
+		if (existFlag) {
+			model.addAttribute("username", new Message(MessageType.success,
+					"register.username.exist"));
 			hasError = true;
 		}
-		if(!password1.equals(password2) || password1==null || password1.equals("")){
-			model.addAttribute("password", new Message(MessageType.success,"register.password.error"));
+		if (!password1.equals(password2) || password1 == null
+				|| password1.equals("")) {
+			model.addAttribute("password", new Message(MessageType.success,
+					"register.password.error"));
 			hasError = true;
 		}
-		if(email == null || email.equals("")){
-			model.addAttribute("email", new Message(MessageType.success,"register.email.error"));
+		if (email == null || email.equals("")) {
+			model.addAttribute("email", new Message(MessageType.success,
+					"register.email.error"));
 			hasError = true;
 		}
-		String original = (String)session.getAttribute("icaptcha");
-		if(!captcha.equals(original)){
-			model.addAttribute("captcha", new Message(MessageType.success,"register.captcha.error"));
+		String original = (String) session.getAttribute("icaptcha");
+		if (!captcha.equals(original)) {
+			model.addAttribute("captcha", new Message(MessageType.success,
+					"register.captcha.error"));
 			hasError = true;
 		}
-//		
-//		if(!agree.equalsIgnoreCase("Y")){
-//			model.addAttribute("agree", new Message(MessageType.success,"register.agree.checked"));
-//			hasError = true;
-//		}
-		
-		if(hasError){
+		//		
+		// if(!agree.equalsIgnoreCase("Y")){
+		// model.addAttribute("agree", new
+		// Message(MessageType.success,"register.agree.checked"));
+		// hasError = true;
+		// }
+
+		if (hasError) {
 			forward = "register";
-		}
-		else{
+		} else {
 			Role role = securityService.getRoleByName(type);
 			User user = new User();
 			user.setUserName(username);
 			user.setUserPassword(password1);
 			user.setUserEmail(email);
 			int roleId = role.getRoleId();
-			boolean companyFlag = (roleId==4)?true:false;
-			userService.register(user, role.getRoleId(),companyFlag,userName);
+			boolean companyFlag = (roleId == 4) ? true : false;
+			userService.register(user, role.getRoleId(), companyFlag, userName);
 			forward = "welcome";
-		}	
+		}
 		return forward;
 	}
 
@@ -145,8 +162,7 @@ public class SecurityController {
 	public String register(HttpServletResponse response) {
 		return "register";
 	}
-	
-	
+
 	@RequestMapping(value = "/passwordForm", method = RequestMethod.GET)
 	public String passwordForm(HttpServletResponse response) {
 		return "password";
@@ -154,7 +170,7 @@ public class SecurityController {
 
 	@RequestMapping(value = "/captcha", method = RequestMethod.GET)
 	public ModelAndView captcha(HttpServletRequest request,
-			HttpServletResponse response,HttpSession session) {
+			HttpServletResponse response, HttpSession session) {
 
 		Properties props = new Properties();
 		String ext = "jpg";
@@ -180,5 +196,5 @@ public class SecurityController {
 
 		return null;
 	}
-	
+
 }
