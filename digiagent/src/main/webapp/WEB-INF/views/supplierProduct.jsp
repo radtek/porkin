@@ -6,7 +6,25 @@
 </head>
 <body>
 	<table id="supplierProductList"></table>
-	<div id="productWindow" class="easyui-window" title="已有品牌产品列表" icon="icon-save" style="width:700px;height:400px;padding:5px;background: #fafafa;">
+	<div id="productPeriodWin" class="easyui-window" closed="true" modal="true" title="有效时间设置" style="width:300px;height:150px;padding:5px;background: #fafafa;">
+		<form id="productForm" action="../supplierProduct/updateSupplierProduct" method="post">
+			<div>
+				<input type="hidden" name="productbrandId"/>
+				<input type="hidden" name="supplierId"/>
+              	<label for="name">开始时间:</label>
+              	<input id="startDate" name="startDate" class="easyui-datebox" required="true" readonly="readonly"/>
+          </div> 
+          <div>
+              	<label for="name">结束时间:</label>
+              	<input id="endDate" name="endDate" class="easyui-datebox" required="true" readonly="readonly"/>
+          </div> 
+          <div>
+	              <input type="submit"  name="submitButton" value="确定" /> 
+	              <input type="reset"   name="resetButton " value="重置" />
+	          </div> 
+         </form>
+	</div>
+	<div id="productWindow" class="easyui-window" title="已有品牌产品列表" icon="icon-save" style="width:840px;height:400px;padding:5px;background: #fafafa;">
 		<div class="easyui-layout" fit="true">
 			<div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">
 				<table id="ownProductList"></table>

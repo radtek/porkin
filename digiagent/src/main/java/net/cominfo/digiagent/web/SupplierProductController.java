@@ -10,12 +10,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
+import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.service.SupplierProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,6 +71,19 @@ public class SupplierProductController {
 			e.printStackTrace();
 		}
 	}
+
+	@RequestMapping(value = "/updateSupplierProduct", method = RequestMethod.POST)
+	public void updateSupplierProduct(@ModelAttribute SupplierProduct supplierProduct, HttpServletResponse response) {
+		String result = supplierProductService.updateSupplierProduct(supplierProduct);
+		try {
+			PrintWriter pw = response.getWriter();
+			pw.write(result);
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value = "/deleteSupplierProduct", method = RequestMethod.GET)
 	public void deleteSupplierProduct(@RequestParam String productBrandIds, @RequestParam String supplierId, HttpServletResponse response) {
 		String result = supplierProductService.deleteSupplierProduct(productBrandIds.split(","), supplierId);

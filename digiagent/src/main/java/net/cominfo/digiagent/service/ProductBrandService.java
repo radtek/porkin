@@ -10,6 +10,7 @@ import java.util.Map;
 import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.persistence.domain.BrandCriteria;
@@ -38,6 +39,8 @@ public class ProductBrandService {
 	private ProductDao productDao;
 	@Autowired
 	private SupplierProductDao supplierProductDao;
+	@Autowired
+	private SequenceDao sequenceDao;
 
 	public int countProductBrand() {
 		return productBrandDao.countByExample(new ProductBrandCriteria());
@@ -113,6 +116,7 @@ public class ProductBrandService {
 		if (productBrand.getProductbrandId() != null) {
 			return productBrand;
 		} else {
+			productBrand.setProductbrandId(sequenceDao.getProductbrandNexId());
 			productBrand.setCreatedBy(userName);
 			productBrand.setCreatedDate(new Date());
 			productBrand.setLastupdatedBy(userName);

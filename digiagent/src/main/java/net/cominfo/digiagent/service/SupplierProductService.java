@@ -9,7 +9,6 @@ import java.util.Map;
 import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.SupplierProduct;
-import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.utils.Page;
 
@@ -82,6 +81,15 @@ public class SupplierProductService {
 		}
 	}
 	
+	public String updateSupplierProduct(SupplierProduct supplierProduct) {
+		try {
+			supplierProductDao.updateByPrimaryKeySelective(supplierProduct);
+			return "success";
+		} catch (Exception e) {
+			return "fail";
+		}
+	}
+	
 	public String deleteSupplierProduct(String[] productBrandIds, String supplierIdStr) {
 		StringBuffer buffer = new StringBuffer();
 		Integer supplierId = Integer.valueOf(supplierIdStr);
@@ -113,8 +121,6 @@ public class SupplierProductService {
 	}
 	
 	private boolean validateProductBrandIsExist(Integer productBrandId, Integer supplierId) {
-		SupplierProductCriteria example = new SupplierProductCriteria();
-		
 		SupplierProductKey spKey = new SupplierProductKey();
 		spKey.setProductbrandId(productBrandId);
 		spKey.setSupplierId(supplierId);

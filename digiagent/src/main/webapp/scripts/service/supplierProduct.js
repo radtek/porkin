@@ -11,6 +11,50 @@
 });
 
 
+//edit event
+function formSubmit() {
+	$('#productForm').ajaxForm({ 
+		url: '../supplierProduct/updateSupplierProduct',
+		beforeSubmit: validate, 
+		dataType:  'html', 
+      success:   processJson,
+      error:   function(err){
+	    	$.messager.alert('消息','更新操作失败！','error');
+		} 
+	});
+}
+
+function validate(formData, jqForm, options) {
+	var form = jqForm[0]; 
+	if (form.startDate.value.length == 0) {
+  	$.messager.alert('消息','请选择开始时间！','info');
+		return false;
+	}
+	if (form.endDate.value.length == 0) {
+  	$.messager.alert('消息','请选择结束时间！','info');
+		return false;
+	}
+	if (form.startDate.value.replace(/\//g,'') > form.endDate.value.replace(/\//g,'')) {
+		$.messager.alert('消息','开始时间应大于结束时间！','info');
+		return false;
+	}
+}
+
+function processJson(data) {
+  if (data == "success") {
+	  $.messager.show({
+			title:'消息',
+			msg:"更新成功",
+			timeout:optSuccessTime,
+			showType:'slide'
+		});
+	  $('#ownProductList').datagrid('reload');
+  } else {
+	  $.messager.alert('消息','更新操作失败！','warning');
+  }
+}
+
+
 function openProduct(supplierId){
 	$('#productWindow').window('open');
 	$('#supplierId').val(supplierId);
@@ -50,9 +94,19 @@ function openProduct(supplierId){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
+			{field:'startDate',title:'开始时间',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'endDate',title:'结束时间',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
 			{field:'opt',title:'操作',width:50,align:'center',
 				formatter:function(value,rec){
-					return '<image onClick="onDeleteClickHandler(' + rec['productbrandId'] + ',' + supplierId +')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
+					return '<image onClick="onDeleteClickHandler(' + rec['productbrandId'] + ',' + supplierId +')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span><image onClick="onSaveClickHandler(' + rec['productbrandId'] + ',' + supplierId +',\'' + rec['startDate'] +'\',\'' + rec['endDate'] +'\')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/icons/help.png"/></span>';
 				}
 			}
 		]],
@@ -129,6 +183,23 @@ function onDeleteClickHandler(productBrandId, supplierId) {
 			});
 		}
 	});
+}
+
+function onSaveClickHandler(productBrandId, supplierId, startDate, endDate) {
+	$('input[name="productbrandId"]').val(productBrandId);
+	$('input[name="supplierId"]').val(supplierId);
+	if (startDate != 'null') {
+		$('input[name="startDate"]').val(startDate);
+	} else {
+		$('input[name="startDate"]').val('');
+	}
+	if (endDate != 'null') {
+		$('input[name="endDate"]').val(endDate);
+	} else {
+		$('input[name="endDate"]').val('');
+	}
+	$('#productPeriodWin').window('open');
+	formSubmit();
 }
 //product brand 
 function deleteSupplierProduct() {
@@ -241,6 +312,16 @@ function openProductBrand() {
 }
 // list
 $(function(){
+	$('#startDate').datebox({
+		formatter:function(value) {
+		return new Date(value).format('yyyy/MM/dd');
+		}
+	});
+	$('#endDate').datebox({
+		formatter:function(value) {
+		return new Date(value).format('yyyy/MM/dd');
+		}
+	});
 	// edit
 	var lastIndex;
 	$('#supplierProductList').datagrid({
