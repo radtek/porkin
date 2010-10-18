@@ -101,14 +101,17 @@ public class SecurityService {
 	}
 	
 	public boolean isExistByName(String userName){
-		boolean result = false;
+		return (getUserByName(userName)!=null);
+	}
+	
+	public User getUserByName(String userName){
+		User result = null;
 		UserCriteria criteria = new UserCriteria();
 		criteria.createCriteria().andUserNameEqualTo(userName);
 		List<User> userList = userDao.selectByExample(criteria);
 		if(null!=userList && userList.size()>0 ){
-			result = true;
+			result = userList.get(0);
 		}
-		
 		return result;
 	}
 

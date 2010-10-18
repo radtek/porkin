@@ -49,7 +49,7 @@
 
 	<!-- Handles all requests into the application -->
 	<servlet>
-		<servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+		<servlet-name>digiagent</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -61,7 +61,7 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+		<servlet-name>digiagent</servlet-name>
 		<url-pattern>/app/*</url-pattern>
 	</servlet-mapping>
 

@@ -28,10 +28,10 @@ li {list-style-type:none;}
 	<div id="con">
   <ul id="tags">
     <li class="selectTag"><a onclick="selectTag('tagContent0',this)" href="javascript:void(0)">&nbsp;搜索&nbsp;</a></li>
-    <li><a onclick="selectTag('tagContent1',this)" href="javascript:void(0)">&nbsp;店铺&nbsp;</a></li>
     <li><a onclick="selectTag('tagContent2',this)" href="javascript:void(0)">&nbsp;促销&nbsp;</a></li>
     <li><a onclick="selectTag('tagContent3',this)" href="javascript:void(0)">&nbsp;二手&nbsp;</a></li>
     <li><a onclick="selectTag('tagContent4',this)" href="javascript:void(0)">&nbsp;排名&nbsp;</a></li>
+     <li><a onclick="selectTag('tagContent1',this)" href="javascript:void(0)">&nbsp;商家&nbsp;</a></li>
   </ul>
   <div id="tagContent" >
     <div class="tagContent selectTag" id="tagContent0">

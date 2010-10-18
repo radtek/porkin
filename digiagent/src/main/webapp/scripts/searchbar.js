@@ -156,7 +156,8 @@ var getSupplierJson = function(brandName) {
 		        $('<li></li>').text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
 		        $('<li></li>').text("传真：" + supplier.supplierFax).appendTo("#contentRight_" + index);
 		        $('<li></li>').text("邮编：" + supplier.supplierZip).appendTo("#contentRight_" + index);
-		        $('<li></li>').text("简介：" + supplier.supplierDescription).appendTo("#contentRight_" + index);
+		        $('<li></li>').attr("href","2.html");
+		         $('<li></li>').text("详情	" + supplier.supplierDescription).appendTo("#contentRight_" + index);
 		        // 供应商图片
 		        $('<div></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
 		        var $enlargedCover = $('<img/>')

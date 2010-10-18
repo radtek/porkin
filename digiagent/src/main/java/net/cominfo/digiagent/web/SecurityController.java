@@ -1,7 +1,9 @@
 package net.cominfo.digiagent.web;
 
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,12 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
 import net.cominfo.digiagent.captcha.render.Producer;
-import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CompanyService;
 import net.cominfo.digiagent.service.UserRoleService;
-import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
@@ -39,9 +39,6 @@ public class SecurityController {
 
 	@Autowired
 	private SecurityService securityService;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private CompanyService companyService;
@@ -103,69 +100,6 @@ public class SecurityController {
 		return "welcome";
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(@ModelAttribute("userName") String userName,
-			Model model, HttpServletRequest request, HttpSession session) {
-
-		String type = request.getParameter("type");
-		String username = request.getParameter("username");
-		String password1 = request.getParameter("password1");
-		String password2 = request.getParameter("password2");
-		String email = request.getParameter("email");
-		String captcha = request.getParameter("captcha");
-
-		boolean existFlag = securityService.isExistByName(username);
-		String forward = "register";
-		boolean hasError = false;
-		if (existFlag) {
-			model.addAttribute("username", new Message(MessageType.success,
-					"register.username.exist"));
-			hasError = true;
-		}
-		if (!password1.equals(password2) || password1 == null
-				|| password1.equals("")) {
-			model.addAttribute("password", new Message(MessageType.success,
-					"register.password.error"));
-			hasError = true;
-		}
-		if (email == null || email.equals("")) {
-			model.addAttribute("email", new Message(MessageType.success,
-					"register.email.error"));
-			hasError = true;
-		}
-		String original = (String) session.getAttribute("icaptcha");
-		if (!captcha.equals(original)) {
-			model.addAttribute("captcha", new Message(MessageType.success,
-					"register.captcha.error"));
-			hasError = true;
-		}
-		//		
-		// if(!agree.equalsIgnoreCase("Y")){
-		// model.addAttribute("agree", new
-		// Message(MessageType.success,"register.agree.checked"));
-		// hasError = true;
-		// }
-
-		if (hasError) {
-			forward = "register";
-		} else {
-			Role role = securityService.getRoleByName(type);
-			User user = new User();
-			user.setUserName(username);
-			user.setUserPassword(password1);
-			user.setUserEmail(email);
-			int roleId = role.getRoleId();
-			boolean companyFlag = (roleId == 4) ? true : false;
-			userService.register(user, role.getRoleId(), companyFlag, userName);
-			forward = "welcome";
-		}
-		return forward;
-	}
-
-	@RequestMapping(value = "/registerForm", method = RequestMethod.GET)
-	public String register(HttpServletResponse response) {
-		return "register";
-	}
 
 	@RequestMapping(value = "/passwordForm", method = RequestMethod.GET)
 	public String passwordForm(HttpServletResponse response) {
@@ -178,7 +112,8 @@ public class SecurityController {
 		
 		String forward = "password";
 		boolean existFlag = securityService.isExistByName(username);
-		if(existFlag){
+		User user = securityService.getUserByName(username);
+		if(user!=null){
 			String original = (String) session.getAttribute("icaptcha");
 			if (!captcha.equals(original)) {
 				model.addAttribute("captcha", new Message(MessageType.success,
@@ -186,7 +121,12 @@ public class SecurityController {
 			}
 			else{
 				// Send mail
-				//mailService.doPost(to, cc, subject, mailTemplate, data)
+				String to = user.getUserEmail();
+				String cc = user.getUserEmail();
+				String subject = "找回密码";
+				String mailTemplate = "password.vm";
+				Map data = new HashMap();
+				mailService.doPost(to, cc, subject, mailTemplate, data);
 				forward = "success";
 			}
 		}

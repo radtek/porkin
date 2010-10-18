@@ -22,7 +22,7 @@ function Home() {
 <body>
 <div class="companyTitle">错误异常</div>
 <div id="companyLeft">
-<form action="${ctx}/company/contact/create" >
+
   <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
   	<tr>
   		<td><br></td>
@@ -52,7 +52,7 @@ function Home() {
       <td></td>
     </tr>
   </table>
-</form>
+
   <p class="tagContent">&nbsp;</p>
 </div>
 </body>
