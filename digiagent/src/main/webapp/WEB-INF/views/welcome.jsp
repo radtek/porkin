@@ -84,7 +84,7 @@ li {list-style-type:none;}
     <div class="tagContent" id="tagContent4">
       <table border="0" cellpadding="0" cellspacing="0" align="center">
         <tr>
-        	<td colspan="3">&nbsp;</td>
+        	<td colspan="3"></td>
         </tr>
         <tr>
           <td><input name="textfield" type="text" size="70" width="200px" /></td>

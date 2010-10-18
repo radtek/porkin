@@ -124,13 +124,19 @@ align="center" border="0">
       href="javascript:void(0)"><img alt="给我留言" 
       src="${ctx}/images/common/ly.gif" /></a> <img alt="当前在线" 
       src="${ctx}/images/common/online.gif" 
-      align="absmiddle" /></td>
+      align="absmiddle" /><br></td>
               </tr>
               <tr>
                 <td><div class="hui912 l_space">访问次数：<c:out value="${supplier.supplierAccess}" /></div>
                     
                   <br clear="all" />
-                  <div class="hui912 l_space">评价数量：0</div>
+                  <div class="hui912 l_space">评价数量：0</div><br>
+                  
+                  <div class="hui912 l_space">实名认证</div><br>
+                  
+                  <div class="hui912 l_space">资质认证</div>
+                  
+                  
                   <div class="info_r"></div>
                   <br 
       clear="all" />
@@ -168,54 +174,7 @@ align="center" border="0">
           </table>
         </div>
       </div>
-      <script 
-src="欣龙海天渠道专营 - 公司简介 【联系电话010-62682632】-ZOL经销商_files/apis.3&amp;key=2b47e646a5516a06c020ab8ca2bdcc09cda2ab682454a45c12693093464b8d7fc0af7de167e3a1df" 
-type="text/javascript"></script>
-      <script type="text/javascript">
-	var mapoption = new MMapOptions();//构造地图参数选项对象
-	mapoption.zoom=13;//设置地图zoom级别
-	mapoption.center=new MLngLat('JIOMSLLOKNDLLH','LQGXXLPNMLLLD');//设置要加载的地图的中心点坐标
-	mapoption.toolbar=ROUND;//设置地图初始化工具条
-	mapoption.toolbarPos=new MPoint(10,20);//工具条在地图上的显示位置
-	mapoption.returnCoordType=COORD_TYPE_OFFSET;//返回坐标类型
-	mapoption.isCongruence = true; 		//叠加覆盖层
-	mapoption.overviewMap=HIDE;		//隐藏鹰眼	 
-	mapoption.fullScreenButton=HIDE; 	//隐藏全屏按钮
-	mapoption.mapComButton=HIDE;		//设置新增商户按钮隐藏
-	mapoption.centerCross=HIDE;		//去中心十字		
-	var mapObj = new MMap("mapObj",mapoption);
-	mapObj.setCtrlPanelState(TOOLBAR_CTRL,HIDE);//去除工具条
-	mapObj.addEventListener(mapObj,MAP_READY,ready);//事件处理函数
-	function ready(param){
-		//mt = new MMapTools(mapObj);
-		//mt.addSpecialLayer();	//在地图上添加专题地图
-		addMarker();
-	}
-	function addMarker()
-	{
-		var markerOption = new MMarkerOptions();//此类的实例用于类 MMarker 的构造函数的option参数中
-		var tipOption = new MTipOptions();//提示窗口选项对象，此对象服务于MMarker、MPlyline、MArea等对象
-		var mlineStyle=new MLineStyle();
-		mlineStyle.thickness=0;
-		mlineStyle.alpha=1;
-		mlineStyle.lineType=LINE_DASHED;
-		tipOption.tipType=mlineStyle;//tip显示类型
-		tipOption.title="经销商：<font color='#ff0000'>欣龙海天渠道专营</font><br>";
-		tipOption.content =" <br>联系人：正品直销中心";
-		tipOption.content +=" <br>地&nbsp;&nbsp;址：北京海淀中关村E世界<br>";
-
-		markerOption.tipOption = tipOption;
-		markerOption.imageUrl="http://api.mapabc.com/fmp/v1.0/components/point/DynamicPoint/1.png";
-		Mmarker = new MMarker(mapObj.getCenter(),markerOption);//标注地图上点的位置
-		Mmarker.id="mark";
-		mapObj.addEventListener(mapObj,ADD_OVERLAY,addoverlay);
-		mapObj.addOverlay(Mmarker,true);
-	}
-	function addoverlay()
-	{
-		mapObj.openOverlayTip("mark");
-	}
-	</script>
+      
       <!--左边-->
     </div>
     <br class="c" />

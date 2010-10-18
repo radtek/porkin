@@ -62,7 +62,7 @@ var getProductJson = function(categoryName) {
 		success: function(data) {
 			if (data.length==0) return;
 			productBarId = target + "_productBar";
-			$('<div style="height:30px"></div>').attr('id', productBarId.replace(/#/g,'')).empty().append('产品: ').appendTo(categoryId);
+			$('<div style="height:30px"></div>').attr('id', productBarId.replace(/#/g,'')).empty().append('<br>产品: ').appendTo(categoryId);
 			$.each(data, function(index, product) {
 				// 搜索TAB
 				if (target == "#searchBar") {
@@ -111,7 +111,7 @@ var getBrandJson = function(productName) {
 		data: {productName:productName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="brandBar" style="height:30px"></div>').empty().append('品牌: ').appendTo(productBarId);
+			$('<div id="brandBar" style="height:30px"></div>').empty().append('<br>品牌: ').appendTo(productBarId);
 			$.each(data, function(index, brand) {
 		        $('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
 		        	var param = encodeURI($(this).text());
@@ -143,7 +143,7 @@ var getSupplierJson = function(brandName) {
 		data: {brandName:brandName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().append('商家: ').appendTo(target);
+			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().append('<br><br>商家: ').appendTo(target);
 			$.each(data, function(index, supplier) {
 		        $('<div class="supplierInfo"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
 		        });
