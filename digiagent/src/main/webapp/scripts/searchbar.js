@@ -143,9 +143,9 @@ var getSupplierJson = function(brandName) {
 		data: {brandName:brandName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().appendTo(target);
+			$('<div id="supplierInfo" style="height:30px;padding:30px"></div>').empty().appendTo(target);
 			$.each(data, function(index, supplier) {
-		        $('<div class="supplierInfo" style="padding-top:10px"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
+		        $('<div class="supplierInfo" style="padding-top:30px"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
 		        });
 		        // 供应商信息
 		        $('<div style="float:left"></div>').attr('id', "contentRight_" + index).appendTo("#supplierInfo_" + index);

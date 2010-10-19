@@ -24,6 +24,7 @@ public class HistoryServiceTest {
 	public void tearDown() throws Exception {
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetSupplierReportByDays() {
 		List<HashMap> result = hs.getSupplierReportByDays(7);

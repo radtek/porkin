@@ -25,6 +25,7 @@ public class SearchServiceTest {
 	public void tearDown() throws Exception {
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testFixedSearch() {
 		Map condition = new HashMap();

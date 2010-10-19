@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class HistoryDao extends HistoryDAOImpl {
 	
+	@SuppressWarnings("unchecked")
 	public List<HashMap> countSupplierAccessByDays(Integer days){
 		return (List<HashMap>)getSqlMapClientTemplate().queryForList("t_da_history_Custom.supplierReportByDays",days);
 	}
