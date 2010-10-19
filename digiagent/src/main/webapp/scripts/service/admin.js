@@ -102,11 +102,21 @@ var basicFunction = function() {
 };
 
 var reportFunction = function() {
-	var map = $('#system').find('.tree-title');
+	var map = $('#report').find('.tree-title');
 	$.each(map, function(key) {
-		if ($(map[key]).text().toLowerCase() == '用户维护') {
+		if ($(map[key]).text().toLowerCase() == '每天') {
 			$(map[key]).click(function() {
-				addTab($(this).text(), 'user/list');
+				addTab($(this).text(), 'report/everyday');
+			});
+		}
+		if ($(map[key]).text().toLowerCase() == '每周') {
+			$(map[key]).click(function() {
+				addTab($(this).text(), 'report/weekly');
+			});
+		}
+		if ($(map[key]).text().toLowerCase() == '每月') {
+			$(map[key]).click(function() {
+				addTab($(this).text(), 'report/monthly');
 			});
 		}
 	});
