@@ -1,10 +1,16 @@
 package net.cominfo.digiagent.persistence.dao;
 
-import org.springframework.stereotype.Repository;
+import java.util.HashMap;
+import java.util.List;
 
 import net.cominfo.digiagent.persistence.sqlmapdao.HistoryDAOImpl;
+
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class HistoryDao extends HistoryDAOImpl {
 	
+	public List<HashMap> countSupplierAccessByDays(Integer days){
+		return (List<HashMap>)getSqlMapClientTemplate().queryForList("t_da_history_Custom.supplierReportByDays",days);
+	}
 }

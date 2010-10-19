@@ -1,6 +1,8 @@
 package net.cominfo.digiagent.service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import net.cominfo.digiagent.persistence.dao.HistoryDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
@@ -78,6 +80,10 @@ public class HistoryService {
 
 	public void recordSupplierAccess(int supplierId) {
 		insert("S", supplierId);
+	}
+	
+	public List<HashMap> getSupplierReportByDays(int days){
+		return historyDao.countSupplierAccessByDays(new Integer(days));
 	}
 
 }
