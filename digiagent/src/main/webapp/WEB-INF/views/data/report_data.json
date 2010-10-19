@@ -4,16 +4,13 @@
 	"iconCls":"icon-ok",
 	"children":[{
 		"id":2,
-		"text":"日访问量",
+		"text":"每天",
 		"checked":true
 	},{
 		"id":3,
-		"text":"周访问量"
+		"text":"每周"
 	},{
 		"id":4,
-		"text":"月访问量"
-	},{
-		"id":5,
-		"text":"城市访问"
+		"text":"每月"
 	}]
 }]
