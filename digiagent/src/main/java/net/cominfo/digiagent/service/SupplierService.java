@@ -285,9 +285,10 @@ public class SupplierService {
 	public void access(SupplierWithBLOBs supplier) {
 		int access = supplier.getSupplierAccess();
 		++access;
-		supplier.setSupplierAccess(access);
-		supplierDao.updateByPrimaryKey(supplier);
-
+		SupplierWithBLOBs sp = new SupplierWithBLOBs();
+		sp.setSupplierId(supplier.getSupplierId());
+		sp.setSupplierAccess(access);
+		supplierDao.updateByPrimaryKeySelective(sp);
 	}
 
 	public String getAreaInfoBySupplierId(Integer supplierid) {

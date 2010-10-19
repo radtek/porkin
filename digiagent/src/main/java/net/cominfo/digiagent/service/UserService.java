@@ -123,14 +123,14 @@ public class UserService {
 			supplier.setSupplierAccess(0);
 			supplier.setSupplierScore(0);
 			
-			supplier.setSupplierAddress("");
-			supplier.setSupplierContactname("");
-			supplier.setSupplierDescription("");
-			supplier.setSupplierFax("");
-			supplier.setSupplierMobile("");
-			supplier.setSupplierName("");
-			supplier.setSupplierTelephone("");
-			supplier.setSupplierZip("");
+			supplier.setSupplierAddress("地址");
+			supplier.setSupplierContactname("联系人");
+			supplier.setSupplierDescription("公司简介");
+			supplier.setSupplierFax("传真号码");
+			supplier.setSupplierMobile("手机号码");
+			supplier.setSupplierName("公司名称");
+			supplier.setSupplierTelephone("手机号码");
+			supplier.setSupplierZip("邮政编码");
 			supplier.setSupplierImage(new byte[]{0,0,0});
 			
 			supplier.setCreatedBy(user.getUserName());
