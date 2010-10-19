@@ -143,22 +143,19 @@ var getSupplierJson = function(brandName) {
 		data: {brandName:brandName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().append('<br><br>商家: ').appendTo(target);
+			$('<div id="supplierInfo" style="height:30px;padding:20px"></div>').empty().appendTo(target);
 			$.each(data, function(index, supplier) {
-		        $('<div class="supplierInfo"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
+		        $('<div class="supplierInfo" style="padding-top:10px"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
 		        });
 		        // 供应商信息
 		        $('<div style="float:left"></div>').attr('id', "contentRight_" + index).appendTo("#supplierInfo_" + index);
-		        $('<li></li>').text("供应商：" + supplier.supplierName).appendTo("#contentRight_" + index);
+		        $('<li></li>').attr("id", "supplierName_" + index).appendTo("#contentRight_" + index);
+		        $("<a>"+supplier.supplierName+"</a>").css('text-decoration','underline').attr('href', "supplier/" + supplier.supplierId).appendTo("#supplierName_" + index);
 		        $('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#contentRight_" + index);
-		        $('<li></li>').text("联系人：" + supplier.supplierContactname).appendTo("#contentRight_" + index);
-		        $('<li></li>').text("手机：" + supplier.supplierMobile).appendTo("#contentRight_" + index);
-		        $('<li></li>').text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
-		        $('<li></li>').text("传真：" + supplier.supplierFax).appendTo("#contentRight_" + index);
-		        $('<li></li>').text("邮编：" + supplier.supplierZip).appendTo("#contentRight_" + index);
-		        $('<li></li>').attr("href","2.html");
-		         $('<li></li>').text("详情	" + supplier.supplierDescription).appendTo("#contentRight_" + index);
+		        $('<li></li>').attr('id', 'tel_' + index).text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
+		        $('<a>>>详情</a>').css('padding-left', '100px').appendTo("#tel_" + index);
 		        // 供应商图片
+		         /*
 		        $('<div></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
 		        var $enlargedCover = $('<img/>')
 		    	.css('position', 'absolute')
@@ -166,7 +163,9 @@ var getSupplierJson = function(brandName) {
 		    	.css('cursor', 'pointer')
 		    	.hide()
 		    	.appendTo('body');
+		    	*/
 		        // 加载放大镜事件驱动
+		        /*
 		        $('<img id="pic" width="100" height="100"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index).click(function(event) {
 		    	    var startPos = $(this).offset();
 		    	    startPos.width = $(this).width();
@@ -200,6 +199,7 @@ var getSupplierJson = function(brandName) {
 		    	}, function() {
 		    		$(this).css('cursor', '');
 		    	});
+		    	*/
 		    });
 		},
 		error: function(xhr, ajaxOptions, thrownError){
