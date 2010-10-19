@@ -54,8 +54,7 @@ function whenDelete() {
               <td valign="top"><table cellspacing="0" cellpadding="0" width="100%" border="0">
                 <tbody>
                   <tr>
-                    <td class="Al_11" height="120"><img 
-            src="http://img8.cn.msn.com/image8/2010/10/19/116930.jpg" /></td>
+                    <td class="Al_11" height="120"><img	src="${ctx}/supplier/getImage?id=${supplier.supplierId}" /></td>
                   </tr>
                 </tbody>
               </table></td>
@@ -135,14 +134,16 @@ align="center" border="0">
                   <div class="hui912 l_space">实名认证:
                   <c:choose>
                   	<c:when test="${empty supplier.supplierCertify }">否</c:when>
-                  	<c:otherwise>是</c:otherwise>
+                  	<c:otherwise>
+                  		<a href="${ctx}/supplier/getImage1?id=${supplier.supplierId}" target="_blank">是</a>
+                  	</c:otherwise>
                   </c:choose>
                   </div><br>
                   
                   <div class="hui912 l_space">资质认证:
                   <c:choose>
                   	<c:when test="${empty supplier.supplierQualify }">否</c:when>
-                  	<c:otherwise>是</c:otherwise>
+                  	<c:otherwise><a href="${ctx}/supplier/getImage2?id=${supplier.supplierId}" target="_blank">是</a></c:otherwise>
                   </c:choose>
                   </div>
                   
