@@ -55,7 +55,7 @@ function whenDelete() {
                 <tbody>
                   <tr>
                     <td class="Al_11" height="120"><img 
-            src="${ctx}/images/876444.jpg" /></td>
+            src="http://img8.cn.msn.com/image8/2010/10/19/116930.jpg" /></td>
                   </tr>
                 </tbody>
               </table></td>
