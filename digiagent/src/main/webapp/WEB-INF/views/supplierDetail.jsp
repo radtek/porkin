@@ -132,9 +132,19 @@ align="center" border="0">
                   <br clear="all" />
                   <div class="hui912 l_space">评价数量：0</div><br>
                   
-                  <div class="hui912 l_space">实名认证</div><br>
+                  <div class="hui912 l_space">实名认证:
+                  <c:choose>
+                  	<c:when test="${empty supplier.supplierCertify }">否</c:when>
+                  	<c:otherwise>是</c:otherwise>
+                  </c:choose>
+                  </div><br>
                   
-                  <div class="hui912 l_space">资质认证</div>
+                  <div class="hui912 l_space">资质认证:
+                  <c:choose>
+                  	<c:when test="${empty supplier.supplierQualify }">否</c:when>
+                  	<c:otherwise>是</c:otherwise>
+                  </c:choose>
+                  </div>
                   
                   
                   <div class="info_r"></div>
@@ -159,16 +169,14 @@ align="center" border="0">
                   
                   <br clear="all" />
                   <div class="hui912 l_space">在线联系：</div>
-                  <div class="info_r"><a 
-      href="tencent://Message/?Uin=156014986&amp;websiteName=dealer.zol.com.cn&amp;Menu=yes" 
+                  <div class="info_r">
+                 <c:forEach var="qq" items="${qqList}">
+                 <a 
+      href="tencent://Message/?Uin=<c:out value='${qq}'/>&amp;websiteName=dealer.zol.com.cn&amp;Menu=yes" 
       target="blank"><img id="qq_2" height="16" alt="点击这里给我发消息" src="" align="absmiddle" 
-      border="no" />(客服)</a> <a 
-      href="tencent://Message/?Uin=858968998&amp;websiteName=dealer.zol.com.cn&amp;Menu=yes" 
-      target="blank"><img id="qq_2" height="16" alt="点击这里给我发消息" src="" align="absmiddle" 
-      border="no" />(客服)</a> <a 
-      href="tencent://Message/?Uin=1186966783&amp;websiteName=dealer.zol.com.cn&amp;Menu=yes" 
-      target="blank"><img id="qq_2" height="16" alt="点击这里给我发消息" src="" align="absmiddle" 
-      border="no" />(客服)</a> </div></td>
+      border="no" />(客服)</a>
+                 </c:forEach>
+                  </div></td>
               </tr>
             </tbody>
           </table>
