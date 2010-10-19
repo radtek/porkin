@@ -66,7 +66,9 @@
 		       t_da_country.country_id as countryId,
 		       t_da_country.country_name as countryName,
 		       t_da_country.country_abbreviation as countryAbbreviation,
-		       t_da_supplierproduct.create_date as createDate
+		       t_da_supplierproduct.create_date as createDate,
+		       t_da_supplierproduct.start_date as startDate,
+		       t_da_supplierproduct.end_date as endDate
 		  FROM t_da_supplierproduct
 		  LEFT JOIN t_da_productbrand ON t_da_supplierproduct.productbrand_id = t_da_productbrand.productbrand_id
 		  LEFT JOIN t_da_product ON t_da_productbrand.product_id = t_da_product.product_id
