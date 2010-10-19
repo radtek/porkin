@@ -3,6 +3,7 @@ package net.cominfo.digiagent.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
@@ -22,15 +23,15 @@ public class ReportController {
 		response.setContentType("image/jpeg");
 		response.setCharacterEncoding("utf-8");  
 		DefaultPieDataset data = getDataSet();
-		JFreeChart chart = null;
-//		JFreeChart chart = ChartFactory.createPieChart(
-//	            "水果产量图",  // chart title
-//	            data,             // data
-//	            true,               // include legend
-//	            true,
-//	            false
-//	        );
-//		
+		//JFreeChart chart = null;
+		JFreeChart chart = ChartFactory.createPieChart(
+	            "水果产量图",  // chart title
+	            data,             // data
+	            true,               // include legend
+	            true,
+	            false
+	        );
+		
 		PiePlot plot = (PiePlot) chart.getPlot();
         plot.setNoDataMessage("No data available");
         plot.setCircular(false);
