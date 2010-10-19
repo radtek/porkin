@@ -6,39 +6,61 @@
 
 	<settings useStatementNamespaces="true" />
 
-	<!-- Predefined -->
+	<!-- Predefi -->
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_brand_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_brand_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_category_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_category_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_city_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_city_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_commodityimage_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_commodityimage_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_commodity_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_commodity_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_contact_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_contact_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_country_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_country_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_history_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_history_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_productbrand_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_productbrand_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_product_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_product_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_province_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_province_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_role_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_role_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplierproduct_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplierproduct_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplier_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_supplier_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_userrole_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_userrole_SqlMap_Custom.xml" />
+	
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_user_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_user_SqlMap_Custom.xml" />
+	
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_sequence_SqlMap.xml" />
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_sequence_SqlMap_Custom.xml" />
+	
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_comments_SqlMap.xml" />
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_comments_SqlMap_Custom.xml" />
+	
 </sqlMapConfig>
 
 
