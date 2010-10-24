@@ -1,6 +1,7 @@
 package net.cominfo.digiagent.web;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import net.cominfo.digiagent.service.ContactService;
 import net.cominfo.digiagent.service.CountryService;
 import net.cominfo.digiagent.service.SupplierProductService;
 import net.cominfo.digiagent.service.SupplierService;
+import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 
@@ -54,17 +56,24 @@ public class CompanyController {
 
 	@Autowired
 	private SupplierProductService supplierProductService;
+	
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public String menu(Model model) {
 		return "company/menu";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/basicInfo", method = RequestMethod.GET)
 	public String basicInfo(@ModelAttribute("userId") Integer userId,
 			Model model) {
 		User user = companyService.getUserById(userId);
 		model.addAttribute("user", user);
+		Map condition = new HashMap();
+		condition.put("userId", userId);
+		model.addAttribute("userRole", userService.getUserInfo(condition));
 		return "company/basicInfo";
 	}
 
