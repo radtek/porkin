@@ -39,7 +39,7 @@ function logout() {
       </c:otherwise>
       </c:choose>
       
-    <span class="rightLink">关于我们 | 设为首页</span>
+    <span class="rightLink">关于我们 | <a href=# onClick="this.style.behavior='url(#default#homepage)'; this.setHomePage('${ctx}/');event.returnValue=false;">设为首页</a></span>
     </div>
  
 </div>
