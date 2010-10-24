@@ -39,7 +39,7 @@ function whenDelete() {
     </tr>
     <tr>
       <td>用户类型：</td>
-      <td>企业会员</td>
+      <td><c:out value="${userRole.roleName}" /></td>
     </tr>
     <tr>
       <td>电子邮件：</td>
