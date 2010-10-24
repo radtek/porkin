@@ -2,6 +2,7 @@ package net.cominfo.digiagent.utils.mail;
 
 import java.util.Map;
 
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
@@ -38,7 +39,6 @@ public class MailService {
 		if (cc != null)
 			mailMessage.setCc(cc);
 		mailMessage.setSubject(subject);
-
 		mailEngine.send(mailMessage, mailTemplate, data);
 	}
 
