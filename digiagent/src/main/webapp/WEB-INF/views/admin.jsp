@@ -10,6 +10,23 @@
 			$('#system').tree({data:<%@include file="data/system_data.json"%>});
 			basicFunction();
 		});
+
+		function logout() {
+			if (confirm("确认要退出吗？")) {
+				$.get(
+					"adminLogout",
+					function(data) {
+						if (data == "welcome") {
+							window.location.href = "";
+						}
+					}
+				);
+			}
+		}
+
+		function gotoIndex() {
+			window.location.href = "";
+		}
 	</script>
 	<style>
 		.logoCenter{ width:75px; height:90px; background:url(images/common/centerLogo.gif) no-repeat; float:left;}
@@ -17,9 +34,9 @@
 </head>
 <body class="easyui-layout">
 		<div region="north" split="false" style="height:100px;padding:0px;">
-			<div class="logoCenter"></div>
+			<div class="logoCenter" onclick="gotoIndex()" onmouseover="this.style.cursor='pointer';"></div>
 			<div style="text-align:right;padding:10px">
-				<a href="javascript:window.opener=null;window.close();"><fmt:message key="label.common.logout"/></a>
+				<a href="javascript:void(0);" onclick="logout();"><fmt:message key="label.common.logout"/></a>
 			</div>
 		</div>
 		<div region="west" split="true" title="<fmt:message key='label.common.menu'/>" style="width:280px;padding1:1px;overflow:hidden;">
@@ -37,7 +54,7 @@
 		</div>
 		<div region="center" title="<fmt:message key='label.common.content'/>" style="overflow:hidden;">
 			<div id="mytab" class="easyui-tabs" fit="true" border="false">
-				<div title="<fmt:message key='label.common.welcome'/>" style="padding:20px;overflow:hidden;"> 
+				<div title="<fmt:message key='label.common.welcome'/>" style="background-image: url(images/common/background-welcome.jpg);background-repeat:no-repeat;background-position:center center;"> 
 					<div style="left:50%;top:50%;position:absolute;">
 						<h1><fmt:message key='label.common.welcome'/></h1>
 					</div>
