@@ -20,6 +20,11 @@ function whenDelete() {
 	window.location = 'contractSearch.html'; 
 	return isDelete;
 }
+
+function reloadcaptcha(){
+	var elem=document.getElementById('captcha');	
+		elem.src='captcha?r='+(new Date());
+}
 </script>
 </head>
 <body>
@@ -50,7 +55,7 @@ function whenDelete() {
     </tr>
     <tr>
       <td>验证码显示</td>
-      <td><img src="captcha" width="140" height="35" /></td>
+      <td><img src="captcha" width="140" height="35" id="captcha" /><a href="javascript:void(0);"  onclick="reloadcaptcha();"/>&nbsp;&nbsp;换一张</a></td>
     </tr>
     <tr>
       <td>随机验证</td>

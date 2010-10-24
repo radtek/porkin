@@ -46,7 +46,7 @@ function reloadcaptcha(){
 <div class="dfcenterTitle">用户注册</div>
 
 <div id="loginCenter">
-  <form action="${ctx}/register" method="post">
+  <form action="${ctx}/login" method="post">
   <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2">
@@ -55,47 +55,20 @@ function reloadcaptcha(){
  	<tr>
       <td></td>
     </tr>
-    <tr>
-      <td>用户类型</td>
-      <td colspan="2"><input type="radio" name="type" id="radio" value="个人会员" checked/>
-      个人会员
-        <input type="radio" name="type" id="radio2" value="企业会员" />
-      企业会员</td>
-    </tr>
-    <tr>
-      <td>用户帐号</td>
-      <td><input type="text" name="username" id="username" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty username}"><fmt:message key="${username.text}" /></c:if></font></td> 
-      </tr>
-    <tr>
-      <td>请输入密码</td>
-      <td><input type="password" name="password1" id="password1" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty password}"><fmt:message key="${password.text}" /></c:if></font></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>再确认密码</td>
-      <td><input type="password" name="password2" id="password2" /></td>
-    </tr>
-    <tr>
-      <td>电子邮件</td>
-      <td><input type="text" name="email" id="email" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty email}"><fmt:message key="${email.text}" /></c:if></font></td>
-    </tr>
-    <tr>
-      <td>验证码显示</td>
-      <td><img src="captcha" width="140" height="35" id="captcha" /><a href="javascript:void(0);"  onclick="reloadcaptcha();"/>&nbsp;&nbsp;换一张</a></td>
-    </tr>
+    
      <tr>
-      <td>输入验证码</td>
-      <td><input type="text" name="captcha" id="captcha" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty captcha}"><fmt:message key="${captcha.text}" /></c:if></font></td>
+      <td><strong></strong>注册成功!</strong></td>
+      <td></td>
     </tr>
     <tr>
-      <td></td>
+      <td><input type="hidden" name="username" value='<c:out value="${username}" />'/></td>
+      <td><input type="hidden" name="password" value='<c:out value="${password}" />'/></td>
+      
     </tr>
     <tr>
       <td colspan="2" align="center"><span class="headCity">
-        <input class="btn_login" type="submit" value="提交" />
-            </span><span class="headCity">
-      <input class="btn_login" type="reset" value="取消" />
-                  </span></td>
+        <input class="btn_login" type="submit" value="确定" />
+            </span></td>
     </tr>
     <tr>
       <td></td>

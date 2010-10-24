@@ -123,7 +123,7 @@ public class SecurityController {
 		User user = securityService.getUserByName(username);
 		if(user!=null){
 			String original = (String) session.getAttribute("icaptcha");
-			if (!captcha.equals(original)) {
+			if (!captcha.equalsIgnoreCase(original)) {
 				model.addAttribute("captcha", new Message(MessageType.success,
 						"password.captcha.error"));
 			}

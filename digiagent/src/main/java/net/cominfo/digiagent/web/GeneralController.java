@@ -67,7 +67,9 @@ public class GeneralController {
 			hasError = true;
 		}
 		String original = (String) session.getAttribute("icaptcha");
-		if (!captcha.equals(original)) {
+		
+		//验证码不区分大小写
+		if (!captcha.equalsIgnoreCase(original)) {
 			model.addAttribute("captcha", new Message(MessageType.success,
 					"register.captcha.error"));
 			hasError = true;
@@ -90,7 +92,9 @@ public class GeneralController {
 			int roleId = role.getRoleId();
 			boolean companyFlag = (roleId == 4) ? true : false;
 			userService.register(user, role.getRoleId(), companyFlag, username);
-			forward = "welcome";
+			model.addAttribute("username", username);
+			model.addAttribute("password", password1);
+			forward = "register_success";
 		}
 		return forward;
 	}
