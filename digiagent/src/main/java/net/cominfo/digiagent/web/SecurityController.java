@@ -51,15 +51,22 @@ public class SecurityController {
 	private MailService mailService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Model model, @RequestParam String username,
-			@RequestParam String password) {
+	public @ResponseBody String login(Model model, @RequestParam String username,
+			@RequestParam String password, HttpServletResponse response) {
 		User user = securityService.login(username, password);
+
+		String message = null;
 		if (user != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userName", user.getUserName());
 			model.addAttribute("supplierId", new Integer(0));
+			message = "success";
 		}
-		return "welcome";
+		else{
+			message = "fail";
+		}
+		return message;
+		
 	}
 
 	@RequestMapping(value = "/member", method = RequestMethod.GET)

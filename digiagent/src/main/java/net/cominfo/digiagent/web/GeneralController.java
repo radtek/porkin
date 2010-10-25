@@ -27,6 +27,11 @@ public class GeneralController {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	public String aboutUs(Model model) {
+		return "about";
+	}
+	
 	@RequestMapping(value = "/header", method = RequestMethod.GET)
 	public String head(Model model) {
 		return "header";

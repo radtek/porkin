@@ -1,5 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="common/common.jsp" %>
+<%@include file="/common/taglibs.jsp" %>
 <html>
 <head>
 	<script type="text/javascript" src="scripts/service/admin.js"></script>
@@ -36,7 +37,9 @@
 		<div region="north" split="false" style="height:100px;padding:0px;">
 			<div class="logoCenter" onclick="gotoIndex()" onmouseover="this.style.cursor='pointer';"></div>
 			<div style="text-align:right;padding:10px">
+				<a href="${ctx}/"><fmt:message key="label.common.homepage"/></a>&nbsp;&nbsp;
 				<a href="javascript:void(0);" onclick="logout();"><fmt:message key="label.common.logout"/></a>
+				
 			</div>
 		</div>
 		<div region="west" split="true" title="<fmt:message key='label.common.menu'/>" style="width:280px;padding1:1px;overflow:hidden;">
