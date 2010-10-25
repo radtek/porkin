@@ -26,6 +26,21 @@ function reloadcaptcha(){
 	var elem=document.getElementById('captcha');	
 		elem.src='captcha?r='+(new Date());
 }
+
+function showAgreement(){
+	window.open ('${ctx}/agreement','商讯网服务协议','height=610,width=800,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
+}
+
+function agreementConfirm(value){
+
+	if(document.registerForm.agreement.checked){
+		document.registerForm.submit();
+	}
+	else{
+		alert("请阅读并接受商讯网服务协议");
+	}		
+}
+
 </script>
 </head>
 <body>
@@ -46,7 +61,7 @@ function reloadcaptcha(){
 <div class="dfcenterTitle">用户注册</div>
 
 <div id="loginCenter">
-  <form action="${ctx}/register" method="post">
+  <form action="${ctx}/register" name="registerForm" method="post">
   <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2">
@@ -88,11 +103,13 @@ function reloadcaptcha(){
       <td><input type="text" name="captcha" id="captcha" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty captcha}"><fmt:message key="${captcha.text}" /></c:if></font></td>
     </tr>
     <tr>
-      <td></td>
+      <td>
+      </td>
+      <td><input type="checkbox" name="agreement" id="agreement" value="checkbox" style="width:20px; float:left; margin-top:3px;"/>已阅读并接受<a href="javascript:showAgreement();">商讯网服务协议</a></td>
     </tr>
     <tr>
       <td colspan="2" align="center"><span class="headCity">
-        <input class="btn_login" type="submit" value="提交" />
+        <input class="btn_login" type="button" value="提交" onClick = "agreementConfirm('value')"/>
             </span><span class="headCity">
       <input class="btn_login" type="reset" value="取消" />
                   </span></td>

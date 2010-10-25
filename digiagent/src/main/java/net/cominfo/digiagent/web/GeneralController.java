@@ -10,6 +10,7 @@ import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
+import net.cominfo.digiagent.utils.ValidatorUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,11 @@ public class GeneralController {
 	@RequestMapping(value = "/header", method = RequestMethod.GET)
 	public String head(Model model) {
 		return "header";
+	}
+	
+	@RequestMapping(value = "/agreement", method = RequestMethod.GET)
+	public String agreement(Model model) {
+		return "agreement";
 	}
 	
 	@RequestMapping(value = "/registerForm", method = RequestMethod.GET)
@@ -66,7 +72,7 @@ public class GeneralController {
 					"register.password.error"));
 			hasError = true;
 		}
-		if (email == null || email.equals("")) {
+		if (email == null || email.equals("") || !ValidatorUtils.validateEmail(email) ) {
 			model.addAttribute("email", new Message(MessageType.success,
 					"register.email.error"));
 			hasError = true;
