@@ -28,5 +28,11 @@ public class SupplierDao extends SupplierDAOImpl {
 						"t_da_supplier_Custom.supplierAreaInfoBySupplierId",
 						supplierId);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map> freeSearchByKeyword(final Map condition) {
+		return getSqlMapClientTemplate().queryForList(
+				"t_da_supplier_Custom.freeSearchByKeyword", condition);
+	}
 
 }

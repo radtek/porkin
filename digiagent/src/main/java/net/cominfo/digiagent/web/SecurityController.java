@@ -68,6 +68,21 @@ public class SecurityController {
 		return message;
 		
 	}
+	
+	@RequestMapping(value = "/autologin", method = RequestMethod.POST)
+	public String autoLogin(Model model, @RequestParam String username,
+			@RequestParam String password, HttpServletResponse response) {
+		User user = securityService.login(username, password);
+		if (user != null) {
+			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("userName", user.getUserName());
+			model.addAttribute("supplierId", new Integer(0));
+		}
+		return "welcome";
+		
+	}
+	
+	
 
 	@RequestMapping(value = "/member", method = RequestMethod.GET)
 	public String member(@ModelAttribute("userId") Integer userId,

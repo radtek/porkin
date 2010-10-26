@@ -46,7 +46,7 @@ function reloadcaptcha(){
 <div class="dfcenterTitle">用户注册</div>
 
 <div id="loginCenter">
-  <form action="${ctx}/login" method="post">
+  <form action="${ctx}/autologin" method="post">
   <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2">
@@ -57,8 +57,8 @@ function reloadcaptcha(){
     </tr>
     
      <tr>
-      <td><strong></strong>注册成功!</strong></td>
-      <td></td>
+      <td><strong></strong>用户<c:out value="${username}" />注册成功!</strong></td>
+      <td><strong></strong>请点击确认到首页.</td>
     </tr>
     <tr>
       <td><input type="hidden" name="username" value='<c:out value="${username}" />'/></td>
