@@ -298,5 +298,10 @@ public class SupplierService {
 	public void deleteContactById(Integer contactId) {
 		contactDao.deleteByPrimaryKey(contactId);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Supplier> getSupplierList(String keyWord){
+		return supplierDao.freeSearchByKeyword(keyWord);
+	}
 
 }

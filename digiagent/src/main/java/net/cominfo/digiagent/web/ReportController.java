@@ -14,6 +14,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +25,20 @@ public class ReportController {
 	
 	@Autowired
 	private HistoryService historyService;
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/rankList", method = RequestMethod.GET)
+	public String rankList(Model model) throws Exception {
+		List<HashMap> dayResult = historyService.getSupplierReportByDays(1);
+		List<HashMap> weekResult = historyService.getSupplierReportByDays(7);
+		List<HashMap> monthResult = historyService.getSupplierReportByDays(30);
+		model.addAttribute("daily", dayResult);
+		model.addAttribute("weekly", weekResult);
+		model.addAttribute("monthly", monthResult);
+	
+		return "rankDetail";
+	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/everyday", method = RequestMethod.GET)

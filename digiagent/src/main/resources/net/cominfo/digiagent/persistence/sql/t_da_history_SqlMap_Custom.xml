@@ -4,13 +4,19 @@
 	<select id="supplierReportByDays" parameterClass="int"
 		resultClass="HashMap">
 	<![CDATA[
-		SELECT count(*) COUNT, supplier_name SUPPLIER FROM t_da_history ,
-		t_da_supplier
+		SELECT 
+			count(history_typeid) COUNT, 
+			supplier_name SUPPLIER,
+			t_da_supplier.supplier_id SUPPLIER_ID 
+		FROM t_da_history ,	t_da_supplier
 		WHERE
 		t_da_history.history_typeid = t_da_supplier.supplier_id
 		and TO_DAYS(NOW()) -
 		TO_DAYS(History_AccessDate)  <=  #value# 
-		and history_type ='S' group by history_typeid limit 10
+		and history_type ='S' group by history_typeid 
+		having count(history_typeid)>=1  
+		order by COUNT desc
+        limit 10 
 	]]>
 	</select>
 

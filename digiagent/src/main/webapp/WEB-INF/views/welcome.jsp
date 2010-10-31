@@ -18,6 +18,7 @@
 }
 li {list-style-type:none;}
 </style>
+
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
@@ -35,14 +36,15 @@ li {list-style-type:none;}
   </ul>
   <div id="tagContent" >
     <div class="tagContent selectTag" id="tagContent0">
+    <form action="freeSearch" method="post">
       <table border="0" cellpadding="0" cellspacing="0" align="center">
         <tr>
         	<td colspan="3">&nbsp;</td>
         </tr>
         <tr>
-          <td><input name="textfield" type="text" size="70" width="200px" /></td>
+          <td><input name="searchkw" type="text" size="70" width="200px" /></td>
           <td>&nbsp;</td>
-          <td width="80"> <input type="reset" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" onclick="window.location.href='purductList.html'" /></td>  
+          <td width="80"> <input type="submit" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
                   
         </tr>
         <tr>
@@ -51,7 +53,32 @@ li {list-style-type:none;}
         <tr>
         	<td colspan="3"><div id="searchBar"></div></td>
         </tr>
+         <tr>
+        	<td colspan="3">
+        	<c:choose>
+	        	<c:when test="${empty supplierList}">
+	        		<div id="supplierInfo" style="height: 30px; padding: 30px;">暂无数据!</div>        
+	        	</c:when>
+	        	<c:otherwise>
+	        		<div id="supplierInfo" style="height: 30px; padding: 30px;">
+	        		<c:forEach var="supplier" items="${supplierList}">
+	        	 		<div id="supplierInfo_${supplier.supplierId}" class="supplierInfo" style="padding-top: 30px;">
+						<div id="contentRight_${supplier.supplierId}" style="float: left;">
+						<li id="supplierName_${supplier.supplierId}"><a href="supplier/${supplier.supplierId}" style="text-decoration: underline;">${supplier.supplierName}</a></li>
+						<li>地址：${supplier.supplierAddress}</li>
+						<li id="tel_0">联系电话：${supplier.supplierTelephone}<a href="supplier/${supplier.supplierId}" style="padding-left: 100px;">&gt;&gt;详情</a></li>
+						</div>
+						</div>
+	        	 	</c:forEach>
+	        	 	</div>
+	        	</c:otherwise>
+        	</c:choose>
+			</td>
+        </tr>
+        
       </table>
+    </form>
+   
     </div>
     <div class="tagContent" id="tagContent1">
      <table border="0" cellpadding="0" cellspacing="0" align="center">
@@ -81,22 +108,29 @@ li {list-style-type:none;}
 	    </div>
 	    <div></div>
     </div>
-    <div class="tagContent" id="tagContent4">
-      <table border="0" cellpadding="0" cellspacing="0" align="center">
-        <tr>
-        	<td colspan="3"></td>
-        </tr>
-        <tr>
-          <td><input name="textfield" type="text" size="70" width="200px" /></td>
-          <td>&nbsp;</td>
-          <td width="80"> <input type="reset" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
-                  
-        </tr>
-        <tr>
-        	<td colspan="3">&nbsp;</td>
-        </tr>
-      </table>
-    </div>
+<!--    <div class="tagContent" id="tagContent4">-->
+<!--      <table border="0" cellpadding="0" cellspacing="0" align="center">-->
+<!--        <tr>-->
+<!--        	<td colspan="3"></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <td><input name="textfield" type="text" size="70" width="200px" /></td>-->
+<!--          <td>&nbsp;</td>-->
+<!--          <td width="80"> <input type="reset" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  -->
+<!--                  -->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--        	<td colspan="3">&nbsp;</td>-->
+<!--        </tr>-->
+<!--      </table>-->
+<!--		-->
+<!--    </div>-->
+  </div>
+  <div class="purductList" id="tagContent4">
+  <br>
+  <br>
+  <br>
+  <div id="searchBar4"></div>
   </div>
 </div>
 </div>

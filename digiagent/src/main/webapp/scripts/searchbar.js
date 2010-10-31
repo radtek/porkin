@@ -36,6 +36,28 @@ var getCategoryJson = function(_target) {
 	});
 };
 
+
+/**
+ * 提取所有类别列表
+ * @return
+ */
+var getRankDetail = function(_target) {
+	target = _target;
+	$(target).empty();
+	$.ajax({
+		url:"report/rankList",
+		dataType:"html/text",
+		type: "GET",
+		success: function(data) {
+			if (data.length==0) return;
+			$('#searchBar4').html(data);
+		},
+		error: function(xhr, ajaxOptions, thrownError){
+            alert("数据读取失败！");
+        }
+	});
+};
+
 /**
  * 根据所选类别提取产品列表
  * @return
@@ -153,7 +175,7 @@ var getSupplierJson = function(brandName) {
 		        $("<a>"+supplier.supplierName+"</a>").css('text-decoration','underline').attr('href', "supplier/" + supplier.supplierId).appendTo("#supplierName_" + index);
 		        $('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#contentRight_" + index);
 		        $('<li></li>').attr('id', 'tel_' + index).text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
-		        $('<a>>>详情</a>').css('padding-left', '100px').appendTo("#tel_" + index);
+		        $('<a>>>详情</a>').css('padding-left', '100px').attr('href', "supplier/" + supplier.supplierId).appendTo("#tel_" + index);
 		        // 供应商图片
 		         /*
 		        $('<div></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);

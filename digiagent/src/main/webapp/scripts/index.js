@@ -32,5 +32,8 @@ function selectTag(showContent,selfObj){
 		$('#commodityS').next().empty();
 		$('#commodityS').empty();
 	}
+	if (showContent == 'tagContent4') {
+		getRankDetail('#searchBar4');
+	}
 	document.getElementById(showContent).style.display = "block";
 }

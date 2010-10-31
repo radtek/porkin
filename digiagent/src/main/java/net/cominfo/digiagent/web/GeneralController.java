@@ -1,11 +1,15 @@
 package net.cominfo.digiagent.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.cominfo.digiagent.persistence.domain.Role;
+import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.service.SupplierService;
 import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/")
@@ -24,6 +29,9 @@ public class GeneralController {
 	
 	@Autowired
 	private SecurityService securityService;
+	
+	@Autowired
+	private SupplierService supplierService;
 
 	@Autowired
 	private UserService userService;
@@ -108,6 +116,19 @@ public class GeneralController {
 			forward = "register_success";
 		}
 		return forward;
+	}
+	
+	@RequestMapping(value = "/freeSearch", method = RequestMethod.POST)
+	public String freeSearch(@RequestParam String searchkw, Model model) {
+		List<Supplier> supplierList = null;
+		if(searchkw ==null || searchkw.equals("")){
+			
+		}
+		else{
+			supplierList = supplierService.getSupplierList(searchkw);
+		}
+		model.addAttribute("supplierList", supplierList);
+		return "welcome";
 	}
 
 	

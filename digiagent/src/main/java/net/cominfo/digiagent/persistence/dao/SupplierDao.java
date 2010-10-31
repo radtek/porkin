@@ -3,6 +3,7 @@ package net.cominfo.digiagent.persistence.dao;
 import java.util.List;
 import java.util.Map;
 
+import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.sqlmapdao.SupplierDAOImpl;
 
 import org.springframework.stereotype.Repository;
@@ -30,7 +31,7 @@ public class SupplierDao extends SupplierDAOImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map> freeSearchByKeyword(final Map condition) {
+	public List<Supplier> freeSearchByKeyword(final String condition) {
 		return getSqlMapClientTemplate().queryForList(
 				"t_da_supplier_Custom.freeSearchByKeyword", condition);
 	}
