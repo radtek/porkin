@@ -1,5 +1,9 @@
 package net.cominfo.digiagent.service;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -208,21 +212,43 @@ public class SupplierService {
 	 *            1:实名2：资质
 	 * @return
 	 */
-	public byte[] getSupplierImage(Integer supplierId, Integer type) {
+	public byte[] getSupplierImage(Integer supplierId, Integer type,
+			String noPicPath) {
 		SupplierWithBLOBs supplier = supplierDao.selectByPrimaryKey(supplierId);
+		byte[] image = null;
 		if (supplier != null) {
 			switch (type) {
 			case 1:
-				return supplier.getSupplierCertify();
+				image = supplier.getSupplierCertify();
+				break;
 			case 2:
-				return supplier.getSupplierQualify();
+				image = supplier.getSupplierQualify();
+				break;
 			default:
-				return supplier.getSupplierImage();
+				image = supplier.getSupplierImage();
 			}
-
-		} else {
-			return null;
 		}
+		if (image == null) {
+			try {
+				return getNoPic(noPicPath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return image;
+	}
+
+	public byte[] getNoPic(String noPicPath) throws IOException {
+		BufferedInputStream in = new BufferedInputStream(new FileInputStream(
+				noPicPath));
+		ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
+		byte[] temp = new byte[1024];
+		int size = 0;
+		while ((size = in.read(temp)) != -1) {
+			out.write(temp, 0, size);
+		}
+		in.close();
+		return out.toByteArray();
 	}
 
 	/**
@@ -298,9 +324,9 @@ public class SupplierService {
 	public void deleteContactById(Integer contactId) {
 		contactDao.deleteByPrimaryKey(contactId);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Supplier> getSupplierList(String keyWord){
+	public List<Supplier> getSupplierList(String keyWord) {
 		return supplierDao.freeSearchByKeyword(keyWord);
 	}
 

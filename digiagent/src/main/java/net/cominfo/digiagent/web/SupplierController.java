@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
@@ -186,8 +188,9 @@ public class SupplierController {
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
 	public String output(@RequestParam Integer id,
-			HttpServletResponse response, Model model) {
-		model.addAttribute("image", supplierService.getSupplierImage(id, 0));
+			HttpServletResponse response, HttpServletRequest request, Model model) {
+		String noPicPath = request.getSession().getServletContext().getRealPath("images/common/nopic.jpg");
+		model.addAttribute("image", supplierService.getSupplierImage(id, 0, noPicPath));
 		return "image";
 	}
 
@@ -201,8 +204,9 @@ public class SupplierController {
 	 */
 	@RequestMapping(value = "/getImage1", method = RequestMethod.GET)
 	public String output1(@RequestParam Integer id,
-			HttpServletResponse response, Model model) {
-		model.addAttribute("image", supplierService.getSupplierImage(id, 1));
+			HttpServletResponse response, HttpServletRequest request, Model model) {
+		String noPicPath = request.getSession().getServletContext().getRealPath("images/common/nopic.jpg");
+		model.addAttribute("image", supplierService.getSupplierImage(id, 1, noPicPath));
 		return "image";
 	}
 
@@ -216,8 +220,9 @@ public class SupplierController {
 	 */
 	@RequestMapping(value = "/getImage2", method = RequestMethod.GET)
 	public String output2(@RequestParam Integer id,
-			HttpServletResponse response, Model model) {
-		model.addAttribute("image", supplierService.getSupplierImage(id, 2));
+			HttpServletResponse response, HttpServletRequest request, Model model) {
+		String noPicPath = request.getSession().getServletContext().getRealPath("images/common/nopic.jpg");
+		model.addAttribute("image", supplierService.getSupplierImage(id, 2, noPicPath));
 		return "image";
 	}
 
