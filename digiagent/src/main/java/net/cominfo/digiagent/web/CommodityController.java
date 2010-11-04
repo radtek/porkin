@@ -184,6 +184,18 @@ public class CommodityController {
 			return commodityService.delete(id);
 		}
 	}
+	
+	@RequestMapping(value = "/releaseCommodity", method = RequestMethod.POST)
+	public @ResponseBody
+	String release(@ModelAttribute("userName") String userName,
+			@ModelAttribute Commodity commodity,
+			@RequestParam("file1") MultipartFile image1,
+			@RequestParam("file2") MultipartFile image2,
+			@RequestParam("file3") MultipartFile image3,
+			@RequestParam("file4") MultipartFile image4,
+			@RequestParam("file5") MultipartFile image5) throws IOException {
+		return release(userName, commodity, image1, image2, image3, image4, image5, null, null);
+	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
@@ -194,7 +206,9 @@ public class CommodityController {
 			@RequestParam("file2") MultipartFile image2,
 			@RequestParam("file3") MultipartFile image3,
 			@RequestParam("file4") MultipartFile image4,
-			@RequestParam("file5") MultipartFile image5) throws IOException {
+			@RequestParam("file5") MultipartFile image5,
+			@RequestParam("categoryName") String categoryName,
+			@RequestParam("productName") String productName) throws IOException {
 		List<MultipartFile> imageList = new ArrayList<MultipartFile>();
 		List<CommodityImage> commodityImageList = new ArrayList<CommodityImage>();
 		imageList.add(image1);
@@ -219,6 +233,11 @@ public class CommodityController {
 		if (map.size() > 0) {
 			return JSONObject.toJSONString(map);
 		} else {
+			// 新加类别与产品
+			if (commodity.getProductId() == null || categoryName != null || productName != null) {
+				int productId = commodityService.generateNewProductId(categoryName, productName, userName);
+				commodity.setProductId(productId);
+			}
 			commodity = commodityService.release(commodity, commodityImageList,
 					userName);
 			map.put("commodityId", commodity.getCommodityId());

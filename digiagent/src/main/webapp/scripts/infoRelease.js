@@ -12,8 +12,14 @@ function PreviewImg(imgFile, targetImage){
     targetImage.style.height = "60px";
 }
 function releaseInfo() {
+	var actionUrl = "";
+	if ($('input[name="categoryName"]').val() == undefined) {
+		actionUrl = "../commodity/releaseCommodity";
+	} else {
+		actionUrl = "../commodity/release";
+	}
 	$('#commodityForm').ajaxForm({ 
-		url: "../commodity/release",
+		url: actionUrl,
 		beforeSubmit: validate, 
 		dataType:  'json', 
         success:   processJson,
@@ -25,14 +31,25 @@ function releaseInfo() {
 
 function validate(formData, jqForm, options) {
 	var form = jqForm[0];  
-	if (form.categoryId.value.length == 0) {
+	
+	if (form.categoryName == undefined && form.categoryId.value.length == 0) {
     	alert('请选择类别！');
 		form.categoryId.focus();
 		return false;
 	}
-	if (form.productId.value.length == 0) {
+	if (form.categoryName != undefined && form.categoryName.value.length == 0) {
+		alert('请输入类别！');
+		form.categoryName.focus();
+		return false;
+	}
+	if (form.productName == undefined  && form.productId.value.length == 0) {
     	alert('请选择产品！');
 		form.productId.focus();
+		return false;
+	}
+	if (form.productName != undefined && form.productName.value.length == 0) {
+		alert('请输入产品！');
+		form.productName.focus();
 		return false;
 	}
 	if (form.commodityName.value.length == 0) {
@@ -120,12 +137,20 @@ function setProductSelect(productId) {
 		dataType:"html",
 		type: "GET",
 		success: function(data) {
-			$('select[name="productId"]').empty().append(data).val(productId);
+			$('select[name="productId"]').empty().append(data).val($('select[name="categoryId"]').val());
 		},
 		error:function(err) {
 	    	alert('数据读取失败！');
 		}
 	});
+	$("input[name='categoryName']").remove();
+	$("input[name='productName']").remove();
+	//$('select[name="productId"]').attr('disabled', false);
+	if ($('select[name="categoryId"]').val() == 9999) {
+		$("<input type='text' name='categoryName' maxlength='20' size='20'/>").insertBefore('select[name="categoryId"]');
+		$("<input type='text' name='productName' maxlength='20' size='20'/>").insertBefore('select[name="productId"]');
+		//$('select[name="productId"]').attr('disabled', true);
+	}
 }
 
 function setCategorySelect(categoryId, productId) {
@@ -134,7 +159,7 @@ function setCategorySelect(categoryId, productId) {
 		dataType:"html",
 		type: "GET",
 		success: function(data) {
-			$('select[name="categoryId"]').empty().append(data).val(categoryId);
+			$('select[name="categoryId"]').empty().append(data).append("<option value='9999'>其它</option>");
 			if (productId > 0) {
 				setProductSelect(productId);
 			}

@@ -4,13 +4,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import net.cominfo.digiagent.persistence.dao.CategoryDao;
 import net.cominfo.digiagent.persistence.dao.CommodityDao;
 import net.cominfo.digiagent.persistence.dao.CommodityImageDao;
+import net.cominfo.digiagent.persistence.dao.ProductDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
+import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria;
 import net.cominfo.digiagent.persistence.domain.CommodityImage;
 import net.cominfo.digiagent.persistence.domain.CommodityImageCriteria;
+import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria.Criteria;
 import net.cominfo.digiagent.utils.Page;
 
@@ -22,6 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class CommodityService {
+
+	@Autowired
+	private CategoryDao categoryDao;
+
+	@Autowired
+	private ProductDao productDao;
 
 	@Autowired
 	private CommodityDao commodityDao;
@@ -145,6 +155,39 @@ public class CommodityService {
 			commodityImageDao.insert(commodityImage);
 		}
 		return commodity;
+	}
+	
+	/**
+	 * Method Description
+	 * 
+	 * @param categoryName
+	 * @param productName
+	 * @param userName
+	 * @return
+	 */
+	public int generateNewProductId(String categoryName, String productName, String userName) {
+		// 类别新增
+		Category category = new Category();
+		category.setCategoryId(sequenceDao.getCategoryNexId());
+		category.setActiveFlag("Y");
+		category.setCategoryName(categoryName);
+		category.setCreatedBy(userName);
+		category.setCreatedDate(new Date());
+		category.setLastupdatedBy(userName);
+		category.setLastupdatedDate(new Date());
+		categoryDao.insert(category);
+		// 产品新增
+		Product product = new Product();
+		product.setProductId(sequenceDao.getProductNexId());
+		product.setProductName(productName);
+		product.setActiveFlag("Y");
+		product.setCategoryId(category.getCategoryId());
+		product.setCreatedBy(userName);
+		product.setCreatedDate(new Date());
+		product.setLastupdatedBy(userName);
+		product.setLastupdatedDate(new Date());
+		productDao.insert(product);
+		return product.getProductId();
 	}
 	
 }
