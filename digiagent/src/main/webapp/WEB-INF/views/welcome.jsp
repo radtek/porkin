@@ -17,6 +17,9 @@
 	width:100%; border-color:maroon; float:left;
 }
 li {list-style-type:none;}
+#commodityP,#commodityS {
+	padding-top: 20px;
+}
 </style>
 
 </head>
