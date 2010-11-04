@@ -81,7 +81,11 @@ function queryCommodityList(pageNum, commodityType, isParentPath, _productName) 
 				str = str.replace(/productName/g, commodity.commodityName == null ? '暂无' : commodity.productName);
 				str = str.replace(/commodityName/g, commodity.commodityName == null ? '暂无' : commodity.commodityName);
 				str = str.replace(/commodityPrice/g, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
-				str = str.replace(/imageSrc/g, prefix + "commodity/getImage?id=" + commodity.imageId + "&uuid=" + createUUID());
+				if (commodity.imageId == null) {
+					str = str.replace(/imageSrc/g, prefix + "images/common/nopic.jpg");
+				} else {
+					str = str.replace(/imageSrc/g, prefix + "commodity/getImage?id=" + commodity.imageId + "&uuid=" + createUUID());
+				}
 				str = str.replace(/supplierContactname/g, commodity.supplierContactname == null ? '暂无' : commodity.supplierContactname);
 				str = str.replace(/supplierMobile/g, commodity.supplierMobile == null ? '暂无' : commodity.supplierMobile);
 				str = str.replace(/supplierTelephone/g, commodity.supplierTelephone == null ? '暂无' : commodity.supplierTelephone);
