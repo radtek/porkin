@@ -88,15 +88,15 @@ public class CommodityService {
 	}
 	
 	public Commodity update(Commodity commodity, String userName) {
-		commodity = validateCommodityName(commodity);
-		if (commodity.getCommodityId() == -1) {
-			return commodity;
-		} else {
+//		commodity = validateCommodityName(commodity);
+//		if (commodity.getCommodityId() == -1) {
+//			return commodity;
+//		} else {
 			commodity.setLastupdatedBy(userName);
 			commodity.setLastupdatedDate(new Date());
 			commodityDao.updateByPrimaryKey(commodity);
 			return commodity;
-		}
+//		}
 	}
 	
 	public String delete(Integer id){
