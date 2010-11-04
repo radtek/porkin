@@ -9,8 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><c:out value="${supplier.supplierName}"/></title>
 <link href="${ctx}/styles/main.css" rel="stylesheet" type="text/css" />
-<script src="${ctx}/scripts/Calendar.js"></script>
-<script src="${ctx}/scripts/menu.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
+
+<script type="text/javascript" src="${ctx}/scripts/login.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/index.js"></script>
 <script language="javascript">
 function selectTag(showContent,selfObj){
 	// 操作标签
@@ -27,14 +29,11 @@ function selectTag(showContent,selfObj){
 	document.getElementById(showContent).style.display = "block";
 }</script>
 <script language="javascript">
-function whenDelete() {
-	var isDelete=true;
-	if (!confirm("sure to delete")) {
-		isDelete=false;
-	}
-	window.location = 'contractSearch.html'; 
-	return isDelete;
+function showCommentForm(){
+	window.open ('${ctx}/supplier/commentForm','','height=360,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
 }
+
+
 </script>
 </head>
 <body>
@@ -102,7 +101,17 @@ function whenDelete() {
       <!--公司简介结束-->
       <!--店铺实体图片开始-->
       <!--end of commonts-->
+
+       <div class="mod_comp mt8">
+        <div class="mod_compT">公司简介</div>
+        
+        <div class="mod_compC" style="WORD-BREAK: break-all">
+        <c:out value="${supplier.supplierDescription}"/>
+        </div>
+      </div>
     </div>
+   
+
     <!--右边-->
     <div class="Bl l">
       <!--左边-->
@@ -129,6 +138,8 @@ align="center" border="0">
                 <td><div class="hui912 l_space">访问次数：<c:out value="${supplier.supplierAccess}" /></div>
                     
                   <br clear="all" />
+                  <div class="hui912 l_space"><a href="javascript:showCommentForm();">快速评价</a></a></div><br>
+                  
                   <div class="hui912 l_space">评价数量：0</div><br>
                   
                   <div class="hui912 l_space">实名认证:
@@ -189,5 +200,6 @@ align="center" border="0">
     <br class="c" />
   </div>
 </div>
+
 </body>
 </html>

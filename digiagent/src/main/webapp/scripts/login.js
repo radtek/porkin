@@ -8,12 +8,14 @@ function login(url) {
 	var username = $("input[name='username']").val();
 	var password = $("input[name='password']").val();
 	$.ajax({
-		url: "login",
+		url: "/digiagent/login",
 		dataType: "text",
 		type: "POST",
 		data:{username:username, password:password},
 		success: function(data) {
+
 			if(data == "success"){
+				//window.location.reload();
 				window.parent.location.href= url;
 			}
 			else{

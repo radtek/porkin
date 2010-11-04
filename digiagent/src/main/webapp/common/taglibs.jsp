@@ -5,3 +5,4 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="homeFlag" value="false"/>

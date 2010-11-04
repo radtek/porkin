@@ -316,4 +316,10 @@ public class SupplierController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	@RequestMapping(value = "/commentForm", method = RequestMethod.GET)
+	public String commentForm() {
+		return "commentForm";
+	}
 }

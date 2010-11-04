@@ -20,6 +20,8 @@ function logout() {
 	var url = "${ctx}/logout";
 	//document.location.href = "${ctx}/logout";
 	window.parent.location.href= url;
+	//window.location.href=url;
+	//window.location.reload();
 
 }
 
