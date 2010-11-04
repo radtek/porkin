@@ -144,6 +144,8 @@ public class CommodityController {
 		commodityUpdate.setStartDate(commodity.getStartDate());
 		commodityUpdate.setEndDate(commodity.getEndDate());
 		commodityUpdate.setCommodityName(commodity.getCommodityName());
+		commodityUpdate.setCommodityPrice(commodity.getCommodityPrice());
+		commodityUpdate.setCommodityType(commodity.getCommodityType());
 		commodityUpdate.setCommodityDescription(commodity
 				.getCommodityDescription());
 		// MYSQL BLOB类型最大65K
