@@ -114,5 +114,21 @@ public class SecurityService {
 		}
 		return result;
 	}
+	
+	public boolean isExistByEmail(String eMail){
+		return (getUserByEmail(eMail)!=null);
+	}
+	
+	private User getUserByEmail(String eMail){
+		User result = null;
+		UserCriteria criteria = new UserCriteria();
+		criteria.createCriteria().andUserEmailEqualTo(eMail);
+		List<User> userList = userDao.selectByExample(criteria);
+		if(null!=userList && userList.size()>0 ){
+			result = userList.get(0);
+		}
+		return result;
+	}
+	
 
 }

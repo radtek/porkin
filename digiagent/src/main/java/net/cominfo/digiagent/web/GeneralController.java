@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/")
@@ -132,6 +133,26 @@ public class GeneralController {
 	}
 
 	
-
+	/**
+	 * 帐号验证
+	 * 
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = "/validateUserName", method = RequestMethod.GET)
+	public @ResponseBody Boolean validateUserName(@RequestParam String username) {
+		return securityService.isExistByName(username);
+	}
+	
+	/**
+	 * 邮箱验证
+	 * 
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
+	public @ResponseBody Boolean validateEmail(@RequestParam String email) {
+		return securityService.isExistByEmail(email);
+	}
 
 }
