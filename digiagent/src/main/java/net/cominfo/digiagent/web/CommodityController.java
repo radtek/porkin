@@ -188,19 +188,21 @@ public class CommodityController {
 	@RequestMapping(value = "/releaseCommodity", method = RequestMethod.POST)
 	public @ResponseBody
 	String release(@ModelAttribute("userName") String userName,
+			@ModelAttribute("userId") Integer userId,
 			@ModelAttribute Commodity commodity,
 			@RequestParam("file1") MultipartFile image1,
 			@RequestParam("file2") MultipartFile image2,
 			@RequestParam("file3") MultipartFile image3,
 			@RequestParam("file4") MultipartFile image4,
 			@RequestParam("file5") MultipartFile image5) throws IOException {
-		return release(userName, commodity, image1, image2, image3, image4, image5, null, null);
+		return release(userName, userId, commodity, image1, image2, image3, image4, image5, null, null);
 	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
 	public @ResponseBody
 	String release(@ModelAttribute("userName") String userName,
+			@ModelAttribute("userId") Integer userId,
 			@ModelAttribute Commodity commodity,
 			@RequestParam("file1") MultipartFile image1,
 			@RequestParam("file2") MultipartFile image2,
@@ -239,7 +241,7 @@ public class CommodityController {
 				commodity.setProductId(productId);
 			}
 			commodity = commodityService.release(commodity, commodityImageList,
-					userName);
+					userName, userId);
 			map.put("commodityId", commodity.getCommodityId());
 		}
 		return JSONObject.toJSONString(map);

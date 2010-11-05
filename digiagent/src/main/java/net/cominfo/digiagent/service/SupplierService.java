@@ -115,14 +115,18 @@ public class SupplierService {
 		} else {
 			// FIXME Role default 企业会员[4]
 			user.setUserId(sequenceDao.getUserNexId());
-			user.setUserName(String.valueOf(new Date().getTime()));
-			user.setUserPassword(String.valueOf(new Date().getTime()));
+			user.setUserName(String.valueOf(System.currentTimeMillis()));
+			user.setUserPassword(String.valueOf(System.currentTimeMillis()));
 			user.setActiveFlag("N");
 			userRole.setRoleId(4);
 			userService.insert(user, userRole, userName);
 
 			supplier.setSupplierId(sequenceDao.getSupplierNexId());
 			supplier.setUserId(user.getUserId());
+			supplier.setSupplierName(user.getUserName());
+			supplier.setSupplierContactname(user.getUserName());
+			supplier.setActiveFlag("Y");
+			supplier.setSupplierAccess(0);
 			supplier.setCreatedBy(userName);
 			supplier.setCreatedDate(new Date());
 			supplier.setLastupdatedBy(userName);
@@ -325,7 +329,6 @@ public class SupplierService {
 		contactDao.deleteByPrimaryKey(contactId);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Supplier> getSupplierList(String keyWord) {
 		return supplierDao.freeSearchByKeyword(keyWord);
 	}

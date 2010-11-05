@@ -15,6 +15,7 @@ public class UserRoleService {
 	@Autowired
 	private UserRoleDao userRoleDao;
 
+	@SuppressWarnings("unchecked")
 	public List<String> getRoleIdListByUserName(String userName) {
 		List<String> list = (List<String>) userRoleDao
 				.getSqlMapClientTemplate().queryForList(

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/search")
 public class SearchController {
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET)
 	public String getView(Model model) {
 		Map user = new HashMap();

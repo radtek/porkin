@@ -74,9 +74,6 @@ public class CommodityService {
 			return commodity;
 		} else {
 			commodity.setCommodityId(sequenceDao.getCommentsNexId());
-			
-			// FIXME GET CURRENT LOGIN USER ID
-			// commodity.setUserId(1);
 			commodity.setUserId(userId);
 			commodity.setCreatedBy(userName);
 			commodity.setCreatedDate(new Date());
@@ -133,11 +130,9 @@ public class CommodityService {
 		}
 	}
 	
-	public Commodity release(Commodity commodity, List<CommodityImage> commodityImageList,String userName) {
+	public Commodity release(Commodity commodity, List<CommodityImage> commodityImageList,String userName, Integer userId) {
 		commodity.setCommodityId(sequenceDao.getCommodityNexId());
-		// FIXME GET CURRENT LOGIN USER ID
-		commodity.setUserId(1);
-		// FIXME DEFAULT ACTIVE_FLAG IS N
+		commodity.setUserId(userId);
 		commodity.setActiveFlag("Y");
 		commodity.setCreatedBy(userName);
 		commodity.setCreatedDate(new Date());

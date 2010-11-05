@@ -128,7 +128,7 @@ function processJson(data) {
     }
     alert("新增成功！");
     $('#commodityId').val(data.commodityId);
-    window.location.href= "basicInfo";
+    window.location.href= "../company/basicInfo";
 }
 
 function setProductSelect(productId) {

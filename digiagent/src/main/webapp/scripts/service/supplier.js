@@ -110,11 +110,6 @@ function validate(formData, jqForm, options) {
 		form.supplierContactname.focus();
 		return false;
 	}
-	if (form.userEmail.value.length == 0) {
-		$.messager.alert('消息','请输入邮件地址！','info');
-		form.userEmail.focus();
-		return false;
-	}
 	if (form.supplierZip.value.length == 0) {
 		$.messager.alert('消息','请输入邮编！','info');
 		form.supplierZip.focus();
@@ -181,7 +176,6 @@ function onEditClickHandler(id) {
 		$('input[name="supplierAddress"]').val(data.supplierAddress);
 		$('input[name="supplierAccess"]').val(data.supplierAccess);
 		$('input[name="supplierScore"]').val(data.supplierScore);
-		$('input[name="userEmail"]').val('abc');
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#supplierEdit').css('display','block');
 		$('#supplierEdit').dialog({title:'修改', modal: true});
@@ -313,7 +307,6 @@ $(function(){
 					$('input[name="supplierAccess"]').val('0');
 					$('input[name="supplierScore"]').val('0');
 					$('input[name="file"]').val('');
-					$('input[name="userEmail"]').val('');
 					$('input[name="supplierFax"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#loader').remove();

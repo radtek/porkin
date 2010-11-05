@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class MainController {
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET)
 	public String getView(@ModelAttribute("userName") String userName,Model model) {
 		Map user = new HashMap();
