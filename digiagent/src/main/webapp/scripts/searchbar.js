@@ -169,26 +169,24 @@ var getSupplierJson = function(brandName) {
 			$.each(data, function(index, supplier) {
 		        $('<div class="supplierInfo" style="padding-top:30px"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
 		        });
-		        // 供应商信息
-		        $('<div style="float:left"></div>').attr('id', "contentRight_" + index).appendTo("#supplierInfo_" + index);
-		        $('<li></li>').attr("id", "supplierName_" + index).appendTo("#contentRight_" + index);
-		        $("<a>"+supplier.supplierName+"</a>").css('text-decoration','underline').attr('href', "supplier/" + supplier.supplierId).appendTo("#supplierName_" + index);
-		        $('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#contentRight_" + index);
-		        $('<li></li>').attr('id', 'tel_' + index).text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
-		        $('<a>>>详情</a>').css('padding-left', '100px').attr('href', "supplier/" + supplier.supplierId).appendTo("#tel_" + index);
 		        // 供应商图片
-		         /*
-		        $('<div></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
+		        $('<div style="float:left"></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
 		        var $enlargedCover = $('<img/>')
 		    	.css('position', 'absolute')
 		    	.css('z-index', 9999)
 		    	.css('cursor', 'pointer')
 		    	.hide()
 		    	.appendTo('body');
-		    	*/
+		        // 供应商信息
+		        $('<div></div>').attr('id', "contentRight_" + index).appendTo("#supplierInfo_" + index);
+		        $('<li></li>').attr("id", "supplierName_" + index).appendTo("#contentRight_" + index);
+		        $("<a>"+supplier.supplierName+"</a>").css('text-decoration','underline').attr('href', "supplier/" + supplier.supplierId).appendTo("#supplierName_" + index);
+		        $('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#contentRight_" + index);
+		        $('<li></li>').attr('id', 'tel_' + index).text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
+		        $('<span>>></span>').css('padding-left', '100px').attr('id', 'blank_' + index).appendTo("#tel_" + index);
+		        $('<a>详情</a>').attr('href', "supplier/" + supplier.supplierId).appendTo("#blank_" + index);
 		        // 加载放大镜事件驱动
-		        /*
-		        $('<img id="pic" width="100" height="100"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index).click(function(event) {
+		        $('<img id="pic" width="50" height="50"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index).click(function(event) {
 		    	    var startPos = $(this).offset();
 		    	    startPos.width = $(this).width();
 		    	    startPos.height = $(this).height();
@@ -221,7 +219,6 @@ var getSupplierJson = function(brandName) {
 		    	}, function() {
 		    		$(this).css('cursor', '');
 		    	});
-		    	*/
 		    });
 		},
 		error: function(xhr, ajaxOptions, thrownError){
