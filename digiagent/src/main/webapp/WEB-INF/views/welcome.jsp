@@ -48,7 +48,6 @@ li {list-style-type:none;}
           <td><input name="searchkw" type="text" size="70" width="200px" /></td>
           <td>&nbsp;</td>
           <td width="80"> <input type="submit" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
-                  
         </tr>
         <tr>
         	<td colspan="3">&nbsp;</td>
@@ -65,12 +64,15 @@ li {list-style-type:none;}
 	        	<c:otherwise>
 	        		<div id="supplierInfo" style="height: 30px; padding: 30px;">
 	        		<c:forEach var="supplier" items="${supplierList}">
-	        	 		<div id="supplierInfo_${supplier.supplierId}" class="supplierInfo" style="padding-top: 30px;">
-						<div id="contentRight_${supplier.supplierId}" style="float: left;">
-						<li id="supplierName_${supplier.supplierId}"><a href="supplier/${supplier.supplierId}" style="text-decoration: underline;">${supplier.supplierName}</a></li>
-						<li>地址：${supplier.supplierAddress}</li>
-						<li id="tel_0">联系电话：${supplier.supplierTelephone}<a href="supplier/${supplier.supplierId}" style="padding-left: 100px;">&gt;&gt;详情</a></li>
-						</div>
+	        			<div id="supplierInfo_${supplier.supplierId}" class="supplierInfo" style="padding-top: 30px;">
+		        			<div id="contentLeft__${supplier.supplierId}" style="float:left">
+		        				<img id="pic" width="50" height="50" src="supplier/getImage?id=${supplier.supplierId}"/>
+		        			</div>
+							<div id="contentRight_${supplier.supplierId}">
+								<li id="supplierName_${supplier.supplierId}"><a href="supplier/${supplier.supplierId}" style="text-decoration: underline;">${supplier.supplierName}</a></li>
+								<li>地址：${supplier.supplierAddress}</li>
+								<li id="tel_0">联系电话：${supplier.supplierTelephone}<span style="padding-left: 100px;">&gt;&gt;</span><a href="supplier/${supplier.supplierId}">详情</a></li>
+							</div>
 						</div>
 	        	 	</c:forEach>
 	        	 	</div>
@@ -100,40 +102,53 @@ li {list-style-type:none;}
       </table>
     </div>
     <div class="tagContent" id="tagContent2">
+    	<form action="freeSearch" method="post">
+	      <table border="0" cellpadding="0" cellspacing="0" align="center">
+	        <tr>
+	        	<td colspan="3">&nbsp;</td>
+	        </tr>
+	        <tr>
+	          <td><input name="searchkw" type="text" size="70" width="200px"/></td>
+	          <td>&nbsp;</td>
+	          <td width="80"> <input type="submit" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
+	        </tr>
+	        <tr>
+	        	<td colspan="3">&nbsp;</td>
+	        </tr>
+        </table>
+        </form>
     	<div id="searchBar2"></div>
     	<div id="commodityP">
 	    </div>
 	    <div></div>
     </div>
     <div class="tagContent" id="tagContent3">
+    	<form action="freeSearch" method="post">
+	      <table border="0" cellpadding="0" cellspacing="0" align="center">
+	        <tr>
+	        	<td colspan="3">&nbsp;</td>
+	        </tr>
+	        <tr>
+	          <td><input name="searchkw" type="text" size="70" width="200px"/></td>
+	          <td>&nbsp;</td>
+	          <td width="80"> <input type="submit" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
+	        </tr>
+	        <tr>
+	        	<td colspan="3">&nbsp;</td>
+	        </tr>
+        </table>
+        </form>
     	<div id="searchBar3"></div>
       	<div id="commodityS">
 	    </div>
 	    <div></div>
     </div>
-<!--    <div class="tagContent" id="tagContent4">-->
-<!--      <table border="0" cellpadding="0" cellspacing="0" align="center">-->
-<!--        <tr>-->
-<!--        	<td colspan="3"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--          <td><input name="textfield" type="text" size="70" width="200px" /></td>-->
-<!--          <td>&nbsp;</td>-->
-<!--          <td width="80"> <input type="reset" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  -->
-<!--                  -->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--        	<td colspan="3">&nbsp;</td>-->
-<!--        </tr>-->
-<!--      </table>-->
-<!--		-->
-<!--    </div>-->
   </div>
   <div class="purductList" id="tagContent4">
-  <br>
-  <br>
-  <br>
-  <div id="searchBar4"></div>
+	  <br/>
+	  <br/>
+	  <br/>
+	  <div id="searchBar4"></div>
   </div>
 </div>
 </div>
