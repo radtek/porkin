@@ -56,14 +56,14 @@ function about() {
       密码<input type="password" name="password" size="10" width="10"/>&nbsp;
       <input class="btn_login" type="button" value="登录" onclick="login(${ctx}/)"/>
       </form>
-   			<span class="leftLink"><a href="${ctx}/registerForm">注册</a> | <a href="${ctx}/passwordForm">忘记密码</a> </span>
+   			<span class="leftLink"> <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="${ctx}/registerForm">注册</a> | <a href="${ctx}/passwordForm">忘记密码</a> </span>
       </c:when>
       <c:otherwise>
        <span class="leftLink"></a>&nbsp;&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /> | <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="${ctx}/member">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></><fmt:message key="label.common.logout"/></a></span>
       </c:otherwise>
       </c:choose>
       
-    <span class="rightLink"><a href="javascript:void(0);" onclick="about()"><fmt:message key="label.common.about"/></a> | <a href=# onClick="this.style.behavior='url(#default#homepage)'; this.setHomePage('${ctx}/');event.returnValue=false;">设为首页</a></span>
+    <span class="rightLink"><a href="javascript:void(0);" onclick="about()"><fmt:message key="label.common.about"/> </a> | <a href=# onClick="this.style.behavior='url(#default#homepage)'; this.setHomePage('${ctx}/');event.returnValue=false;">设为首页</a></span>
     </div>
  
 </div>
