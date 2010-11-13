@@ -38,6 +38,7 @@ function whenDelete() {
           <LI><b><A href="${ctx}/company/agent?page=1" target="mainFrame" title="代理申请">代理申请</A></b></LI>
           <LI><b><A href="${ctx}/company/picture" target="mainFrame" title="资质认证">资质认证</A></b></LI>
           <LI><b><A href="${ctx}/company/infoRelease" target="mainFrame" title="促销发布">促销发布</A></b></LI>
+          <LI><b><A href="${ctx}/person/infoRelease" target="mainFrame" title="二手发布">二手发布</A></b></LI>
           <LI><b><A href="${ctx}/company/commodityList" target="mainFrame" title="促销历史">促销历史</A></b></LI>
         </UL>
         </DIV>

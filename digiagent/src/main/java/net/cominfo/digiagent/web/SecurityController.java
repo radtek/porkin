@@ -52,8 +52,8 @@ public class SecurityController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(Model model, @RequestParam String username,
-			@RequestParam String password, HttpServletResponse response) {
-		User user = securityService.login(username, password);
+			@RequestParam String password, @RequestParam String type, HttpServletResponse response) {
+		User user = securityService.login(username, password, type);
 
 		String message = null;
 		if (user != null) {
@@ -72,7 +72,7 @@ public class SecurityController {
 	@RequestMapping(value = "/autologin", method = RequestMethod.POST)
 	public String autoLogin(Model model, @RequestParam String username,
 			@RequestParam String password, HttpServletResponse response) {
-		User user = securityService.login(username, password);
+		User user = securityService.login(username, password, null);
 		if (user != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userName", user.getUserName());

@@ -54,6 +54,14 @@ function about() {
      <form name="loginForm" action="${ctx}/login" method="post">
       用户<input type="text" name="username" size="10" width="10"/>&nbsp;
       密码<input type="password" name="password" size="10" width="10"/>&nbsp;
+      <select name="type">
+      	<option value="">通行证</option>
+      	<option value="个人会员">个人会员</option>
+      	<option value="企业会员">企业会员</option>
+      	<option value="一般用户">一般用户</option>
+      	<option value="超级用户">超级用户</option>
+      	<option value="系统管理员">系统管理员</option>
+      </select>&nbsp;
       <input class="btn_login" type="button" value="登录" onclick="login(${ctx}/)"/>
       </form>
    			<span class="leftLink"> <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="${ctx}/registerForm">注册</a> | <a href="${ctx}/passwordForm">忘记密码</a> </span>

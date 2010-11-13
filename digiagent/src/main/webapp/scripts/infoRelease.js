@@ -21,7 +21,7 @@ function releaseInfo() {
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'json', 
+		dataType:  'text', 
         success:   processJson,
         error:   function(err){
         	alert('数据操作失败！');

@@ -77,4 +77,36 @@
 			t_da_user.user_id = $userId$
 		</isNotEmpty>
 	</select>
+	
+	<select id="getUser" resultClass="net.cominfo.digiagent.persistence.domain.User" parameterClass="HashMap">
+		SELECT 
+			t_da_user.user_id as userId,
+	        user_name as userName,
+	        user_password as userPassword,
+	        user_email as userEmail,
+	        date_format(lastlogintime, '%Y/%m/%d %H:%i:%s') as lastlogintime,
+	        date_format(registertime, '%Y/%m/%d %H:%i:%s') as registertime,
+	        logonsum as logonsum,
+	        t_da_user.active_flag as activeFlag,
+	        t_da_user.created_by as createdBy,
+	        date_format(t_da_user.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
+	        t_da_user.lastupdated_by as lastupdatedBy,
+	        date_format(t_da_user.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate
+		FROM t_da_user
+		  LEFT JOIN t_da_userrole ON t_da_user.user_id = t_da_userrole.user_id
+		  LEFT JOIN t_da_role ON t_da_userrole.role_id = t_da_role.role_id
+		 WHERE t_da_user.user_id > 0
+		 <isNotEmpty prepend="AND" property="userId">
+			t_da_user.user_id = $userId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userName">
+			t_da_user.user_name = '$userName$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userPassword">
+			t_da_user.user_password = '$userPassword$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleName">
+			t_da_role.role_name = '$roleName$'
+		</isNotEmpty>
+	</select>
 </sqlMap>
