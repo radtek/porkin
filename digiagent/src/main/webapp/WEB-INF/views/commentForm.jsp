@@ -29,22 +29,35 @@ function Home() {
       <td colspan="2"></td>
     </tr>
     <tr >
+    <input type="hidden" name="id" id="id" value="${id}" />		
      <c:choose>
      	<c:when test="${empty sessionScope.userName}">
      		<td>帐号</td>
       		<td><input type="text" size="20" width="20"name="username" id="username" /></td>
       		<td>密码</td>
-      		<td><input type="password" size="20" width="20" name="password" id="username" /></td>
+      		<td><input type="password" size="20" width="20" name="password" id="password" /><input type="hidden" name="logined" id="logined" value="N" /></td>
      	</c:when>
      	<c:otherwise>
      		<td>&nbsp;</td>
-      		<td>&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /><input type="hidden" size="20" width="20" name="username" id="username" value="${sessionScope.userName}" /></td>
+      		<td>&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /><input type="hidden" name="username" id="username" value="${sessionScope.userName}" /><input type="hidden" name="password" id="password" value="" /><input type="hidden" name="logined" id="logined" value="Y" /></td>
       		<td></td>
       		<td></td>
      	
      	</c:otherwise>
      </c:choose>
       
+    </tr>
+    
+     <tr >
+      	<td colspan="4">评分: &nbsp;
+      		<select size="1" id="rank" name="rank">
+      			<c:forEach var="current" begin="1" end="9">
+      				<option value="${current}" ><c:out value="${current}"/>&nbsp;分</option>
+      			</c:forEach>
+      			<option value="10" selected>10分</option>
+      			
+            </select>
+		</td>
     </tr>
     
     <tr >
@@ -62,7 +75,7 @@ function Home() {
     </tr>
     <tr>
       <td colspan="2" align="center"><span class="headCity">
-        <input class="btn_login" type="submit" value="注册" />
+        <input class="btn_login" type="submit" value="提交" />
             </span><span class="headCity">
       <input class="btn_login" type="reset" value="取消" />
                   </span></td>

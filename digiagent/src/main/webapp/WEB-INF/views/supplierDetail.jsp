@@ -30,7 +30,7 @@ function selectTag(showContent,selfObj){
 }</script>
 <script language="javascript">
 function showCommentForm(){
-	window.open ('${ctx}/supplier/commentForm','','height=360,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
+	window.open ('${ctx}/supplier/commentForm?id=${supplier.supplierId}','','height=360,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
 }
 
 
@@ -81,7 +81,8 @@ function showCommentForm(){
                <br/></>联 系 人：${supplier.supplierContactname}<br /><br/>
                
                  电子邮件: <c:forEach var="email" items="${emailList}"><c:out value="${email}"/>&nbsp;&nbsp;</c:forEach><br /><br />   
-       QQ 号码: <c:forEach var="qq" items="${qqList}"><c:out value="${qq}"/>&nbsp;&nbsp;</c:forEach><br /><br />        
+       QQ 号码: <c:forEach var="qq" items="${qqList}"><c:out value="${qq}"/>&nbsp;&nbsp;</c:forEach><br /><br />
+       MSN号码: <c:forEach var="msn" items="${msnList}"><c:out value="${msn}"/>&nbsp;&nbsp;</c:forEach><br /><br />        
               </div></td>
             </tr>
           </tbody>

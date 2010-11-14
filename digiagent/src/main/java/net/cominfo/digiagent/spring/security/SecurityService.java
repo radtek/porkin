@@ -107,6 +107,26 @@ public class SecurityService {
 		return result;
 	}
 	
+	/**
+	 * @param userName
+	 * @param userPassword
+	 * @return 
+	 */
+	public User loginWithoutType(String userName, String userPassword) {
+		User result = null;
+		UserCriteria criteria = new UserCriteria();
+		criteria.createCriteria().andUserNameEqualTo(userName).andUserPasswordEqualTo(userPassword);
+		List<User> userList = userDao.selectByExample(criteria);
+		if (userList != null & userList.size() > 0) {
+			result = userList.get(0);
+			int newLogonSum = result.getLogonsum()+1;
+			result.setLogonsum(newLogonSum);
+			result.setLastlogintime(new Date());
+			userDao.updateByPrimaryKey(result);
+		}
+		return result;
+	}
+	
 	public boolean isExistByName(String userName){
 		return (getUserByName(userName)!=null);
 	}

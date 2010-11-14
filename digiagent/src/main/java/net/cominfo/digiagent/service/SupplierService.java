@@ -258,7 +258,7 @@ public class SupplierService {
 	/**
 	 * @param supplierId
 	 * @param type
-	 *            联系方式类型 T：电话,Q:QQ, E:Email M：手机
+	 *            联系方式类型 T：电话,Q:QQ, E:Email M：手机, N: MSN
 	 * @return
 	 */
 	public List<String> getContactBySupplierId(Integer supplierId, String type) {
@@ -282,6 +282,10 @@ public class SupplierService {
 
 	public List<String> getSupplierEmailList(Integer supplierId) {
 		return getContactBySupplierId(supplierId, "E");
+	}
+	
+	public List<String> getSupplierMSNList(Integer supplierId) {
+		return getContactBySupplierId(supplierId, "N");
 	}
 
 	public List<String> getSupplierTelephoneList(Integer supplierId,

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
 import net.cominfo.digiagent.persistence.domain.Contact;
@@ -18,8 +19,12 @@ import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.persistence.domain.UserRole;
+import net.cominfo.digiagent.service.CommentsService;
 import net.cominfo.digiagent.service.HistoryService;
 import net.cominfo.digiagent.service.SupplierService;
+import net.cominfo.digiagent.spring.FlashMap.Message;
+import net.cominfo.digiagent.spring.FlashMap.MessageType;
+import net.cominfo.digiagent.spring.security.SecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +45,12 @@ public class SupplierController {
 
 	@Autowired
 	private SupplierService supplierService;
+	
+	@Autowired
+	private CommentsService commentsService;
+	
+	@Autowired
+	private SecurityService securityService;
 
 	@Autowired
 	private HistoryService historyService;
@@ -187,9 +198,12 @@ public class SupplierController {
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
 	public String output(@RequestParam Integer id,
-			HttpServletResponse response, HttpServletRequest request, Model model) {
-		String noPicPath = request.getSession().getServletContext().getRealPath("images/common/nopic.jpg");
-		model.addAttribute("image", supplierService.getSupplierImage(id, 0, noPicPath));
+			HttpServletResponse response, HttpServletRequest request,
+			Model model) {
+		String noPicPath = request.getSession().getServletContext()
+				.getRealPath("images/common/nopic.jpg");
+		model.addAttribute("image", supplierService.getSupplierImage(id, 0,
+				noPicPath));
 		return "image";
 	}
 
@@ -203,9 +217,12 @@ public class SupplierController {
 	 */
 	@RequestMapping(value = "/getImage1", method = RequestMethod.GET)
 	public String output1(@RequestParam Integer id,
-			HttpServletResponse response, HttpServletRequest request, Model model) {
-		String noPicPath = request.getSession().getServletContext().getRealPath("images/common/nopic.jpg");
-		model.addAttribute("image", supplierService.getSupplierImage(id, 1, noPicPath));
+			HttpServletResponse response, HttpServletRequest request,
+			Model model) {
+		String noPicPath = request.getSession().getServletContext()
+				.getRealPath("images/common/nopic.jpg");
+		model.addAttribute("image", supplierService.getSupplierImage(id, 1,
+				noPicPath));
 		return "image";
 	}
 
@@ -219,9 +236,12 @@ public class SupplierController {
 	 */
 	@RequestMapping(value = "/getImage2", method = RequestMethod.GET)
 	public String output2(@RequestParam Integer id,
-			HttpServletResponse response, HttpServletRequest request, Model model) {
-		String noPicPath = request.getSession().getServletContext().getRealPath("images/common/nopic.jpg");
-		model.addAttribute("image", supplierService.getSupplierImage(id, 2, noPicPath));
+			HttpServletResponse response, HttpServletRequest request,
+			Model model) {
+		String noPicPath = request.getSession().getServletContext()
+				.getRealPath("images/common/nopic.jpg");
+		model.addAttribute("image", supplierService.getSupplierImage(id, 2,
+				noPicPath));
 		return "image";
 	}
 
@@ -245,6 +265,7 @@ public class SupplierController {
 
 			ArrayList<String> emailList = new ArrayList<String>();
 			ArrayList<String> qqList = new ArrayList<String>();
+			ArrayList<String> msnList = new ArrayList<String>();
 
 			List<Contact> contactList = supplierService
 					.getContactBySupplierId(id);
@@ -264,6 +285,8 @@ public class SupplierController {
 					telephoneList.add(contactContent);
 				} else if (contactType.equalsIgnoreCase("Q")) {
 					qqList.add(contactContent);
+				} else if (contactType.equalsIgnoreCase("N")) {
+					msnList.add(contactContent);
 				}
 			}
 
@@ -275,6 +298,7 @@ public class SupplierController {
 			model.addAttribute("telephoneList", telephoneList);
 			model.addAttribute("area", area);
 			model.addAttribute("qqList", qqList);
+			model.addAttribute("msnList", msnList);
 
 			supplierService.access(supplier);
 			historyService.recordSupplierAccess(id);
@@ -320,10 +344,50 @@ public class SupplierController {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "/commentForm", method = RequestMethod.GET)
-	public String commentForm() {
+	public String commentForm(@RequestParam("id") String id, Model model) {
+		model.addAttribute("id",id);
 		return "commentForm";
+	}
+
+	@RequestMapping(value = "/comments", method = RequestMethod.POST)
+	public String postComments(@ModelAttribute("username") String username,
+			@RequestParam("password") String password,
+			@RequestParam("logined") String logined,
+			@RequestParam("rank") String rank,
+			@RequestParam("comments") String comments,
+			@RequestParam("id") Integer id,
+			HttpServletRequest request, HttpSession session, Model model) throws IOException {
+		
+		String result = "commentForm";
+		User user = null;
+		
+		if(logined.equals("Y")){
+			String userName = (String)session.getAttribute("userName");
+			if(userName.equals(username)){
+				user = securityService.getUserByName(userName);
+			}
+		}
+		else{
+			user = securityService.loginWithoutType(username, password);
+		}
+		
+		if(user==null){
+			model.addAttribute("id",id);
+			model.addAttribute("nologin", new Message(MessageType.success,"supplier.comments.nologin"));
+			result = "commentForm";
+		}
+		else{
+			Integer userId = user.getUserId();
+			commentsService.save(id, userId, rank, comments, username);
+			model.addAttribute("userId", userId);
+			model.addAttribute("userName", username);
+			model.addAttribute("supplierId", new Integer(0));
+			result = "successForcomments";
+		}
+		
+		return result;
+
 	}
 }
