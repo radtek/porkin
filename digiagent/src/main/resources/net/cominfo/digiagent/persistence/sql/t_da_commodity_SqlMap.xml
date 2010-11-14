@@ -20,6 +20,7 @@
     <result column="LASTUPDATED_DATE" jdbcType="TIMESTAMP" property="lastupdatedDate" />
     <result column="ACTIVE_FLAG" jdbcType="CHAR" property="activeFlag" />
     <result column="PRODUCT_ID" jdbcType="INTEGER" property="productId" />
+    <result column="COMMODITY_PRICE_OLD" jdbcType="REAL" property="commodityPriceOld" />
   </resultMap>
   <sql id="ibatorgenerated_Example_Where_Clause">
     <!--
@@ -58,7 +59,7 @@
     -->
     select COMMODITY_ID, COMMODITY_NAME, COMMODITY_DESCRIPTION, START_DATE, END_DATE,
       COMMODITY_TYPE, COMMODITY_PRICE, USER_ID, CREATED_BY, CREATED_DATE, LASTUPDATED_BY,
-      LASTUPDATED_DATE, ACTIVE_FLAG, PRODUCT_ID
+      LASTUPDATED_DATE, ACTIVE_FLAG, PRODUCT_ID, COMMODITY_PRICE_OLD
     from t_da_commodity
     <isParameterPresent>
       <include refid="t_da_commodity.ibatorgenerated_Example_Where_Clause" />
@@ -74,7 +75,7 @@
     -->
     select COMMODITY_ID, COMMODITY_NAME, COMMODITY_DESCRIPTION, START_DATE, END_DATE,
       COMMODITY_TYPE, COMMODITY_PRICE, USER_ID, CREATED_BY, CREATED_DATE, LASTUPDATED_BY,
-      LASTUPDATED_DATE, ACTIVE_FLAG, PRODUCT_ID
+      LASTUPDATED_DATE, ACTIVE_FLAG, PRODUCT_ID, COMMODITY_PRICE_OLD
     from t_da_commodity
     where COMMODITY_ID = #commodityId:INTEGER#
   </select>
@@ -101,11 +102,11 @@
     -->
     insert into t_da_commodity (COMMODITY_ID, COMMODITY_NAME, COMMODITY_DESCRIPTION, START_DATE,
       END_DATE, COMMODITY_TYPE, COMMODITY_PRICE, USER_ID, CREATED_BY, CREATED_DATE, LASTUPDATED_BY,
-      LASTUPDATED_DATE, ACTIVE_FLAG, PRODUCT_ID)
+      LASTUPDATED_DATE, ACTIVE_FLAG, PRODUCT_ID, COMMODITY_PRICE_OLD, COMMODITY_PRICE_OLD)
     values (#commodityId:INTEGER#, #commodityName:VARCHAR#, #commodityDescription:VARCHAR#,
       #startDate:TIMESTAMP#, #endDate:TIMESTAMP#, #commodityType:CHAR#, #commodityPrice:REAL#,
       #userId:INTEGER#, #createdBy:VARCHAR#, #createdDate:TIMESTAMP#, #lastupdatedBy:VARCHAR#,
-      #lastupdatedDate:TIMESTAMP#, #activeFlag:CHAR#, #productId:INTEGER#)
+      #lastupdatedDate:TIMESTAMP#, #activeFlag:CHAR#, #productId:INTEGER#, #commodityPriceOld:REAL#)
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="net.cominfo.digiagent.persistence.domain.Commodity">
     <!--
@@ -156,6 +157,9 @@
       <isNotNull prepend="," property="productId">
         PRODUCT_ID
       </isNotNull>
+      <isNotNull prepend="," property="commodityPriceOld">
+        COMMODITY_PRICE_OLD
+      </isNotNull>
       )
     </dynamic>
     values
@@ -201,6 +205,9 @@
       </isNotNull>
       <isNotNull prepend="," property="productId">
         #productId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="commodityPriceOld">
+        #commodityPriceOld:REAL#
       </isNotNull>
       )
     </dynamic>
@@ -262,6 +269,9 @@
       <isNotNull prepend="," property="record.productId">
         PRODUCT_ID = #record.productId:INTEGER#
       </isNotNull>
+      <isNotNull prepend="," property="record.commodityPriceOld">
+        COMMODITY_PRICE_OLD = #record.commodityPriceOld:REAL#
+      </isNotNull>
     </dynamic>
     <isParameterPresent>
       <include refid="t_da_commodity.ibatorgenerated_Example_Where_Clause" />
@@ -286,7 +296,8 @@
       LASTUPDATED_BY = #record.lastupdatedBy:VARCHAR#,
       LASTUPDATED_DATE = #record.lastupdatedDate:TIMESTAMP#,
       ACTIVE_FLAG = #record.activeFlag:CHAR#,
-      PRODUCT_ID = #record.productId:INTEGER#
+      PRODUCT_ID = #record.productId:INTEGER#,
+      COMMODITY_PRICE_OLD = #record.commodityPriceOld:REAL#
     <isParameterPresent>
       <include refid="t_da_commodity.ibatorgenerated_Example_Where_Clause" />
     </isParameterPresent>
@@ -337,6 +348,9 @@
       <isNotNull prepend="," property="productId">
         PRODUCT_ID = #productId:INTEGER#
       </isNotNull>
+      <isNotNull prepend="," property="commodityPriceOld">
+        COMMODITY_PRICE_OLD = #commodityPriceOld:REAL#
+      </isNotNull>
     </dynamic>
     where COMMODITY_ID = #commodityId:INTEGER#
   </update>
@@ -358,7 +372,8 @@
       LASTUPDATED_BY = #lastupdatedBy:VARCHAR#,
       LASTUPDATED_DATE = #lastupdatedDate:TIMESTAMP#,
       ACTIVE_FLAG = #activeFlag:CHAR#,
-      PRODUCT_ID = #productId:INTEGER#
+      PRODUCT_ID = #productId:INTEGER#,
+      COMMODITY_PRICE_OLD = #commodityPriceOld:REAL#
     where COMMODITY_ID = #commodityId:INTEGER#
   </update>
 </sqlMap>

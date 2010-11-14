@@ -151,6 +151,7 @@ function onEditClickHandler(id) {
 		$('input[name="endDate"]').val(new Date(data.endDate).format('yyyy/MM/dd'));
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('input[name="commodityPrice"]').val(data.commodityPrice);
+		$('input[name="commodityPriceOld"]').val(data.commodityPriceOld);
 		$('select[name="commodityType"]').val(data.commodityType);
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
@@ -302,6 +303,11 @@ $(function(){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
+			{field:'commodityPriceOld',title:'原价',width:50,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
 			{field:'commodityType',title:'商品类型',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
@@ -356,6 +362,7 @@ $(function(){
 					$('input[name="startDate"]').val('');
 					$('input[name="endDate"]').val('');
 					$('input[name="commodityPrice"]').val('');
+					$('input[name="commodityPriceOld"]').val('');
 					$('input[name="file"]').val('');
 					$('input[name="commodityimageId"]').val('');
 					$('select[name="commodityType"]').val('S');

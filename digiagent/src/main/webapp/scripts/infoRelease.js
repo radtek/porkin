@@ -67,6 +67,11 @@ function validate(formData, jqForm, options) {
 		form.commodityPrice.focus();
 		return false;
 	}
+	if (form.commodityPriceOld != undefined && form.commodityPriceOld.value > 0 && !/^\d+\.{0,}\d{0,}$/.test(form.commodityPriceOld.value)) {
+    	alert('商品原价格式错误！');
+		form.commodityPriceOld.focus();
+		return false;
+	}
 	if (form.commodityDescription.value.length == 0) {
     	alert('请输入商品描述！');
 		form.commodityDescription.focus();

@@ -22,6 +22,7 @@
 		<li>产品<select id="productId" name="productId"></select></li>
     	<li>商品名称<input type="hidden" name="commodityId" id="commodityId" size="30"/><input type="text" name="commodityName" id="commodityName" size="30"/></li>
         <li>商品单价<input type="text" name="commodityPrice" id="commodityPrice" size="30"/></li>
+        <li>商品原价<input type="text" name="commodityPriceOld" id="commodityPriceOld" size="30"/></li>
         <li>开始时间<input type="text" name="startDate" id="startDate" size="30" readonly="readonly" onclick="SelectDate(this,'yyyy/MM/dd');"/></li>
 		<li>结束时间<input type="text" name="endDate" id="endDate" size="30" readonly="readonly" onclick="SelectDate(this,'yyyy/MM/dd');"/></li>
 		<li>商品描述<textarea name="commodityDescription" id="commodityDescription" cols="50" rows="5"></textarea></li>

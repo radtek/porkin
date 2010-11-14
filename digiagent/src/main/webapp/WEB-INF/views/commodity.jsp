@@ -7,7 +7,7 @@
 </head>
 <body>
 <table id="commodityList"></table>
-<div id="commodityEdit" icon="icon-edit" style="width:500px;height:380px;display:none">
+<div id="commodityEdit" icon="icon-edit" style="width:500px;height:450px;display:none">
 	<div style="background: #fafafa; padding: 10px; text-align: center">
 		<form id="commodityForm" action="../commodity/create" method="post"	enctype="multipart/form-data">
 			  <div>
@@ -46,6 +46,10 @@
 	          <div>
 	              	<label for="name">价格:</label>
 	              	<input class="easyui-validatebox" type="text" id="commodityPrice" name="commodityPrice" maxlength="20"/>
+	          </div> 
+	          <div>
+	              	<label for="name">原价:</label>
+	              	<input class="easyui-validatebox" type="text" id="commodityPriceOld" name="commodityPriceOld" maxlength="20"/>
 	          </div> 
 	          <div>
 	              	<label for="name">状态:</label>

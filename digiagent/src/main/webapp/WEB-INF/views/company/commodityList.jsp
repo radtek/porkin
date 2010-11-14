@@ -21,7 +21,7 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../historyTemplate.jsp"></jsp:include>
 <div class="companyTitle">促销历史 </div>
-<div id="commodityP">
+<div id="commodityP" style="height:auto">
 </div>
 <div></div>
 </body>

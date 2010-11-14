@@ -13,6 +13,7 @@
 		       t_da_commodity.lastupdated_by as lastupdatedBy,
 		       date_format(t_da_commodity.lastupdated_date, '%Y/%m/%d %H:%i:%s') as lastupdatedDate,
 		       t_da_commodity.commodity_price as commodityPrice,
+		       t_da_commodity.commodity_price_old as commodityPriceOld,
 		       t_da_commodity.commodity_type as commodityType,
 		       t_da_commodity.active_flag as activeFlag,
 		       t_da_supplier.supplier_name as supplierName,

@@ -75,12 +75,15 @@ function queryCommodityList(pageNum, commodityType, isParentPath, _productName) 
 			var result = jQuery.parseJSON(data.resultList);
 			if (result.length == 0) return;
 			$.each(result, function(index, commodity) {
+				$('#companyLeft').css('height', 250);
 				var str = $('#commodityTemplate').html();
 				str = str.replace('rowNum', (pageNum - 1) * 10 + index + 1);
 				str = str.replace(/categoryName/g, commodity.categoryName == null ? '暂无' : commodity.categoryName);
 				str = str.replace(/productName/g, commodity.commodityName == null ? '暂无' : commodity.productName);
 				str = str.replace(/commodityName/g, commodity.commodityName == null ? '暂无' : commodity.commodityName);
-				str = str.replace(/commodityPrice/g, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
+				str = str.replace(/commodityPrice/, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
+				str = str.replace(/commodityPrice/, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
+				str = str.replace(/commodityPriceOld/, commodity.commodityPriceOld == null ? '暂无' : commodity.commodityPriceOld);
 				if (commodity.imageId == null) {
 					str = str.replace(/imageSrc/g, prefix + "images/common/nopic.jpg");
 				} else {
@@ -104,9 +107,11 @@ function queryCommodityList(pageNum, commodityType, isParentPath, _productName) 
 			
 			if (commodityType == 'S') {
 				$('#commodityS').next().empty().append('<a href="javascript:void(0)" onclick="skip(1, \''+commodityType+'\')">首页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+prePageNum+', \''+commodityType+'\')">前一页</a>&nbsp;共<input type="text" name="pageNum" size=2 value="'+pageNum+'" onkeyup="CheckInputInt(this);" onchange="go(this, \''+commodityType+'\', '+totalPage+');"/>/' + totalPage + '页&nbsp;<a href="javascript:void(0)" onclick="skip('+nextPageNum+', \''+commodityType+'\')">后一页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+totalPage+', \''+commodityType+'\')">尾页</a>&nbsp;共'+data.total+'条记录');
+				$(".oldPrice").hide();
 			}
 			if (commodityType == 'P') {
 				$('#commodityP').next().empty().append('<a href="javascript:void(0)" onclick="skip(1, \''+commodityType+'\')">首页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+prePageNum+', \''+commodityType+'\')">前一页</a>&nbsp;共<input type="text" name="pageNum" size=2 value="'+pageNum+'" onkeyup="CheckInputInt(this);" onchange="go(this, \''+commodityType+'\', '+totalPage+');"/>/' + totalPage + '页&nbsp;<a href="javascript:void(0)" onclick="skip('+nextPageNum+', \''+commodityType+'\')">后一页</a>&nbsp;<a href="javascript:void(0)" onclick="skip('+totalPage+', \''+commodityType+'\')">尾页</a>&nbsp;共'+data.total+'条记录');
+				$(".oldPrice").show();
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError){

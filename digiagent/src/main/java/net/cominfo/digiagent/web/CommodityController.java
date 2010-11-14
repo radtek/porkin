@@ -145,6 +145,7 @@ public class CommodityController {
 		commodityUpdate.setEndDate(commodity.getEndDate());
 		commodityUpdate.setCommodityName(commodity.getCommodityName());
 		commodityUpdate.setCommodityPrice(commodity.getCommodityPrice());
+		commodityUpdate.setCommodityPriceOld(commodity.getCommodityPriceOld());
 		commodityUpdate.setCommodityType(commodity.getCommodityType());
 		commodityUpdate.setCommodityDescription(commodity
 				.getCommodityDescription());
