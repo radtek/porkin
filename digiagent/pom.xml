@@ -16,7 +16,13 @@
 	</properties>
 	<dependencies>
 	
-		<!-- Compile dependencies -->
+		<!-- Lucene dependencies -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.wltea.analyzer</groupId>
 			<artifactId>IKAnalyzer</artifactId>
