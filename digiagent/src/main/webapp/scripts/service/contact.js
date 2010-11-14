@@ -197,16 +197,25 @@ $(function(){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				},
 				formatter:function(value,rec){
+					var tag = "";
 					switch (value) {
 					case "Q":
-						return "qq";
+						tag = "qq";
+						break;
 					case "T":
-						return "电话";
+						tag = "电话";
+						break;
 					case "E":
-						return "电子邮件";
+						tag = "电子邮件";
+						break;
 					case "M":
-						return "手机";
+						tag = "手机";
+						break;
+					case "N":
+						tag = "MSN";
+						break;
 					}
+					return tag;
 				}
 			},
 			{field:'contactContent',title:'联系内容',width:100,align:'center',sortable:true,

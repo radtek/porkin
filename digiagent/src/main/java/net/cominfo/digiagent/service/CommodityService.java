@@ -1,5 +1,6 @@
 package net.cominfo.digiagent.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,8 @@ import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria.Criteria;
 import net.cominfo.digiagent.utils.Page;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class CommodityService {
+	Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private CategoryDao categoryDao;
@@ -183,6 +187,34 @@ public class CommodityService {
 		product.setLastupdatedDate(new Date());
 		productDao.insert(product);
 		return product.getProductId();
+	}
+	
+	/**
+	 * 商品信息过期没有自动删除
+	 */
+	@SuppressWarnings("unchecked")
+	public boolean autoTimeDeleteCommodity() {
+		List<Commodity> commodityList = commodityDao.getSqlMapClientTemplate().queryForList("t_da_commodity_Custom.getExpiredCommodity");
+		if (commodityList != null && commodityList.size() > 0) {
+			log.info("过期商品条数：" + commodityList.size() + " 条");
+			List param = new ArrayList();
+			for (Commodity commodity : commodityList) {
+				param.add(commodity.getCommodityId());
+			}
+			try {
+				commodityDao.getSqlMapClientTemplate().delete("t_da_commodity_Custom.deleteExpiredCommodityImage", param);
+				int result = commodityDao.getSqlMapClientTemplate().delete("t_da_commodity_Custom.deleteExpiredCommodity", param);
+				if (commodityList.size() == result) {
+					return true;
+				}
+				return false;
+			} catch (Exception e) {
+				log.error(e);
+				return false;
+			}
+		}
+		return true;
+		
 	}
 	
 }

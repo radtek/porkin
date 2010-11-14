@@ -32,6 +32,7 @@
                     <option value="T">电话</option>
                     <option value="E">电子邮件</option>
                     <option value="M">手机</option> 
+                    <option value="N">MSN</option> 
               	</select>
           </div> 
           <div>

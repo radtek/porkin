@@ -42,7 +42,7 @@ function formSubmit(actionUrl) {
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'json', 
+		dataType:  'html', 
         success:   processJson,
         error:   function(err){
     		$('#loader').remove();
@@ -85,19 +85,20 @@ function validate(formData, jqForm, options) {
 		$.messager.alert('消息','开始时间应大于结束时间！','info');
 		return false;
 	}
-	if ($('#image').children().length == 0 && form.file.value.length == 0) {
-		$.messager.alert('消息','请选择图片！','info');
-		form.file.focus();
-		return false;
+	if ($('#image').children().length > 0 && form.file.value.length > 0) {
+//		$.messager.alert('消息','请选择图片！','info');
+//		form.file.focus();
+//		return false;
+//	}
+		var ext = form.file.value.split('.').pop().toLowerCase(); 
+		var allow = new Array('gif','png','jpg','jpeg'); 
+		if(form.file.value.length > 0 && jQuery.inArray(ext, allow) == -1) {
+		
+		   $.messager.alert('消息','请选择图片格式为：gif,png,jpg,jpeg！','info');
+		   return false;
+		} 
+		$('#image').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
 	}
-	var ext = form.file.value.split('.').pop().toLowerCase(); 
-	var allow = new Array('gif','png','jpg','jpeg'); 
-	if(form.file.value.length > 0 && jQuery.inArray(ext, allow) == -1) {
-	
-	   $.messager.alert('消息','请选择图片格式为：gif,png,jpg,jpeg！','info');
-	   return false;
-	} 
-	$('#image').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
 }
 /**
  * 字符串转JSON对象
@@ -109,6 +110,7 @@ function parseObj(strData){
 }
 
 function processJson(data) {
+	data = parseObj(data.replace(/<.*?>/g,""));
     if (data.commodityId == -1) {
     	$('#loader').remove();
 		$.messager.alert('消息','商品已存在，请重新操作！','warning');

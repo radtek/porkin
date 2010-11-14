@@ -184,8 +184,8 @@ align="center" border="0">
                   <div class="info_r">
                  <c:forEach var="qq" items="${qqList}">
                  <a 
-      href="tencent://Message/?Uin=<c:out value='${qq}'/>&amp;websiteName=dealer.zol.com.cn&amp;Menu=yes" 
-      target="blank"><img id="qq_2" height="16" alt="点击这里给我发消息" src="" align="absmiddle" 
+      href="http://wpa.qq.com/msgrd?V=1&Uin=<c:out value='${qq}'/>Site=商讯网&Menu=yes" 
+      target="blank"><img id="qq_2" height="16" alt="点击这里给我发消息" src="http://wpa.qq.com/pa?p=1:<c:out value='${qq}'/>:4" align="absmiddle" 
       border="no" />(客服)</a>
                  </c:forEach>
                   </div></td>
