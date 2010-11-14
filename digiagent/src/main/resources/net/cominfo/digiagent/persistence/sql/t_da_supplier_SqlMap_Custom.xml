@@ -166,7 +166,9 @@
 		    T_DA_SUPPLIER.SUPPLIER_ADDRESS LIKE '%$value$%' OR
 		    T_DA_PRODUCT.PRODUCT_NAME LIKE '%$value$%'  OR
 		    T_DA_CATEGORY.CATEGORY_NAME LIKE '%$value$%'  OR
-		    T_DA_BRAND.BRAND_NAME LIKE  '%$value$%' 
+		    T_DA_BRAND.BRAND_NAME LIKE  '%$value$%' OR
+		    T_DA_BRAND.BRAND_ENGLISH LIKE  '%$value$%' 
+		    
     )
 	</select>
 	
