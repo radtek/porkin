@@ -1,0 +1,24 @@
+<!--
+²ÎÕÕ¡¡URL
+http://weblogs.asp.net/scottgu/archive/2010/05/07/jquery-templates-and-data-linking-and-microsoft-contributing-to-jquery.aspx
+-->
+<script src="../jquery-1.4.2.min.js" type="text/javascript"></script>
+<script src="../jquery.tmpl.js" type="text/javascript"></script>
+
+<h1>Contacts</h1>
+<div id="contactContainer"></div>
+<script id="contactTemplate" type="text/html">
+<div>
+<ul>
+<li>name:{{= name }} </li>
+<li>Phone:{{= phone }}</li>
+</ul>
+</div>
+</script>
+
+
+<script type="text/javascript">
+var contacts = [{name:'a',phone:1},{name:'b',phone:2}];
+
+$("#contactTemplate").render(contacts).appendTo("#contactContainer");
+</script>
