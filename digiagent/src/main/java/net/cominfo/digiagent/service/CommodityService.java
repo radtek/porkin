@@ -1,6 +1,5 @@
 package net.cominfo.digiagent.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -194,17 +193,13 @@ public class CommodityService {
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean autoTimeDeleteCommodity() {
-		List<Commodity> commodityList = commodityDao.getSqlMapClientTemplate().queryForList("t_da_commodity_Custom.getExpiredCommodity");
-		if (commodityList != null && commodityList.size() > 0) {
-			log.info("过期商品条数：" + commodityList.size() + " 条");
-			List param = new ArrayList();
-			for (Commodity commodity : commodityList) {
-				param.add(commodity.getCommodityId());
-			}
+		List<Integer> commodityIdList = commodityDao.getSqlMapClientTemplate().queryForList("t_da_commodity_Custom.getExpiredCommodity");
+		if (commodityIdList != null && commodityIdList.size() > 0) {
+			log.info("过期商品条数：" + commodityIdList.size() + " 条");
 			try {
-				commodityDao.getSqlMapClientTemplate().delete("t_da_commodity_Custom.deleteExpiredCommodityImage", param);
-				int result = commodityDao.getSqlMapClientTemplate().delete("t_da_commodity_Custom.deleteExpiredCommodity", param);
-				if (commodityList.size() == result) {
+				commodityDao.getSqlMapClientTemplate().delete("t_da_commodity_Custom.deleteExpiredCommodityImage", commodityIdList);
+				int result = commodityDao.getSqlMapClientTemplate().delete("t_da_commodity_Custom.deleteExpiredCommodity", commodityIdList);
+				if (commodityIdList.size() == result) {
 					return true;
 				}
 				return false;

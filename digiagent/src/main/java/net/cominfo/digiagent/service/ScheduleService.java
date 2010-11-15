@@ -23,7 +23,7 @@ public class ScheduleService {
 	 * 商品信息过期没有自动删除
 	 */
 	public void outPeriodDeleteCommodity() {
-		log.info("☆☆☆☆☆商品信息过期没有自动删除开始☆☆☆☆☆");
+		log.info("☆☆☆☆☆商品信息过期自动删除开始☆☆☆☆☆");
 		sdf.applyPattern("yyyy年MM月dd日 HH时mm分ss秒");  
 		long startTime = System.currentTimeMillis();
 		log.info("开始时间：" + sdf.format(startTime));  
@@ -36,6 +36,6 @@ public class ScheduleService {
 		long endTime = System.currentTimeMillis();
 		log.info("结束时间：" + sdf.format(endTime));  
 		log.info("耗时：" + (endTime - startTime)/1000 + " 秒");
-		log.info("☆☆☆☆☆商品信息过期没有自动删除结束☆☆☆☆☆");
+		log.info("☆☆☆☆☆商品信息过期自动删除结束☆☆☆☆☆");
 	}
 }
