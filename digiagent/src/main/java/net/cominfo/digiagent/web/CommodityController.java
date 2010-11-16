@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
@@ -167,7 +168,7 @@ public class CommodityController {
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
 	public String output(@RequestParam Integer id,
-			HttpServletResponse response, Model model) {
+			HttpServletResponse response, HttpServletRequest request,Model model) {
 		model
 				.addAttribute("image", commodityImageService
 						.getCommodityImage(id));
