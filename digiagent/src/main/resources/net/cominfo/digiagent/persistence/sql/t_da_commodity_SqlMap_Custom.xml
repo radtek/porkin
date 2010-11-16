@@ -89,19 +89,8 @@
 	</select>
 	
 	<select id="getExpiredCommodity" parameterClass="HashMap"
-		resultClass="net.cominfo.digiagent.persistence.domain.Commodity">
-		SELECT t_da_commodity.commodity_id as commodityId,
-		       t_da_commodity.commodity_name as commodityName,
-		       t_da_commodity.commodity_Description as commodityDescription,
-		       t_da_commodity.start_date as startDate,
-		       t_da_commodity.end_date as endDate,
-		       t_da_commodity.created_by as createdBy,
-		       t_da_commodity.created_date as createdDate,
-		       t_da_commodity.lastupdated_by as lastupdatedBy,
-		       t_da_commodity.lastupdated_date as lastupdatedDate,
-		       t_da_commodity.commodity_price as commodityPrice,
-		       t_da_commodity.commodity_type as commodityType,
-		       t_da_commodity.active_flag as activeFlag
+		resultClass="int">
+		SELECT t_da_commodity.commodity_id as commodityId
 		FROM t_da_commodity
 		 WHERE commodity_id > 0
 		and	t_da_commodity.end_date <![CDATA[<]]> now();
