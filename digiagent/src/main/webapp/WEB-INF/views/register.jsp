@@ -11,6 +11,7 @@
 <script src="scripts/Calendar.js"></script>
 <script src="scripts/menu.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/password.complexity.js"></script>
 
 <script language="javascript">
 
@@ -124,8 +125,20 @@ var validateEmail = function() {
       </tr>
     <tr>
       <td>请输入密码</td>
-      <td><input type="password" name="password1" id="password1" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty password}"><fmt:message key="${password.text}" /></c:if></font></td>
+      <td><input type="password" name="password1" id="password1" onKeyUp="pwStrength(this.value)" onBlur="pwStrength(this.value)" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty password}"><fmt:message key="${password.text}" /></c:if></font></td>
       <td></td>
+    </tr>
+    <tr>
+    	<td>密码强度</td>
+    	<td>
+    		<table width="100" border="1" cellspacing="0" cellpadding="1" bordercolor="#cccccc" height="5" style='display:inline'>     
+				<tr align="center" bgcolor="#eeeeee">     
+					<td width="33%" id="strength_L">弱</td>     
+					<td width="33%" id="strength_M">中</td>     
+					<td width="33%" id="strength_H">强</td>     
+				</tr>     
+			  </table>   
+    	</td>
     </tr>
     <tr>
       <td>再确认密码</td>
