@@ -21,7 +21,7 @@ function releaseInfo() {
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'text', 
+		dataType:  'json', 
         success:   processJson,
         error:   function(err){
         	alert('数据操作失败！');
@@ -131,9 +131,13 @@ function processJson(data) {
 		alert('商品图片大小应小于65K，请重新操作！');
     	return;
     }
-    alert("新增成功！");
-    $('#commodityId').val(data.commodityId);
-    window.location.href= "../company/basicInfo";
+    if (data.commodityId > 0) {
+	    alert("发布成功！");
+	    $('#commodityId').val(data.commodityId);
+	    window.location.href= "../company/basicInfo";
+    } else {
+    	alert("发布失败！");
+    }
 }
 
 function setProductSelect(productId) {

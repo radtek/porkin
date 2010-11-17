@@ -42,7 +42,7 @@ function formSubmit(actionUrl) {
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'html', 
+		dataType:  'json', 
         success:   processJson,
         error:   function(err){
     		$('#loader').remove();
@@ -100,17 +100,8 @@ function validate(formData, jqForm, options) {
 		$('#image').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
 	}
 }
-/**
- * 字符串转JSON对象
- * @param strData
- * @return
- */
-function parseObj(strData){
-	return (new Function( "return " + strData ))();
-}
 
 function processJson(data) {
-	data = parseObj(data.replace(/<.*?>/g,""));
     if (data.commodityId == -1) {
     	$('#loader').remove();
 		$.messager.alert('消息','商品已存在，请重新操作！','warning');
@@ -121,21 +112,25 @@ function processJson(data) {
 		$.messager.alert('消息','商品图片大小应小于65K，请重新操作！','warning');
     	return;
     }
-    var optMsg = "新增成功！";
-    if ($('input[name="commodityId"]').val() > 0) {
-    	optMsg = "更新成功！";
+    if (data.commodityId > 0) {
+    	var optMsg = "新增成功！";
+        if ($('input[name="commodityId"]').val() > 0) {
+        	optMsg = "更新成功！";
+        }
+        $.messager.show({
+    		title:'消息',
+    		msg:optMsg,
+    		timeout:optSuccessTime,
+    		showType:'slide'
+    	});
+        $('#commodityId').val(data.commodityId);
+        var url = "../commodity/getImage?id=" +data.commodityImage + "&uuid=" + createUUID();
+        $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+//    	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
+    	$('#commodityList').datagrid('reload');
+    } else {
+    	$.messager.alert('消息','操作失败！','error');
     }
-    $.messager.show({
-		title:'消息',
-		msg:optMsg,
-		timeout:optSuccessTime,
-		showType:'slide'
-	});
-    $('#commodityId').val(data.commodityId);
-    var url = "../commodity/getImage?id=" +data.commodityImage + "&uuid=" + createUUID();
-    $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
-//	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
-	$('#commodityList').datagrid('reload');
 }
 
 function onEditClickHandler(id) {
