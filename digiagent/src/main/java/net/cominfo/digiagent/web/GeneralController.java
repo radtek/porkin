@@ -66,7 +66,9 @@ public class GeneralController {
 		String password2 = request.getParameter("password2");
 		String email = request.getParameter("email");
 		String captcha = request.getParameter("captcha");
-
+		model.addAttribute("user_type", type);
+		model.addAttribute("user_username", username);
+		model.addAttribute("user_email", email);
 		boolean existFlag = securityService.isExistByName(username);
 		String forward = "register";
 		boolean hasError = false;
@@ -86,6 +88,14 @@ public class GeneralController {
 					"register.email.error"));
 			hasError = true;
 		}
+		
+		existFlag = securityService.isExistByName(username);
+		if (existFlag) {
+			model.addAttribute("email", new Message(MessageType.success,
+					"register.email.exist"));
+			hasError = true;
+		}
+		
 		String original = (String) session.getAttribute("icaptcha");
 		
 		//验证码不区分大小写

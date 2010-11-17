@@ -113,14 +113,14 @@ var validateEmail = function() {
     </tr>
     <tr>
       <td>用户类型</td>
-      <td colspan="2"><input type="radio" name="type" id="radio" value="个人会员" checked/>
+      <td colspan="2"><input type="radio" name="type" id="radio" value="个人会员" <c:if test="${user_type=='个人会员'}">checked</c:if>/>
       个人会员
-        <input type="radio" name="type" id="radio2" value="企业会员" />
+        <input type="radio" name="type" id="radio2" value="企业会员" <c:if test="${user_type=='企业会员'}">checked</c:if>/>
       企业会员</td>
     </tr>
     <tr>
       <td>用户帐号</td>
-      <td><input type="text" name="username" id="username" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty username}"><fmt:message key="${username.text}" /></c:if></font></td> 
+      <td><input type="text" name="username" id="username" value="${user_username }"/>&nbsp;&nbsp;<font color="red"><c:if test="${not empty username}"><fmt:message key="${username.text}" /></c:if></font></td> 
       </tr>
     <tr>
       <td>请输入密码</td>
@@ -133,7 +133,7 @@ var validateEmail = function() {
     </tr>
     <tr>
       <td>电子邮件</td>
-      <td><input type="text" name="email" id="email" />&nbsp;&nbsp;<font color="red"><c:if test="${not empty email}"><fmt:message key="${email.text}" /></c:if></font></td>
+      <td><input type="text" name="email" id="email" value="${user_email }"/>&nbsp;&nbsp;<font color="red"><c:if test="${not empty email}"><fmt:message key="${email.text}" /></c:if></font></td>
     </tr>
     <tr>
       <td>验证码显示</td>
