@@ -1,3 +1,4 @@
+var browserIsIE = "true"; /* 浏览器是否为IE */
 function setProductSelect(productId) {
 	$.ajax({
 		url:"../productBrand/getProductList",
@@ -38,11 +39,19 @@ function setCategoryByProductId(productId) {
 
 //edit event
 function formSubmit(actionUrl) {
+	
+	var dt = "";
+	if (browserIsIE) {
+		dt = "json";
+	} else {
+		dt = "text";
+	}
+	
 	$('#loader').remove();
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'json', 
+		dataType:  dt, 
         success:   processJson,
         error:   function(err){
     		$('#loader').remove();
@@ -102,6 +111,9 @@ function validate(formData, jqForm, options) {
 }
 
 function processJson(data) {
+	if (!browserIsIE) {
+		data = JSON.parse(data.replace(/<.*?>/g,""));
+	}
     if (data.commodityId == -1) {
     	$('#loader').remove();
 		$.messager.alert('消息','商品已存在，请重新操作！','warning');
@@ -381,4 +393,14 @@ $(function(){
 		afterPageText:'/{pages}',
 		beforePageText:'页'
 	});
+});
+
+$(document).ready(function() {
+	 jQuery.each(jQuery.browser, function(i, val) {
+		 if($.browser.msie){
+			 browserIsIE = true;
+		 } else {
+			 browserIsIE = false;
+		 }
+	 });
 });

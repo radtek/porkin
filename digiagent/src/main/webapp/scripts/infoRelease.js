@@ -1,3 +1,4 @@
+var browserIsIE = "true"; /* 浏览器是否为IE */
 function PreviewImg(imgFile, targetImage){  
 	var targetId = "#"+targetImage;
 	$(targetId).empty();
@@ -18,10 +19,18 @@ function releaseInfo() {
 	} else {
 		actionUrl = "../commodity/release";
 	}
+	
+	var dt = "";
+	if (browserIsIE) {
+		dt = "json";
+	} else {
+		dt = "text";
+	}
+	
 	$('#commodityForm').ajaxForm({ 
 		url: actionUrl,
 		beforeSubmit: validate, 
-		dataType:  'json', 
+		dataType:  dt, 
         success:   processJson,
         error:   function(err){
         	alert('数据操作失败！');
@@ -123,6 +132,9 @@ function validate(formData, jqForm, options) {
 }
 
 function processJson(data) {
+	if (!browserIsIE) {
+		data = JSON.parse(data.replace(/<.*?>/g,""));
+	}
     if (data.commodityId == -1) {
 		alert('商品已存在，请重新操作！');
     	return;
@@ -183,4 +195,11 @@ function setCategorySelect(categoryId, productId) {
 $(document).ready(function() {
 	$('select[name="categoryId"]').bind('change', setProductSelect);
 	setCategorySelect('', -1);
+	 jQuery.each(jQuery.browser, function(i, val) {
+		 if($.browser.msie){
+			 browserIsIE = true;
+		 } else {
+			 browserIsIE = false;
+		 }
+	 });
 });

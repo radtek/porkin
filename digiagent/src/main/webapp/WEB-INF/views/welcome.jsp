@@ -21,7 +21,6 @@ li {list-style-type:none;}
 	padding-top: 20px;
 }
 </style>
-
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
