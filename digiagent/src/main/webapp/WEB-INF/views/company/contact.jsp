@@ -68,6 +68,9 @@ function whenDelete() {
     			<c:if test="${contact.contactType eq 'M'}">
     				<td>手机</td>
     			</c:if>
+    			<c:if test="${contact.contactType eq 'N'}">
+    				<td>MSN</td>
+    			</c:if>
     			<td><c:out value="${contact.contactContent}" /></td>
     			<td>
     			<span class="headCity">
