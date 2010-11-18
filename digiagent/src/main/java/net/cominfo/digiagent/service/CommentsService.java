@@ -13,16 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class CommentsService {
-	
+
 	@Autowired
 	private CommentsDao commentsDao;
-	
+
 	@Autowired
 	private SequenceDao sequenceDao;
-	
-	public void save(Integer supplierId, Integer userId, String rank, String content,String userName){
+
+	public void save(Integer supplierId, Integer userId, String rank,
+			String content, String userName) {
 		Comments comments = new Comments();
-		
+
 		comments.setCommentId(sequenceDao.getCommentsNexId());
 		comments.setCommentRank(rank);
 		comments.setCommentStatus("N");
@@ -34,8 +35,7 @@ public class CommentsService {
 		comments.setSupplierId(supplierId);
 		comments.setUserId(userId);
 		commentsDao.insert(comments);
-		
+
 	}
-	
 
 }

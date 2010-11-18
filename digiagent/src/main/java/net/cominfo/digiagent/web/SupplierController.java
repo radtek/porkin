@@ -355,7 +355,7 @@ public class SupplierController {
 	public String postComments(@RequestParam("username") String username,
 			@RequestParam("password") String password,
 			@RequestParam("logined") String logined,
-			@RequestParam("rank") String rank,
+			@RequestParam("rank") Integer rank,
 			@RequestParam("comments") String comments,
 			@RequestParam("id") Integer id,
 			HttpServletRequest request, HttpSession session, Model model) throws IOException {
@@ -380,10 +380,12 @@ public class SupplierController {
 		}
 		else{
 			Integer userId = user.getUserId();
-			commentsService.save(id, userId, rank, comments, username);
+			String strRank = Integer.toHexString(rank).toUpperCase(); 
+			commentsService.save(id, userId, strRank, comments, username);
 			model.addAttribute("userId", userId);
 			model.addAttribute("userName", username);
 			model.addAttribute("supplierId", new Integer(0));
+			model.addAttribute("id",id);
 			result = "successForcomments";
 		}
 		
