@@ -19,7 +19,7 @@ var getCategoryJson = function(_target) {
 		success: function(data) {
 			if (data.length==0) return;
 			categoryId = target + "_categoryBar";
-			$('<div style="height:30px"></div>').attr('id', categoryId.replace(/#/g,'')).empty().append('类别: ').appendTo(target);
+			$('<div></div>').attr('id', categoryId.replace(/#/g,'')).empty().append('类别: ').appendTo(target);
 			$.each(data, function(index, category) {
 				$(categoryId).append($('<a></a>').attr('href', 'javascript:void(0)').text(category.categoryName).click(function() {
 					var param = encodeURI($(this).text());
@@ -84,7 +84,7 @@ var getProductJson = function(categoryName) {
 		success: function(data) {
 			if (data.length==0) return;
 			productBarId = target + "_productBar";
-			$('<div style="height:30px"></div>').attr('id', productBarId.replace(/#/g,'')).empty().append('<br>产品: ').appendTo(categoryId);
+			$('<div></div>').attr('id', productBarId.replace(/#/g,'')).empty().append('<br>产品: ').appendTo(categoryId);
 			$.each(data, function(index, product) {
 				// 搜索TAB
 				if (target == "#searchBar") {
@@ -133,7 +133,7 @@ var getBrandJson = function(productName) {
 		data: {productName:productName},
 		success: function(data) {
 			if (data.length==0) return;
-			$('<div id="brandBar" style="height:30px"></div>').empty().append('<br>品牌: ').appendTo(productBarId);
+			$('<div id="brandBar"></div>').empty().append('<br>品牌: ').appendTo(productBarId);
 			$.each(data, function(index, brand) {
 		        $('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
 		        	var param = encodeURI($(this).text());
