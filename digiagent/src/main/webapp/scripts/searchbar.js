@@ -186,7 +186,8 @@ var getSupplierJson = function(brandName) {
 		        $('<span>>></span>').css('padding-left', '100px').attr('id', 'blank_' + index).appendTo("#tel_" + index);
 		        $('<a>详情</a>').attr('href', "supplier/" + supplier.supplierId).appendTo("#blank_" + index);
 		        // 加载放大镜事件驱动
-		        $('<img id="pic" width="50" height="50"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index).click(function(event) {
+		        $('<img id="pic" width="50" height="50"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index);
+		        /*.click(function(event) {
 		    	    var startPos = $(this).offset();
 		    	    startPos.width = $(this).width();
 		    	    startPos.height = $(this).height();
@@ -219,6 +220,7 @@ var getSupplierJson = function(brandName) {
 		    	}, function() {
 		    		$(this).css('cursor', '');
 		    	});
+		    	*/
 		    });
 		},
 		error: function(xhr, ajaxOptions, thrownError){
