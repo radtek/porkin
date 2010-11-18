@@ -25,7 +25,7 @@ public class CommentsService {
 		
 		comments.setCommentId(sequenceDao.getCommentsNexId());
 		comments.setCommentRank(rank);
-		comments.setCommentRank("N");
+		comments.setCommentStatus("N");
 		comments.setCommentContent(content);
 		comments.setCreatedBy(userName);
 		comments.setCreatedDate(new Date());
