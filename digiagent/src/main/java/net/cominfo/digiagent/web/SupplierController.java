@@ -352,7 +352,7 @@ public class SupplierController {
 	}
 
 	@RequestMapping(value = "/comments", method = RequestMethod.POST)
-	public String postComments(@ModelAttribute("username") String username,
+	public String postComments(@RequestParam("username") String username,
 			@RequestParam("password") String password,
 			@RequestParam("logined") String logined,
 			@RequestParam("rank") String rank,
