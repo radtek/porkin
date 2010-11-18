@@ -23,7 +23,7 @@ function Home() {
 <div class="companyTitle">发表评论</div>
 <div id="companyLeft">
 
-<form action="${ctx}/supplier/comments">	
+<form action="${ctx}/supplier/comments" method="post">	
   <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="2"></td>
