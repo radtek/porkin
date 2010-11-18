@@ -1,6 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="common/common.jsp" %>
-<%@include file="/common/taglibs.jsp" %>
 <html>
 <head>
 	<script type="text/javascript" src="scripts/service/admin.js"></script>

@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>个人会员</title>
 <link href="styles/main.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="${ctx}/images/common/star.gif" />
 
 <script language="javascript">
 /**
