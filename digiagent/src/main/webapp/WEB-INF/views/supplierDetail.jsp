@@ -33,7 +33,9 @@ function showCommentForm(){
 	window.open ('${ctx}/supplier/commentForm?id=${supplier.supplierId}','','height=360,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
 }
 
-
+function goBack() {
+	window.location.href="/digiagent/";
+}
 </script>
 </head>
 <body>
@@ -46,7 +48,7 @@ function showCommentForm(){
     <div class="Brr">
       <!--基本信息开始-->
       <div class="mod_comp">
-        <div class="mod_compT">基本信息</div>
+        <div class="mod_compT">基本信息<div style="float:right"><a href="javascript:void(0)" onclick="goBack()">返回</a></div></div>
         <table cellspacing="12" cellpadding="0" width="100%" border="0">
           <tbody>
             <tr>
