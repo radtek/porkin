@@ -291,6 +291,7 @@ public class SupplierController {
 			}
 
 			String area = supplierService.getAreaInfoBySupplierId(id);
+			Integer countComments = commentsService.countCommentsBySupplier(id);
 
 			model.addAttribute("supplier", supplier);
 			model.addAttribute("emailList", emailList);
@@ -299,6 +300,8 @@ public class SupplierController {
 			model.addAttribute("area", area);
 			model.addAttribute("qqList", qqList);
 			model.addAttribute("msnList", msnList);
+			model.addAttribute("countComments", countComments);
+			model.addAttribute("creditLevel", 3);
 
 			supplierService.access(supplier);
 			historyService.recordSupplierAccess(id);

@@ -30,7 +30,7 @@ function selectTag(showContent,selfObj){
 }</script>
 <script language="javascript">
 function showCommentForm(){
-	window.open ('${ctx}/supplier/commentForm?id=${supplier.supplierId}','','height=360,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
+	window.open ('${ctx}/supplier/commentForm?id=${supplier.supplierId}','','height=390,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
 }
 
 function goBack() {
@@ -61,9 +61,7 @@ function goBack() {
               </table></td>
               <td><div class="Al_2 l f14" 
       style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 530px; PADDING-TOP: 0px"><span 
-      class="comp"><c:out value="${supplier.supplierName}"/></span> <img alt="当前在线" 
-      src="${ctx}/images/common/online.gif" 
-      align="absmiddle" /> <br />
+      class="comp"><c:out value="${supplier.supplierName}"/></span> <br />
                       <div 
       style="MARGIN: 0px 0px 8px; OVERFLOW: hidden; WIDTH: 100%; BORDER-BOTTOM: #ccc 1px dotted; HEIGHT: 8px"></div>
               
@@ -130,20 +128,17 @@ align="center" border="0">
                 <td height="10"></td>
               </tr>
               <tr>
-                <td class="liuyan_box" valign="center" align="middle"><a 
-      onclick="document.getElementById('content').focus();" 
-      href="javascript:void(0)"><img alt="给我留言" 
-      src="${ctx}/images/common/ly.gif" /></a> <img alt="当前在线" 
-      src="${ctx}/images/common/online.gif" 
-      align="absmiddle" /><br></td>
+                <td class="liuyan_box" valign="center" align="middle"><a
+       
+      href="javascript:showCommentForm();"><img alt="给我留言" 
+      src="${ctx}/images/common/ly2.gif" /></a> <br></td>
               </tr>
               <tr>
-                <td><div class="hui912 l_space">访问次数：<c:out value="${supplier.supplierAccess}" /></div>
+                <td><br><div class="hui912 l_space">访问次数：<c:out value="${supplier.supplierAccess}" /></div>
                     
                   <br clear="all" />
-                  <div class="hui912 l_space"><a href="javascript:showCommentForm();">快速评价</a></a></div><br>
                   
-                  <div class="hui912 l_space">评价数量：0</div><br>
+                  <div class="hui912 l_space">评价数量：<c:out value="${countComments}" /></div><br>
                   
                   <div class="hui912 l_space">实名认证:
                   <c:choose>
@@ -166,20 +161,11 @@ align="center" border="0">
                   <br 
       clear="all" />
                   <div class="hui912 l_space">信誉等级：</div>
-                  <div class="info_r"><a title="点击查看信誉等级来源" 
-      href="http://dealer.zol.com.cn/d_29835/appraise.html" target="_blank"><A 
-      title=3钻商家 href="http://dealer.zol.com.cn/d_29835/appraise.html" 
-      target=_blank><img height="16" 
-      src="${ctx}/images/common/d1.gif" width="16" 
-      border="0" /><img height="16" 
-      src="${ctx}/images/common/d1.gif" width="16" 
-      border="0" /><img height="16" 
-      src="${ctx}/images/common/d1.gif" width="16" 
-      border="0" /><img height="16" 
-      src="欣龙海天渠道专营 - 公司简介 【联系电话010-62682632】-ZOL经销商_files/star.gif" width="16" 
-      border="0" /><img height="16" 
-      src="欣龙海天渠道专营 - 公司简介 【联系电话010-62682632】-ZOL经销商_files/star.gif" width="16" 
-      border="0" /></a></div>
+                  <div class="info_r">
+                  <c:forEach begin="1" end="${creditLevel}">
+                  	<img height="16" src="${ctx}/images/common/d1.gif" width="16" border="0" />
+                  </c:forEach >                  
+                  </div>
                   <br clear="all" />
                   
                   <br clear="all" />

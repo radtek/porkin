@@ -5,6 +5,7 @@ import java.util.Date;
 import net.cominfo.digiagent.persistence.dao.CommentsDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.domain.Comments;
+import net.cominfo.digiagent.persistence.domain.CommentsCriteria;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,12 @@ public class CommentsService {
 		comments.setUserId(userId);
 		commentsDao.insert(comments);
 
+	}
+	
+	public int countCommentsBySupplier(Integer supplierId){
+		CommentsCriteria criteria = new CommentsCriteria();
+		criteria.createCriteria().andSupplierIdEqualTo(supplierId);
+		return commentsDao.countByExample(criteria);
 	}
 
 }
