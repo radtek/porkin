@@ -20,6 +20,12 @@ li {list-style-type:none;}
 #commodityP,#commodityS {
 	padding-top: 20px;
 }
+#searchBar, #searchBar1, #searchBar2, #searchBar3 {
+	font-size: 14px; 
+}
+#searchBar a, #searchBar1 a, #searchBar2 a, #searchBar3 a{
+	font-size: 14px; 
+}
 </style>
 </head>
 <body>
