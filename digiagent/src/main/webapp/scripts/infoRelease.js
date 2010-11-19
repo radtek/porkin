@@ -1,17 +1,4 @@
 var browserIsIE = "true"; /* 浏览器是否为IE */
-function PreviewImg(imgFile, targetImage){  
-	var targetId = "#"+targetImage;
-	$(targetId).empty();
-	var targetImage = document.getElementById(targetImage);
-    var imgDiv = document.createElement("div");
-    document.body.appendChild(imgDiv);
-    imgDiv.style.width = "80px";    imgDiv.style.height = "80px";
-    imgDiv.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod = scale)";   
-    imgDiv.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgFile.value;
-    targetImage.appendChild(imgDiv);    
-    targetImage.style.width = "80px";
-    targetImage.style.height = "60px";
-}
 function releaseInfo() {
 	var actionUrl = "";
 	if ($('input[name="categoryName"]').val() == undefined) {

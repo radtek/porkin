@@ -11,6 +11,7 @@
 <script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/Calendar.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/common/upload.preview.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/infoRelease.js"></script>
 </head>
 <body>
@@ -32,24 +33,44 @@
     </ul>
     <ul style="list-style:none; line-height:30px;">
     	<li>图片1
-    		<input type="file" name="file1" id="file1" onchange="javascript:PreviewImg(this, 'image1');"/>
-            <div id="image1"></div>
+    		<div id="image1_wrapper">  
+		        <div id="image1_fake">  
+		            <img id="image1" onload="onPreviewLoad(this)"/>  
+		        </div>  
+		    </div> 
+    		<input type="file" name="file1" id="file1" onchange="onUploadImgChange(this, 'image1');"/>
         </li>
         <li>图片2
-    		<input type="file" name="file2" id="file2" onchange="javascript:PreviewImg(this, 'image2');"/>
-            <div id="image2"></div>
+        	<div id="image2_wrapper">  
+		        <div id="image2_fake">  
+		            <img id="image2" onload="onPreviewLoad(this)"/>  
+		        </div>  
+		    </div> 
+    		<input type="file" name="file2" id="file2" onchange="onUploadImgChange(this, 'image2');"/>
         </li>
         <li>图片3
-    		<input type="file" name="file3" id="file3" onchange="javascript:PreviewImg(this, 'image3');"/>
-            <div id="image3"></div>
+        	<div id="image3_wrapper">  
+		        <div id="image3_fake">  
+		            <img id="image3" onload="onPreviewLoad(this)"/>  
+		        </div>  
+		    </div> 
+    		<input type="file" name="file3" id="file3" onchange="onUploadImgChange(this, 'image3');"/>
         </li>
         <li>图片4
-    		<input type="file" name="file4" id="file4" onchange="javascript:PreviewImg(this, 'image4');"/>
-            <div id="image4"></div>
+        	<div id="image4_wrapper">  
+		        <div id="image4_fake">  
+		            <img id="image4" onload="onPreviewLoad(this)"/>  
+		        </div>  
+		    </div> 
+    		<input type="file" name="file4" id="file4" onchange="onUploadImgChange(this, 'image4');"/>
         </li>
         <li>图片5
-    		<input type="file" name="file5" id="file5" onchange="javascript:PreviewImg(this, 'image5');"/>
-            <div id="image5"></div>
+        	<div id="image5_wrapper">  
+		        <div id="image5_fake">  
+		            <img id="image5" onload="onPreviewLoad(this)"/>  
+		        </div>  
+		    </div> 
+    		<input type="file" name="file5" id="file5" onchange="onUploadImgChange(this, 'image5');"/>
         </li>
     </ul>
     </form>
