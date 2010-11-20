@@ -4,7 +4,9 @@
 var target = null;
 var categoryId = null;
 var productBarId = null;
-
+var _categoryName;
+var _productName;
+var _brandName;
 /**
  * 提取所有类别列表
  * @return
@@ -23,16 +25,19 @@ var getCategoryJson = function(_target) {
 			$.each(data, function(index, category) {
 				$(categoryId).append($('<a></a>').attr('href', 'javascript:void(0)').text(category.categoryName).click(function() {
 					var param = encodeURI($(this).text());
-			        getProductJson(param);
-		        }));
-		        if ((index + 1) < data.length) {
-		        	$(categoryId).append(" | ");
-		        }
-		    });
+					if (_target == "#searchBar") {
+						_categoryName = $(this).text();
+					}
+					getProductJson(param);
+				}));
+				if ((index + 1) < data.length) {
+					$(categoryId).append(" | ");
+				}
+			});
 		},
 		error: function(xhr, ajaxOptions, thrownError){
-            alert("数据读取失败！");
-        }
+			alert("数据读取失败！");
+		}
 	});
 };
 
@@ -53,8 +58,8 @@ var getRankDetail = function(_target) {
 			$('#searchBar4').html(data);
 		},
 		error: function(xhr, ajaxOptions, thrownError){
-            alert("数据读取失败！");
-        }
+			alert("数据读取失败！");
+		}
 	});
 };
 
@@ -88,34 +93,35 @@ var getProductJson = function(categoryName) {
 			$.each(data, function(index, product) {
 				// 搜索TAB
 				if (target == "#searchBar") {
-			        $(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
-			        	var param = encodeURI($(this).text());
-			        	getBrandJson(param);
-			        }));
+					$(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
+						var param = encodeURI($(this).text());
+						_productName = $(this).text();
+						getBrandJson(param);
+					}));
 				} else {
 					// 其它TAB
 					$(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
-			        	var productName = encodeURI($(this).text());
-			        	var commodityType = "";
-			        	// 促销商品
-			        	if (target == '#searchBar2') {
-			        		commodityType = "P";
-			        	} 
-			        	// 二手商品
-			        	if (target == '#searchBar3') {
-			        		commodityType = "S";
-			        	}
-		        		queryCommodityList(1, commodityType, false, productName);
-			        }));
+						var productName = encodeURI($(this).text());
+						var commodityType = "";
+						// 促销商品
+						if (target == '#searchBar2') {
+							commodityType = "P";
+						} 
+						// 二手商品
+						if (target == '#searchBar3') {
+							commodityType = "S";
+						}
+						queryCommodityList(1, commodityType, false, productName);
+					}));
 				}
 				if ((index + 1) < data.length) {
-		        	$(productBarId).append(" | ");
-		        }
-		    });
+					$(productBarId).append(" | ");
+				}
+			});
 		},
 		error: function(xhr, ajaxOptions, thrownError){
-            alert("数据读取失败！");
-        }
+			alert("数据读取失败！");
+		}
 	});
 };
 
@@ -135,18 +141,19 @@ var getBrandJson = function(productName) {
 			if (data.length==0) return;
 			$('<div id="brandBar"></div>').empty().append('<br>品牌: ').appendTo(productBarId);
 			$.each(data, function(index, brand) {
-		        $('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
-		        	var param = encodeURI($(this).text());
-		        	getSupplierJson(param);
-		        }));
-		        if ((index + 1) < data.length) {
-		        	$('#brandBar').append(" | ");
-		        }
-		    });
+				$('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
+					var param = encodeURI($(this).text());
+					_brandName = $(this).text();
+					getSupplierJson(param);
+				}));
+				if ((index + 1) < data.length) {
+					$('#brandBar').append(" | ");
+				}
+			});
 		},
 		error: function(xhr, ajaxOptions, thrownError){
-            alert("数据读取失败！");
-        }
+			alert("数据读取失败！");
+		}
 	});
 };
 
@@ -167,65 +174,65 @@ var getSupplierJson = function(brandName) {
 			if (data.length==0) return;
 			$('<div id="supplierInfo" style="height:30px;padding:30px"></div>').empty().appendTo(target);
 			$.each(data, function(index, supplier) {
-		        $('<div class="supplierInfo" style="padding-top:30px"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
-		        });
-		        // 供应商图片
-		        $('<div style="float:left"></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
-		        var $enlargedCover = $('<img/>')
-		    	.css('position', 'absolute')
-		    	.css('z-index', 9999)
-		    	.css('cursor', 'pointer')
-		    	.hide()
-		    	.appendTo('body');
-		        // 供应商信息
-		        $('<div></div>').attr('id', "contentRight_" + index).appendTo("#supplierInfo_" + index);
-		        $('<li></li>').attr("id", "supplierName_" + index).appendTo("#contentRight_" + index);
-		        $("<a>"+supplier.supplierName+"</a>").css('text-decoration','underline').attr('href', "supplier/" + supplier.supplierId).appendTo("#supplierName_" + index);
-		        $('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#contentRight_" + index);
-		        $('<li></li>').attr('id', 'tel_' + index).text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
-		        $('<span>>></span>').css('padding-left', '100px').attr('id', 'blank_' + index).appendTo("#tel_" + index);
-		        $('<a>详情</a>').attr('href', "supplier/" + supplier.supplierId).appendTo("#blank_" + index);
-		        // 加载放大镜事件驱动
-		        $('<img id="pic" width="50" height="50"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index);
-		        /*.click(function(event) {
-		    	    var startPos = $(this).offset();
-		    	    startPos.width = $(this).width();
-		    	    startPos.height = $(this).height();
-		    	    var endPos = {};
-		            endPos.width = startPos.width * 6;
-		            endPos.height = startPos.height * 6;
-		            endPos.top = 50;
-		            endPos.left = ($('body').width() - endPos.width) / 2;
-		            $enlargedCover.attr('src', $(this).attr('src'))
-		            .css(startPos)
-		            .show();
-		    		var performAnimation = function() {
-		    		    $enlargedCover.animate(endPos, 'normal',
-		    		        function() {
-		    		      $enlargedCover.one('click', function() {
-		    		        $enlargedCover.fadeOut();
-		    		      });
-		    		    });
-		    		};
-		    		if ($enlargedCover[0].complete) {
-		    		  performAnimation();
-		    		}
-		    		else {
-		    		  $enlargedCover.bind('load', performAnimation);
-		    		}
-		    		event.preventDefault();
-		    	})
-		    	.hover(function() {
-		    	    $(this).css('cursor', 'pointer');
-		    	}, function() {
-		    		$(this).css('cursor', '');
-		    	});
-		    	*/
-		    });
+				$('<div class="supplierInfo" style="padding-top:30px"></div>').appendTo('#supplierInfo').attr('id', "supplierInfo_" + index).ready(function() {
+				});
+				// 供应商图片
+				$('<div style="float:left"></div>').attr('id', "contentLeft_" + index).appendTo("#supplierInfo_" + index);
+				var $enlargedCover = $('<img/>')
+				.css('position', 'absolute')
+				.css('z-index', 9999)
+				.css('cursor', 'pointer')
+				.hide()
+				.appendTo('body');
+				// 供应商信息
+				$('<div></div>').attr('id', "contentRight_" + index).appendTo("#supplierInfo_" + index);
+				$('<li></li>').attr("id", "supplierName_" + index).appendTo("#contentRight_" + index);
+				$("<a>"+supplier.supplierName+"</a>").css('text-decoration','underline').attr('href', "supplier/" + supplier.supplierId + "?categoryName=" + _categoryName + "&productName=" + _productName + "&brandName=" + _brandName).appendTo("#supplierName_" + index);
+				$('<li></li>').text("地址：" + supplier.supplierAddress).appendTo("#contentRight_" + index);
+				$('<li></li>').attr('id', 'tel_' + index).text("联系电话：" + supplier.supplierTelephone).appendTo("#contentRight_" + index);
+				$('<span>>></span>').css('padding-left', '100px').attr('id', 'blank_' + index).appendTo("#tel_" + index);
+				$('<a>详情</a>').attr('href', "supplier/" + supplier.supplierId).appendTo("#blank_" + index);
+				// 加载放大镜事件驱动
+				$('<img id="pic" width="50" height="50"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + "&uuid=" + createUUID()).appendTo("#contentLeft_" + index);
+				/*.click(function(event) {
+					var startPos = $(this).offset();
+					startPos.width = $(this).width();
+					startPos.height = $(this).height();
+					var endPos = {};
+					endPos.width = startPos.width * 6;
+					endPos.height = startPos.height * 6;
+					endPos.top = 50;
+					endPos.left = ($('body').width() - endPos.width) / 2;
+					$enlargedCover.attr('src', $(this).attr('src'))
+					.css(startPos)
+					.show();
+					var performAnimation = function() {
+						$enlargedCover.animate(endPos, 'normal',
+							function() {
+						  $enlargedCover.one('click', function() {
+							$enlargedCover.fadeOut();
+						  });
+						});
+					};
+					if ($enlargedCover[0].complete) {
+					  performAnimation();
+					}
+					else {
+					  $enlargedCover.bind('load', performAnimation);
+					}
+					event.preventDefault();
+				})
+				.hover(function() {
+					$(this).css('cursor', 'pointer');
+				}, function() {
+					$(this).css('cursor', '');
+				});
+				*/
+			});
 		},
 		error: function(xhr, ajaxOptions, thrownError){
-            alert("数据读取失败！");
-        }
+			alert("数据读取失败！");
+		}
 	});
 };
 

@@ -77,12 +77,12 @@ function processJson(data) {
 		showType:'slide'
 	});
     $('#supplierId').val(data.supplierId);
-    var url = "../supplier/getImage?id=" +data.supplierId + "&uuid=" + createUUID();
-    $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
-    var url1 = "../supplier/getImage1?id=" +data.supplierId + "&uuid=" + createUUID();
-    $('#image1').empty().append('<img id="pic1" width="100" height="100" src="'+url1+'"/>');
-    var url2 = "../supplier/getImage2?id=" +data.supplierId + "&uuid=" + createUUID();
-    $('#image2').empty().append('<img id="pic2" width="100" height="100" src="'+url2+'"/>');
+    var url = "../supplier/getImage?id=" + data.supplierId + "&uuid=" + createUUID();
+    $('#image').attr('src', url);
+    var url1 = "../supplier/getImage1?id=" + data.supplierId + "&uuid=" + createUUID();
+    $('#image1').attr('src', url1);
+    var url2 = "../supplier/getImage2?id=" + data.supplierId + "&uuid=" + createUUID();
+    $('#image2').attr('src', url2);
 	//$('#supplierEdit').dialog('close');
     $('#supplierList').datagrid('reload');
 }
@@ -157,9 +157,9 @@ function validate(formData, jqForm, options) {
 	   $.messager.alert('消息','请选择图片格式为：gif,png,jpg,jpeg！','info');
 	   return false;
 	} 
-	$('#image').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
-	$('#image1').append('<image id="loader1" src="../images/datagrid/tree_loading.gif"/> ');
-	$('#image2').append('<image id="loader2" src="../images/datagrid/tree_loading.gif"/> ');
+	$('#image_fake').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
+	$('#image1_fake').append('<image id="loader1" src="../images/datagrid/tree_loading.gif"/> ');
+	$('#image2_fake').append('<image id="loader2" src="../images/datagrid/tree_loading.gif"/> ');
 }
 function onEditClickHandler(id) {
 	$.get('../supplier/get', { id: id } ,function(data) {
@@ -179,12 +179,12 @@ function onEditClickHandler(id) {
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#supplierEdit').css('display','block');
 		$('#supplierEdit').dialog({title:'修改', modal: true});
-		var url = "../supplier/getImage?id=" +id;
-		$('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
-		var url1 = "../supplier/getImage1?id=" +id;
-		$('#image1').empty().append('<img id="pic1" width="100" height="100" src="'+url1+'"/>');
-		var url2 = "../supplier/getImage2?id=" +id;
-		$('#image2').empty().append('<img id="pic2" width="100" height="100" src="'+url2+'"/>');
+	    var url = "../supplier/getImage?id=" + id + "&uuid=" + createUUID();
+	    $('#image').attr('src', url);
+	    var url1 = "../supplier/getImage1?id=" + id + "&uuid=" + createUUID();
+	    $('#image1').attr('src', url1);
+	    var url2 = "../supplier/getImage2?id=" + id + "&uuid=" + createUUID();
+	    $('#image2').attr('src', url2);
 	});
 	formSubmit('../supplier/update');
 }
@@ -310,7 +310,9 @@ $(function(){
 					$('input[name="supplierFax"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#loader').remove();
-					$('#image').empty();
+					$('#image').attr('src', '../images/common/nopic.jpg');
+					$('#image1').attr('src', '../images/common/nopic.jpg');
+					$('#image2').attr('src', '../images/common/nopic.jpg');
 					$('#supplierEdit').css('display','block');
 					$('#supplierEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
 					formSubmit('../supplier/create');

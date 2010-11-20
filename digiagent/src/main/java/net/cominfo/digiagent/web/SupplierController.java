@@ -2,6 +2,7 @@ package net.cominfo.digiagent.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -246,8 +247,15 @@ public class SupplierController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public String show(@PathVariable Integer id, HttpServletResponse response,
-			Model model) {
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response,
+			Model model) throws UnsupportedEncodingException {
+		String otherParam[] = {"categoryName", "productName", "brandName"};
+		for (String key : otherParam) {
+			String value = request.getParameter(key);
+			if (value != null) {
+				model.addAttribute(key, new String(value.getBytes("iso8859-1"),"utf-8"));
+			}
+		}
 		SupplierWithBLOBs supplier = supplierService.getById(id);
 		if (supplier != null) {
 

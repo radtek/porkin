@@ -48,14 +48,14 @@ function goBack() {
     <div class="Brr">
       <!--基本信息开始-->
       <div class="mod_comp">
-        <div class="mod_compT">基本信息<div style="float:right"><a href="javascript:void(0)" onclick="goBack()">返回</a></div></div>
+        <div class="mod_compT">基本信息 - ${categoryName}/${productName}/${brandName}<div style="float:right"><a href="javascript:void(0)" onclick="goBack()">返回</a></div></div>
         <table cellspacing="12" cellpadding="0" width="100%" border="0">
           <tbody>
             <tr>
               <td valign="top"><table cellspacing="0" cellpadding="0" width="100%" border="0">
                 <tbody>
                   <tr>
-                    <td class="Al_11" height="120"><img	src="${ctx}/supplier/getImage?id=${supplier.supplierId}" /></td>
+                    <td class="Al_11" height="120"><img	src="${ctx}/supplier/getImage?id=${supplier.supplierId}" width="150px" height="150px"/></td>
                   </tr>
                 </tbody>
               </table></td>

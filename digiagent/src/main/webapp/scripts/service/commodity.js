@@ -106,7 +106,7 @@ function validate(formData, jqForm, options) {
 		   $.messager.alert('消息','请选择图片格式为：gif,png,jpg,jpeg！','info');
 		   return false;
 		} 
-		$('#image').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
+		$('#image_fake').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
 	}
 }
 
@@ -137,7 +137,7 @@ function processJson(data) {
     	});
         $('#commodityId').val(data.commodityId);
         var url = "../commodity/getImage?id=" +data.commodityImage + "&uuid=" + createUUID();
-        $('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+        $('#image').attr('src', url);
 //    	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
     	$('#commodityList').datagrid('reload');
     } else {
@@ -169,7 +169,7 @@ function onEditClickHandler(id) {
 			$('input[name="commodityimageId"]').val(image.commodityimageId);
 			$('input[name="commodityimageId"]').val(image.commodityimageId);
 			var url = "../commodity/getImage?id=" +image.commodityimageId + "&uuid=" + createUUID();
-			$('#image').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+			$('#image').attr('src', url);
 		}
 //		$('#image').append('<image  onClick="onDeleteClickHandler(' + id + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
 	});
@@ -373,7 +373,7 @@ $(function(){
 					$('input[name="file"]').val('');
 					$('input[name="commodityimageId"]').val('');
 					$('select[name="commodityType"]').val('S');
-					$('#image').empty();
+					$('#image').attr('src', '../images/common/nopic.jpg');
 					$('select[name="activeFlag"]').val('Y');
 					$('#commodityEdit').css('display','block');
 					$('#commodityEdit').dialog({title:'新增', modal: true, icon:'icon-add'});

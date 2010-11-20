@@ -3,7 +3,27 @@
 <html>
 <head>
 	<script type="text/javascript" src="../scripts/service/supplier.js"></script>
-<script type="text/javascript" src="../scripts/common/common.js"></script>
+	<script type="text/javascript" src="../scripts/common/common.js"></script>
+	<script type="text/javascript" src="../scripts/common/upload.preview.js"></script>
+<style>
+#image_wrapper, #image1_wrapper, #image2_wrapper, #image3_wrapper, #image4_wrapper, #image5_wrapper{   
+    display:inline-block;   
+    width:200px;   
+    height:200px;   
+    background-color:#CCC;   
+} 
+#image_fake, #image1_fake, #image2_fake, #image3_fake, #image4_fake, #image5_fake{ /* 该对象用于在IE下显示预览图片 */   
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);   
+}   
+#image_size_fake, #image1_size_fake, #image2_size_fake, #image3_size_fake, #image4_size_fake, #image5_size_fake{ /* 该对象只用来在IE下获得图片的原始尺寸，无其它用途 */   
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);     
+    visibility:hidden;   
+}   
+#image, #image1, #image2, #image3, #image4, #image5{ /* 该对象用于在FF下显示预览图片 */   
+    width:100px;   
+    height:100px;   
+}
+</style>
 </head>
 <body>
 	<table id="supplierList"></table>
@@ -47,18 +67,30 @@
           </div> 
 	      <div>
              	<label for="name">图片: </label>
-		  		<input type="file" name="file" id="file"/> 
-	          	<div id="image"></div>
+		  		<div id="image_wrapper">  
+			        <div id="image_fake">  
+			            <img id="image" onload="onPreviewLoad(this)"/>  
+			        </div>  
+			    </div> 
+	    		<input type="file" name="file" id="file" onchange="onUploadImgChange(this, 'image');"/>
 	      </div>
 	      <div>
              	<label for="name">实名认证: </label>
-		  		<input type="file" name="file1" id="file1"/> 
-	          	<div id="image1"></div>
+	          	<div id="image1_wrapper">  
+			        <div id="image1_fake">  
+			            <img id="image1" onload="onPreviewLoad(this)"/>  
+			        </div>  
+			    </div> 
+	    		<input type="file" name="file1" id="file1" onchange="onUploadImgChange(this, 'image1');"/>
 	      </div>
 	      <div>
              	<label for="name">资质认证: </label>
-		  		<input type="file" name="file2" id="file2"/> 
-	          	<div id="image2"></div>
+	          	<div id="image2_wrapper">  
+			        <div id="image2_fake">  
+			            <img id="image2" onload="onPreviewLoad(this)"/>  
+			        </div>  
+			    </div> 
+	    		<input type="file" name="file2" id="file2" onchange="onUploadImgChange(this, 'image2');"/>
 	      </div>
 	      <div>
               	<label for="name">简介:</label>

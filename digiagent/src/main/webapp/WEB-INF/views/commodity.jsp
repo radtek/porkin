@@ -4,7 +4,27 @@
 <head>
 	<script type="text/javascript" src="../scripts/service/commodity.js"></script>
 	<script type="text/javascript" src="../scripts/common/common.js"></script>
+	<script type="text/javascript" src="../scripts/common/upload.preview.js"></script>
 </head>
+<style>
+#image_wrapper, #image1_wrapper, #image2_wrapper, #image3_wrapper, #image4_wrapper, #image5_wrapper{   
+    display:inline-block;   
+    width:200px;   
+    height:200px;   
+    background-color:#CCC;   
+} 
+#image_fake, #image1_fake, #image2_fake, #image3_fake, #image4_fake, #image5_fake{ /* 该对象用于在IE下显示预览图片 */   
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);   
+}   
+#image_size_fake, #image1_size_fake, #image2_size_fake, #image3_size_fake, #image4_size_fake, #image5_size_fake{ /* 该对象只用来在IE下获得图片的原始尺寸，无其它用途 */   
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);     
+    visibility:hidden;   
+}   
+#image, #image1, #image2, #image3, #image4, #image5{ /* 该对象用于在FF下显示预览图片 */   
+    width:100px;   
+    height:100px;   
+}
+</style>
 <body>
 <table id="commodityList"></table>
 <div id="commodityEdit" icon="icon-edit" style="width:500px;height:450px;display:none">
@@ -60,8 +80,12 @@
 	          </div>
 	          <div>
 	              	<label for="name">图片: </label>
-					<input type="file" name="file" id="file"/> 
-	          <div id="image"></div>
+					<div id="image_wrapper">  
+				        <div id="image_fake">  
+				            <img id="image" onload="onPreviewLoad(this)"/>  
+				        </div>  
+				    </div> 
+		    		<input type="file" name="file" id="file" onchange="onUploadImgChange(this, 'image');"/>
 	          <div>
 					<input type="hidden" name="MAX_FILE_SIZE" value="100000" /> 
 	              <input type="submit"  name="submitButton" value="确定" /> 
