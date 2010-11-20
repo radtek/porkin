@@ -55,7 +55,7 @@ li {list-style-type:none;}
           <td width="80"> <input type="submit" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
         </tr>
         <tr>
-        	<td colspan="3">&nbsp;</td>
+        	<td colspan="3">&nbsp;<input type="hidden" name="categoryName" value="${categoryName}"/><input type="hidden" name="productName" value="${productName}"/><input type="hidden" name="brandName" value="${brandName}"/></td>
         </tr>
         <tr>
         	<td colspan="3"><div id="searchBar"></div></td>

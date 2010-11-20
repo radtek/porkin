@@ -27,6 +27,7 @@ var getCategoryJson = function(_target) {
 					var param = encodeURI($(this).text());
 					if (_target == "#searchBar") {
 						_categoryName = $(this).text();
+						clearParam();
 					}
 					getProductJson(param);
 				}));
@@ -34,6 +35,12 @@ var getCategoryJson = function(_target) {
 					$(categoryId).append(" | ");
 				}
 			});
+			// 从商家返回再次定位
+			if (_target == "#searchBar" && $('input[name="categoryName"]').val().length > 0) {
+				var param = encodeURI($('input[name="categoryName"]').val());
+				_categoryName = $('input[name="categoryName"]').val();
+				getProductJson(param);
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError){
 			alert("数据读取失败！");
@@ -96,6 +103,7 @@ var getProductJson = function(categoryName) {
 					$(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
 						var param = encodeURI($(this).text());
 						_productName = $(this).text();
+						clearParam();
 						getBrandJson(param);
 					}));
 				} else {
@@ -118,6 +126,13 @@ var getProductJson = function(categoryName) {
 					$(productBarId).append(" | ");
 				}
 			});
+			
+			// 从商家返回再次定位
+			if (target == "#searchBar" && $('input[name="productName"]').val().length > 0) {
+				var param = encodeURI($('input[name="productName"]').val());
+				_productName = $('input[name="productName"]').val();
+				getBrandJson(param);
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError){
 			alert("数据读取失败！");
@@ -144,12 +159,20 @@ var getBrandJson = function(productName) {
 				$('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
 					var param = encodeURI($(this).text());
 					_brandName = $(this).text();
+					clearParam();
 					getSupplierJson(param);
 				}));
 				if ((index + 1) < data.length) {
 					$('#brandBar').append(" | ");
 				}
 			});
+			
+			// 从商家返回再次定位
+			if (target == "#searchBar" && $('input[name="brandName"]').val().length > 0) {
+				var param = encodeURI($('input[name="brandName"]').val());
+				_brandName = $('input[name="brandName"]').val();
+				getSupplierJson(param);
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError){
 			alert("数据读取失败！");
@@ -242,3 +265,13 @@ var getSupplierJson = function(brandName) {
 $(document).ready(function() {
 	getCategoryJson('#searchBar');
 });
+
+/**
+ * 清空返回定位参数
+ * @return
+ */
+function clearParam() {
+	$('input[name="categoryName"]').val('');
+	$('input[name="productName"]').val('');
+	$('input[name="brandName"]').val('');
+}

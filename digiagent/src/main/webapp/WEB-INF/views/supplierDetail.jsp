@@ -34,7 +34,7 @@ function showCommentForm(){
 }
 
 function goBack() {
-	window.location.href="/digiagent/";
+	window.location.href="/digiagent/goBack?categoryName=${categoryName}&productName=${productName}&brandName=${brandName}";
 }
 </script>
 </head>

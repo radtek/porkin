@@ -1,5 +1,6 @@
 package net.cominfo.digiagent.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -163,6 +164,29 @@ public class GeneralController {
 	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
 	public @ResponseBody Boolean validateEmail(@RequestParam String email) {
 		return securityService.isExistByEmail(email);
+	}
+	
+	/**
+	 * 从商家详细返回
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/goBack", method = RequestMethod.GET)
+	public String goBack(HttpServletRequest request, Model model) {
+		String otherParam[] = {"categoryName", "productName", "brandName"};
+		for (String key : otherParam) {
+			String value = request.getParameter(key);
+			if (value != null) {
+				try {
+					model.addAttribute(key, new String(value.getBytes("iso8859-1"),"utf-8"));
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return "welcome";
 	}
 
 }
