@@ -14,26 +14,14 @@
 <script src="${ctx}/scripts/menu.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery.form.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/common/upload.preview.js"></script>
 <script>
-function PreviewImg(imgFile, targetImage){  
-	var targetId = "#"+targetImage;
-	$(targetId).empty();
-	var targetImage = document.getElementById(targetImage);
-    var imgDiv = document.createElement("div");
-    document.body.appendChild(imgDiv);
-    imgDiv.style.width = "80px";    imgDiv.style.height = "80px";
-    imgDiv.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod = scale)";   
-    imgDiv.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgFile.value;
-    targetImage.appendChild(imgDiv);    
-    targetImage.style.width = "80px";
-    targetImage.style.height = "60px";
-}
 
 $(document).ready(function() {
 	var url = "../supplier/getImage1?id=${supplierId}&uuid=" + createUUID();
-	$('#image1').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+	$('#image1').attr('src', url);
 	var url = "../supplier/getImage2?id=${supplierId}&uuid=" + createUUID();
-	$('#image2').empty().append('<img id="pic" width="100" height="100" src="'+url+'"/>');
+	$('#image2').attr('src', url);
 	formSubmit();
 });
 
@@ -70,8 +58,8 @@ function validate(formData, jqForm, options) {
 		   return false;
 		} 
 	}
-	$('#image1').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
-	$('#image2').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
+	$('#image1_fake').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
+	$('#image2_fake').append('<image id="loader" src="../images/datagrid/tree_loading.gif"/> ');
 }
 /**
 * 字符串转JSON对象
@@ -93,6 +81,25 @@ function processJson(data) {
   window.location.href = '${ctx}/company/picture';
 }
 </script>
+<style>
+#image1_wrapper, #image2_wrapper, #image3_wrapper, #image4_wrapper, #image5_wrapper{   
+    display:inline-block;   
+    width:300px;   
+    height:300px;   
+    background-color:#CCC;   
+}   
+#image1_fake, #image2_fake, #image3_fake, #image4_fake, #image5_fake{ /* 该对象用于在IE下显示预览图片 */   
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);   
+}   
+#image1_size_fake, #image2_size_fake, #image3_size_fake, #image4_size_fake, #image5_size_fake{ /* 该对象只用来在IE下获得图片的原始尺寸，无其它用途 */   
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);     
+    visibility:hidden;   
+}   
+#image1, #image2, #image3, #image4, #image5{ /* 该对象用于在FF下显示预览图片 */   
+    width:300px;   
+    height:300px;   
+}  
+</style>
 </head>
 <body>
 <div class="companyTitle">资质认证</div>
@@ -107,22 +114,30 @@ function processJson(data) {
 		</c:if> </strong></td>
 	</tr>
 	<tr>
+		<td>
+			<div id="image1_wrapper">  
+		        <div id="image1_fake">  
+		            <img id="image1" onload="onPreviewLoad(this)"/>  
+		        </div>  
+		    </div> 
+    		<input type="file" name="file1" id="file1" onchange="onUploadImgChange(this, 'image1');"/>
+		</td>
+	</tr>
+	<tr>
 		<td>实名认证</td>
 	</tr>
 	<tr>
 		<td>
-			<input type="file" name="file1" id="file1" onchange="javascript:PreviewImg(this, 'image1')"/> 
-	          <div id="image1"/>
+			<div id="image2_wrapper">  
+		        <div id="image2_fake">  
+		            <img id="image2" onload="onPreviewLoad(this)"/>  
+		        </div>  
+		    </div> 
+    		<input type="file" name="file2" id="file2" onchange="onUploadImgChange(this, 'image2');"/>
 		</td>
 	</tr>
 	<tr>
 		<td>资质认证</td>
-	</tr>
-	<tr>
-		<td>
-			<input type="file" name="file2" id="file2" onchange="javascript:PreviewImg(this, 'image2')"/> 
-	          <div id="image2"/>
-		</td>
 	</tr>
 	<tr>
 		<td></td>

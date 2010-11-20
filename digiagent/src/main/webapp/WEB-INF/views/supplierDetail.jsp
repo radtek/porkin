@@ -29,6 +29,10 @@ function selectTag(showContent,selfObj){
 	document.getElementById(showContent).style.display = "block";
 }</script>
 <script language="javascript">
+function showImage(getMethod){
+	window.open ('${ctx}/supplier/image?getMethod=' + getMethod + '&id=${supplier.supplierId}');
+}
+
 function showCommentForm(){
 	window.open ('${ctx}/supplier/commentForm?id=${supplier.supplierId}','','height=390,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
 }
@@ -144,7 +148,7 @@ align="center" border="0">
                   <c:choose>
                   	<c:when test="${empty supplier.supplierCertify }">否</c:when>
                   	<c:otherwise>
-                  		<a href="${ctx}/supplier/getImage1?id=${supplier.supplierId}" target="_blank">是</a>
+                  		<a href="javascript:showImage('getImage1')">是</a>
                   	</c:otherwise>
                   </c:choose>
                   </div><br>
@@ -152,7 +156,7 @@ align="center" border="0">
                   <div class="hui912 l_space">资质认证:
                   <c:choose>
                   	<c:when test="${empty supplier.supplierQualify }">否</c:when>
-                  	<c:otherwise><a href="${ctx}/supplier/getImage2?id=${supplier.supplierId}" target="_blank">是</a></c:otherwise>
+                  	<c:otherwise><a href="javascript:showImage('getImage2')">是</a></c:otherwise>
                   </c:choose>
                   </div>
                   

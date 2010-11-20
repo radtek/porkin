@@ -403,4 +403,11 @@ public class SupplierController {
 		return result;
 
 	}
+	
+	@RequestMapping(value = "/image", method = RequestMethod.GET)
+	public String image(@RequestParam("id") String id, @RequestParam("getMethod") String getMethod, Model model) {
+		model.addAttribute("id", id);
+		model.addAttribute("getMethod", getMethod);
+		return "supplierImage";
+	}
 }
