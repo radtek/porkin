@@ -26,7 +26,7 @@ var getCategoryJson = function(_target) {
 				$(categoryId).append($('<a></a>').attr('href', 'javascript:void(0)').text(category.categoryName).click(function() {
 					var param = encodeURI($(this).text());
 					if (_target == "#searchBar") {
-						_categoryName = $(this).text();
+						_categoryName = param;
 						clearParam();
 					}
 					getProductJson(param);
@@ -102,7 +102,7 @@ var getProductJson = function(categoryName) {
 				if (target == "#searchBar") {
 					$(productBarId).append($('<a></a>').attr('href', 'javascript:void(0)').text(product.productName).click(function() {
 						var param = encodeURI($(this).text());
-						_productName = $(this).text();
+						_productName = param;
 						clearParam();
 						getBrandJson(param);
 					}));
@@ -158,7 +158,7 @@ var getBrandJson = function(productName) {
 			$.each(data, function(index, brand) {
 				$('#brandBar').append($('<a></a>').attr('href', 'javascript:void(0)').text(brand.brandName).click(function() {
 					var param = encodeURI($(this).text());
-					_brandName = $(this).text();
+					_brandName = param;
 					clearParam();
 					getSupplierJson(param);
 				}));
