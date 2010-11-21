@@ -40,7 +40,9 @@ function about() {
 
 }
 
-
+function member() {
+	window.parent.location.href= "${ctx}/member";
+}
 </script>
 </head>
 <body>
@@ -68,7 +70,7 @@ function about() {
    			<span class="leftLink"> <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="${ctx}/registerForm">注册</a> | <a href="${ctx}/passwordForm">忘记密码</a> </span>
       </c:when>
       <c:otherwise>
-       <span class="leftLink"></a>&nbsp;&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /> | <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="${ctx}/member">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></><fmt:message key="label.common.logout"/></a></span>
+       <span class="leftLink"></a>&nbsp;&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /> | <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="javascript:void(0);" onclick="member();">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></><fmt:message key="label.common.logout"/></a></span>
       </c:otherwise>
       </c:choose>
       
