@@ -79,7 +79,7 @@ function queryCommodityList(pageNum, commodityType, isParentPath, _productName) 
 				var str = $('#commodityTemplate').html();
 				str = str.replace('rowNum', (pageNum - 1) * 10 + index + 1);
 				str = str.replace(/categoryName/g, commodity.categoryName == null ? '暂无' : commodity.categoryName);
-				str = str.replace(/productName/g, commodity.commodityName == null ? '暂无' : commodity.productName);
+				str = str.replace(/productName/g, commodity.productName == null ? '暂无' : commodity.productName);
 				str = str.replace(/commodityName/g, commodity.commodityName == null ? '暂无' : commodity.commodityName);
 				str = str.replace(/commodityPrice/, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
 				str = str.replace(/commodityPrice/, commodity.commodityPrice == null ? '暂无' : commodity.commodityPrice);
