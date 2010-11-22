@@ -50,7 +50,7 @@ li {list-style-type:none;}
         	<td colspan="3">&nbsp;</td>
         </tr>
         <tr>
-          <td><input name="searchkw" type="text" size="70" width="200px" /></td>
+          <td><input name="searchkw" type="text" size="70" width="200px" value="${searchkw}"/></td>
           <td>&nbsp;</td>
           <td width="80"> <input type="submit" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
         </tr>
@@ -96,7 +96,7 @@ li {list-style-type:none;}
         	<td colspan="3">&nbsp;</td>
         </tr>
         <tr>
-          <td><input name="textfield" type="text" size="70" width="200px" /></td>
+          <td><input name="textfield" type="text" size="70" width="200px" value="${searchkw}" /></td>
           <td>&nbsp;</td>
           <td width="80"> <input type="reset" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
                   
@@ -113,7 +113,7 @@ li {list-style-type:none;}
 	        	<td colspan="3">&nbsp;</td>
 	        </tr>
 	        <tr>
-	          <td><input name="searchkw" type="text" size="70" width="200px"/></td>
+	          <td><input name="searchkw" type="text" size="70" width="200px" value="${searchkw}" /></td>
 	          <td>&nbsp;</td>
 	          <td width="80"> <input type="submit" style="width:100px" name="Reset212222" onmouseout="this.className='button01'" onmouseover="this.className=' button02'" value="搜索" class="button01" /></td>  
 	        </tr>

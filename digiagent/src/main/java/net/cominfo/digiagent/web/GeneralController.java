@@ -130,16 +130,17 @@ public class GeneralController {
 		return forward;
 	}
 	
+	
 	@RequestMapping(value = "/freeSearch", method = RequestMethod.POST)
 	public String freeSearch(@RequestParam String searchkw, Model model) {
 		List<Supplier> supplierList = null;
 		if(searchkw ==null || searchkw.equals("")){
-			
 		}
 		else{
 			supplierList = supplierService.getSupplierList(searchkw);
 		}
 		model.addAttribute("supplierList", supplierList);
+		model.addAttribute("searchkw", searchkw);
 		return "welcome";
 	}
 

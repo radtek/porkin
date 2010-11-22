@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
+import net.cominfo.digiagent.persistence.domain.Comments;
 import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
@@ -409,5 +410,16 @@ public class SupplierController {
 		model.addAttribute("id", id);
 		model.addAttribute("getMethod", getMethod);
 		return "supplierImage";
+	}
+	
+	@RequestMapping(value = "/comments/{id}", method = RequestMethod.GET)
+	public String showComments(@PathVariable Integer id, @RequestParam Integer page,@RequestParam Integer rows,
+			Model model) throws UnsupportedEncodingException {
+		Map param = new HashMap();
+		param.put("supplierId", id);
+		List<Comments> commentsList = commentsService.query(page, rows, param);
+		model.addAttribute("commentsList",commentsList);
+		return "commentsDetail";
+
 	}
 }
