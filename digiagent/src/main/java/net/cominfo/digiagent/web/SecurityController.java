@@ -19,7 +19,7 @@ import net.cominfo.digiagent.service.UserRoleService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
-import net.cominfo.digiagent.utils.mail.MailService;
+import net.cominfo.digiagent.utils.mail.SimpleMailSender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +48,9 @@ public class SecurityController {
 	private UserRoleService userRoleService;
 	
 	@Autowired
-	private MailService mailService;
+	private SimpleMailSender simpleMailSender;
+	
+	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(Model model, @RequestParam String username,
@@ -141,7 +143,6 @@ public class SecurityController {
 			@RequestParam String captcha,HttpSession session) {
 		
 		String forward = "password";
-		boolean existFlag = securityService.isExistByName(username);
 		User user = securityService.getUserByName(username);
 		if(user!=null){
 			String original = (String) session.getAttribute("icaptcha");
@@ -152,16 +153,13 @@ public class SecurityController {
 			else{
 				// Send mail
 				String to = user.getUserEmail();
-				String cc = user.getUserEmail();
-				String subject = "找回密码";
-				String mailTemplate = "password.vm";
-				Map data = new HashMap();
-				mailService.doPost(to, cc, subject, mailTemplate, data);
-				forward = "success";
+				String password = user.getUserPassword();
+				simpleMailSender.sendMail(username, password, to);
+				forward = "password_success";
 			}
 		}
 		else{
-			model.addAttribute("captcha", new Message(MessageType.success,
+			model.addAttribute("username", new Message(MessageType.success,
 			"password.userName.notExist"));
 		}
 		return forward;
