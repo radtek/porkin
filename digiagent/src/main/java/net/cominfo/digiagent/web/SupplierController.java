@@ -417,9 +417,20 @@ public class SupplierController {
 			Model model) throws UnsupportedEncodingException {
 		Map param = new HashMap();
 		param.put("supplierId", id);
+		Long total = commentsService.count(id);
 		List<Comments> commentsList = commentsService.query(page, rows, param);
 		model.addAttribute("commentsList",commentsList);
+		model.addAttribute("total", total);
+		model.addAttribute("supplierId", id);
+		model.addAttribute("pageSize", (int)Math.ceil(total/Double.valueOf(rows)));
+		model.addAttribute("page",page);
 		return "commentsDetail";
 
 	}
+	
+	@RequestMapping(value = "/iframe", method = RequestMethod.GET)
+	public String iframe() {
+		return "iframe";
+	}
+			
 }

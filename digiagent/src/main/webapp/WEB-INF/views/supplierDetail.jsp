@@ -52,7 +52,7 @@ function goBack() {
     <div class="Brr">
       <!--基本信息开始-->
       <div class="mod_comp">
-        <div class="mod_compT">基本信息 - ${categoryName}/${productName}/${brandName}<div style="float:right"><a href="javascript:void(0)" onclick="goBack()">返回</a></div></div>
+        <div class="mod_compT">基本信息<c:if test="${not empty categoryName && not empty productName && not empty brandName}"> - ${categoryName}/${productName}/${brandName}</c:if><div style="float:right"><a href="javascript:void(0)" onclick="goBack()">返回</a></div></div>
         <table cellspacing="12" cellpadding="0" width="100%" border="0">
           <tbody>
             <tr>
@@ -106,14 +106,13 @@ function goBack() {
       <!--公司简介结束-->
       <!--店铺实体图片开始-->
       <!--end of commonts-->
-
-       <div class="mod_comp mt8">
-        <div class="mod_compT">公司简介</div>
-        
-        <div class="mod_compC" style="WORD-BREAK: break-all">
-        <c:out value="${supplier.supplierDescription}"/>
-        </div>
-      </div>
+      <!--评论列表开始-->
+	  <div class="mod_comp mt8">
+        <div class="mod_compT">评论</div>
+		<iframe id="frame_content"  name="frame_content" src="${ctx}/supplier/comments/${supplier.supplierId}?page=1&rows=10" width="100%" height="0" scrolling="no" frameborder="0"></iframe>
+	  </div>
+      <!--评论列表结束-->
+      
     </div>
    
 
