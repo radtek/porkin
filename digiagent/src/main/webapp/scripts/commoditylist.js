@@ -94,6 +94,7 @@ function queryCommodityList(pageNum, commodityType, isParentPath, _productName) 
 				str = str.replace(/supplierTelephone/g, commodity.supplierTelephone == null ? '暂无' : commodity.supplierTelephone);
 				str = str.replace(/supplierAddress/g, commodity.supplierAddress == null ? '暂无' : commodity.supplierAddress);
 				str = str.replace(/userEmail/g, commodity.userEmail == null ? '暂无' : commodity.userEmail);
+				str = str.replace(/commodityDescription/g, commodity.commodityDescription == null ? '暂无' : commodity.commodityDescription);
 				if (commodityType == 'S') {
 					$('#commodityS').append('<div class="supplierInfo">' + str + '</div>');
 				}
