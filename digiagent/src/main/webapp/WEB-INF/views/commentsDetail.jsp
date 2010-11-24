@@ -50,10 +50,10 @@ function skip(pageNum) {
 </head>
 <body>
 <div style="height: 10px"></div>
-<c:forEach items="${commentsList}" var="comments">
+<c:forEach items="${commentsList}" var="comments" varStatus="status">
 	<div id="companyLeft" style="margin:1px; width: 100%">
 		<div style="text-align:right">作者：${comments.username} <span style="padding-left: 10px"></span>回复日期：${comments.createdDate }<span style="padding-right: 10px"></span></div>
-		<div style="padding:10px"><c:out value="${comments.content}"/></div>
+		<div style="padding:10px"><c:out value="${comments.content}"/><div style="text-align:right">${(total -(((page -1) * 10) + status.index))}楼</div></div>
 	</div>
 	<div style="height: 2px"></div>
 </c:forEach>
