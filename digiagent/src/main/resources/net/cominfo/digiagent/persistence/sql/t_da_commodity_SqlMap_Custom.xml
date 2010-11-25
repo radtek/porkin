@@ -56,6 +56,12 @@
 		 <isNotEmpty prepend="AND" property="param.productName">
 			t_da_product.product_name = '$param.productName$'
          </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.kw">
+         	t_da_commodity.commodity_name like '%$param.kw$%' OR 
+			t_da_commodity.commodity_Description like '%$param.kw$%' OR 
+			t_da_commodity.commodity_price like '%$param.kw$%' OR 
+			t_da_product.product_name like '%$param.kw$%'
+         </isNotEmpty>
          <isEmpty prepend="ORDER BY" property="orderByStatement">
          	t_da_commodity.commodity_name
          </isEmpty>
@@ -82,6 +88,12 @@
          </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.productName">
 			t_da_product.product_name = '$param.productName$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.kw">
+         	t_da_commodity.commodity_name like '%$param.kw$%' OR 
+			t_da_commodity.commodity_Description like '%$param.kw$%' OR 
+			t_da_commodity.commodity_price like '%$param.kw$%' OR 
+			t_da_product.product_name like '%$param.kw$%'
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.activeFlag">
 			t_da_commodity.active_flag = '$param.activeFlag$'

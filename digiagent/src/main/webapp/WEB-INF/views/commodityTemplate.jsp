@@ -19,6 +19,7 @@
 			<div>手机号码：<span class=hong14b>supplierTelephone</span></div>
 			<div>电子邮箱：userEmail</div>
 			<div>联系地址：supplierAddress</div>
+			<div>备注：commodityDescription</div>
 		</div>
 	</div>
 </div>
