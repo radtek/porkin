@@ -148,7 +148,7 @@ var commoditySearch = function(event) {
 	$.ajax({
 		url:prefix + "commodity/queryCommodityList",
 		dataType:"json",
-		data: {page:pageNum, commodityType:commodityType, activeFlag:'Y', productName:'', kw:kw},
+		data: {page:pageNum, commodityType:commodityType, activeFlag:'Y', productName:'', kw:encodeURI(kw)},
 		type: "GET",
 		success: result,
 		error: function(xhr, ajaxOptions, thrownError){
