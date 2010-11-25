@@ -14,11 +14,11 @@
 			<div>商品名称：commodityName</div>
 			<div>商品单价：commodityPrice</div>
 			<div class="oldPrice">商品原价：commodityPriceOld</div>
-<!--			<div>联 系 人：supplierContactname</div>-->
-<!--			<div>联系电话：<span class=hong14b>supplierMobile</span></div>-->
-<!--			<div>手机号码：<span class=hong14b>supplierTelephone</span></div>-->
+			<div>联 系 人：supplierContactname</div>
+			<div>联系电话：<span class=hong14b>supplierMobile</span></div>
+			<div>手机号码：<span class=hong14b>supplierTelephone</span></div>
 			<div>电子邮箱：userEmail</div>
-<!--			<div>联系地址：supplierAddress</div>-->
+			<div>联系地址：supplierAddress</div>
 			<div>备注：commodityDescription</div>
 		</div>
 	</div>

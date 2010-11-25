@@ -40,6 +40,7 @@ function whenDelete() {
           <LI><b><A href="${ctx}/company/infoRelease" target="mainFrame" title="促销发布">促销发布</A></b></LI>
           <LI><b><A href="${ctx}/person/infoRelease" target="mainFrame" title="二手发布">二手发布</A></b></LI>
           <LI><b><A href="${ctx}/company/commodityList" target="mainFrame" title="促销历史">促销历史</A></b></LI>
+          <li><b><a href="${ctx}/person/commodityList" target="mainFrame" title="二手历史 ">二手历史</a></b></li>
         </UL>
         </DIV>
         </DIV>
