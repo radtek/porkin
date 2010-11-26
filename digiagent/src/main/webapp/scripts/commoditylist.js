@@ -78,24 +78,25 @@ var result = function(data) {
 	if (commodityType == 'S') {
 		$('#commodityS').next().empty();
 		$('#commodityS').empty();
-		$('.link1 div').eq(5).hide();
-		$('.link1 div').eq(6).hide();
-		$('.link1 div').eq(7).hide();
-		$('.link1 div').eq(9).hide();
+		$('#leftImage').css('padding-bottom', '10px');
+		$('#content div').eq(5).hide();
+		$('#content div').eq(6).hide();
+		$('#content div').eq(7).hide();
+		$('#content div').eq(9).hide();
 	}
 	if (commodityType == 'P') {
 		$('#commodityP').next().empty();
 		$('#commodityP').empty();
-		$('.link1 div').eq(5).show();
-		$('.link1 div').eq(6).show();
-		$('.link1 div').eq(7).show();
-		$('.link1 div').eq(9).show();
+		$('#leftImage').css('padding-bottom', '100px');
+		$('#content div').eq(5).show();
+		$('#content div').eq(6).show();
+		$('#content div').eq(7).show();
+		$('#content div').eq(9).show();
 	}
 	if (data.total==0) return;
 	var result = jQuery.parseJSON(data.resultList);
 	if (result.length == 0) return;
 	$.each(result, function(index, commodity) {
-		$('#companyLeft').css('height', 250);
 		var str = $('#commodityTemplate').html();
 		str = str.replace('rowNum', (pageNum - 1) * 10 + index + 1);
 		str = str.replace(/categoryName/g, commodity.categoryName == null ? '暂无' : commodity.categoryName);
