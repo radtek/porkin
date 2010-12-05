@@ -1,5 +1,5 @@
-<%@page contentType="text/html;charset=UTF-8"%>
-<%@page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <%@ include file="/common/taglibs.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -42,26 +42,23 @@ function reloadcaptcha(){
 <DIV style="CLEAR: both"></DIV>
 </DIV>
 </DIV>
-<div class="dfcenterTitle">关于我们</div>
+<div class="dfcenterTitle" >
+<p style="font-size:12pt; font-weight: bold; TEXT-ALIGN: center;">关于我们</p>
+</div>
+
+
+
 <div id="loginCenter">
 
-  <table width="680" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td colspan="2"></td>
-    </tr>
-    
-    <tr>
-    	<td></td>
-    </tr>
-    <tr>
-      
-    </tr>
-    <tr>
-    	<td></td>
-    </tr>
-  </table>
+<img src="${ctx}/images/about.jpg" width=500px;/>
+<br>  
 
-  <p class="tagContent">&nbsp;</p>
+<P style="font-size:12pt; font-weight: bold;">
+&nbsp;大连•商讯网是一款以提供商业产品信息的地域性信息类门户网站。<br>
+&nbsp;商讯网是为了用户更方便、快捷的查找产品的信息为所建立的网站，商讯网力争做到：保证信息的准确性、方便快捷的查询、保障用户信息的安全。<br>
+&nbsp;我们的服务理念是:用方便、快捷的服务带给您准确无误的信息！<br>
+
+</p>
 </div>
 
 </body>
