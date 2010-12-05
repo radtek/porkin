@@ -163,11 +163,10 @@ align="center" border="0">
                   <div class="info_r"></div>
                   <br 
       clear="all" />
-                  <div class="hui912 l_space">信誉等级：</div>
+                  <div class="hui912 l_space">信誉等级分：<c:out value="${creditScore}"/></div>
                   <div class="info_r">
-                  <c:forEach begin="1" end="${creditLevel}">
-                  	<img height="16" src="${ctx}/images/common/d1.gif" width="16" border="0" />
-                  </c:forEach >                  
+                  	<c:if test="${not empty supplier.supplierQualify }"><img height="16" src="${ctx}/images/common/d1.gif" width="16" border="0" /></c:if>
+                  	<c:if test="${not empty supplier.supplierCertify}"><img height="16" src="${ctx}/images/common/d1.gif" width="16" border="0" /></c:if>
                   </div>
                   <br clear="all" />
                   

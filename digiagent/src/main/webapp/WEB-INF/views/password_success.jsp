@@ -57,7 +57,9 @@ function goHome() {
     </tr>
     
      <tr>
-      <td><strong>用户找回密码成功!</strong></td>
+      <td>
+      	<strong>用户找回密码成功,请到邮箱查收密码!
+      </strong></td>
       <td></td>
     </tr>
     <tr>

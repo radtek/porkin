@@ -17,4 +17,27 @@
 			t_da_comments.created_date desc
 		LIMIT $first$, $pageSize$;
 	</select>
+	
+	<select id="sumBySupplierID" parameterClass="int" resultClass="long">
+		select sum(t.score) SCORE
+		from
+		(
+			SELECT 
+			    case comment_rank 
+			        when '0' then 0
+			        when '1' then 1
+			        when '2' then 2
+			        when '3' then 3
+			        when '4' then 4
+			        when '5' then 5
+			        when '6' then 6
+			        when '7' then 7
+			        when '8' then 8
+			        when '9' then 9
+			        when 'A' then 10
+			        else  0
+			    end score
+			FROM t_da_comments where supplier_id = #value#
+		) t
+	</select>
 </sqlMap>

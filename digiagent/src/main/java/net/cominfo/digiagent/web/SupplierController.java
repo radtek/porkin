@@ -301,6 +301,7 @@ public class SupplierController {
 
 			String area = supplierService.getAreaInfoBySupplierId(id);
 			Integer countComments = commentsService.countCommentsBySupplier(id);
+			Long score = commentsService.sumScore(id);
 
 			model.addAttribute("supplier", supplier);
 			model.addAttribute("emailList", emailList);
@@ -310,7 +311,7 @@ public class SupplierController {
 			model.addAttribute("qqList", qqList);
 			model.addAttribute("msnList", msnList);
 			model.addAttribute("countComments", countComments);
-			model.addAttribute("creditLevel", 3);
+			model.addAttribute("creditScore", score);
 
 			supplierService.access(supplier);
 			historyService.recordSupplierAccess(id);

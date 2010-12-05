@@ -65,5 +65,10 @@ public class CommentsService {
 		int total = commentsDao.countByExample(criteria);
 		return new Long(total);
 	}
+	
+	public Long sumScore(int supplierId){
+		Long result = commentsDao.sumScore(supplierId);
+		return (result==null)?0:result;
+	}
 
 }

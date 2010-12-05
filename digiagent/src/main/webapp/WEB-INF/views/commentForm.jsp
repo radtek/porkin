@@ -17,6 +17,7 @@ function Home() {
 	var url = "${ctx}/";
 	window.parent.location.href= url;
 }
+
 </script>
 </head>
 <body>
@@ -77,8 +78,12 @@ function Home() {
       <td colspan="2" align="center"><span class="headCity">
         <input class="btn_login" type="submit" value="提交" />
             </span><span class="headCity">
-      <input class="btn_login" type="reset" value="取消" />
-                  </span></td>
+      <input class="btn_login" type="reset" value="清空" />
+                  </span>
+             <span class="headCity">
+      <input class="btn_login" type="button" value="关闭"  OnClick="javascript:window.close(); return false;"/>
+                  </span>
+                  </td>
     </tr>
     <tr>
     	<td></td>
