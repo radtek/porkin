@@ -68,7 +68,7 @@ function reloadcaptcha(){
       <td colspan="2" align="center"><span class="headCity">
         <input class="btn_login" type="submit" value="提交" />
             </span><span class="headCity">
-      <input class="btn_login" type="reset" value="取消" />
+      <input class="btn_login" type="reset" value="清空" />
                   </span></td>
     </tr>
     <tr>
