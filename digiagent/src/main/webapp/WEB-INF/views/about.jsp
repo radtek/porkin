@@ -36,7 +36,8 @@ function reloadcaptcha(){
       </select>
      <span class="leftLink"><a href="${ctx}/">首页</a></span>
      <span class="rightLink">设为首页</span> </div>
-  <div class="logo"></div>
+  <div class="logo"><a href="${ctx}/"><img src="${ctx}/images/logolink.gif"></a>
+  </div>
 </div>
 <div class="redLine"></div>
 <DIV style="CLEAR: both"></DIV>

@@ -36,7 +36,7 @@ function reloadcaptcha(){
       </select>
      <span class="leftLink"><a href="${ctx}/">首页</a></span>
      <span class="rightLink">帮助 | 设为首页</span> </div>
-  <div class="logo"></div>
+  <div class="logo"><a href="${ctx}/"><img src="${ctx}/images/logolink.gif"></a></div>
 </div>
 <div class="redLine"></div>
 <DIV style="CLEAR: both"></DIV>
@@ -68,7 +68,7 @@ function reloadcaptcha(){
       <td colspan="2" align="center"><span class="headCity">
         <input class="btn_login" type="submit" value="提交" />
             </span><span class="headCity">
-      <input class="btn_login" type="reset" value="清空" />
+      <input class="btn_login" type="reset" value="取消" onClick="javasciprt:history.go(-1); return false;" />
                   </span></td>
     </tr>
     <tr>
