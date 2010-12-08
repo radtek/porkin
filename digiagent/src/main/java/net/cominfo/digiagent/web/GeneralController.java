@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.service.CategoryService;
 import net.cominfo.digiagent.service.SupplierService;
 import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
@@ -37,6 +39,9 @@ public class GeneralController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String aboutUs(Model model) {
@@ -182,12 +187,18 @@ public class GeneralController {
 				try {
 					model.addAttribute(key, new String(value.getBytes("iso8859-1"),"utf-8"));
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 		return "welcome";
+	}
+	
+	@RequestMapping(value = "/sortable", method = RequestMethod.GET)
+	public String sortable(Model model) {
+		List<Category> categoryList = categoryService.getAllCategory();
+		model.addAttribute(categoryList);
+		return "sortable";
 	}
 
 }
