@@ -38,10 +38,13 @@
 		$("#sortable").disableSelection();
 	});
 
-	function save() {
+	function setValue() {
+		var data = [];
 		$.each($("#sortable").children(), function (index, category) {
-			alert(index + "~" + $(category).text());
+			data.push($(category).text());
 		});
+		alert(JSON.stringify(data));
+		$('input[name="categorys"]').val(JSON.stringify(data));
 	}
 </script>
 </head>
@@ -52,7 +55,10 @@
 		<li class=ui-state-default><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>${item.categoryName}</li>
 	</c:forEach>
 </ul>
-<input type="button" value="Save" onclick="save()"/>
+<form action="save" method=post name="test" onsubmit="setValue()">
+<input name="categorys" type="hidden"/>
+<input type="submit" value="Save"/>
+</form>
 </div>
 </body>
 </html>

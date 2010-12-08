@@ -19,6 +19,7 @@ import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
 import net.cominfo.digiagent.utils.ValidatorUtils;
 
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -198,7 +199,16 @@ public class GeneralController {
 	public String sortable(Model model) {
 		List<Category> categoryList = categoryService.getAllCategory();
 		model.addAttribute(categoryList);
+		// TODO 读取时根据排序标识排序后读取LIST
 		return "sortable";
+	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(HttpServletRequest request, Model model) {
+		JSONArray jsonArray = JSONArray.fromObject((String)request.getParameter("categorys"));
+		Object[] categoryNames = jsonArray.toArray();
+		// TODO 按读取顺序自然保存排序标识
+		return "redirect:/sortable";
 	}
 
 }
