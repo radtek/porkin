@@ -157,11 +157,11 @@ public class SequenceDao extends SequenceDAOImpl {
 		return getNextId(COMMENTS_KEY);
 	}
 	
-	public int getSortableId(){
+	public int getSortableNexId(){
 		return getNextId(SORTABLE_KEY);
 	}
 	
-	public int getSortOrder(){
+	public int getSortOrderNexId(){
 		return getNextId(SORT_ORDER_KEY);
 	}
 	

@@ -367,9 +367,9 @@ CREATE TABLE T_DA_SORTABLE
 	-- 所对应的排序位
 	SORTABLE_ORDER INT DEFAULT 0 NOT NULL COMMENT '所对应的排序位',
 	-- 所对应的排序类型, C为category, B为Brand, P为Product
-	SORTABLE_TYPE CHAR(1) COMMENT '所对应的排序类型, C为category, B为Brand, P为Product',
+	SORTABLE_TYPE CHAR(1) NOT NULL COMMENT '所对应的排序类型, C为category, B为Brand, P为Product',
 	-- 排序表系统的主键
-	PARENT_ID INT NOT NULL COMMENT '排序表系统的主键',
+	PARENT_ID INT COMMENT '排序表系统的主键',
 	PRIMARY KEY (SORTABLE_ID)
 ) ENGINE = InnoDB COMMENT = '排序表' DEFAULT CHARACTER SET utf8;
 

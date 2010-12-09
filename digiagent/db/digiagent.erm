@@ -22,7 +22,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>40</x>
-	<y>1373</y>
+	<y>1614</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -105,7 +105,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2010-07-29 23:23:36</creation_date>
-			<updated_date>2010-12-09 21:54:48</updated_date>
+			<updated_date>2010-12-10 00:39:55</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -5134,7 +5134,7 @@
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
+					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
 					<sequence>
@@ -5162,7 +5162,7 @@
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
 					<foreign_key>true</foreign_key>
-					<not_null>true</not_null>
+					<not_null>false</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
 					<sequence>
@@ -5204,7 +5204,7 @@
 			<connections>
 				<relation>
 					<id>11</id>
-					<source>2</source>
+					<source>17</source>
 					<target>15</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -5221,7 +5221,7 @@
 				</relation>
 				<relation>
 					<id>12</id>
-					<source>17</source>
+					<source>2</source>
 					<target>15</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -5638,7 +5638,7 @@
 				<normal_column>
 					<id>133</id>
 					<referenced_column>16</referenced_column>
-					<relation>11</relation>
+					<relation>12</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -5666,7 +5666,7 @@
 				<normal_column>
 					<id>134</id>
 					<referenced_column>146</referenced_column>
-					<relation>12</relation>
+					<relation>11</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -5886,7 +5886,7 @@
 			<connections>
 				<relation>
 					<id>13</id>
-					<source>15</source>
+					<source>10</source>
 					<target>16</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -5903,7 +5903,7 @@
 				</relation>
 				<relation>
 					<id>14</id>
-					<source>10</source>
+					<source>15</source>
 					<target>16</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -5928,7 +5928,7 @@
 				<normal_column>
 					<id>141</id>
 					<referenced_column>119</referenced_column>
-					<relation>13</relation>
+					<relation>14</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -5956,7 +5956,7 @@
 				<normal_column>
 					<id>142</id>
 					<referenced_column>88</referenced_column>
-					<relation>14</relation>
+					<relation>13</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -6460,7 +6460,7 @@
 			<connections>
 				<relation>
 					<id>15</id>
-					<source>12</source>
+					<source>17</source>
 					<target>18</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -6477,7 +6477,7 @@
 				</relation>
 				<relation>
 					<id>16</id>
-					<source>17</source>
+					<source>12</source>
 					<target>18</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -6502,7 +6502,7 @@
 				<normal_column>
 					<id>158</id>
 					<referenced_column>146</referenced_column>
-					<relation>16</relation>
+					<relation>15</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -6530,7 +6530,7 @@
 				<normal_column>
 					<id>159</id>
 					<referenced_column>104</referenced_column>
-					<relation>15</relation>
+					<relation>16</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
