@@ -18,8 +18,8 @@ import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
 import net.cominfo.digiagent.utils.ValidatorUtils;
-
 import net.sf.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

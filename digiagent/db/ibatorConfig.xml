@@ -28,24 +28,26 @@
 		<daoGenerator targetPackage="net.cominfo.digiagent.persistence.sqlmapdao"
 			targetProject="digiagent/src/main/java" type="SPRING" />
 			
-		<table tableName="T_DA_CONTACT" domainObjectName="Contact" />
-		<table tableName="T_DA_SUPPLIERPRODUCT" domainObjectName="SupplierProduct" />
-		<table tableName="T_DA_PRODUCTBRAND" domainObjectName="ProductBrand" />
-		<table tableName="T_DA_BRAND" domainObjectName="Brand" />
-		<table tableName="T_DA_PRODUCT" domainObjectName="Product" />
-		<table tableName="T_DA_CATEGORY" domainObjectName="Category" />
-		<table tableName="T_DA_SUPPLIER" domainObjectName="Supplier" />
-		<table tableName="T_DA_CITY" domainObjectName="City" />
-		<table tableName="T_DA_COMMODITY" domainObjectName="Commodity" />
-		<table tableName="T_DA_COMMODITYIMAGE" domainObjectName="CommodityImage" />
-		<table tableName="T_DA_COUNTRY" domainObjectName="Country" />
-		<table tableName="T_DA_HISTORY" domainObjectName="History" />
-		<table tableName="T_DA_PROVINCE" domainObjectName="Province" />
-		<table tableName="T_DA_ROLE" domainObjectName="Role" />
-		<table tableName="T_DA_USER" domainObjectName="User" />
-		<table tableName="T_DA_USERROLE" domainObjectName="UserRole" />
-		<table tableName="T_DA_SEQUENCE" domainObjectName="Sequence" />
-		<table tableName="T_DA_COMMENTS" domainObjectName="Comments" />
+<!--		<table tableName="T_DA_CONTACT" domainObjectName="Contact" />-->
+<!--		<table tableName="T_DA_SUPPLIERPRODUCT" domainObjectName="SupplierProduct" />-->
+<!--		<table tableName="T_DA_PRODUCTBRAND" domainObjectName="ProductBrand" />-->
+<!--		<table tableName="T_DA_BRAND" domainObjectName="Brand" />-->
+<!--		<table tableName="T_DA_PRODUCT" domainObjectName="Product" />-->
+<!--		<table tableName="T_DA_CATEGORY" domainObjectName="Category" />-->
+<!--		<table tableName="T_DA_SUPPLIER" domainObjectName="Supplier" />-->
+<!--		<table tableName="T_DA_CITY" domainObjectName="City" />-->
+<!--		<table tableName="T_DA_COMMODITY" domainObjectName="Commodity" />-->
+<!--		<table tableName="T_DA_COMMODITYIMAGE" domainObjectName="CommodityImage" />-->
+<!--		<table tableName="T_DA_COUNTRY" domainObjectName="Country" />-->
+<!--		<table tableName="T_DA_HISTORY" domainObjectName="History" />-->
+<!--		<table tableName="T_DA_PROVINCE" domainObjectName="Province" />-->
+<!--		<table tableName="T_DA_ROLE" domainObjectName="Role" />-->
+<!--		<table tableName="T_DA_USER" domainObjectName="User" />-->
+<!--		<table tableName="T_DA_USERROLE" domainObjectName="UserRole" />-->
+<!--		<table tableName="T_DA_SEQUENCE" domainObjectName="Sequence" />-->
+<!--		<table tableName="T_DA_COMMENTS" domainObjectName="Comments" />-->
+<!--		-->
+		<table tableName="T_DA_SORTABLE" domainObjectName="Sortable" />
 
 	</ibatorContext>
 </ibatorConfiguration>
