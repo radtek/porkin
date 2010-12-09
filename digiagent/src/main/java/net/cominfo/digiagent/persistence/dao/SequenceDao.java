@@ -44,6 +44,10 @@ public class SequenceDao extends SequenceDAOImpl {
 	
 	private final String COMMENTS_KEY = "comments";
 	
+	private final String SORTABLE_KEY = "sortable";
+	
+	private final String SORT_ORDER_KEY = "sort_order";
+	
 	/**
 	 * This is a generic sequence ID generator that is based on a database table
 	 * called 'SEQUENCE', which contains two columns (NAME, NEXTID). This
@@ -151,6 +155,14 @@ public class SequenceDao extends SequenceDAOImpl {
 	
 	public int getCommentsNexId() {
 		return getNextId(COMMENTS_KEY);
+	}
+	
+	public int getSortableId(){
+		return getNextId(SORTABLE_KEY);
+	}
+	
+	public int getSortOrder(){
+		return getNextId(SORT_ORDER_KEY);
 	}
 	
 	

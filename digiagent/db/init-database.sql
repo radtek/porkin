@@ -442,7 +442,8 @@ INSERT INTO `t_da_sequence` (`NAME`, `NEXTID`) VALUES
 ('supplierproduct', 1),
 ('user', 1),
 ('userrole', 1),
-('comments', 1);
+('sortable', 1);
+('sort_order', 1);
 
 -- --------------------------------------------------------
 

@@ -2,9 +2,7 @@ package net.cominfo.digiagent.spring.security;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.cominfo.digiagent.persistence.dao.RoleDao;
 import net.cominfo.digiagent.persistence.dao.UserDao;
@@ -86,17 +84,18 @@ public class SecurityService {
 	 * @param userPassword
 	 * @return 
 	 */
-	@SuppressWarnings("unchecked")
-	public User login(String userName, String userPassword, String type) {
+	public User login(String userName, String userPassword) {
 		User result = null;
-//		UserCriteria criteria = new UserCriteria();
-//		criteria.createCriteria().andUserNameEqualTo(userName)
-//				.andUserPasswordEqualTo(userPassword);
-		Map param = new HashMap();
-		param.put("userName", userName);
-		param.put("userPassword", userPassword);
-		param.put("roleName", type);
-		List<User> userList = userDao.getSqlMapClientTemplate().queryForList("t_da_user_Custom.getUser", param);
+		UserCriteria criteria = new UserCriteria();
+		criteria.createCriteria().andUserNameEqualTo(userName)
+				.andUserPasswordEqualTo(userPassword);
+		List<User> userList = userDao.selectByExample(criteria);
+//		Map param = new HashMap();
+//		param.put("userName", userName);
+//		param.put("userPassword", userPassword);
+//		param.put("roleName", type);
+//		List<User> userList = userDao.getSqlMapClientTemplate().queryForList("t_da_user_Custom.getUser", param);
+	
 		if (userList != null & userList.size() > 0) {
 			result = userList.get(0);
 			int newLogonSum = result.getLogonsum()+1;

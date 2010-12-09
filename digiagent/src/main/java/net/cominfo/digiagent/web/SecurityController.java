@@ -1,9 +1,7 @@
 package net.cominfo.digiagent.web;
 
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,8 +52,8 @@ public class SecurityController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(Model model, @RequestParam String username,
-			@RequestParam String password, @RequestParam String type, HttpServletResponse response) {
-		User user = securityService.login(username, password, type);
+			@RequestParam String password, HttpServletResponse response) {
+		User user = securityService.login(username, password);
 
 		String message = null;
 		if (user != null) {
@@ -74,7 +72,7 @@ public class SecurityController {
 	@RequestMapping(value = "/autologin", method = RequestMethod.POST)
 	public String autoLogin(Model model, @RequestParam String username,
 			@RequestParam String password, HttpServletResponse response) {
-		User user = securityService.login(username, password, null);
+		User user = securityService.login(username, password);
 		if (user != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userName", user.getUserName());
