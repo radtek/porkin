@@ -17,10 +17,10 @@ public class SortableServiceTest {
 	}
 
 	@Test
-	public void testSortCategory() {
-		int[] categoryIds = new int[]{3};
-		ss.sortCategory(categoryIds);
+	public void testReset() {
+		ss.reset();
 	}
+	
 	
 //	@Test
 //	public void testSortProduct() {

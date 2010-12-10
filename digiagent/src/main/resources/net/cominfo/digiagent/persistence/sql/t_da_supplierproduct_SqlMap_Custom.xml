@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="t_da_supplierproduct_Custom">
+
+	<resultMap id="getAllBrandSupplierResult" class="java.util.HashMap">
+		<result column="brandId" jdbcType="INTEGER" property="brandId" javaType="INTEGER" />
+		<result column="supplierId" jdbcType="INTEGER" property="supplierId" javaType="INTEGER" />
+	</resultMap>
+	
 	<select id="supplierPageByCondition" parameterClass="net.cominfo.digiagent.utils.Page"
 		resultClass="HashMap">
 		SELECT t_da_supplier.city_id as cityId,
@@ -222,6 +228,14 @@
 		<isNotEmpty prepend="AND" property="brandName">
 			brand_name = '$brandName$'
 		</isNotEmpty>
+	</select>
+	
+	<select id="getAllBrandSupplier" resultMap="getAllBrandSupplierResult">
+		SELECT
+			T_DA_PRODUCTBRAND.BRAND_ID brandId,
+			T_DA_SUPPLIERPRODUCT.SUPPLIER_ID supplierId
+		from T_DA_PRODUCTBRAND, T_DA_SUPPLIERPRODUCT
+		where T_DA_PRODUCTBRAND.PRODUCTBRAND_ID = T_DA_SUPPLIERPRODUCT.PRODUCTBRAND_ID
 	</select>
 	
 	

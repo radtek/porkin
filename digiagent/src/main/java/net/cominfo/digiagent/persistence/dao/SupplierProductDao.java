@@ -15,4 +15,9 @@ public class SupplierProductDao extends SupplierProductDAOImpl {
 		return getSqlMapClientTemplate().queryForList("t_da_supplierproduct_Custom.getProductListByCondition", condition);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Map> getAllBrandSupplier() {
+		return getSqlMapClientTemplate().queryForList("t_da_supplierproduct_Custom.getAllBrandSupplier");
+	}
+		
 }

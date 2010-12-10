@@ -25,17 +25,22 @@ public class SortableDao extends SortableDAOImpl {
 		getSqlMapClientTemplate().insert(
 				"t_da_sortable_Custom.getSortableChildIds", parameterMap);
 		String outputStr = (String) parameterMap.get("OUT_IDS");
-		
+
 		List<Integer> result = new ArrayList<Integer>();
-		if(outputStr!=null & outputStr.trim().length()>0){
+		if (outputStr != null & outputStr.trim().length() > 0) {
 			String[] ouputStrList = outputStr.split(",");
 			Integer temp = null;
-			for(String str:ouputStrList){
+			for (String str : ouputStrList) {
 				temp = Integer.valueOf(str);
 				result.add(temp);
 			}
 		}
 		return result;
+	}
+
+	public void cleanAll() {
+		getSqlMapClientTemplate().delete(
+				"t_da_sortable_Custom.cleanSortableTable");
 	}
 
 }

@@ -18,4 +18,8 @@
 		</dynamic>
 	</delete>
 	
+	<delete id="cleanSortableTable">
+		TRUNCATE TABLE t_da_sortable; 
+	</delete>
+	
 </sqlMap>
