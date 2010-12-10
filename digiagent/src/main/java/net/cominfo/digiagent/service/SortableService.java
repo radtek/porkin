@@ -44,7 +44,6 @@ public class SortableService {
 		}
 		return result;
 	}
-
 	
 	/**
 	 * 通用的重排序方法 
@@ -58,11 +57,11 @@ public class SortableService {
 		Integer parentId = null;
 		SortableCriteria criteria = new SortableCriteria();
 		if(rootId>0){
-			criteria.createCriteria().andSortableTypeEqualTo(type);
-		}
-		else{
 			criteria.createCriteria().andSortableTypeEqualTo(type).andParentIdEqualTo(rootId);
 			parentId = new Integer(rootId);
+		}
+		else{
+			criteria.createCriteria().andSortableTypeEqualTo(type);
 		}
 		
 		List<Sortable> sortableList = sortableDao.selectByExample(criteria);
@@ -91,6 +90,10 @@ public class SortableService {
 		}
 
 		// 来用存储过程进行删除不用的Id及其子Id
+		for(Sortable sortable: sortableList){
+			Integer sortableId = sortable.getSortableId();
+			sortableDao.deleteByPrimaryKey(sortableId);
+		}
 
 	}
 
@@ -118,5 +121,18 @@ public class SortableService {
 	 */
 	public void sortBrand(int[] brandIds,int productId) {
 		sort(brandIds, productId, "B");
+	}
+	
+	/**
+	 * 按brandId顺序增加或更新供应商顺序号
+	 * @param brandIds
+	 * @param productId
+	 */
+	public void sortSupplier(int[] supplierIds,int brandId) {
+		sort(supplierIds, brandId, "S");
+	}
+	
+	public List<Integer> getAllChild(Integer rootId){
+		return sortableDao.getAllChildId(rootId);
 	}
 }

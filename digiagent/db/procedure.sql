@@ -27,3 +27,27 @@ END
 
 
 ----------------------
+-- 排序表
+CREATE TABLE T_DA_SORTABLE
+(
+	-- 排序表系统的主键
+	SORTABLE_ID INT NOT NULL COMMENT '排序表系统的主键',
+	-- 需要排序的表的系统工主键，主要来源于category,brand,product
+	SORTABLE_KEY INT NOT NULL COMMENT '需要排序的表的系统工主键，主要来源于category,brand,product',
+	-- 所对应的排序位
+	SORTABLE_ORDER INT DEFAULT 0 NOT NULL COMMENT '所对应的排序位',
+	-- 所对应的排序类型, C为category, B为Brand, P为Product
+	SORTABLE_TYPE CHAR(1) NOT NULL COMMENT '所对应的排序类型, C为category, B为Brand, P为Product',
+	-- 排序表系统的主键
+	PARENT_ID INT COMMENT '排序表系统的主键',
+	PRIMARY KEY (SORTABLE_ID),
+	KEY `FK_PARENT` (`PARENT_ID`)
+) ENGINE = InnoDB COMMENT = '排序表' DEFAULT CHARACTER SET utf8;
+
+
+ALTER TABLE T_DA_SORTABLE
+	ADD CONSTRAINT FOREIGN KEY (PARENT_ID)
+	REFERENCES T_DA_SORTABLE (SORTABLE_ID)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
