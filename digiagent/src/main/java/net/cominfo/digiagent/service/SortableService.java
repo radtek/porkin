@@ -1,6 +1,5 @@
 package net.cominfo.digiagent.service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -50,18 +49,44 @@ public class SortableService {
 	 *
 	 */
 	public enum TypeFlag{
-		Category("C"),
-		Product("P"),
-		Brand("B"),
-		Supplier("S");
+		Category("C") {
+			@Override
+			public TypeFlag parent() {
+				return null;
+			}
+		},
+		Product("P"){
+			@Override
+			public TypeFlag parent() {
+				return Category;
+			}
+		},
+		Brand("B"){
+			@Override
+			public TypeFlag parent() {
+				return Product;
+			}
+		},
+		Supplier("S"){
+			@Override
+			public TypeFlag parent() {
+				return Brand;
+			}
+		};
+		
 		
 		private String flag;
+		
 		public String getFlag(){
 			return flag;
 		}
+		
 		private TypeFlag(String flag){
 			this.flag = flag;
 		}
+		
+		// 找到上级标志位
+		public abstract TypeFlag parent();
 	}
 	
 	/**
@@ -88,7 +113,7 @@ public class SortableService {
 		productCriteria.createCriteria();
 		List<Product> productList =  productDao.selectByExample(productCriteria);
 		for(Product p:productList){
-			insertSortable(p.getProductId(),p.getCategoryId(),TypeFlag.Product.getFlag());
+			 rebuild(p.getProductId(),p.getCategoryId(), TypeFlag.Product);
 		}
 		
 		//将品牌信息导入Sortable表
@@ -96,7 +121,7 @@ public class SortableService {
 		productBrandCriteria.createCriteria();
 		List<ProductBrand> productBrandList =  productBrandDao.selectByExample(productBrandCriteria);
 		for(ProductBrand pb:productBrandList){
-			insertSortable(pb.getBrandId(),pb.getProductId(),TypeFlag.Brand.getFlag());
+			rebuild(pb.getBrandId(),pb.getProductId(), TypeFlag.Brand);
 		}
 		
 		//将供应商信息导入Sortable表
@@ -104,10 +129,34 @@ public class SortableService {
 		for(Map bs:brandSupplierList){
 			Integer brandId = (Integer)bs.get("brandId");
 			Integer supplierId = (Integer)bs.get("supplierId");
-			insertSortable(supplierId,brandId,TypeFlag.Supplier.getFlag());
+			rebuild(supplierId,brandId,TypeFlag.Supplier);
 		}
 	}
 	
+	
+	/**
+	 * 将重建Sortable表,用sortKey,父级sortKey和类型
+	 * @param sortKey,可能为productId,brandId, supplierId
+	 * @param parentSortKey,相应的父级sortKey
+	 * @param type
+	 */
+	public void rebuild(Integer sortKey,Integer parentSortKey,  TypeFlag typeFlag){
+		SortableCriteria parentCriteria = new SortableCriteria();
+		parentCriteria.createCriteria().andSortableTypeEqualTo(typeFlag.parent().getFlag()).andSortableKeyEqualTo(parentSortKey);
+		List<Sortable> sortableList = sortableDao.selectByExample(parentCriteria);
+		if(sortableList!=null & sortableList.size()>0){
+			Sortable parent = sortableList.get(0);
+			Integer parentId = parent.getSortableId();
+			insertSortable(sortKey, parentId, typeFlag.getFlag());
+		}
+	}
+	
+	/**
+	 * 插入sortable对象
+	 * @param sortKey
+	 * @param parentId
+	 * @param type
+	 */
 	public void insertSortable(Integer sortKey, Integer parentId, String type){
 		Sortable sortable = new Sortable();
 		sortable.setSortableId(sequenceDao.getSortableNexId());
@@ -128,19 +177,16 @@ public class SortableService {
 	private Sortable getSortableByKey(List<Sortable> sortableList, int key) {
 		Sortable result = null;
 		if (sortableList != null & sortableList.size() > 0) {
-			Iterator<Sortable> iterator = sortableList.iterator();
-			Sortable temp = null;
-			while (iterator.hasNext()) {
-				temp = iterator.next();
-				if (temp.getSortableKey() == key) {
+			for(Sortable temp : sortableList){
+				if(temp.getSortableKey().intValue()==key){
 					result = temp;
 					break;
 				}
 			}
+			
 		}
 		return result;
 	}
-	
 	
 	/**
 	 * 查找sortKey的主键
@@ -148,10 +194,10 @@ public class SortableService {
 	 * @param type
 	 * @return
 	 */
-	private int getRootId(int sortKey, String type){
+	private int getParentId(int parentSortKey, String type){
 		int result = 0;
 		SortableCriteria criteria = new SortableCriteria();
-		criteria.createCriteria().andSortableTypeEqualTo(type).andSortableKeyEqualTo(sortKey);
+		criteria.createCriteria().andSortableTypeEqualTo(type).andSortableKeyEqualTo(parentSortKey);
 		List<Sortable> sortableList = sortableDao.selectByExample(criteria);
 		if(sortableList!=null & sortableList.size()>0){
 			result = sortableList.get(0).getSortableId();
@@ -216,7 +262,7 @@ public class SortableService {
 	 * @param categoryIds
 	 */
 	public void sortCategory(int[] categoryIds) {
-		sort(categoryIds, 0, "C"); 
+		sort(categoryIds, 0, TypeFlag.Category.getFlag()); 
 	}
 
 	/** 
@@ -225,8 +271,8 @@ public class SortableService {
 	 * @param categoryId
 	 */
 	public void sortProduct(int[] productIds,int categoryId) {
-		int parentId = getRootId(categoryId,"C");
-		sort(productIds, parentId, "P");
+		int parentId = getParentId(categoryId,TypeFlag.Category.getFlag());
+		sort(productIds, parentId, TypeFlag.Product.getFlag());
 	}
 	
 	/**
@@ -235,8 +281,8 @@ public class SortableService {
 	 * @param productId
 	 */
 	public void sortBrand(int[] brandIds,int productId) {
-		int parentId = getRootId(productId,"P");
-		sort(brandIds, parentId, "B");
+		int parentId = getParentId(productId,TypeFlag.Product.getFlag());
+		sort(brandIds, parentId, TypeFlag.Brand.getFlag());
 	}
 	
 	/**
@@ -245,8 +291,8 @@ public class SortableService {
 	 * @param productId
 	 */
 	public void sortSupplier(int[] supplierIds,int brandId) {
-		int parentId = getRootId(brandId,"B");
-		sort(supplierIds, parentId, "S");
+		int parentId = getParentId(brandId,TypeFlag.Brand.getFlag());
+		sort(supplierIds, parentId, TypeFlag.Supplier.getFlag());
 	}
 	
 	public List<Integer> getAllChild(Integer rootId){
