@@ -32,6 +32,13 @@
 	</select>
 	
 	
+	<select id="listSortableByCondition" parameterClass="HashMap" resultClass="HashMap">
+		SELECT category_id as categoryId,
+		       category_name as categoryName
+		  FROM t_da_category, t_da_sortable
+		 WHERE t_da_category.category_id = t_da_sortable.sortable_key and active_flag = 'Y'
+		 ORDER BY t_da_sortable.sortable_order asc
+	</select>
 	<select id="listByCondition" parameterClass="HashMap" resultClass="HashMap">
 		SELECT category_id as categoryId,
 		       category_name as categoryName

@@ -1,17 +1,19 @@
 package net.cominfo.digiagent.web;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CategoryService;
+import net.cominfo.digiagent.service.SortableService;
 import net.cominfo.digiagent.service.SupplierService;
 import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
@@ -43,6 +45,9 @@ public class GeneralController {
 	
 	@Autowired
 	private CategoryService categoryService;
+
+	@Autowired
+	private SortableService sortableService;
 	
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String aboutUs(Model model) {
@@ -195,19 +200,29 @@ public class GeneralController {
 		return "welcome";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/sortable", method = RequestMethod.GET)
 	public String sortable(Model model) {
-		List<Category> categoryList = categoryService.getAllCategory();
-		model.addAttribute(categoryList);
-		// TODO 读取时根据排序标识排序后读取LIST
+		List<Map> categoryList = null;
+		try {
+			categoryList = categoryService.getCateogryList();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("categoryList", categoryList);
 		return "sortable";
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(HttpServletRequest request, Model model) {
-		JSONArray jsonArray = JSONArray.fromObject((String)request.getParameter("categorys"));
-		Object[] categoryNames = jsonArray.toArray();
-		// TODO 按读取顺序自然保存排序标识
+		JSONArray jsonArray = JSONArray.fromObject((String)request.getParameter("categoryIds"));
+		Object[] categoryIds =jsonArray.toArray();
+		int[] sortCategoryIds = new int[categoryIds.length]; 
+		int i = 0;
+		for (Object categoryId : categoryIds) {
+			sortCategoryIds[i++] = Integer.valueOf((String)categoryId);
+		}
+		sortableService.sortCategory(sortCategoryIds);
 		return "redirect:/sortable";
 	}
 

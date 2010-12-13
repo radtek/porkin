@@ -128,8 +128,15 @@ public class CategoryService {
 
 	@SuppressWarnings("unchecked")
 	public List<Map> getCateogryList() throws SQLException {
-		return (List<Map>) categoryDao.getSqlMapClient().queryForList(
-				"t_da_category_Custom.listByCondition", new HashMap());
+		List<Map> result = (List<Map>) categoryDao.getSqlMapClient()
+				.queryForList("t_da_category_Custom.listSortableByCondition",
+						new HashMap());
+		if (result != null && result.size() > 0) {
+			return result;
+		} else {
+			return (List<Map>) categoryDao.getSqlMapClient().queryForList(
+					"t_da_category_Custom.listByCondition", new HashMap());
+		}
 	}
 
 	public List<Category> getAllCategory() {
