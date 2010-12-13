@@ -189,7 +189,15 @@ public class ProductBrandService {
 
 	@SuppressWarnings("unchecked")
 	public List<Map> getBrandList(Map condition) throws SQLException {
-		return (List<Map>) supplierProductDao.getSqlMapClient().queryForList(
-				"t_da_productbrand_Custom.listByCondition", condition);
+		List<Map> result = (List<Map>) supplierProductDao.getSqlMapClient()
+				.queryForList("t_da_productbrand_Custom.listSortableByCondition",
+						condition);
+		if (result != null && result.size() > 0) {
+			return result;
+		} else {
+			return (List<Map>) supplierProductDao.getSqlMapClient()
+					.queryForList("t_da_productbrand_Custom.listByCondition",
+							condition);
+		}
 	}
 }

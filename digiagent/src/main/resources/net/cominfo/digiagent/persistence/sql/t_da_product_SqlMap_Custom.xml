@@ -52,4 +52,25 @@
 			category_name = '$categoryName$'
 		</isNotEmpty>
 	</select>
+	
+	<select id="listSortableByCondition" parameterClass="HashMap" resultClass="HashMap">
+		SELECT product_id as productId,
+		       product_name as productName
+		  FROM t_da_product,t_da_category, t_da_sortable
+		 WHERE t_da_product.category_id = t_da_category.category_id
+		 	and t_da_product.product_id = t_da_sortable.sortable_key and t_da_sortable.sortable_type = 'P'
+		 <isNotEmpty prepend="AND" property="productName">
+			product_name = '$productName$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="categoryId">
+			t_da_product.category_id = $categoryId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productId">
+			t_da_product.category_id = (SELECT category_id FROM t_da_product where  product_Id = $productId$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="categoryName">
+			category_name = '$categoryName$'
+		</isNotEmpty>
+		 ORDER BY t_da_sortable.sortable_order asc
+	</select>
 </sqlMap>

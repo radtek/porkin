@@ -72,8 +72,25 @@
 		<isNotEmpty prepend="AND" property="brandId">
 			t_da_productbrand.brand_id = '$brandId$'
 		</isNotEmpty>
-		<isNotEmpty prepend="AND" property="productId">
+		<isNotEmpty prepend="AND" property="productbrandId">
+			productbrand_id != $productbrandId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productName">
+			product_name = '$productName$'
+		</isNotEmpty>
+	</select>
+	
+	<select id="listSortableByCondition" parameterClass="HashMap" resultClass="HashMap">
+		SELECT t_da_productbrand.brand_id as brandId, 
+				t_da_brand.brand_name as brandName
+		  FROM t_da_productbrand, t_da_product, t_da_brand, t_da_sortable
+		 WHERE t_da_productbrand.brand_id = t_da_brand.brand_id and t_da_productbrand.product_id = t_da_product.product_id
+		 	and t_da_productbrand.brand_id = t_da_sortable.sortable_key and t_da_sortable.sortable_type = 'B'
+		 <isNotEmpty prepend="AND" property="productId">
 			t_da_productbrand.product_id = $productId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="brandId">
+			t_da_productbrand.brand_id = '$brandId$'
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="productbrandId">
 			productbrand_id != $productbrandId$
@@ -81,5 +98,6 @@
 		<isNotEmpty prepend="AND" property="productName">
 			product_name = '$productName$'
 		</isNotEmpty>
+		 ORDER BY t_da_sortable.sortable_order asc
 	</select>
 </sqlMap>
