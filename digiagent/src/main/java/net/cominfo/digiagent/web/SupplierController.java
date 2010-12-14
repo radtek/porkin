@@ -249,12 +249,12 @@ public class SupplierController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response,
-			Model model) throws UnsupportedEncodingException {
-		String otherParam[] = {"categoryName", "productName", "brandName"};
+			Model model) {
+		String otherParam[] = {"categoryId", "productId", "productBrandId"};
 		for (String key : otherParam) {
 			String value = request.getParameter(key);
 			if (value != null) {
-				model.addAttribute(key, new String(value.getBytes("iso8859-1"),"utf-8"));
+				model.addAttribute(key, value);
 			}
 		}
 		SupplierWithBLOBs supplier = supplierService.getById(id);

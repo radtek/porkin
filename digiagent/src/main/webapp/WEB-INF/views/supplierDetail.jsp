@@ -38,7 +38,7 @@ function showCommentForm(){
 }
 
 function goBack() {
-	window.location.href="/digiagent/goBack?categoryName=${categoryName}&productName=${productName}&brandName=${brandName}";
+	window.location.href="/digiagent/goBack?categoryId=${categoryId}&productId=${productId}&productBrandId=${productBrandId}";
 }
 </script>
 </head>
@@ -52,7 +52,7 @@ function goBack() {
     <div class="Brr">
       <!--基本信息开始-->
       <div class="mod_comp">
-        <div class="mod_compT">基本信息<c:if test="${not empty categoryName && not empty productName && not empty brandName}"> - ${categoryName}/${productName}/${brandName}</c:if><div style="float:right"><a href="javascript:void(0)" onclick="goBack()">返回</a></div></div>
+        <div class="mod_compT">基本信息<div style="float:right"><a href="javascript:void(0)" onclick="goBack()">返回</a></div></div>
         <table cellspacing="12" cellpadding="0" width="100%" border="0">
           <tbody>
             <tr>

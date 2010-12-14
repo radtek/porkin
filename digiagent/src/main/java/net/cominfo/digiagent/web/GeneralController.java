@@ -1,6 +1,5 @@
 package net.cominfo.digiagent.web;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -202,16 +201,11 @@ public class GeneralController {
 	 */
 	@RequestMapping(value = "/goBack", method = RequestMethod.GET)
 	public String goBack(HttpServletRequest request, Model model) {
-		String otherParam[] = { "categoryName", "productName", "brandName" };
+		String otherParam[] = {"categoryId", "productId", "productBrandId"};
 		for (String key : otherParam) {
 			String value = request.getParameter(key);
 			if (value != null) {
-				try {
-					model.addAttribute(key, new String(value
-							.getBytes("iso8859-1"), "utf-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+				model.addAttribute(key, value);
 			}
 		}
 		return "welcome";
@@ -242,6 +236,7 @@ public class GeneralController {
 				break;
 			case 1:
 				categoryList = categoryService.getCateogryList();
+				categoryId = parentId;
 				param.put("categoryId", parentId);
 				productList = productService.getProductList(param);
 				break;

@@ -48,11 +48,11 @@ public class SearchComponentBarController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getProductList", method = RequestMethod.GET)
-	public void getProductList(@RequestParam String categoryName, HttpServletResponse response) {
+	public void getProductList(@RequestParam String categoryId, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
 			Map param = new HashMap();
-			param.put("categoryName", java.net.URLDecoder.decode(categoryName,"UTF-8"));
+			param.put("categoryId", categoryId);
 			String result = JSONArray.toJSONString(productService.getProductList(param));  
 			pw.write(result);
 			pw.close();
@@ -63,11 +63,11 @@ public class SearchComponentBarController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getBrandList", method = RequestMethod.GET)
-	public void getBrandList(@RequestParam String productName, HttpServletResponse response) {
+	public void getBrandList(@RequestParam String productId, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
 			Map param = new HashMap();
-			param.put("productName", java.net.URLDecoder.decode(productName,"UTF-8"));
+			param.put("productId", productId);
 			String result = JSONArray.toJSONString(productBrandService.getBrandList(param));  
 			pw.write(result);
 			pw.close();
@@ -79,11 +79,11 @@ public class SearchComponentBarController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getSupplierList", method = RequestMethod.GET)
-	public void getSupplierList(@RequestParam String brandName, HttpServletResponse response) {
+	public void getSupplierList(@RequestParam String productBrandId, HttpServletResponse response) {
 		try {
 			PrintWriter pw = response.getWriter();
 			Map param = new HashMap();
-			param.put("brandName", java.net.URLDecoder.decode(brandName,"UTF-8"));
+			param.put("productBrandId", productBrandId);
 			String result = JSONArray.toJSONString(supplierProductService.getSupplierList(param));  
 			pw.write(result);
 			pw.close();
