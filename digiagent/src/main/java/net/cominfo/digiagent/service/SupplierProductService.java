@@ -159,8 +159,16 @@ public class SupplierProductService {
 
 	@SuppressWarnings("unchecked")
 	public List<Map> getSupplierList(Map condition) throws SQLException {
-		return (List<Map>) supplierProductDao.getSqlMapClient().queryForList(
-				"t_da_supplierproduct_Custom.supplierInfoListByCondition",
+		List<Map> result = (List<Map>) supplierProductDao.getSqlMapClient()
+		.queryForList("t_da_supplierproduct_Custom.listSortableByCondition",
 				condition);
+		if (result != null && result.size() > 0) {
+			return result;
+		} else {
+			return (List<Map>) supplierProductDao.getSqlMapClient().queryForList(
+					"t_da_supplierproduct_Custom.supplierInfoListByCondition",
+					condition);
+		}
+		
 	}
 }

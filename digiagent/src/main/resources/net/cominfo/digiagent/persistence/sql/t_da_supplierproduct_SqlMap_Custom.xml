@@ -228,6 +228,43 @@
 		<isNotEmpty prepend="AND" property="brandName">
 			brand_name = '$brandName$'
 		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productBrandId">
+			t_da_supplierproduct.productbrand_id = $productBrandId$
+		</isNotEmpty>
+	</select>
+	
+	<select id="listSortableByCondition" parameterClass="HashMap" resultClass="HashMap">
+		SELECT distinct t_da_supplier.supplier_id as supplierId,
+		       t_da_supplier.supplier_name as supplierName,
+		       t_da_supplier.supplier_contactname as supplierContactname,
+		       t_da_supplier.supplier_zip as supplierZip,
+		       t_da_supplier.supplier_description as supplierDescription,
+		       t_da_supplier.supplier_fax as supplierFax,
+		       t_da_supplier.supplier_mobile as supplierMobile,
+		       t_da_supplier.supplier_telephone as supplierTelephone,
+		       t_da_supplier.supplier_address as supplierAddress,
+		       t_da_supplier.supplier_name as supplierName
+		  FROM t_da_supplierproduct, t_da_supplier, t_da_productbrand, t_da_brand, t_da_sortable
+		WHERE t_da_supplierproduct.productbrand_id = t_da_productbrand.productbrand_id
+		and t_da_brand.brand_id = t_da_productbrand.brand_id
+		and t_da_supplierproduct.supplier_id = t_da_supplier.supplier_id
+		and t_da_supplierproduct.supplier_id = t_da_sortable.sortable_key and t_da_sortable.sortable_type = 'S'
+		<isNotEmpty prepend="AND" property="brandId">
+			t_da_productbrand.brand_id = '$brandId$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productId">
+			supplierproduct_id = '$productId$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="supplierId">
+			supplier_id = $supplierId$
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="brandName">
+			brand_name = '$brandName$'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="productBrandId">
+			t_da_supplierproduct.productbrand_id = $productBrandId$
+		</isNotEmpty>
+		 ORDER BY t_da_sortable.sortable_order asc
 	</select>
 	
 	<select id="getAllBrandSupplier" resultMap="getAllBrandSupplierResult">

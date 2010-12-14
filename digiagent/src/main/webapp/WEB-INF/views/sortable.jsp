@@ -11,7 +11,7 @@
 	src="${ctx}/scripts/jquery-ui-1.8.6.custom.min.js"></script>
 <link rel="stylesheet" href="${ctx}/styles/jquery-ui-1.8.6.custom.css" />
 <style>
-#sortable0,#sortable1,#sortable2 {
+#sortable0,#sortable1,#sortable2,#sortable3 {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -52,6 +52,10 @@ li span {
 			placeholder: "ui-state-highlight"
 		});
 		$("#sortable2").disableSelection();
+		$("#sortable3").sortable({
+			placeholder: "ui-state-highlight"
+		});
+		$("#sortable3").disableSelection();
 	});
 
 	function setValue(ind) {
@@ -75,15 +79,28 @@ li span {
 			$.each($('#sortable' + (ind - 1)).children(), function (index, item) {
 				if ($(item).find(".ui-icon").text() == parentId) {
 					$(item).css('background-color', '#F78181');
-					var pId = ${pId};
-					$('input[name="parentId"]').eq(1).val(pId);
+					<c:if test="${not empty categoryId}">
+					var categoryId = ${categoryId};
+					$('input[name="parentId"]').eq(1).val(categoryId);
 					if (ind > 1) {
-						$.each($('#sortable' + (ind - 2)).children(), function (index1, item1) {
-							if ($(item1).find(".ui-icon").text() == pId) {
+						$.each($('#sortable0').children(), function (index1, item1) {
+							if ($(item1).find(".ui-icon").text() == categoryId) {
 								$(item1).css('background-color', '#F78181');
 							}
 						});
 					}
+					</c:if>
+					<c:if test="${not empty productId && productId > 0}">
+					var productId = ${productId};
+					$('input[name="parentId"]').eq(2).val(productId);
+					if (ind > 1) {
+						$.each($('#sortable1').children(), function (index1, item1) {
+							if ($(item1).find(".ui-icon").text() == productId) {
+								$(item1).css('background-color', '#F78181');
+							}
+						});
+					}
+					</c:if>
 				}
 			});
 		}
@@ -134,7 +151,7 @@ li span {
 <div id="brandDiv">
 <ul id=sortable2>
 	<c:forEach var="item" items="${brandList}">
-		<li class="ui-state-default" ondblclick="showChild(3, ${item.brandId});"><span class="ui-icon">${item.brandId}</span>${item.brandName}</li>
+		<li class="ui-state-default" ondblclick="showChild(3, ${item.productBrandId});"><span class="ui-icon">${item.productBrandId}</span>${item.brandName}</li>
 	</c:forEach>
 </ul>
 <c:if test="${not empty brandList}">
@@ -142,11 +159,29 @@ li span {
 		<input name="items" type="hidden"/>
 		<input name="parentId" type="hidden"/>
 		<input name="type" value="2" type="hidden"/>
-		<input type="submit" value="保存"/>
+		<input type="submit" value="保存"/>(双击品牌查看商家)
 	</form>
 </c:if>
 </div>
 </fieldset>
 
+<fieldset style="border:#06c dashed 1px;padding:10px;margin:10px;">
+<legend style="color:#06c;font-weight:800;">商 家</legend>
+<div id="supplierDiv">
+<ul id=sortable3>
+	<c:forEach var="item" items="${supplierList}">
+		<li class="ui-state-default"><span class="ui-icon">${item.supplierId}</span>${item.supplierName}</li>
+	</c:forEach>
+</ul>
+<c:if test="${not empty supplierList}">
+	<form action="../../save" method=post name="test3" onsubmit="setValue(3)">
+		<input name="items" type="hidden"/>
+		<input name="parentId" type="hidden"/>
+		<input name="type" value="3" type="hidden"/>
+		<input type="submit" value="保存"/>
+	</form>
+</c:if>
+</div>
+</fieldset>
 </body>
 </html>

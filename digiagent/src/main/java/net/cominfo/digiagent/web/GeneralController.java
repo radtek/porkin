@@ -17,6 +17,7 @@ import net.cominfo.digiagent.service.CategoryService;
 import net.cominfo.digiagent.service.ProductBrandService;
 import net.cominfo.digiagent.service.ProductService;
 import net.cominfo.digiagent.service.SortableService;
+import net.cominfo.digiagent.service.SupplierProductService;
 import net.cominfo.digiagent.service.SupplierService;
 import net.cominfo.digiagent.service.UserService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
@@ -58,6 +59,9 @@ public class GeneralController {
 	
 	@Autowired
 	private SortableService sortableService;
+	
+	@Autowired
+	private SupplierProductService supplierProductService;
 
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String aboutUs(Model model) {
@@ -227,7 +231,9 @@ public class GeneralController {
 		List<Map> categoryList = null;
 		List<Map> productList = null;
 		List<Map> brandList = null;
-		int pId = 0;
+		List<Map> supplierList = null;
+		int categoryId = 0;
+		int productId = 0;
 		Map param = new HashMap();
 		try {
 			switch (type) {
@@ -241,12 +247,30 @@ public class GeneralController {
 				break;
 			case 2:
 				categoryList = categoryService.getCateogryList();
-				pId = productService.getById(parentId).getCategoryId();
-				param.put("categoryId", pId);
+				categoryId = productService.getById(parentId).getCategoryId();
+				// get product list
+				param.put("categoryId", categoryId);
 				productList = productService.getProductList(param);
 				param.clear();
+				// get brand list
 				param.put("productId", parentId);
 				brandList = productBrandService.getBrandList(param);
+				break;
+			case 3:
+				categoryList = categoryService.getCateogryList();
+				productId = productBrandService.getById(parentId).getProductId();
+				// get brand list
+				param.put("productId", productId);
+				brandList = productBrandService.getBrandList(param);
+				categoryId = productService.getById(productId).getCategoryId();
+				param.clear();
+				// get product list
+				param.put("categoryId", categoryId);
+				productList = productService.getProductList(param);
+				param.clear();
+				// get supplier list
+				param.put("productBrandId", parentId);
+				supplierList = supplierProductService.getSupplierList(param);
 				break;
 			default:
 				break;
@@ -255,12 +279,14 @@ public class GeneralController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("pId", pId);
+		model.addAttribute("categoryId", categoryId);
+		model.addAttribute("productId", productId);
 		model.addAttribute("type", type);
 		model.addAttribute("parentId", parentId);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("productList", productList);
 		model.addAttribute("brandList", brandList);
+		model.addAttribute("supplierList", supplierList);
 		return "sortable";
 	}
 
@@ -291,6 +317,9 @@ public class GeneralController {
 			break;
 		case 2:
 			sortableService.sortBrand(sortItemIds, parentId);
+			break;
+		case 3:
+			sortableService.sortSupplier(sortItemIds, parentId);
 			break;
 		default:
 			break;
