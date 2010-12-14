@@ -65,9 +65,6 @@
 		<isNotEmpty prepend="AND" property="categoryId">
 			t_da_product.category_id = $categoryId$
 		</isNotEmpty>
-		<isNotEmpty prepend="AND" property="productId">
-			t_da_product.category_id = (SELECT category_id FROM t_da_product where  product_Id = $productId$)
-		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="categoryName">
 			category_name = '$categoryName$'
 		</isNotEmpty>

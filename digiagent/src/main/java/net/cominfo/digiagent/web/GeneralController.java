@@ -241,9 +241,11 @@ public class GeneralController {
 				break;
 			case 2:
 				categoryList = categoryService.getCateogryList();
-				param.put("productId", parentId);
 				pId = productService.getById(parentId).getCategoryId();
+				param.put("categoryId", pId);
 				productList = productService.getProductList(param);
+				param.clear();
+				param.put("productId", parentId);
 				brandList = productBrandService.getBrandList(param);
 				break;
 			default:
