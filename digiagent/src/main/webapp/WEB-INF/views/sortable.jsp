@@ -76,6 +76,7 @@ li span {
 				if ($(item).find(".ui-icon").text() == parentId) {
 					$(item).css('background-color', '#F78181');
 					var pId = ${pId};
+					$('input[name="parentId"]').eq(1).val(pId);
 					if (ind > 1) {
 						$.each($('#sortable' + (ind - 2)).children(), function (index1, item1) {
 							if ($(item1).find(".ui-icon").text() == pId) {
