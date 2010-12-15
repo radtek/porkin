@@ -32,14 +32,15 @@ li span {
 }
 
 * {
-    font-size:12px;
-    margin:0;
-    padding:0; 
-} 
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
 </style>
 
 <script>
 	$(function() {
+		$("#tabs").tabs().find(".ui-tabs-nav").sortable({axis:'x'});
 		$("#sortable0").sortable({
 			placeholder: "ui-state-highlight"
 		});
@@ -104,84 +105,74 @@ li span {
 				}
 			});
 		}
+		$("#tabs").tabs("option", "selected", ind);
 	});
 </script>
 </head>
 <body>
-<fieldset style="border:#06c dashed 1px;padding:10px;margin:10px;">
-<legend style="color:#06c;font-weight:800;">类 别</legend>
-<div id="categoryDiv">
+
+<div id="tabs" style="padding: 10px;margin: 10px">
+<ul>
+	<li style="height: 25px"><a href="#tabs-0">类 别</a></li>
+	<li style="height: 25px"><a href="#tabs-1">产 品</a></li>
+	<li style="height: 25px"><a href="#tabs-2">品 牌</a></li>
+	<li style="height: 25px"><a href="#tabs-3">商 家</a></li>
+</ul>
+<div id="tabs-0">
 <ul id=sortable0>
 	<c:forEach var="item" items="${categoryList}">
-		<li class="ui-state-default" ondblclick="showChild(1, ${item.categoryId});"><span class="ui-icon">${item.categoryId}</span>${item.categoryName}</li>
+		<li class="ui-state-default"
+			ondblclick="showChild(1, ${item.categoryId});"><span
+			class="ui-icon">${item.categoryId}</span>${item.categoryName}</li>
 	</c:forEach>
 </ul>
 <c:if test="${not empty categoryList}">
-	<form action="../../save" method=post name="test0" onsubmit="setValue(0)">
-		<input name="items" type="hidden"/>
-		<input name="parentId" value="0" type="hidden"/>
-		<input name="type" value="0" type="hidden"/>
-		<input type="submit" value="保存"/>(双击类别查看产品)
+	<form action="../../save" method=post name="test0"
+		onsubmit="setValue(0)"><input name="items" type="hidden" /> <input
+		name="parentId" value="0" type="hidden" /> <input name="type"
+		value="0" type="hidden" /> <input type="submit" value="保存" />(双击类别查看产品)
 	</form>
-</c:if>
-</div>
-</fieldset>
-
-<fieldset style="border:#06c dashed 1px;padding:10px;margin:10px;">
-<legend style="color:#06c;font-weight:800;">产 品</legend>
-<div id="productDiv">
+</c:if></div>
+<div id="tabs-1">
 <ul id=sortable1>
 	<c:forEach var="item" items="${productList}">
-		<li class="ui-state-default" ondblclick="showChild(2, ${item.productId});"><span class="ui-icon">${item.productId}</span>${item.productName}</li>
+		<li class="ui-state-default"
+			ondblclick="showChild(2, ${item.productId});"><span
+			class="ui-icon">${item.productId}</span>${item.productName}</li>
 	</c:forEach>
 </ul>
 <c:if test="${not empty productList}">
-	<form action="../../save" method=post name="test1" onsubmit="setValue(1)">
-		<input name="items" type="hidden"/>
-		<input name="parentId" type="hidden"/>
-		<input name="type" value="1" type="hidden"/>
-		<input type="submit" value="保存"/> (双击产品查看品牌)
-	</form>
-</c:if>
-</div>
-</fieldset>
-
-<fieldset style="border:#06c dashed 1px;padding:10px;margin:10px;">
-<legend style="color:#06c;font-weight:800;">品 牌</legend>
-<div id="brandDiv">
+	<form action="../../save" method=post name="test1"
+		onsubmit="setValue(1)"><input name="items" type="hidden" /> <input
+		name="parentId" type="hidden" /> <input name="type" value="1"
+		type="hidden" /> <input type="submit" value="保存" /> (双击产品查看品牌)</form>
+</c:if></div>
+<div id="tabs-2">
 <ul id=sortable2>
 	<c:forEach var="item" items="${brandList}">
-		<li class="ui-state-default" ondblclick="showChild(3, ${item.productBrandId});"><span class="ui-icon">${item.productBrandId}</span>${item.brandName}</li>
+		<li class="ui-state-default"
+			ondblclick="showChild(3, ${item.productBrandId});"><span
+			class="ui-icon">${item.productBrandId}</span>${item.brandName}</li>
 	</c:forEach>
 </ul>
 <c:if test="${not empty brandList}">
-	<form action="../../save" method=post name="test2" onsubmit="setValue(2)">
-		<input name="items" type="hidden"/>
-		<input name="parentId" type="hidden"/>
-		<input name="type" value="2" type="hidden"/>
-		<input type="submit" value="保存"/>(双击品牌查看商家)
-	</form>
-</c:if>
-</div>
-</fieldset>
-
-<fieldset style="border:#06c dashed 1px;padding:10px;margin:10px;">
-<legend style="color:#06c;font-weight:800;">商 家</legend>
-<div id="supplierDiv">
+	<form action="../../save" method=post name="test2"
+		onsubmit="setValue(2)"><input name="items" type="hidden" /> <input
+		name="parentId" type="hidden" /> <input name="type" value="2"
+		type="hidden" /> <input type="submit" value="保存" />(双击品牌查看商家)</form>
+</c:if></div>
+<div id="tabs-3">
 <ul id=sortable3>
 	<c:forEach var="item" items="${supplierList}">
 		<li class="ui-state-default"><span class="ui-icon">${item.supplierId}</span>${item.supplierName}</li>
 	</c:forEach>
 </ul>
 <c:if test="${not empty supplierList}">
-	<form action="../../save" method=post name="test3" onsubmit="setValue(3)">
-		<input name="items" type="hidden"/>
-		<input name="parentId" type="hidden"/>
-		<input name="type" value="3" type="hidden"/>
-		<input type="submit" value="保存"/>
-	</form>
-</c:if>
+	<form action="../../save" method=post name="test3"
+		onsubmit="setValue(3)"><input name="items" type="hidden" /> <input
+		name="parentId" type="hidden" /> <input name="type" value="3"
+		type="hidden" /> <input type="submit" value="保存" /></form>
+</c:if></div>
 </div>
-</fieldset>
 </body>
 </html>
