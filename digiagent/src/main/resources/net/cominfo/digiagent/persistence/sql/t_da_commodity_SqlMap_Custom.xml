@@ -56,6 +56,9 @@
 		 <isNotEmpty prepend="AND" property="param.productName">
 			t_da_product.product_name = '$param.productName$'
          </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.productId">
+			t_da_product.product_id = $param.productId$
+         </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.kw">
          	(t_da_commodity.commodity_name like '%$param.kw$%' OR 
 			t_da_commodity.commodity_Description like '%$param.kw$%' OR 
@@ -88,6 +91,9 @@
          </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.productName">
 			t_da_product.product_name = '$param.productName$'
+         </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.productId">
+			t_da_product.product_id = $param.productId$
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.kw">
          	(t_da_commodity.commodity_name like '%$param.kw$%' OR 

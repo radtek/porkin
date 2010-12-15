@@ -111,6 +111,7 @@ var getProductJson = function(parentId) {
 						if (target == '#searchBar3') {
 							commodityType = "S";
 						}
+						keywork = '';
 						queryCommodityList(1, commodityType, false, $(this).attr('id'));
 					}));
 				}

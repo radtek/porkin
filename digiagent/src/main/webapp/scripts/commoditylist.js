@@ -2,10 +2,11 @@
  * 全局变量定义
  */
 var prefix = "";
-var productName = "";
+var productId = "";
 var commodityType = "";
 var pageNum;
 var prefix;
+var keywork;
 
 /**
  * 验证输入页码
@@ -32,7 +33,7 @@ function go(obj, commodityType, totalPage) {
 	if (obj.value - 0 < 1) {
 		obj.value = 1;
     }
-	queryCommodityList(obj.value, commodityType, prefix, productName);
+	queryCommodityList(obj.value, commodityType, prefix, productId);
 }
 
 /**
@@ -42,7 +43,7 @@ function go(obj, commodityType, totalPage) {
  * @return
  */
 function skip(pageNum, commodityType) {
-	queryCommodityList(pageNum, commodityType, prefix, productName);
+	queryCommodityList(pageNum, commodityType, prefix, productId);
 }
 
 /**
@@ -55,8 +56,8 @@ function skip(pageNum, commodityType) {
  * 		是否上级路径
  * @return
  */
-function queryCommodityList(pageNum, commodityType, isParentPath, _productName) {
-	productName = _productName;
+function queryCommodityList(pageNum, commodityType, isParentPath, _productId) {
+	productId = _productId;
 	if (isParentPath) {
 		prefix = "../";
 	}
@@ -65,7 +66,7 @@ function queryCommodityList(pageNum, commodityType, isParentPath, _productName) 
 	$.ajax({
 		url:prefix + "commodity/queryCommodityList",
 		dataType:"json",
-		data: {page:pageNum, commodityType:commodityType, activeFlag:'Y', productName:productName},
+		data: {page:pageNum, commodityType:commodityType, activeFlag:'Y', productId:productId, kw:keywork},
 		type: "GET",
 		success: result,
 		error: function(xhr, ajaxOptions, thrownError){
@@ -146,10 +147,12 @@ var commoditySearch = function(event) {
 	} else if (commodityType == 'S') {
 		kw = $('input[name="searchS"]').val();
 	}
+	keywork = encodeURI(kw);
+	productId = '';
 	$.ajax({
 		url:prefix + "commodity/queryCommodityList",
 		dataType:"json",
-		data: {page:pageNum, commodityType:commodityType, activeFlag:'Y', productName:'', kw:encodeURI(kw)},
+		data: {page:pageNum, commodityType:commodityType, activeFlag:'Y', productId:'', kw:keywork},
 		type: "GET",
 		success: result,
 		error: function(xhr, ajaxOptions, thrownError){

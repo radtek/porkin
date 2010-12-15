@@ -42,11 +42,10 @@ public class CommodityController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/queryCommodityList", method = RequestMethod.GET)
 	public void queryCommodityList(@RequestParam Map param,
-			@RequestParam String productName, HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam Integer productId, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			if (productName != null && productName.length() > 0) {
-				param.put("productName", java.net.URLDecoder.decode(
-						productName, "UTF-8"));
+			if (productId != null && productId > 0) {
+				param.put("productId", productId);
 			}
 			String kw = request.getParameter("kw");
 			if (kw != null && kw.length() > 0) {
