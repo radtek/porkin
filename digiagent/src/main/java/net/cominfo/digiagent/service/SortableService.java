@@ -1,5 +1,6 @@
 package net.cominfo.digiagent.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -189,6 +190,28 @@ public class SortableService {
 	}
 	
 	/**
+	 * 根据Key获取Sortalbe对象
+	 * 
+	 * @param sortableList
+	 * @param key
+	 * @return
+	 */
+	private List<Sortable> removeSortable(List<Sortable> sortableList, Sortable existSortable) {
+		List<Sortable> result = new ArrayList<Sortable>();
+		if ((sortableList != null & sortableList.size() > 0) && existSortable!=null) {
+			int key = existSortable.getSortableKey();
+			for(Sortable temp : sortableList){
+				if(temp.getSortableKey().intValue()!=key){
+					result.add(temp);
+				}
+			}
+			
+		}
+		return result;
+	}
+	
+	
+	/**
 	 * 查找sortKey的主键
 	 * @param sortKey
 	 * @param type
@@ -227,12 +250,13 @@ public class SortableService {
 		List<Sortable> sortableList = sortableDao.selectByExample(criteria);
 
 		// 增加或更新顺序
+		Sortable existSortable = null;
 		Sortable newSortable = null;
 		for (int sortableKey : sortableKeyList) {
-			newSortable = getSortableByKey(sortableList, sortableKey);
+			existSortable = getSortableByKey(sortableList, sortableKey);
 
 			// 新增类别顺序
-			if (newSortable == null) {
+			if (existSortable == null) {
 				newSortable = new Sortable();
 				newSortable.setSortableId(sequenceDao.getSortableNexId());
 				newSortable.setSortableKey(sortableKey);
@@ -243,9 +267,10 @@ public class SortableService {
 			}
 			// 更新类别顺序
 			else {
-				sortableList.remove(newSortable);
-				newSortable.setSortableOrder(sequenceDao.getSortOrderNexId());
-				sortableDao.updateByPrimaryKey(newSortable);
+				//sortableList.remove(newSortable);
+				sortableList = removeSortable(sortableList,existSortable);
+				existSortable.setSortableOrder(sequenceDao.getSortOrderNexId());
+				sortableDao.updateByPrimaryKey(existSortable);
 			}
 		}
 
