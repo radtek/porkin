@@ -98,6 +98,11 @@ var basicFunction = function() {
 				addTab($(this).text(), 'commodity/list');
 			});
 		}
+		if ($(map[key]).text().toLowerCase() == '排序') {
+			$(map[key]).click(function() {
+				addTab($(this).text(), 'sortable/0/0');
+			});
+		}
 	});
 };
 
