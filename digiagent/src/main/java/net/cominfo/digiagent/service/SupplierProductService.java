@@ -6,8 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
+import net.cominfo.digiagent.persistence.dao.SequenceDao;
+import net.cominfo.digiagent.persistence.dao.SortableDao;
 import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
+import net.cominfo.digiagent.persistence.domain.Sortable;
+import net.cominfo.digiagent.persistence.domain.SortableCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.utils.Page;
@@ -22,6 +27,16 @@ public class SupplierProductService {
 
 	@Autowired
 	private SupplierProductDao supplierProductDao;
+
+	@Autowired
+	private ProductBrandDao productBrandDao;
+
+	@Autowired
+	private SortableDao sortableDao;
+	
+	@Autowired
+	private SequenceDao sequenceDao;
+	
 
 	@SuppressWarnings("unchecked")
 	public List<SupplierProductKey> query(int pageNo, int pageSize,
@@ -81,6 +96,25 @@ public class SupplierProductService {
 				supplierProduct.setSupplierId(supplierId);
 				supplierProduct.setCreateDate(new Date());
 				supplierProductDao.insert(supplierProduct);
+				
+				//增加品牌下的一个供应商
+				ProductBrand productBrand = productBrandDao.selectByPrimaryKey(productBrandId);
+				Integer brandId = productBrand.getBrandId();
+				SortableCriteria brandSortableCriteria = new SortableCriteria();
+				brandSortableCriteria.createCriteria().andSortableKeyEqualTo(brandId).andSortableTypeEqualTo(SortableType.Brand.getFlag());
+				List<Sortable> brandSortableList = sortableDao.selectByExample(brandSortableCriteria);
+				if(brandSortableList!=null && brandSortableList.size()>0){
+					Sortable brandSortable = brandSortableList.get(0);
+					Integer parentId = brandSortable.getSortableId();
+					Sortable supplierSortable = new Sortable();
+					supplierSortable.setSortableId(sequenceDao.getSortableNexId());
+					supplierSortable.setSortableKey(supplierId);
+					supplierSortable.setSortableOrder(sequenceDao.getSortOrderNexId());
+					supplierSortable.setSortableType(SortableType.Supplier.getFlag());
+					supplierSortable.setParentId(parentId);
+					sortableDao.insert(supplierSortable);
+				}
+				
 			}
 		}
 		if (buffer.toString().length() > 0) {
@@ -110,6 +144,25 @@ public class SupplierProductService {
 				supplierProduct.setProductbrandId(productBrandId);
 				supplierProduct.setSupplierId(supplierId);
 				supplierProductDao.deleteByPrimaryKey(supplierProduct);
+				
+				// 相当于删除品牌下的一个供应商
+				ProductBrand productBrand = productBrandDao
+						.selectByPrimaryKey(productBrandId);
+				Integer brandId = productBrand.getBrandId();
+				SortableCriteria brandSortableCriteria = new SortableCriteria();
+				brandSortableCriteria.createCriteria().andSortableKeyEqualTo(brandId)
+						.andSortableTypeEqualTo(SortableType.Brand.getFlag());
+				List<Sortable> brandSortableList = sortableDao
+						.selectByExample(brandSortableCriteria);
+				if (brandSortableList != null && brandSortableList.size() > 0) {
+					Sortable brandSortable = brandSortableList.get(0);
+					Integer parentId = brandSortable.getSortableId();
+					SortableCriteria supplierSortableCriteria = new SortableCriteria();
+					supplierSortableCriteria.createCriteria().andParentIdEqualTo(
+							parentId).andSortableKeyEqualTo(supplierId)
+							.andSortableTypeEqualTo(SortableType.Supplier.getFlag());
+					sortableDao.deleteByExample(supplierSortableCriteria);
+				}
 			} else {
 				// 品牌产品不存在
 				buffer.append(productBrandId);
@@ -128,6 +181,26 @@ public class SupplierProductService {
 		supplierProduct.setProductbrandId(productBrandId);
 		supplierProduct.setSupplierId(supplierId);
 		supplierProductDao.deleteByPrimaryKey(supplierProduct);
+
+		// 相当于删除品牌下的一个供应商
+		ProductBrand productBrand = productBrandDao
+				.selectByPrimaryKey(productBrandId);
+		Integer brandId = productBrand.getBrandId();
+		SortableCriteria brandSortableCriteria = new SortableCriteria();
+		brandSortableCriteria.createCriteria().andSortableKeyEqualTo(brandId)
+				.andSortableTypeEqualTo(SortableType.Brand.getFlag());
+		List<Sortable> brandSortableList = sortableDao
+				.selectByExample(brandSortableCriteria);
+		if (brandSortableList != null && brandSortableList.size() > 0) {
+			Sortable brandSortable = brandSortableList.get(0);
+			Integer parentId = brandSortable.getSortableId();
+			SortableCriteria supplierSortableCriteria = new SortableCriteria();
+			supplierSortableCriteria.createCriteria().andParentIdEqualTo(
+					parentId).andSortableKeyEqualTo(supplierId)
+					.andSortableTypeEqualTo(SortableType.Supplier.getFlag());
+			sortableDao.deleteByExample(supplierSortableCriteria);
+		}
+
 	}
 
 	private boolean validateProductBrandIsExist(Integer productBrandId,
@@ -160,15 +233,18 @@ public class SupplierProductService {
 	@SuppressWarnings("unchecked")
 	public List<Map> getSupplierList(Map condition) throws SQLException {
 		List<Map> result = (List<Map>) supplierProductDao.getSqlMapClient()
-		.queryForList("t_da_supplierproduct_Custom.listSortableByCondition",
-				condition);
+				.queryForList(
+						"t_da_supplierproduct_Custom.listSortableByCondition",
+						condition);
 		if (result != null && result.size() > 0) {
 			return result;
 		} else {
-			return (List<Map>) supplierProductDao.getSqlMapClient().queryForList(
-					"t_da_supplierproduct_Custom.supplierInfoListByCondition",
-					condition);
+			return (List<Map>) supplierProductDao
+					.getSqlMapClient()
+					.queryForList(
+							"t_da_supplierproduct_Custom.supplierInfoListByCondition",
+							condition);
 		}
-		
+
 	}
 }

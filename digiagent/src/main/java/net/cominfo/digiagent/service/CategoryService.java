@@ -9,10 +9,13 @@ import java.util.Map;
 import net.cominfo.digiagent.persistence.dao.CategoryDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
+import net.cominfo.digiagent.persistence.dao.SortableDao;
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
+import net.cominfo.digiagent.persistence.domain.Sortable;
+import net.cominfo.digiagent.persistence.domain.SortableCriteria;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria.Criteria;
 import net.cominfo.digiagent.utils.Page;
 
@@ -32,6 +35,9 @@ public class CategoryService {
 
 	@Autowired
 	private SequenceDao sequenceDao;
+
+	@Autowired
+	private SortableDao sortableDao;
 
 	public int countCategory() {
 		return categoryDao.countByExample(new CategoryCriteria());
@@ -65,12 +71,22 @@ public class CategoryService {
 		if (category.getCategoryId() != null) {
 			return category;
 		} else {
-			category.setCategoryId(sequenceDao.getCategoryNexId());
+			int categoryId = sequenceDao.getCategoryNexId();
+			category.setCategoryId(categoryId);
 			category.setCreatedBy(userName);
 			category.setCreatedDate(new Date());
 			category.setLastupdatedBy(userName);
 			category.setLastupdatedDate(new Date());
 			categoryDao.insert(category);
+
+			// 追加Sortable 记录
+			Sortable sortable = new Sortable();
+			sortable.setSortableId(sequenceDao.getSortableNexId());
+			sortable.setSortableKey(categoryId);
+			sortable.setSortableOrder(sequenceDao.getSortOrderNexId());
+			sortable.setSortableType(SortableType.Category.getFlag());
+			sortable.setParentId(null);
+			sortableDao.insert(sortable);
 			return category;
 		}
 	}
@@ -93,6 +109,12 @@ public class CategoryService {
 			return "reference";
 		} else {
 			categoryDao.deleteByPrimaryKey(id);
+
+			// 删除Sortable 记录
+			SortableCriteria criteria = new SortableCriteria();
+			criteria.createCriteria().andSortableKeyEqualTo(id)
+					.andSortableTypeEqualTo(SortableType.Category.getFlag());
+			sortableDao.deleteByExample(criteria);
 			return "success";
 		}
 	}

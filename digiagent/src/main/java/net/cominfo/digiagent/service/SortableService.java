@@ -46,50 +46,6 @@ public class SortableService {
 	private SupplierProductDao supplierProductDao;
 
 	/**
-	 * 类型标志位枚举
-	 * 
-	 */
-	public enum TypeFlag {
-		Category("C") {
-			@Override
-			public TypeFlag parent() {
-				return null;
-			}
-		},
-		Product("P") {
-			@Override
-			public TypeFlag parent() {
-				return Category;
-			}
-		},
-		Brand("B") {
-			@Override
-			public TypeFlag parent() {
-				return Product;
-			}
-		},
-		Supplier("S") {
-			@Override
-			public TypeFlag parent() {
-				return Brand;
-			}
-		};
-
-		private String flag;
-
-		public String getFlag() {
-			return flag;
-		}
-
-		private TypeFlag(String flag) {
-			this.flag = flag;
-		}
-
-		// 找到上级标志位
-		public abstract TypeFlag parent();
-	}
-
-	/**
 	 * 对Sortable表进行初始化
 	 */
 	@SuppressWarnings("unchecked")
@@ -105,7 +61,7 @@ public class SortableService {
 				.selectByExample(categoryCriteria);
 		if (categoryList != null && categoryList.size() > 0) {
 			for (Category c : categoryList) {
-				insertSortable(c.getCategoryId(), null, TypeFlag.Category
+				insertSortable(c.getCategoryId(), null, SortableType.Category
 						.getFlag());
 			}
 		}
@@ -115,7 +71,7 @@ public class SortableService {
 		productCriteria.createCriteria();
 		List<Product> productList = productDao.selectByExample(productCriteria);
 		for (Product p : productList) {
-			rebuild(p.getProductId(), p.getCategoryId(), TypeFlag.Product);
+			rebuild(p.getProductId(), p.getCategoryId(), SortableType.Product);
 		}
 
 		// 将品牌信息导入Sortable表
@@ -124,7 +80,7 @@ public class SortableService {
 		List<ProductBrand> productBrandList = productBrandDao
 				.selectByExample(productBrandCriteria);
 		for (ProductBrand pb : productBrandList) {
-			rebuild(pb.getBrandId(), pb.getProductId(), TypeFlag.Brand);
+			rebuild(pb.getBrandId(), pb.getProductId(), SortableType.Brand);
 		}
 
 		// 将供应商信息导入Sortable表
@@ -132,7 +88,7 @@ public class SortableService {
 		for (Map bs : brandSupplierList) {
 			Integer brandId = (Integer) bs.get("brandId");
 			Integer supplierId = (Integer) bs.get("supplierId");
-			rebuild(supplierId, brandId, TypeFlag.Supplier);
+			rebuild(supplierId, brandId, SortableType.Supplier);
 		}
 	}
 
@@ -146,7 +102,7 @@ public class SortableService {
 	 * @param type
 	 */
 	public void rebuild(Integer sortKey, Integer parentSortKey,
-			TypeFlag typeFlag) {
+			SortableType typeFlag) {
 		SortableCriteria parentCriteria = new SortableCriteria();
 		parentCriteria.createCriteria().andSortableTypeEqualTo(
 				typeFlag.parent().getFlag()).andSortableKeyEqualTo(
@@ -301,7 +257,7 @@ public class SortableService {
 	 * @param categoryIds
 	 */
 	public void sortCategory(int[] categoryIds) {
-		sort(categoryIds, 0, TypeFlag.Category.getFlag());
+		sort(categoryIds, 0, SortableType.Category.getFlag());
 	}
 
 	/**
@@ -311,8 +267,8 @@ public class SortableService {
 	 * @param categoryId
 	 */
 	public void sortProduct(int[] productIds, int categoryId) {
-		int parentId = getParentId(categoryId, TypeFlag.Category.getFlag());
-		sort(productIds, parentId, TypeFlag.Product.getFlag());
+		int parentId = getParentId(categoryId, SortableType.Category.getFlag());
+		sort(productIds, parentId, SortableType.Product.getFlag());
 	}
 
 	/**
@@ -322,8 +278,8 @@ public class SortableService {
 	 * @param productId
 	 */
 	public void sortBrand(int[] brandIds, int productId) {
-		int parentId = getParentId(productId, TypeFlag.Product.getFlag());
-		sort(brandIds, parentId, TypeFlag.Brand.getFlag());
+		int parentId = getParentId(productId, SortableType.Product.getFlag());
+		sort(brandIds, parentId, SortableType.Brand.getFlag());
 	}
 
 	/**
@@ -333,8 +289,8 @@ public class SortableService {
 	 * @param productId
 	 */
 	public void sortSupplier(int[] supplierIds, int brandId) {
-		int parentId = getParentId(brandId, TypeFlag.Brand.getFlag());
-		sort(supplierIds, parentId, TypeFlag.Supplier.getFlag());
+		int parentId = getParentId(brandId, SortableType.Brand.getFlag());
+		sort(supplierIds, parentId, SortableType.Supplier.getFlag());
 	}
 
 	public List<Integer> getAllChild(Integer rootId) {

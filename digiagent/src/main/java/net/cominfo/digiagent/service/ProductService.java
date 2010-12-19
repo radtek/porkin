@@ -10,12 +10,15 @@ import net.cominfo.digiagent.persistence.dao.CategoryDao;
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
+import net.cominfo.digiagent.persistence.dao.SortableDao;
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.CategoryCriteria;
 import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.ProductBrandCriteria;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
+import net.cominfo.digiagent.persistence.domain.Sortable;
+import net.cominfo.digiagent.persistence.domain.SortableCriteria;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,10 @@ public class ProductService {
 
 	@Autowired
 	private SequenceDao sequenceDao;
+	
+	
+	@Autowired
+	private SortableDao sortableDao;
 
 	public int countProduct() {
 		return productDao.countByExample(new ProductCriteria());
@@ -89,12 +96,31 @@ public class ProductService {
 		if (product.getProductId() != null) {
 			return product;
 		} else {
-			product.setProductId(sequenceDao.getProductNexId());
+			int productId = sequenceDao.getProductNexId(); 
+			product.setProductId(productId);
 			product.setCreatedBy(userName);
 			product.setCreatedDate(new Date());
 			product.setLastupdatedBy(userName);
 			product.setLastupdatedDate(new Date());
 			productDao.insert(product);
+
+			// 增加Sortable对象
+			Integer categoryId = product.getCategoryId();
+			SortableCriteria parentCriteria = new SortableCriteria();
+			parentCriteria.createCriteria().andSortableTypeEqualTo(SortableType.Category.getFlag()).andSortableKeyEqualTo(categoryId);
+			List<Sortable> sortableList = sortableDao.selectByExample(parentCriteria);
+			if(sortableList!=null && sortableList.size()>0){
+				Sortable parentSortable = sortableList.get(0);
+				Integer parentId = parentSortable.getSortableId();
+				Sortable sortable = new Sortable();
+				sortable.setParentId(parentId);
+				sortable.setSortableId(sequenceDao.getSortableNexId());
+				sortable.setSortableKey(new Integer(productId));
+				sortable.setSortableOrder(sequenceDao.getSortOrderNexId());
+				sortable.setSortableType(SortableType.Product.getFlag());
+				sortableDao.insert(sortable);
+			}
+			
 			return product;
 		}
 	}
@@ -117,6 +143,9 @@ public class ProductService {
 			return "reference";
 		} else {
 			productDao.deleteByPrimaryKey(id);
+			SortableCriteria criteria = new SortableCriteria();
+			criteria.createCriteria().andSortableKeyEqualTo(id).andSortableTypeEqualTo(SortableType.Product.getFlag());
+			sortableDao.deleteByExample(criteria);
 			return "success";
 		}
 	}

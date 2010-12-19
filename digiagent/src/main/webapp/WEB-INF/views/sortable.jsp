@@ -151,8 +151,8 @@ li span {
 <ul id=sortable2>
 	<c:forEach var="item" items="${brandList}">
 		<li class="ui-state-default"
-			ondblclick="showChild(3, ${item.productBrandId});"><span
-			class="ui-icon">${item.productBrandId}</span>${item.brandName}</li>
+			ondblclick="showChild(3, ${item.brandId});"><span
+			class="ui-icon">${item.brandId}</span>${item.brandName}</li>
 	</c:forEach>
 </ul>
 <c:if test="${not empty brandList}">

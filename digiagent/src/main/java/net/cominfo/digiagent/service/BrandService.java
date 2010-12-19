@@ -9,12 +9,14 @@ import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.CountryDao;
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
+import net.cominfo.digiagent.persistence.dao.SortableDao;
 import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.persistence.domain.BrandCriteria;
 import net.cominfo.digiagent.persistence.domain.Country;
 import net.cominfo.digiagent.persistence.domain.CountryCriteria;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.ProductBrandCriteria;
+import net.cominfo.digiagent.persistence.domain.SortableCriteria;
 import net.cominfo.digiagent.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,10 @@ public class BrandService {
 
 	@Autowired
 	private SequenceDao sequenceDao;
-
+	
+	@Autowired
+	private SortableDao sortableDao;
+	
 	public int countBrand() {
 		return brandDao.countByExample(new BrandCriteria());
 	}
@@ -87,7 +92,8 @@ public class BrandService {
 		if (brand.getBrandId() != null) {
 			return brand;
 		} else {
-			brand.setBrandId(sequenceDao.getBrandNexId());
+			int brandId = sequenceDao.getBrandNexId();
+			brand.setBrandId(brandId);
 			brand.setCreatedBy(userName);
 			brand.setCreatedDate(new Date());
 			brand.setLastupdatedBy(userName);
@@ -115,6 +121,9 @@ public class BrandService {
 			return "reference";
 		} else {
 			brandDao.deleteByPrimaryKey(id);
+			SortableCriteria brandSortableCritera = new SortableCriteria();
+			brandSortableCritera.createCriteria().andSortableKeyEqualTo(id).andSortableTypeEqualTo(SortableType.Brand.getFlag());
+			sortableDao.deleteByExample(brandSortableCritera);
 			return "success";
 		}
 	}

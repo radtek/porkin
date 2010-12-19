@@ -11,6 +11,7 @@ import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
+import net.cominfo.digiagent.persistence.dao.SortableDao;
 import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.Brand;
 import net.cominfo.digiagent.persistence.domain.BrandCriteria;
@@ -18,6 +19,8 @@ import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.ProductBrandCriteria;
 import net.cominfo.digiagent.persistence.domain.ProductCriteria;
+import net.cominfo.digiagent.persistence.domain.Sortable;
+import net.cominfo.digiagent.persistence.domain.SortableCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
 import net.cominfo.digiagent.utils.Page;
@@ -44,6 +47,9 @@ public class ProductBrandService {
 
 	@Autowired
 	private SequenceDao sequenceDao;
+
+	@Autowired
+	private SortableDao sortableDao;
 
 	public int countProductBrand() {
 		return productBrandDao.countByExample(new ProductBrandCriteria());
@@ -130,6 +136,27 @@ public class ProductBrandService {
 			productBrand.setLastupdatedBy(userName);
 			productBrand.setLastupdatedDate(new Date());
 			productBrandDao.insert(productBrand);
+
+			// 增加Sortable对象
+			int productId = productBrand.getProductId();
+			int brandId = productBrand.getBrandId();
+			SortableCriteria parentCriteria = new SortableCriteria();
+			parentCriteria.createCriteria().andSortableKeyEqualTo(
+					new Integer(productId)).andSortableTypeEqualTo(
+					SortableType.Product.getFlag());
+			List<Sortable> sortableList = sortableDao
+					.selectByExample(parentCriteria);
+			if (sortableList != null && sortableList.size() > 0) {
+				Sortable parentSortable = sortableList.get(0);
+				Integer parentId = parentSortable.getSortableId();
+				Sortable sortable = new Sortable();
+				sortable.setParentId(parentId);
+				sortable.setSortableId(sequenceDao.getSortableNexId());
+				sortable.setSortableKey(new Integer(brandId));
+				sortable.setSortableOrder(sequenceDao.getSortOrderNexId());
+				sortable.setSortableType(SortableType.Brand.getFlag());
+				sortableDao.insert(sortable);
+			}
 			return productBrand;
 		}
 	}
@@ -151,7 +178,28 @@ public class ProductBrandService {
 		if (isReferenceSupplierProduct(id)) {
 			return "reference";
 		} else {
+			
+			//相当于删除产品下的一个品牌
+			ProductBrand pb = productBrandDao.selectByPrimaryKey(id);
+			Integer brandId = pb.getBrandId();
+			Integer productId = pb.getProductId();
 			productBrandDao.deleteByPrimaryKey(id);
+			SortableCriteria productSortableCriteria = new SortableCriteria();
+			productSortableCriteria.createCriteria().andSortableKeyEqualTo(
+					productId).andSortableTypeEqualTo(
+					SortableType.Product.getFlag());
+			List<Sortable> productSortableList = sortableDao
+					.selectByExample(productSortableCriteria);
+			if (productSortableList != null && productSortableList.size() > 0) {
+				Sortable productSortable = productSortableList.get(0);
+				Integer parentId = productSortable.getSortableId();
+				SortableCriteria brandSortableCriteria = new SortableCriteria();
+				brandSortableCriteria.createCriteria().andSortableKeyEqualTo(
+						brandId).andParentIdEqualTo(parentId)
+						.andSortableTypeEqualTo(SortableType.Brand.getFlag());
+				sortableDao.deleteByExample(brandSortableCriteria);
+			}
+
 			return "success";
 		}
 	}
@@ -190,7 +238,8 @@ public class ProductBrandService {
 	@SuppressWarnings("unchecked")
 	public List<Map> getBrandList(Map condition) throws SQLException {
 		List<Map> result = (List<Map>) supplierProductDao.getSqlMapClient()
-				.queryForList("t_da_productbrand_Custom.listSortableByCondition",
+				.queryForList(
+						"t_da_productbrand_Custom.listSortableByCondition",
 						condition);
 		if (result != null && result.size() > 0) {
 			return result;
