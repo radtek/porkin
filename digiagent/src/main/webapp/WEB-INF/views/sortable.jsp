@@ -170,7 +170,8 @@ li span {
 <c:if test="${not empty supplierList}">
 	<form action="../../save" method=post name="test3"
 		onsubmit="setValue(3)"><input name="items" type="hidden" /> <input
-		name="parentId" type="hidden" /> <input name="type" value="3"
+		name="parentId" type="hidden" /> <input
+		name="productBrandId" type="hidden" value="${productBrandId }"/> <input name="type" value="3"
 		type="hidden" /> <input type="submit" value="保存" /></form>
 </c:if></div>
 </div>

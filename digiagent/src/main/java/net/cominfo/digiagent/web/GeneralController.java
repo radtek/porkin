@@ -265,6 +265,7 @@ public class GeneralController {
 				param.clear();
 				// get supplier list
 				param.put("productBrandId", parentId);
+				model.addAttribute("productBrandId", parentId);
 				supplierList = supplierProductService.getSupplierList(param);
 				parentId = productBrandService.getById(parentId).getBrandId();
 				break;
@@ -315,7 +316,9 @@ public class GeneralController {
 			sortableService.sortBrand(sortItemIds, parentId);
 			break;
 		case 3:
+			int productBrandId = Integer.valueOf((String)request.getParameter("productBrandId"));
 			sortableService.sortSupplier(sortItemIds, parentId);
+			parentId = productBrandId;
 			break;
 		default:
 			break;
