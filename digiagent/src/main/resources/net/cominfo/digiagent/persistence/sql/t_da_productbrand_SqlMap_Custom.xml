@@ -86,7 +86,7 @@
 				t_da_brand.brand_name as brandName
 		  FROM t_da_productbrand, t_da_product, t_da_brand, t_da_sortable
 		 WHERE t_da_productbrand.brand_id = t_da_brand.brand_id and t_da_productbrand.product_id = t_da_product.product_id
-		 	and t_da_productbrand.productbrand_id = t_da_sortable.sortable_key and t_da_sortable.sortable_type = 'B'
+		 	and t_da_productbrand.brand_id = t_da_sortable.sortable_key and t_da_sortable.sortable_type = 'B'
 		 <isNotEmpty prepend="AND" property="productId">
 			t_da_productbrand.product_id = $productId$
 		</isNotEmpty>
