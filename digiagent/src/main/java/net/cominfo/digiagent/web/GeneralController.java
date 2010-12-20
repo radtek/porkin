@@ -266,6 +266,7 @@ public class GeneralController {
 				// get supplier list
 				param.put("productBrandId", parentId);
 				supplierList = supplierProductService.getSupplierList(param);
+				parentId = productBrandService.getById(parentId).getBrandId();
 				break;
 			default:
 				break;
