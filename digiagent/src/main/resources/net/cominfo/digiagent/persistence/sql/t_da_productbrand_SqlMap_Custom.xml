@@ -81,7 +81,7 @@
 	</select>
 	
 	<select id="listSortableByCondition" parameterClass="HashMap" resultClass="HashMap">
-		SELECT distinct (t_da_productbrand.productbrand_id) as productBrandId,
+		SELECT t_da_productbrand.productbrand_id as productBrandId,
 			t_da_productbrand.brand_id as brandId, 
 				t_da_brand.brand_name as brandName
 		  FROM t_da_productbrand, t_da_product, t_da_brand, t_da_sortable
