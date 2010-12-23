@@ -246,7 +246,6 @@ public class GeneralController {
 				// get product list
 				param.put("categoryId", categoryId);
 				productList = productService.getProductList(param);
-				param.clear();
 				// get brand list
 				param.put("productId", parentId);
 				brandList = productBrandService.getBrandList(param);
