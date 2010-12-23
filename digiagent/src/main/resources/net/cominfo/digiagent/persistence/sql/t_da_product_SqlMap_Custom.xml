@@ -55,10 +55,13 @@
 	
 	<select id="listSortableByCondition" parameterClass="HashMap" resultClass="HashMap">
 		SELECT product_id as productId,
-		       product_name as productName
-		  FROM t_da_product,t_da_category, t_da_sortable
-		 WHERE t_da_product.category_id = t_da_category.category_id
-		 	and t_da_product.product_id = t_da_sortable.sortable_key and t_da_sortable.sortable_type = 'P'
+				product_name as productName
+		FROM t_da_product,t_da_category, t_da_sortable, t_da_sortable c
+		WHERE t_da_product.category_id = t_da_category.category_id
+			and t_da_product.product_id = t_da_sortable.sortable_key 
+			and t_da_sortable.parent_id = c.sortable_id 
+			and c.sortable_key = t_da_product.category_id 
+			and t_da_sortable.sortable_type = 'P'
 		 <isNotEmpty prepend="AND" property="productName">
 			product_name = '$productName$'
 		</isNotEmpty>
