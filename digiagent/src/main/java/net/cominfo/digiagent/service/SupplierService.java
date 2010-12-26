@@ -123,7 +123,8 @@ public class SupplierService {
 
 			supplier.setSupplierId(sequenceDao.getSupplierNexId());
 			supplier.setUserId(user.getUserId());
-			supplier.setSupplierName(user.getUserName());
+			
+			//supplier.setSupplierName(user.getUserName());
 			supplier.setSupplierContactname(user.getUserName());
 			supplier.setActiveFlag("Y");
 			supplier.setSupplierAccess(0);
