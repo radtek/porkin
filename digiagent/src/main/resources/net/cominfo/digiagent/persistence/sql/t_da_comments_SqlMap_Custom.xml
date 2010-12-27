@@ -19,25 +19,35 @@
 	</select>
 	
 	<select id="sumBySupplierID" parameterClass="int" resultClass="long">
-		select sum(t.score) SCORE
-		from
+		select (t1.score + t2.score) score FROM
+		( 
+			select 
+				(case (SUPPLIER_CERTIFY is not null) WHEN 0 then 0 ELSE  500 end ) +
+				(case (SUPPLIER_QUALIFY is not null) WHEN 0 then 0 ELSE  500 end ) SCORE
+			from t_da_supplier where SUPPLIER_ID = #value# 
+		) t1,
 		(
-			SELECT 
-			    case comment_rank 
-			        when '0' then 0
-			        when '1' then 1
-			        when '2' then 2
-			        when '3' then 3
-			        when '4' then 4
-			        when '5' then 5
-			        when '6' then 6
-			        when '7' then 7
-			        when '8' then 8
-			        when '9' then 9
-			        when 'A' then 10
-			        else  0
-			    end score
-			FROM t_da_comments where supplier_id = #value#
-		) t
+			select 
+				case (t.score is not NULL) when 1 then sum(t.score) ELSE 0 end SCORE
+			from
+			(
+				SELECT 
+			    	case comment_rank 
+			        	when '0' then 0
+			        	when '1' then 1
+			        	when '2' then 2
+			        	when '3' then 3
+			        	when '4' then 4
+			        	when '5' then 5
+			        	when '6' then 6
+				        when '7' then 7
+				        when '8' then 8
+				        when '9' then 9
+				        when 'A' then 10
+				        else  0
+				    end score
+				FROM t_da_comments where supplier_id = #value#
+			) t
+		) t2
 	</select>
 </sqlMap>
