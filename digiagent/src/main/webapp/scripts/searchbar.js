@@ -2,6 +2,7 @@
  * 全局变量
  */
 var target = null;
+var commodityType = null;
 var categoryId = null;
 var productBarId = null;
 var _categoryId;
@@ -93,20 +94,13 @@ var getProductJson = function(parentId) {
 			$('<td class="text_guide productClass"></td>').attr('id', 'productDetail').appendTo('#productTR');
 			$.each(data, function(index, product) {
 				$('#productDetail').append($('<a class="Agray"></a>').attr('href', 'javascript:void(0)').attr('id', product.productId).text(product.productName).click(function() {
-					_productId = $(this).attr('id');
-					getBrandJson($(this).attr('id'));
-					//////////////////////////////////////
-					var commodityType = "";
-					// 促销商品
-					if (target == '#searchBar2') {
-						commodityType = "P";
-					} 
-					// 二手商品
-					if (target == '#searchBar3') {
-						commodityType = "S";
+					if (commodityType == null) {
+						_productId = $(this).attr('id');
+						getBrandJson($(this).attr('id'));
+					} else {
+						keywork = '';
+						queryCommodityList(1, commodityType, false, $(this).attr('id'));
 					}
-					keywork = '';
-					queryCommodityList(1, commodityType, false, $(this).attr('id'));
 				}));
 				if ((index + 1) < data.length) {
 					$('#productDetail').append(" | ");
@@ -208,13 +202,6 @@ var addAD = function(_target) {
 	$(target).empty();
 	$(target).append(html);
 }
-/**
- * 页面加载初始化
- */
-$(document).ready(function() {
-	addAD('#searchBar');
-	getCategoryJson('#categoryTR');
-});
 
 /**
  * 清空返回定位参数

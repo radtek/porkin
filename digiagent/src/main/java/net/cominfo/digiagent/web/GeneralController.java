@@ -324,5 +324,15 @@ public class GeneralController {
 		}
 		return "redirect:/sortable/" + type + "/" + parentId;
 	}
+	
+	@RequestMapping(value = "/promotion", method = RequestMethod.GET)
+	public String sales(Model model) {
+		return "promotion";
+	}
+	
+	@RequestMapping(value = "/secondHand", method = RequestMethod.GET)
+	public String secondHand(Model model) {
+		return "secondHand";
+	}
 
 }
