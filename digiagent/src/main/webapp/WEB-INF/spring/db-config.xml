@@ -11,9 +11,9 @@
 	<!-- Datasource configuration for testing -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/digiagent?useUnicode=true&amp;characterEncoding=UTF-8" />
-		<property name="username" value="digiagent" />
-		<property name="password" value="digiagent_123" />
+		<property name="url" value="jdbc:mysql://localhost:3306/digiagent_dev?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="digiagent_dev" />
+		<property name="password" value="digiagent_dev_123" />
 	</bean>
 
 	<!-- Datasource configuration for production -->

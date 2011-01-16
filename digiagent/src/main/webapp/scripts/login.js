@@ -7,16 +7,11 @@
 function login(url) {
 	var username = $("input[name='username']").val();
 	var password = $("input[name='password']").val();
-	var type = $("select[name='type']").val();
-	if (type == "") {
-		alert("请选择通行证!");
-		return;
-	}
 	$.ajax({
 		url: "/digiagent/login",
 		dataType: "text",
 		type: "POST",
-		data:{username:username, password:password, type:type},
+		data:{username:username, password:password},
 		success: function(data) {
 
 			if(data == "success"){

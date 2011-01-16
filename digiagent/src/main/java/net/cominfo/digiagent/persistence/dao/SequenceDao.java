@@ -71,15 +71,24 @@ public class SequenceDao extends SequenceDAOImpl {
 		updateByPrimaryKey(sequence);
 		return result;
 	}
+	
+	public void init(String name) throws DataAccessException {
+		Sequence sequence =  new Sequence();
+		sequence.setName(name);
+		sequence.setNextid(START_POINT);
+		insert(sequence);
+	}
 
 	public void reset(String name) throws DataAccessException {
 		Sequence sequence = selectByPrimaryKey(name);
 		if (sequence == null) {
-			throw new DataRetrievalFailureException("'" + name
-					+ "': sequence does not exist");
+			init(name);
 		}
-		sequence.setNextid(START_POINT);
-		updateByPrimaryKey(sequence);
+		else{
+			sequence.setNextid(START_POINT);
+			updateByPrimaryKey(sequence);
+		}
+		
 	}
 
 	public int getUserNexId() {

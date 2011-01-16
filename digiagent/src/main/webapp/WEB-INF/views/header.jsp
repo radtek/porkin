@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>个人会员</title>
-<link href="styles/main.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="${ctx}/images/common/star.gif" />
+<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
 
 <script language="javascript">
 /**
@@ -16,6 +16,30 @@
  * @param password
  * @return
  */
+
+function login(url) {
+	var username = $("input[name='username']").val();
+	var password = $("input[name='password']").val();
+	$.ajax({
+		url: "/digiagent/login",
+		dataType: "text",
+		type: "POST",
+		data:{username:username, password:password},
+		success: function(data) {
+
+			if(data == "success"){
+				//window.location.reload();
+					window.parent.location.href= url;
+			}
+			else{
+				alert("用户名或密码错误！");
+			}		
+		},
+		error: function(xhr, ajaxOptions, thrownError){
+			 alert("数据读取失败！");
+        }
+	});
+}
 
 function logout() {
 	var url = "${ctx}/logout";
@@ -46,39 +70,58 @@ function member() {
 </script>
 </head>
 <body>
-<div class="headTop">
-  <div class="headCity">切换城市
-    <select name="select3" style="width:60px;">
-        <option>大连</option>
-        <option>上海</option>
-      </select>
-      <c:choose>
-      <c:when test="${empty sessionScope.userName}">
-     <form name="loginForm" action="${ctx}/login" method="post">
-      用户<input type="text" name="username" size="10" width="10"/>&nbsp;
-      密码<input type="password" name="password" size="10" width="10"/>&nbsp;
-<!--      <select name="type">-->
-<!--      	<option value="">通行证</option>-->
-<!--      	<option value="个人会员">个人会员</option>-->
-<!--      	<option value="企业会员">企业会员</option>-->
-<!--      	<option value="一般用户">一般用户</option>-->
-<!--      	<option value="超级用户">超级用户</option>-->
-<!--      	<option value="系统管理员">系统管理员</option>-->
-<!--      </select>&nbsp;-->
-      <input class="btn_login" type="button" value="登录" onclick="login(${ctx}/)"/>
-      </form>
-   			<span class="leftLink"> <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="${ctx}/registerForm">注册</a> | <a href="${ctx}/passwordForm">忘记密码</a> </span>
-      </c:when>
-      <c:otherwise>
-       <span class="leftLink"></a>&nbsp;&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /> | <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="javascript:void(0);" onclick="member();">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></><fmt:message key="label.common.logout"/></a></span>
-      </c:otherwise>
-      </c:choose>
-      
-    <span class="rightLink"><a href="javascript:void(0);" onclick="about()"><fmt:message key="label.common.about"/> </a> | <a href=# onClick="this.style.behavior='url(#default#homepage)'; this.setHomePage('${ctx}/');event.returnValue=false;">设为首页</a></span>
-    </div>
- 
-</div>
-<div class="redLine"></div>
-<div style="clear: both"></div>
+<table border="0" cellspacing="0" cellpadding="0" width="1000" align="center">
+  <tr>
+    <td height="74" rowspan="2" width="420"><img src="${ctx}/images/head_pic01.gif" /></td>
+    <td height="36" valign="top" colspan="2"><table border="0" cellspacing="0" cellpadding="0" align="right">
+	  <tr valign="bottom">
+		<td><a href="#" class="Ahead">首页</a></td>
+		<td><img src="${ctx}/images/head_line.gif" /></td>
+		<td><a href="#" class="Ahead">关于我们</a></td>
+		<td><img src="${ctx}/images/head_line.gif" /></td>
+		<td><a href="#" class="Ahead">设为首页</a></td>
+		<td><img src="${ctx}/images/head_line.gif" /></td>
+	  </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td bgcolor="#ffffff" height="38"><table border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	  <c:choose>
+      	<c:when test="${empty sessionScope.userName}">
+		<td class="head_landing_text">切换城市 </td>
+		<td width="90"><select name="select" class="head_landing_select">
+		</select>
+		</td>
+		
+		<form name="loginForm" action="${ctx}/login" method="POST">
+		<td class="head_landing_text">用户名 </td>
+		<td width="80"><label>
+		  <input type="text" name="username" class="head_landing_input" />
+		</label></td>
+		<td class="head_landing_text">密码 </td>
+		<td width="80"><label>
+		  <input value="" type="password" name="password" class="head_landing_input"  />
+		</label></td>
+		<td><label>
+		  <input type="button" value="登录" onclick="login(${ctx}/)" class="btn_02"  />
+		</label></td>
+		<td width="15"></td>
+		</form>
+		<td><a href="#" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 注册</a> &nbsp; <a href="${ctx}/passwordForm" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 忘记密码</a></td>
+		</c:when>
+		<c:otherwise>
+		<td class="head_landing_text">欢迎您 ，<c:out value="${sessionScope.userName}" /> | <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="javascript:void(0);" onclick="member();">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></><fmt:message key="label.common.logout"/></a></td>
+		<td width="80"><label>
+		  
+		</label></td>
+		</c:otherwise>
+		
+		</c:choose>
+	  </tr>
+    </table></td>
+    <td width="25"><img src="${ctx}/images/head_pic02.gif" /></td>
+  </tr>
+</table>
 </body>
 </html>
