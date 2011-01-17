@@ -82,10 +82,10 @@
         <td width="750" bgcolor="#FFFFFF">
           <br />
 		  <!-- 已代理的商品 -->
-		  <form action="${ctx}/person/changePassword" method="post">
+		  <form action="${ctx}/person/changeEmail" method="post">
           <table width="500" border="0" align="center" cellpadding="0" cellspacing="0" class="list2">
             <tr>
-              <td colspan="2" class="text_14size" style="border-bottom:1px solid #95b9e9; text-align:center; padding-left:30px"><b>用户密码管理</b></td>
+              <td colspan="2" class="text_14size" style="border-bottom:1px solid #95b9e9; text-align:center; padding-left:30px"><b>用户电子邮件</b></td>
             </tr>
             <tr>
       		<tr>
@@ -93,22 +93,18 @@
       				<strong><font color="red">	
       					<c:if test="${not empty message}">
 							<fmt:message key="${message.text}" />
-			 			</c:if>
+						 </c:if>
 			 		</font></strong>
 				</th>
 				<td></td>
     		</tr>
 			<tr>
-              <th>请输入旧密码：</th>
-              <td><input type="password" name="oldpassword" id="oldpassword" /></td>
+              <th>原有的电子邮件：</th>
+              <td><input type="hidden" name="oldEmail" id="oldEmail" value='<c:out value="${email}" />' /><c:out value="${email}" /></td>
 			</tr>
             <tr>
-              <th>请输入新密码：</th>
-              <td><input type="password" name="newpassword1" id="newpassword1" /></td>
-            </tr>
-            <tr>
-              <th>再确认新密码：</th>
-              <td><input type="password" name="newpassword2" id="newpassword1" /></td>
+              <th>新的电子邮件：</th>
+              <td><input type="text" name="newEmail" id="newEmail" /></td>
             </tr>
             <tr>
               <th>
@@ -138,10 +134,7 @@
 <br />
 
 <!-- foot -->
-<table border="0" cellspacing="0" cellpadding="0" width="100%">
-	<tr><td bgcolor="#cccccc" height="1"></td></tr>
-	<tr><td height="30" class="text_foot">&copy; 2011年 商讯网版权所有</td></tr>
-</table>
+<jsp:include page="../footer.jsp"></jsp:include>
 <!-- foot end -->
 
 </body>

@@ -41,11 +41,11 @@ function whenDelete() {
       <td></td>
     </tr>
     <tr>
-      <td>原有的电子邮件</td>
+      <td>原有的电子邮件：</td>
       <td><input type="hidden" name="oldEmail" id="oldEmail" value='<c:out value="${email}" />' /><c:out value="${email}" /></td>
     </tr>
     <tr>
-      <td>请输入新的电子邮件</td>
+      <td>新的电子邮件：</td>
       <td><input type="text" name="newEmail" id="newEmail" /></td>
     </tr>
     <tr>
