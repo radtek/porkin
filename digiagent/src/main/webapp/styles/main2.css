@@ -184,6 +184,22 @@ hr
 	padding:10px 0px 0px 0px;
 }
 
+.title_left_b
+{
+	height:40px;
+	background-image: url(../images/bg_pic04b.gif);
+	background-position:top;
+	background-repeat:repeat-x;
+	font-size:15px;
+	color:#000000;
+	background-color:#FFFFFF;
+	font-weight:bold;
+	text-align:center;
+	vertical-align:bottom;
+	padding:10px 0px 0px 0px;
+}
+
+
 .text_guide
 {
 	color:#666666;
@@ -227,6 +243,8 @@ hr
 
 .text_line
 {
+	padding-top:6px;
+	padding-bottom:2px;
 	border-bottom:1px solid #d6d6d6;
 }
 
@@ -262,7 +280,7 @@ hr
 
 .btn_02
 {
-	font-size:13px;
+	font-size:12px;
 	color:#000000;
 	font-weight:bold;
 	background-image: url(../images/btn_bg02.gif);
@@ -271,6 +289,13 @@ hr
 	border:0px;
 	padding-top:4px;
 	cursor:hand;
+}
+
+input
+{
+	height:15px;
+	border:1px solid #999999;
+	padding-top:3px;
 }
 
 .head_landing_text
@@ -337,7 +362,7 @@ table.user_list {
 
 table.user_list th {
 	font-size:14px;
-	background-color:#e7eef8;
+	background-color:#dbe8f8;
 	text-align:left;
 	padding:5px 20px 0px 15px;
 }
@@ -346,7 +371,57 @@ table.user_list td {
 	font-size:13px;
 	background-color:#FFFFFF;
 	text-align:left;
-	padding:10px 15px 5px 15px;
+	padding:10px 15px 3px 15px;
+	background-image: url(../images/line03a.gif);
+	background-position:top;
+	background-repeat:repeat-x;
+}
+
+/* ----表格---- */
+
+table.list {
+	border:1px solid #95b9e9;
+}
+
+table.list th {
+	font-size:13px;
+	background-color:#dbe8f8;
+	text-align:center;
+	padding:5px 20px 0px 15px;
+}
+
+table.list td {
+	font-size:13px;
+	background-color:#FFFFFF;
+	text-align:center;
+	padding:10px 15px 3px 15px;
+	background-image: url(../images/line03a.gif);
+	background-position:top;
+	background-repeat:repeat-x;
+}
+
+/* ----表格 2---- */
+
+table.list2 {
+	border:1px solid #95b9e9;
+}
+
+table.list2 th {
+	font-size:13px;
+	background-color:#FFFFFF;
+	text-align:right;
+	padding:10px 0px 3px 30px;
+	background-image: url(../images/line03a.gif);
+	background-position:top;
+	background-repeat:repeat-x;
+	font-weight:normal;
+}
+
+table.list2 td {
+	font-size:13px;
+	background-color:#FFFFFF;
+	text-align:left;
+	padding:10px 30px 3px 0px;
 	background-image: url(../images/line03a.gif);
 	background-position:top;
 	background-repeat:repeat-x;

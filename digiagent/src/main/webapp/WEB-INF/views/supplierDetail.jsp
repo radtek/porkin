@@ -14,7 +14,7 @@
 <body>
 
 <!-- head -->
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="${ctx}/header.jsp"></jsp:include>
 <!-- head end -->
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
