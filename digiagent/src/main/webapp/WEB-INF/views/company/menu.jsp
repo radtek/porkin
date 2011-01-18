@@ -32,11 +32,11 @@
               <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/commodityList">促销历史</a></td>
             </tr>
 			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/infoRelease">二手发布</a></td>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/infoRelease2">二手发布</a></td>
             </tr>
 			
 			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/commodityList">二手历史</a></td>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/commodityList2">二手历史</a></td>
             </tr>
           </table>
 		  <!-- 用户连接 end -->

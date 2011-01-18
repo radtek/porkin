@@ -19,11 +19,11 @@
 	</tr>
 	<tr>
 		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">二手发布</a></td>
+			href="${ctx}/person/infoRelease">二手发布</a></td>
 	</tr>
 	<tr>
 		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">二手历史</a></td>
+			href="${ctx}/person/commodityList">二手历史</a></td>
 	</tr>
 </table>
 <!-- 用户连接 end -->
