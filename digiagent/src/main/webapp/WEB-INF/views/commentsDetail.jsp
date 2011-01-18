@@ -2,13 +2,14 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page session="true"%>
 <%@ include file="/common/taglibs.jsp"%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
-<link href="${ctx}/styles/main.css" rel="stylesheet" type="text/css" />
+<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css" />
+<style>
+body
+{
+	background-color:#ffffff;
+	background-image: url();
+}
+</style>
 <script language="javascript">
 /**
  * 验证输入页码
@@ -47,20 +48,41 @@ function skip(pageNum) {
 	window.location.href = "${ctx}/supplier/comments/${supplierId}?page=" + pageNum + "&rows=10";
 }
 </script>
-</head>
-<body>
-<div style="height: 10px"></div>
 <c:forEach items="${commentsList}" var="comments" varStatus="status">
-	<div id="companyLeft" style="margin:1px; width: 100%">
-		<div style="text-align:right">作者：${comments.username} <span style="padding-left: 10px"></span>回复日期：${comments.createdDate }<span style="padding-right: 10px"></span></div>
-		<div style="padding:10px"><c:out value="${comments.content}"/><div style="text-align:right">${(total -(((page -1) * 10) + status.index))}楼</div></div>
-	</div>
-	<div style="height: 2px"></div>
+	<table width="700" border="0" align="center" cellpadding="0"
+		cellspacing="0" class="user_list">
+		<tr>
+			<th colspan="2">评论</th>
+		</tr>
+		<tr>
+			<td colspan="2"><c:out value="${comments.content}" /></td>
+		</tr>
+		<tr>
+			<td style="padding: 2px 10px 0px 15px">${(total -(((page -1) *
+			10) + status.index))}楼</td>
+			<td style="text-align: right; padding: 2px 20px 0px 15px">作者：${comments.username}
+			回复时间：${comments.createdDate }</td>
+		</tr>
+	</table>
+	<br />
 </c:forEach>
-<div style="height: 5px"></div>
-<div style="padding-left:100px"><a href="javascript:void(0)" onclick="skip(1)">首页</a>&nbsp;<a href="javascript:void(0)" onclick="skip(${page <= 1 ? 1 : (page - 1)})">前一页</a>&nbsp;共<input type="text" name="pageNum" size=2 value="${page}" onkeyup="CheckInputInt(this);" onchange="go(this, ${pageSize });"/>/${pageSize}页&nbsp;<a href="javascript:void(0)" onclick="skip(${page >= pageSize ? pageSize : (page + 1)})">后一页</a>&nbsp;<a href="javascript:void(0)" onclick="skip(${pageSize})">尾页</a>&nbsp;共${total }条记录</div>
-<div style="height: 10px"></div>
-<iframe id="iframeC" name="iframeC" src="" width="0" height="0" style="display:none;" ></iframe>
+<table width="560" border="0" align="center" cellpadding="0"
+		cellspacing="0">
+		<tr style="font-size:12px">
+			<td align="center" class="page_number"><a
+				href="javascript:void(0)" onclick="skip(1)">首页</a> &nbsp;&nbsp; <a
+				href="javascript:void(0)"
+				onclick="skip(${page <= 1 ? 1 : (page - 1)})">前一页</a> &nbsp;&nbsp; 共
+			<input type="text" name="pageNum" size=2 value="${page}" class="page_input"
+				onkeyup="CheckInputInt(this);" onchange="go(this, ${pageSize });" />/${pageSize}
+			&nbsp;&nbsp; <a href="javascript:void(0)"
+				onclick="skip(${page >= pageSize ? pageSize : (page + 1)})">后一页</a>
+			&nbsp;&nbsp; <a href="javascript:void(0)" onclick="skip(${pageSize})">尾页</a>
+			&nbsp;&nbsp; 共${total }条记录</td>
+		</tr>
+	</table>
+<iframe id="iframeC" name="iframeC" src="" width="0" height="0"
+	style="display: none;"></iframe>
 <script type="text/javascript"> 
 function sethash(){
     hashH = document.documentElement.scrollHeight; 
@@ -69,8 +91,6 @@ function sethash(){
 }
 window.onload=sethash();
 </script>
-</body>
-</html>
 
 
 

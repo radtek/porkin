@@ -9,12 +9,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>商讯网--商家信息--<c:out value="${supplier.supplierName}"/></title>
 <link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css">
+<script language="javascript">
+function showImage(getMethod){
+	window.open ('${ctx}/supplier/image?getMethod=' + getMethod + '&id=${supplier.supplierId}');
+}
+
+function showCommentForm(){
+	window.open ('${ctx}/supplier/commentForm?id=${supplier.supplierId}','','height=390,width=520,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
+}
+
+function goBack() {
+	window.location.href="${ctx}/goBack?categoryId=${categoryId}&productId=${productId}&productBrandId=${productBrandId}";
+}
+</script>
 </head>
 
 <body>
 
 <!-- head -->
-<jsp:include page="${ctx}/header.jsp"></jsp:include>
+<jsp:include page="header.jsp"></jsp:include>
 <!-- head end -->
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
@@ -43,7 +56,7 @@
 		  <!-- 提出评价 -->
           <table width="120" border="0" cellpadding="2" cellspacing="0">
             <tr>
-              <td colspan="2" align="center"><img src="${ctx}/images/btn_comments.gif" /></td>
+              <td colspan="2" align="center"><a href="javascript:showCommentForm();"><img src="${ctx}/images/btn_comments.gif" /></a></td>
               </tr>
             <tr>
               <td width="72" class="text_line">&nbsp;&nbsp;访问次数：</td>
@@ -138,12 +151,12 @@
               <td colspan="3" class="title_color07"><img src="${ctx}/images/dot04.gif" />&nbsp;&nbsp; 基本信息</td>
             </tr>
 			<tr>
-			  <td colspan="3" style="text-align:right; font-weight:bold; padding-right:50px"><a href="#" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 返回</a></td>
+			  <td colspan="3" style="text-align:right; font-weight:bold; padding-right:50px"><a href="javascript:void(0)" onclick="goBack()" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 返回</a></td>
 			</tr>
             <tr valign="top">
 			  <td><table border="0" cellspacing="0" cellpadding="0">
 				  <tr>
-					<td class="img_border_w"><img src="ad_pic/ad006.jpg" width="180" height="200" /></td>
+					<td class="img_border_w"><img src="${ctx}/supplier/getImage?id=${supplier.supplierId}" width="180" height="200" /></td>
 				  </tr>
 				</table></td>
               <td width="20">&nbsp;</td>
@@ -208,26 +221,7 @@
           <br />
 		  
 		  <!-- 评价 -->
-          <table width="700" border="0" align="center" cellpadding="0" cellspacing="0" class="user_list">
-            <tr>
-              <th colspan="2">评论</th>
-            </tr>
-            <tr>
-              <td colspan="2">信誉好，服务优！</td>
-            </tr>
-            <tr>
-              <td style="padding:2px 10px 0px 15px">1楼</td>
-              <td style="text-align:right;padding:2px 20px 0px 15px">作者：admin    回复时间：2011/01/05 21:50:03</td>
-            </tr>
-          </table>
-		  <br />
-		  <table width="560" border="0" align="center" cellpadding="0" cellspacing="0">
-            <tr>
-              <td align="center" class="page_number"><a href="#">首页</a> &nbsp;&nbsp; <a href="#">前一页</a> &nbsp;&nbsp; 共
-                <input value="" type="text" name="textfield22" class="page_input">
-                /1 &nbsp;&nbsp; <a href="#">后一页</a> &nbsp;&nbsp; <a href="#">尾页</a> &nbsp;&nbsp; 共1条记录</td>
-            </tr>
-          </table>
+		  <iframe id="frame_content"  name="frame_content" src="${ctx}/supplier/comments/${supplier.supplierId}?page=1&rows=10" width="100%" height="0" scrolling="no" frameborder="0"></iframe>
 		  <!-- 评价 end -->
           <br />
         </td>
@@ -247,10 +241,7 @@
 <br />
 
 <!-- foot -->
-<table border="0" cellspacing="0" cellpadding="0" width="100%">
-	<tr><td bgcolor="#cccccc" height="1"></td></tr>
-	<tr><td height="30" class="text_foot">&copy; 2011年 商讯网版权所有</td></tr>
-</table>
+<jsp:include page="footer.jsp"></jsp:include>
 <!-- foot end -->
 
 </body>

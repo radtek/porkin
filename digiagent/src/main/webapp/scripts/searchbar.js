@@ -32,8 +32,9 @@ var getCategoryJson = function(_target) {
 				}
 			});
 			// 从商家返回再次定位
-			if (_target == "#searchBar" && $('input[name="categoryId"]').val().length > 0) {
+			if ($('input[name="categoryId"]').val().length > 0) {
 				_categoryId =  $('input[name="categoryId"]').val();
+				$('input[name="categoryId"]').val('');
 				getProductJson(_categoryId);
 			}
 		},
@@ -108,8 +109,9 @@ var getProductJson = function(parentId) {
 			});
 			
 			// 从商家返回再次定位
-			if (target == "#searchBar" && $('input[name="productId"]').val().length > 0) {
+			if ($('input[name="productId"]').val().length > 0) {
 				_productId = $('input[name="productId"]').val();
+				$('input[name="productId"]').val('');
 				getBrandJson(_productId);
 			}
 		},
@@ -147,8 +149,9 @@ var getBrandJson = function(parentId) {
 			});
 			
 			// 从商家返回再次定位
-			if (target == "#searchBar" && $('input[name="productBrandId"]').val().length > 0) {
+			if ($('input[name="productBrandId"]').val().length > 0) {
 				_productBrandId = $('input[name="productBrandId"]').val();
+				$('input[name="productBrandId"]').val('');
 				getSupplierJson(_productBrandId);
 			}
 		},
@@ -208,7 +211,7 @@ var addAD = function(_target) {
  * @return
  */
 function clearParam() {
-	$('input[name="categoryName"]').val('');
-	$('input[name="productName"]').val('');
-	$('input[name="brandName"]').val('');
+	$('input[name="categoryId"]').val('');
+	$('input[name="productId"]').val('');
+	$('input[name="productBrandId"]').val('');
 }
