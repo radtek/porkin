@@ -162,7 +162,7 @@ $(document).ready(function() {
               <td rowspan="2"></td>
             </tr>
             <tr>
-              <td bgcolor="#f8f8f8" class="text_left"><a href="#" class="Aleft" onclick="selectTag('tagContent4',this)" href="javascript:void(0)">商家排行<img src="images/btn_more.gif" /></a></td>
+              <td bgcolor="#f8f8f8" class="text_left"><a href="${ctx }/report/rankList" class="Aleft">商家排行<img src="images/btn_more.gif" /></a></td>
             </tr>
             <tr>
               <td height="10"><img src="images/bg_pic02c.gif" /></td>
