@@ -7,43 +7,19 @@
 	style="font-size: 13px; text-align: center">
 	<tr>
 		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">基础信息</a></td>
+			href="${ctx}/person/basicInfo">基础信息</a></td>
 	</tr>
 	<tr>
 		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">密码管理</a></td>
+			href="${ctx}/person/passwordForm">密码管理</a></td>
 	</tr>
 	<tr>
 		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">电子邮件</a></td>
-	</tr>
-	<tr>
-		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">公司介绍</a></td>
-	</tr>
-	<tr>
-		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">联系方式</a></td>
-	</tr>
-	<tr>
-		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">代理申请</a></td>
-	</tr>
-	<tr>
-		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">资质认证</a></td>
-	</tr>
-	<tr>
-		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">促销发布</a></td>
+			href="${ctx}/person/emailForm">电子邮件</a></td>
 	</tr>
 	<tr>
 		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
 			href="#">二手发布</a></td>
-	</tr>
-	<tr>
-		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a
-			href="#">促销历史</a></td>
 	</tr>
 	<tr>
 		<td class="text_line"><img src="images/dot05.gif" />&nbsp;&nbsp;<a

@@ -75,7 +75,7 @@ function member() {
     <td height="74" rowspan="2" width="420"><img src="${ctx}/images/head_pic01.gif" /></td>
     <td height="36" valign="top" colspan="2"><table border="0" cellspacing="0" cellpadding="0" align="right">
 	  <tr valign="bottom">
-		<td><a href="#" class="Ahead">首页</a></td>
+		<td><a href="${ctx}/" class="Ahead">首页</a></td>
 		<td><img src="${ctx}/images/head_line.gif" /></td>
 		<td><a href="#" class="Ahead">关于我们</a></td>
 		<td><img src="${ctx}/images/head_line.gif" /></td>

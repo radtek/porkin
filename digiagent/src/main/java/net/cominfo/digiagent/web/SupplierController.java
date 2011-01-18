@@ -331,7 +331,7 @@ public class SupplierController {
 			HttpServletResponse response) throws IOException {
 		supplier = supplierService.getById(supplier.getSupplierId());
 		if (supplier == null) {
-			new ResourceNotFoundException(new Long(supplier.getSupplierId()));
+			throw new ResourceNotFoundException(new Long(supplier.getSupplierId()));
 		}
 		// MYSQL BLOB类型最大65K--实名认证
 		if (image1.getSize() > 0 && image1.getSize() / 1024 < 65) {

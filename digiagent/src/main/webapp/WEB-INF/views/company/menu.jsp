@@ -1,52 +1,42 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
-<%@ page session="true" %>
-<%@ include file="/common/taglibs.jsp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-<link href="${ctx}/styles/main.css" rel="stylesheet" type="text/css" />
-<script src="${ctx}/scripts/Calendar.js"></script>
-<script src="${ctx}/scripts/menu.js"></script>
-<script language="javascript">
-
-function whenDelete() {
-	var isDelete=true;
-	if (!confirm("sure to delete")) {
-		isDelete=false;
-	}
-	window.location = 'contractSearch.html'; 
-	return isDelete;
-}
-</script>
-</head>
-<body>
-<DIV id=dfleft>
-<DIV class=sidebar>
-    <DIV class=blk>
-    <H3>用户操作</H3>
-        <DIV class=c>                   
-        <DIV class=blk2>                       
-        <UL>
-          <LI><b><A href="${ctx}/company/basicInfo" target="mainFrame" title="基本信息">基本信息 </A></b>                 
-          <LI><b><A href="${ctx}/company/passwordForm" target="mainFrame" title="密码管理">密码管理</A></b></LI>                  
-          <LI><b><A href="${ctx}/company/emailForm" target="mainFrame" title="电子邮件">电子邮件</A></b></LI>
-          <LI><b><A href="${ctx}/company/introductionForm" target="mainFrame" title="公司简介">公司简介</A></b></LI>
-          <LI><b><A href="${ctx}/company/contact/list" target="mainFrame" title="联系方式">联系方式</A></b></LI>
-          <LI><b><A href="${ctx}/company/agent?page=1" target="mainFrame" title="代理申请">代理申请</A></b></LI>
-          <LI><b><A href="${ctx}/company/picture" target="mainFrame" title="资质认证">资质认证</A></b></LI>
-          <LI><b><A href="${ctx}/company/infoRelease" target="mainFrame" title="促销发布">促销发布</A></b></LI>
-          <LI><b><A href="${ctx}/person/infoRelease" target="mainFrame" title="二手发布">二手发布</A></b></LI>
-          <LI><b><A href="${ctx}/company/commodityList" target="mainFrame" title="促销历史">促销历史</A></b></LI>
-          <li><b><a href="${ctx}/person/commodityList" target="mainFrame" title="二手历史 ">二手历史</a></b></li>
-        </UL>
-        </DIV>
-        </DIV>
-    </DIV>
-   
-</DIV>
-</DIV>
-</body>
-</html>
+<%@ page session="true"%>
+<%@ include file="/common/taglibs.jsp"%>
+		  <!-- 用户连接 -->
+          <table width="120" border="0" cellpadding="1" cellspacing="0" style="font-size:13px; text-align:center">
+            <tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/basicInfo">基础信息</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/passwordForm">密码管理</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/emailForm">电子邮件</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/introductionForm">公司介绍</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/contact/list">联系方式</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/agent?page=1">代理申请</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/picture">资质认证</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/infoRelease">促销发布</a></td>
+            </tr>
+            <tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/commodityList">促销历史</a></td>
+            </tr>
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/infoRelease">二手发布</a></td>
+            </tr>
+			
+			<tr>
+              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="${ctx}/company/commodityList">二手历史</a></td>
+            </tr>
+          </table>
+		  <!-- 用户连接 end -->

@@ -1,12 +1,17 @@
 package net.cominfo.digiagent.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import net.cominfo.digiagent.exception.ResourceNotFoundException;
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.Country;
@@ -33,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/company")
@@ -284,6 +290,47 @@ public class CompanyController {
 
 	@RequestMapping(value = "/picture", method = RequestMethod.GET)
 	public String picture(Model model) {
+		return "company/picture";
+	}
+	
+	@RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
+	public String updatePicture(@ModelAttribute SupplierWithBLOBs supplier,
+			@ModelAttribute("userName") String userName,
+			@RequestParam("file1") MultipartFile image1,
+			@RequestParam("file2") MultipartFile image2,
+			HttpServletResponse response,Model model) throws IOException {
+		supplier = supplierService.getById(supplier.getSupplierId());
+		
+		boolean updateFlag = true;
+		// MYSQL BLOB类型最大65K--实名认证
+		if (image1.getSize() > 0 && image1.getSize() / 1024 < 65) {
+			supplier.setSupplierCertify(image1.getBytes());
+		}
+		else{
+			if(image1!=null && image1.getSize() / 1024 >65){
+				model.addAttribute("message", new Message(MessageType.success,
+				"image1.size.overlarge"));
+				updateFlag = false;
+			}
+		}
+		
+		// MYSQL BLOB类型最大65K--资质认证
+		if (image2.getSize() > 0 && image2.getSize() / 1024 < 65) {
+			supplier.setSupplierQualify(image2.getBytes());
+		}
+		else{
+			if(image2!=null && image2.getSize() / 1024 > 65){
+				model.addAttribute("message", new Message(MessageType.success,
+				"image2.size.overlarge"));
+				updateFlag = false;	
+			}
+		}
+
+		if(updateFlag){
+			supplier = supplierService.update(supplier, userName);
+			model.addAttribute("message", new Message(MessageType.success,
+			"image.update.success"));
+		}
 		return "company/picture";
 	}
 

@@ -14,36 +14,7 @@
 <body>
 
 <!-- head -->
-<table border="0" cellspacing="0" cellpadding="0" width="1000" align="center">
-  <tr>
-    <td height="74" rowspan="2" width="420"><img src="${ctx}/images/head_pic01.gif" /></td>
-    <td height="36" valign="top" colspan="2"><table border="0" cellspacing="0" cellpadding="0" align="right">
-	  <tr valign="bottom">
-		<td><a href="#" class="Ahead">首页</a></td>
-		<td><img src="${ctx}/images/head_line.gif" /></td>
-		<td><a href="#" class="Ahead">关于我们</a></td>
-		<td><img src="${ctx}/images/head_line.gif" /></td>
-		<td><a href="#" class="Ahead">设为首页</a></td>
-		<td><img src="${ctx}/images/head_line.gif" /></td>
-	  </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td bgcolor="#ffffff" height="38"><table width="100%" border="0" cellpadding="0" cellspacing="0">
-	  <tr>
-		<td width="60" class="head_landing_text">切换城市 </td>
-		<td width="90"><select name="select" class="head_landing_select">
-		  <option value="大连市">大连市</option>
-		</select>		</td>
-		<td width="20"> </td>
-		<td align="right">欢迎您，<b>Test123456</b></td>
-		<td width="20"> </td>
-		<td width="65"><a href="#" class="Aorange">会员</a>&nbsp; | &nbsp;<a href="#" class="Aorange">退出</a></td>
-	  </tr>
-    </table></td>
-    <td width="25"><img src="${ctx}/images/head_pic02.gif" /></td>
-  </tr>
-</table>
+<jsp:include page="../header.jsp"></jsp:include>
 <!-- head end -->
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
@@ -70,41 +41,7 @@
 		  <!-- 标题 end -->
 		  
 		  <!-- 用户连接 -->
-          <table width="120" border="0" cellpadding="1" cellspacing="0" style="font-size:13px; text-align:center">
-            <tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">基础信息</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">密码管理</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">电子邮件</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">公司介绍</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">联系方式</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">代理申请</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">资质认证</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">促销发布</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">二手发布</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">促销历史</a></td>
-            </tr>
-			<tr>
-              <td class="text_line"><img src="${ctx}/images/dot05.gif" />&nbsp;&nbsp;<a href="#">二手历史</a></td>
-            </tr>
-          </table>
+          <jsp:include page="./menu.jsp"></jsp:include>
 		  <!-- 用户连接 end -->
         </td>
         <td width="10" class="title_left_b" style="vertical-align:top; padding-top:50px"><img src="${ctx}/images/left_pic01.gif" />
@@ -149,23 +86,23 @@
             </tr>
 			<tr>
               <th>用户账号：</th>
-              <td>Test123456</td>
+              <td><c:out value="${user.userName}" /></td>
 			</tr>
             <tr>
               <th>用户类型：</th>
-              <td>企业会员</td>
+              <td><c:out value="${userRole.roleName}" /></td>
             </tr>
             <tr>
               <th>电子邮箱：</th>
-              <td>111111@111111.com</td>
+              <td><c:out value="${user.userEmail}" /></td>
             </tr>
             <tr>
               <th>最后登录时间：</th>
-              <td>2010/12/26</td>
+              <td><fmt:formatDate value="${user.lastlogintime}" pattern="yyyy/MM/dd"/></td>
             </tr>
             <tr>
               <th>登录次数：</th>
-              <td>101</td>
+              <td><c:out value="${user.logonsum}" /></td>
             </tr>
           </table>
 		  <!-- 已代理的商品 end -->
