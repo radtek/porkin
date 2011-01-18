@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>商讯网--商家排行</title>
-<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css">
+<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>

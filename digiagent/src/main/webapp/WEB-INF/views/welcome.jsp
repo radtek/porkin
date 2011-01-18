@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>商讯网--商讯导购</title>
-<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css">
+<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/searchbar.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/common/common.js"></script>
@@ -201,7 +201,7 @@ $(document).ready(function() {
 				<input type="text" name="searchkw" class="seach_input" value="${searchkw}"/>
 			  </label></td>
 			  <td width="15"></td>
-			  <td><input type="image" src="${ctx}/images/btn_seachgo.jpg"/></td>
+			  <td><input type="image" src="${ctx}/images/btn_seachgo.jpg" style="width:30px;height:30px;border-width: 0px"/></td>
 			</tr>
 			<tr>
 			  <td height="20" colspan="4"><input type="hidden" name="categoryId" value="${categoryId}"/><input type="hidden" name="productId" value="${productId}"/><input type="hidden" name="productBrandId" value="${productBrandId}"/></td>
