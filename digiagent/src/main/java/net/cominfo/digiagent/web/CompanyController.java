@@ -1,8 +1,6 @@
 package net.cominfo.digiagent.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.cominfo.digiagent.exception.ResourceNotFoundException;
 import net.cominfo.digiagent.persistence.domain.Category;
 import net.cominfo.digiagent.persistence.domain.Contact;
 import net.cominfo.digiagent.persistence.domain.Country;
