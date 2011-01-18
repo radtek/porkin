@@ -41,6 +41,34 @@ function login(url) {
 	});
 }
 
+function setHomepage()
+{
+ if (document.all)
+    {
+        document.body.style.behavior='url(#default#homepage)';
+        document.body.setHomePage('http://www.crazymusic.com');
+    }
+    else if (window.sidebar)
+    {
+    	if(window.netscape)
+    	{
+         	try
+   			{ 
+            	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+         	} 
+         	catch (e) 
+         	{ 
+    			alert( "该操作被浏览器拒绝，如果想启用该功能，请在地址栏内输入 about:config,然后将项 signed.applets.codebase_principal_support 值该为true" ); 
+         	}
+    	}
+    	var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components. interfaces.nsIPrefBranch);
+   	 	prefs.setCharPref('browser.startup.homepage','http://www.carzymusic.com');
+ 	}
+}
+
+
+
+
 function logout() {
 	var url = "${ctx}/logout";
 	//document.location.href = "${ctx}/logout";
@@ -77,9 +105,9 @@ function member() {
 	  <tr valign="bottom">
 		<td><a href="${ctx}/" class="Ahead">首页</a></td>
 		<td><img src="${ctx}/images/head_line.gif" /></td>
-		<td><a href="#" class="Ahead">关于我们</a></td>
+		<td><a href="${ctx}/about" class="Ahead">关于我们</a></td>
 		<td><img src="${ctx}/images/head_line.gif" /></td>
-		<td><a href="#" class="Ahead">设为首页</a></td>
+		<td><a onclick="setHomepage();" href="#" class="Ahead">设为首页</a></td>
 		<td><img src="${ctx}/images/head_line.gif" /></td>
 	  </tr>
     </table></td>
@@ -108,7 +136,7 @@ function member() {
 		</label></td>
 		<td width="15"></td>
 		</form>
-		<td><a href="#" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 注册</a> &nbsp; <a href="${ctx}/passwordForm" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 忘记密码</a></td>
+		<td><a href="${ctx}/registerForm" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 注册</a> &nbsp; <a href="${ctx}/passwordForm" class="Aorange"><img src="${ctx}/images/dot01.gif" /> 忘记密码</a></td>
 		</c:when>
 		<c:otherwise>
 		<td class="head_landing_text">欢迎您 ，<c:out value="${sessionScope.userName}" /> | <a href="javascript:void(0);" onclick="homepage()"><fmt:message key="label.common.homepage"/></a> | <a href="javascript:void(0);" onclick="member();">会员</a> | <a href="javascript:void(0);" onclick="logout()" ></><fmt:message key="label.common.logout"/></a></td>
