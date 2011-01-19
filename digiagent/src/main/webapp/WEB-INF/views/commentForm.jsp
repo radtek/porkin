@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>加入评论</title>
-<link href="${ctx}/styles/main.css" rel="stylesheet" type="text/css" />
+<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css" />
 <script src="${ctx}/scripts/Calendar.js"></script>
 <script src="${ctx}/scripts/menu.js"></script>
 <script language="javascript">
@@ -21,7 +21,15 @@ function Home() {
 </script>
 </head>
 <body>
-<div class="companyTitle">发表评论</div>
+<TABLE cellSpacing=0 cellPadding=0 align=center border=0>
+<TR>
+	<TD height=20 align="center"
+			style="font-size:14px;font-weight:bold;color:white;">发表评论<br>
+		<br>
+	</TD>
+</TR>
+</TABLE>
+
 <div id="companyLeft">
 
 <form action="${ctx}/supplier/comments" method="post">	
@@ -33,20 +41,23 @@ function Home() {
     <input type="hidden" name="id" id="id" value="${id}" />		
      <c:choose>
      	<c:when test="${empty sessionScope.userName}">
-     		<td>帐号</td>
-      		<td><input type="text" size="20" width="20"name="username" id="username" /></td>
-      		<td>密码</td>
+     		<td style="font-size:12px;font-weight:bold;color:white;">帐号</td>
+      		<td><input type="text" size="20" width="20"name="username" id="username"/></td>
+      		<td style="font-size:12px;font-weight:bold;color:white;">密码</td>
       		<td><input type="password" size="20" width="20" name="password" id="password" /><input type="hidden" name="logined" id="logined" value="N" /></td>
      	</c:when>
      	<c:otherwise>
      		<td>&nbsp;</td>
-      		<td>&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /><input type="hidden" name="username" id="username" value="${sessionScope.userName}" /><input type="hidden" name="password" id="password" value="" /><input type="hidden" name="logined" id="logined" value="Y" /></td>
+      		<td style="font-size:12px;font-weight:bold;color:white;">&nbsp;欢迎您 ，<c:out value="${sessionScope.userName}" /><input type="hidden" name="username" id="username" value="${sessionScope.userName}" /><input type="hidden" name="password" id="password" value="" /><input type="hidden" name="logined" id="logined" value="Y" /></td>
       		<td></td>
       		<td></td>
      	
      	</c:otherwise>
      </c:choose>
       
+    </tr>
+    <tr>
+    	<td></td>
     </tr>
     
      <tr >
@@ -76,12 +87,12 @@ function Home() {
     </tr>
     <tr>
       <td colspan="2" align="center"><span class="headCity">
-        <input class="btn_login" type="submit" value="提交" />
+        <input class="btn_01" type="submit" value="提交" />
             </span><span class="headCity">
-      <input class="btn_login" type="reset" value="清空" />
+      <input class="btn_01" type="reset" value="清空" />
                   </span>
              <span class="headCity">
-      <input class="btn_login" type="button" value="关闭"  OnClick="javascript:window.close(); return false;"/>
+      <input class="btn_01" type="button" value="关闭"  OnClick="javascript:window.close(); return false;"/>
                   </span>
                   </td>
     </tr>
