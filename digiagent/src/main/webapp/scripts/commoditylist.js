@@ -85,7 +85,7 @@ var result = function(data) {
 			// 供应商信息
 			$('<tr id="supplierTR_' + index + '"></tr>').appendTo("#supplierInfo_" + index);
 			$('<td rowspan="11" width="70" id="image_' + index + '"></td><td rowspan="11" width="15"></td>').appendTo("#supplierTR_" + index);
-			$('<img width="200" height="200" class="img_border"/>').attr('src',  commodity.commodityId == null ? prefix + "images/common/nopic.jpg" : prefix + "commodity/getImage?id=" + commodity.commodityId + '&uuid=' + createUUID()).appendTo('#image_' + index);
+			$('<img width="200" height="200" class="img_border"/>').attr('src',  commodity.commodityId == null ? prefix + "images/common/nopic.jpg" : prefix + "commodity/getImage?id=" + commodity.imageId + '&uuid=' + createUUID()).appendTo('#image_' + index);
 			$('<td colspan="2" id="title_' + index + '"></td>').appendTo("#supplierTR_" + index);
 			$('<tr></tr>').append("<td colspan='2'>类别：" + (commodity.categoryName == null ? '暂无' : commodity.categoryName) + '</td>').appendTo('#title_' + index);
 			$('<tr></tr>').append("<td colspan='2'>产品：" + (commodity.productName == null ? '暂无' : commodity.productName) + '</td>').appendTo("#supplierInfo_" + index);

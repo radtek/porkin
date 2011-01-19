@@ -87,7 +87,14 @@
         <td width="750" bgcolor="#FFFFFF">
           <br />
 		  <!-- 已代理的商品 -->
-		 <form id="commodityForm" name="commodityForm" action="${ctx}/commodity/release" method="post" enctype="multipart/form-data">
+		   <c:if test="${not empty message}">
+		   <center>
+      				<strong style="text-align: center">
+      				<font color="red"><fmt:message key="${message.text}" /></font>
+			 		</strong>
+			 </center>
+   			</c:if>
+		 <form id="commodityForm" name="commodityForm" action="${ctx}/commodity/release" method="post" enctype="multipart/form-data" onsubmit="return releaseInfo(document.forms[0])">
           <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="list2">
             <tr>
               <td colspan="2" class="text_14size" style="border-bottom:1px solid #95b9e9; text-align:center; padding-left:30px"><b>促销发布</b></td>
@@ -247,7 +254,7 @@
               	<th>
 			  	</th>
               	<td>
-              		<input type="submit" value="发布" class="btn_02" onclick="releaseInfo()"/>
+              		<input type="submit" value="发布" class="btn_02"/>
               		<input type="reset" name="reset" class="btn_02" value="取消"/>
 					<input type="hidden" name="MAX_FILE_SIZE" value="100000" /> 
 					<input type="hidden" name="commodityType" value="P" />

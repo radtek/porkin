@@ -1,5 +1,5 @@
 var browserIsIE = "true"; /* 浏览器是否为IE */
-function releaseInfo() {
+function releaseInfo(form) {
 	var actionUrl = "";
 	if ($('input[name="categoryName"]').val() == undefined) {
 		actionUrl = "../commodity/releaseCommodity";
@@ -13,20 +13,22 @@ function releaseInfo() {
 	} else {
 		dt = "text";
 	}
-	
-	$('#commodityForm').ajaxForm({ 
-		url: actionUrl,
-		beforeSubmit: validate, 
-		dataType:  dt, 
-        success:   processJson,
-        error:   function(err){
-        	alert('数据操作失败！');
-		} 
-	});
+	form.action = actionUrl;
+	return validate(form);
+//	$('#commodityForm').ajaxForm({ 
+//		url: actionUrl,
+//		beforeSubmit: validate, 
+//		dataType:  dt, 
+//        success:   processJson,
+//        error:   function(err){
+//        	alert('数据操作失败！');
+//		} 
+//	});
 }
 
-function validate(formData, jqForm, options) {
-	var form = jqForm[0];  
+//function validate(formData, jqForm, options) {
+function validate(form) {
+	//var form = jqForm[0];  
 	
 	if (form.categoryName == undefined && form.categoryId.value.length == 0) {
     	alert('请选择类别！');

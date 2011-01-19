@@ -16,6 +16,8 @@ import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityImage;
 import net.cominfo.digiagent.service.CommodityImageService;
 import net.cominfo.digiagent.service.CommodityService;
+import net.cominfo.digiagent.spring.FlashMap.Message;
+import net.cominfo.digiagent.spring.FlashMap.MessageType;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -192,7 +194,7 @@ public class CommodityController {
 	}
 	
 	@RequestMapping(value = "/releaseCommodity", method = RequestMethod.POST)
-	public @ResponseBody
+	public 
 	String release(@ModelAttribute("userName") String userName,
 			@ModelAttribute("userId") Integer userId,
 			@ModelAttribute Commodity commodity,
@@ -200,13 +202,13 @@ public class CommodityController {
 			@RequestParam("file2") MultipartFile image2,
 			@RequestParam("file3") MultipartFile image3,
 			@RequestParam("file4") MultipartFile image4,
-			@RequestParam("file5") MultipartFile image5) throws IOException {
-		return release(userName, userId, commodity, image1, image2, image3, image4, image5, null, null);
+			@RequestParam("file5") MultipartFile image5,Model model) throws IOException {
+		return release(userName, userId, commodity, image1, image2, image3, image4, image5, null, null, model);
 	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
-	public @ResponseBody
+	public 
 	String release(@ModelAttribute("userName") String userName,
 			@ModelAttribute("userId") Integer userId,
 			@ModelAttribute Commodity commodity,
@@ -216,7 +218,7 @@ public class CommodityController {
 			@RequestParam("file4") MultipartFile image4,
 			@RequestParam("file5") MultipartFile image5,
 			@RequestParam("categoryName") String categoryName,
-			@RequestParam("productName") String productName) throws IOException {
+			@RequestParam("productName") String productName,Model model) throws IOException {
 		List<MultipartFile> imageList = new ArrayList<MultipartFile>();
 		List<CommodityImage> commodityImageList = new ArrayList<CommodityImage>();
 		imageList.add(image1);
@@ -225,31 +227,41 @@ public class CommodityController {
 		imageList.add(image4);
 		imageList.add(image5);
 		Map map = new HashMap();
-		for (MultipartFile image : imageList) {
-			if (image == null || image.getSize() == 0)
-				continue;
-			if (image.getSize() / 1024 >= 65) {
-				map.put("commodityId", -2);
+		try {
+			for (MultipartFile image : imageList) {
+				if (image == null || image.getSize() == 0)
+					continue;
+				if (image.getSize() / 1024 >= 65) {
+					map.put("commodityId", -2);
+				}
+				CommodityImage commodityImage = new CommodityImage();
+				// MYSQL BLOB类型最大65K
+				if (image.getSize() > 0 && image.getSize() / 1024 < 65) {
+					commodityImage.setCommodityimageContent(image.getBytes());
+					commodityImageList.add(commodityImage);
+				}
 			}
-			CommodityImage commodityImage = new CommodityImage();
-			// MYSQL BLOB类型最大65K
-			if (image.getSize() > 0 && image.getSize() / 1024 < 65) {
-				commodityImage.setCommodityimageContent(image.getBytes());
-				commodityImageList.add(commodityImage);
+			if (map.size() > 0) {
+				return JSONObject.toJSONString(map);
+			} else {
+				// 新加类别与产品
+				if (commodity.getProductId() == null || categoryName != null || productName != null) {
+					int productId = commodityService.generateNewProductId(categoryName, productName, userName);
+					commodity.setProductId(productId);
+				}
+				commodity = commodityService.release(commodity, commodityImageList,
+						userName, userId);
+				map.put("commodityId", commodity.getCommodityId());
 			}
+			model.addAttribute("message", new Message(MessageType.success,
+			"commodityRelease.success"));
+		} catch (Exception e) {
+			model.addAttribute("message", new Message(MessageType.success,
+			"commodityRelease.error"));
 		}
-		if (map.size() > 0) {
-			return JSONObject.toJSONString(map);
-		} else {
-			// 新加类别与产品
-			if (commodity.getProductId() == null || categoryName != null || productName != null) {
-				int productId = commodityService.generateNewProductId(categoryName, productName, userName);
-				commodity.setProductId(productId);
-			}
-			commodity = commodityService.release(commodity, commodityImageList,
-					userName, userId);
-			map.put("commodityId", commodity.getCommodityId());
-		}
-		return JSONObject.toJSONString(map);
+//		return JSONObject.toJSONString(map);
+		
+		return "company/infoRelease";
+		
 	}
 }
