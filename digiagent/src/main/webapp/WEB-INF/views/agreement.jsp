@@ -7,7 +7,7 @@
  
 <HTML>
 <HEAD>
-<link href="styles/main.css" rel="stylesheet" type="text/css" /> 
+<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css" /> 
  
 <TITLE>网上营业厅客户服务协议</TITLE>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
@@ -65,13 +65,13 @@
 		<TABLE cellSpacing=0 cellPadding=0 align=center border=0>
 			<TR>
 				<TD height=20 align="center"
-					style="font-size:14px;font-weight:bold;"><br>
+					style="font-size:14px;font-weight:bold;color:white;"><br>
 				商讯网有限公司</TD>
  
 			</TR>
 			<TR>
 				<TD height=20 align="center"
-					style="font-size:14px;font-weight:bold;">服务协议<br>
+					style="font-size:14px;font-weight:bold;color:white;">服务协议<br>
 				<br>
 				</TD>
 			</TR>
@@ -139,8 +139,8 @@
 	<TR>
 		<TD align="center">
 
-			<input class="btn_login" type="button"  value="同意" onclick="agree();" class="service_input_w90" />
-			<input class="btn_login" type="button"  value="不同意" onclick="disAgree()" class="service_input_w90" />
+			<input class="btn_01" type="button"  value="同意" onclick="agree();" class="service_input_w90" />
+			<input class="btn_01" type="button"  value="不同意" onclick="disAgree()" class="service_input_w90" />
 		</TD>
 	</TR>
 </table>

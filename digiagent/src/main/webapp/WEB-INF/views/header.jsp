@@ -118,8 +118,10 @@ function member() {
 	  <c:choose>
       	<c:when test="${empty sessionScope.userName}">
 		<td class="head_landing_text">切换城市 </td>
-		<td width="90"><select name="select" class="head_landing_select">
-		</select>
+		<td width="90">
+			<select name="select" class="head_landing_select">
+				<option selected>大连</option>
+			</select>
 		</td>
 		
 		<form name="loginForm" action="${ctx}/login" method="POST">
