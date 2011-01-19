@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
 import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityImage;
+import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.service.CommodityImageService;
 import net.cominfo.digiagent.service.CommodityService;
+import net.cominfo.digiagent.service.UserRoleService;
 import net.cominfo.digiagent.spring.FlashMap.Message;
 import net.cominfo.digiagent.spring.FlashMap.MessageType;
 
@@ -34,13 +36,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/commodity")
-@SessionAttributes( { "userId", "userName" })
+@SessionAttributes( { "userId", "userName", "userName" })
 public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
 	@Autowired
 	private CommodityImageService commodityImageService;
-
+	@Autowired
+	private UserRoleService userRoleService;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/queryCommodityList", method = RequestMethod.GET)
 	public void queryCommodityList(@RequestParam Map param,
@@ -261,7 +265,24 @@ public class CommodityController {
 		}
 //		return JSONObject.toJSONString(map);
 		
-		return "company/infoRelease";
+		List<String> roleIdList = userRoleService
+		.getRoleIdListByUserName(userName);
+		String roleId = null;
 		
+		String result = "";
+		if (roleIdList != null && roleIdList.size() > 0) {
+			roleId = roleIdList.get(0);
+			if (roleId.equals("4")) {
+				result = "company";
+	
+			} else if (roleId.equals("5")) {
+				result = "person";
+			} 
+		}
+		if ("P".equals(commodity.getCommodityType()) || "person".equals(result)) {
+			return result + "/infoRelease";
+		} else {
+			return result + "/infoRelease2";
+		}
 	}
 }
