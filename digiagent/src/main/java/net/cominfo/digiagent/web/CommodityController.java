@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.cominfo.digiagent.exception.ResourceNotFoundException;
 import net.cominfo.digiagent.persistence.domain.Commodity;
 import net.cominfo.digiagent.persistence.domain.CommodityImage;
-import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
 import net.cominfo.digiagent.service.CommodityImageService;
 import net.cominfo.digiagent.service.CommodityService;
 import net.cominfo.digiagent.service.UserRoleService;
