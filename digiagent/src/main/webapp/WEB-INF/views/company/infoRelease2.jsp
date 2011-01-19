@@ -37,7 +37,7 @@
 		  <!-- 标题 -->
 		  <table width="110" border="0" cellpadding="0" cellspacing="0">
             <tr>
-              <td class="title_left_b">二手发布</td>
+              <td class="title_left_b">用户注册</td>
             </tr>
             <tr>
               <td><img src="${ctx}/images/line_left.gif" /></td>

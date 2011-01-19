@@ -341,6 +341,12 @@ public class CompanyController {
 	public String infoRelease(Model model) {
 		return "company/infoRelease";
 	}
+	
+
+	@RequestMapping(value = "/infoRelease2", method = RequestMethod.GET)
+	public String infoRelease2(Model model) {
+		return "company/infoRelease2";
+	}
 
 	@RequestMapping(value = "/commodityList", method = RequestMethod.GET)
 	public String commodityList(Model model) {
