@@ -44,7 +44,7 @@ $(document).ready(function() {
 var validateUserName = function() {
 	$('#validateUserName').remove();
 	if ($('#username').val() == "") return;
-	$('<span></span>').css('padding-left', '10px').attr('id', 'validateUserName').append('<image id="loader" src="images/datagrid/tree_loading.gif"/>').insertAfter('#username');
+	$('<span></span>').css('position', 'relative').css('left', '180px').css('top', '-20px').attr('id', 'validateUserName').append('<image id="loader" src="images/datagrid/tree_loading.gif"/>').insertAfter('#username');
 	$.get('validateUserName', {username:$('#username').val()}, function(data) {
 		if (data) {
 			$('#validateUserName').empty().append('<image id="loader" src="images/icons/no.png"/>');
@@ -57,7 +57,7 @@ var validateUserName = function() {
 var validateEmail = function() {
 	$('#validateEmail').remove();
 	if ($('#email').val() == "") return;
-	$('<span></span>').css('padding-left', '10px').attr('id', 'validateEmail').append('<image id="loader" src="images/datagrid/tree_loading.gif"/>').insertAfter('#email');
+	$('<span></span>').css('position', 'relative').css('left', '180px').css('top', '-20px').attr('id', 'validateEmail').append('<image id="loader" src="images/datagrid/tree_loading.gif"/>').insertAfter('#email');
 	// 对Email地址格式的验证
 	var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 	if(!regEmail.test($('#email').val())){
