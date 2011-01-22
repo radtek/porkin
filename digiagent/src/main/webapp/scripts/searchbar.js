@@ -182,7 +182,7 @@ var getSupplierJson = function(parentId) {
 					$('<td rowspan="3" width="70" id="image_' + index + '"></td><td rowspan="3" width="15"></td>').appendTo("#supplierTR_" + index);
 					$('<img width="70" height="55" class="img_border"/>').attr('src', "supplier/getImage?id=" + supplier.supplierId + '&uuid=' + createUUID()).appendTo('#image_' + index);
 					$('<td colspan="2" id="title_' + index + '"></td>').appendTo("#supplierTR_" + index);
-					$('<a></a>').attr('href', "supplier/" + supplier.supplierId + "?categoryId=" + _categoryId + "&productId=" + _productId + "&productBrandId=" + _productBrandId).append('<strong>' + supplier.supplierName + '</strong>').appendTo('#title_' + index);
+					$('<a></a>').attr('target', '_black').attr('href', "supplier/" + supplier.supplierId + "?categoryId=" + _categoryId + "&productId=" + _productId + "&productBrandId=" + _productBrandId).append('<strong>' + supplier.supplierName + '</strong>').appendTo('#title_' + index);
 					
 					$('<tr><td colspan="2"></td></tr>').text("地址：" + supplier.supplierAddress).appendTo("#supplierInfo_" + index);
 					$('<tr id="lastRow_' + index + '"><td width="460" id="contact_' + index + '"></td></tr>').text('电话：' + supplier.supplierTelephone).appendTo("#supplierInfo_" + index);

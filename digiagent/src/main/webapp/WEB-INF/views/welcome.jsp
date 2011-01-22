@@ -226,7 +226,7 @@ $(document).ready(function() {
 					<tr>
 						<td rowspan="3" width="70"><img src="supplier/getImage?id=${supplier.supplierId}" width="70" height="55" class="img_border" /></td>
 						<td rowspan="3" width="15"></td>
-						<td colspan="2"><a href="supplier/${supplier.supplierId}"><strong>${supplier.supplierName}</strong></a></td>
+						<td colspan="2"><a href="supplier/${supplier.supplierId}" target="_black"><strong>${supplier.supplierName}</strong></a></td>
 					</tr>
 					<tr>
 						<td colspan="2">地址：${supplier.supplierAddress}</td>
