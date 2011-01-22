@@ -19,7 +19,7 @@ function showCommentForm(){
 }
 
 function goBack() {
-	window.location.href="${ctx}/goBack?categoryId=${categoryId}&productId=${productId}&productBrandId=${productBrandId}";
+	window.history.back();
 }
 </script>
 </head>

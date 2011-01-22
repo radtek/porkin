@@ -2,6 +2,9 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page session="true"%>
 <%@ include file="/common/taglibs.jsp"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css" />
 <style>
 body
@@ -48,6 +51,8 @@ function skip(pageNum) {
 	window.location.href = "${ctx}/supplier/comments/${supplierId}?page=" + pageNum + "&rows=10";
 }
 </script>
+</head>
+<body id="commentList">
 <c:forEach items="${commentsList}" var="comments" varStatus="status">
 	<table width="700" border="0" align="center" cellpadding="0"
 		cellspacing="0" class="user_list">
@@ -65,6 +70,11 @@ function skip(pageNum) {
 		</tr>
 	</table>
 	<br />
+	<c:if test="${(status.index+1) == fn:length(commentsList)}">
+		<script>
+		window.onload=setTimeout("sethash()",1000 ); 
+		</script>
+	</c:if>
 </c:forEach>
 <table width="560" border="0" align="center" cellpadding="0"
 		cellspacing="0">
@@ -85,12 +95,12 @@ function skip(pageNum) {
 	style="display: none;"></iframe>
 <script type="text/javascript"> 
 function sethash(){
-    hashH = document.documentElement.scrollHeight; 
+    hashH = document.getElementById("commentList").scrollHeight; 
     urlC = "${ctx}/supplier/iframe"; 
     document.getElementById("iframeC").src=urlC+"#"+hashH; 
 }
-window.onload=sethash();
 </script>
-
+</body>
+</html>
 
 
