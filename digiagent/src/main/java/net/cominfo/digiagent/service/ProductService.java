@@ -126,7 +126,9 @@ public class ProductService {
 	}
 
 	public Product update(Product product, String userName) {
+		String oldDisplayType = product.getDisplayType();
 		product = validateProductName(product);
+		product.setDisplayType(oldDisplayType);
 		if (product.getProductId() == -1) {
 			return product;
 		} else {

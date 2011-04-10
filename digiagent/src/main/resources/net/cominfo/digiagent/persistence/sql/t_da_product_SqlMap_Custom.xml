@@ -6,6 +6,7 @@
 		SELECT t_da_product.category_id as categoryId,
 		       product_id as productId,
 		       product_name as productName,
+		       display_type as displayType,
 		       t_da_product.created_by as createdBy,
 		       date_format(t_da_product.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
 		       t_da_product.lastupdated_by as lastupdatedBy,

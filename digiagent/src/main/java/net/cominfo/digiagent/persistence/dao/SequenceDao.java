@@ -50,6 +50,8 @@ public class SequenceDao extends SequenceDAOImpl {
 
 	private final String SORT_ORDER_KEY = "sort_order";
 
+	private final String ADVERTISE_KEY = "advertise";
+
 	/**
 	 * This is a generic sequence ID generator that is based on a database table
 	 * called 'SEQUENCE', which contains two columns (NAME, NEXTID). This
@@ -71,9 +73,9 @@ public class SequenceDao extends SequenceDAOImpl {
 		updateByPrimaryKey(sequence);
 		return result;
 	}
-	
+
 	public void init(String name) throws DataAccessException {
-		Sequence sequence =  new Sequence();
+		Sequence sequence = new Sequence();
 		sequence.setName(name);
 		sequence.setNextid(START_POINT);
 		insert(sequence);
@@ -83,12 +85,15 @@ public class SequenceDao extends SequenceDAOImpl {
 		Sequence sequence = selectByPrimaryKey(name);
 		if (sequence == null) {
 			init(name);
-		}
-		else{
+		} else {
 			sequence.setNextid(START_POINT);
 			updateByPrimaryKey(sequence);
 		}
-		
+
+	}
+
+	public int getAdvertiseNextId() {
+		return getNextId(ADVERTISE_KEY);
 	}
 
 	public int getUserNexId() {
