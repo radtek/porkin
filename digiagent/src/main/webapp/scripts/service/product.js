@@ -61,6 +61,7 @@ function onEditClickHandler(id) {
 		setCategorySelect(data.categoryId);
 		$('input[name="productId"]').val(id);
 		$('input[name="productName"]').val(data.productName);
+		$('select[name="displayType"]').val(data.displayType);
 		$('select[name="activeFlag"]').val(data.activeFlag);
 		$('#productEdit').css('display','block');
 		$('#productEdit').dialog({title:'修改', modal: true});
@@ -126,6 +127,36 @@ $(function(){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
 				}
 			},
+			{field:'displayType',title:'显示方式',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				},
+				formatter:function(value,rec){
+					if (value == '1') {
+						return '导购';
+					}
+					if (value == '2') {
+						return '二手';
+					}
+					if (value == '3') {
+						return '导购+二手';
+					}
+					if (value == '4') {
+						return '促销';
+					}
+					if (value == '5') {
+						return '导购+促销';
+					}
+					if (value == '6') {
+						return '二手+:促销';
+					}
+					if (value == '7') {
+						return '导购+二手+促销';
+					}
+				}
+
+			},
+			
 			{field:'activeFlag',title:'状态',width:100,align:'center',sortable:true,
 				sorter:function(a,b,order){
 					return (a>b?1:-1)*(order=='asc'?1:-1);
@@ -163,6 +194,7 @@ $(function(){
 					$('input[name="productId"]').val('');
 					$('select[name="categoryId"]').val('');
 					$('input[name="productName"]').val('');
+					$('select[name="displayType"]').val('');
 					$('select[name="activeFlag"]').val('Y');
 					$('#productEdit').css('display','block');
 					$('#productEdit').dialog({title:'新增', modal: true, icon:'icon-add'});

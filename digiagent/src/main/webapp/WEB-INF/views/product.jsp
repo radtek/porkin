@@ -6,7 +6,7 @@
 </head>
 <body>
 	<table id="productList"></table>
-	<div id="productEdit" icon="icon-edit" style="width:400px;height:170px;display:none">
+	<div id="productEdit" icon="icon-edit" style="width:400px;height:220px;display:none">
 		<div style="background:#fafafa;padding:10px;text-align:center">
 		<form id="productForm" action="../product/create" method="post"> 
 		  <div>
@@ -18,7 +18,20 @@
               	<label for="name">产品名:</label>
               	<input type="hidden" name="productId"/>
               	<input class="easyui-validatebox" type="text" name="productName" maxlength="20"/>
-          </div> 
+          </div>
+          <div>
+              	<label for="name">显示方式:</label>
+              	<select class="easyui-validatebox" id="displayType" name="displayType"> 
+              		<option value="1">导购</option>
+              		<option value="2">二手</option>
+              		<option value="3">导购+二手</option>
+              		<option value="4">促销</option>
+              		<option value="5">导购+促销</option>
+              		<option value="6">二手+促销</option>
+              		<option value="7">导购+二手+促销</option>              		
+              	</select>
+          </div>
+           
           <div>
               	<label for="name">状态:</label>
               	<select class="easyui-validatebox" id="activeFlag" name="activeFlag"> 
