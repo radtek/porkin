@@ -17,6 +17,9 @@ insert into t_da_sequence(name,nextid) value('user',2);
 insert into t_da_sequence(name,nextid) value('userrole',2);
 insert into t_da_sequence(name,nextid) value('comments',1);
 insert into t_da_sequence(name,nextid) value('advertise',1);
+insert into t_da_sequence(name,nextid) value('sortable',1);
+insert into t_da_sequence(name,nextid) value('sort_order',1);
+
 
 -- country
 INSERT INTO `t_da_country` (`COUNTRY_ID`, `COUNTRY_NAME`, `COUNTRY_ABBREVIATION`, `CREATED_BY`, `CREATED_DATE`, `LASTUPDATED_BY`, `LASTUPDATED_DATE`, `ACTIVE_FLAG`) VALUES
