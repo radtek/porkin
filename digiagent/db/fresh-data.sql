@@ -85,5 +85,18 @@ INSERT INTO `t_da_user` (`USER_ID`, `USER_NAME`, `USER_EMAIL`, `USER_PASSWORD`, 
 INSERT INTO `t_da_userrole` (`USER_ID`, `ROLE_ID`) VALUES
 (1, 1);
 
+-- City
+INSERT INTO `t_da_city` (`CITY_ID`, `CITY_NAME`, `CITY_ABBREVIATION`, `CREATED_BY`, `CREATED_DATE`, `LASTUPDATED_BY`, `LASTUPDATED_DATE`, `ACTIVE_FLAG`, `PROVINCE_ID`) VALUES
+(1, '大连市', 'DL', 'sj', '2010-09-15 19:15:39', 'sj', '2010-09-15 19:15:39', 'Y', 8),
+(2, '辽阳市', 'SY', 'sj', '2010-09-15 19:16:00', 'sj', '2010-09-15 19:16:00', 'Y', 8);
 
-
+-- Brand
+INSERT INTO `t_da_brand` (`BRAND_ID`, `BRAND_NAME`, `BRAND_ENGLISH`, `CREATED_BY`, `CREATED_DATE`, `LASTUPDATED_BY`, `LASTUPDATED_DATE`, `ACTIVE_FLAG`, `COUNTRY_ID`) VALUES
+(1, '戴尔', 'DELL', 'sj', '2010-09-15 19:26:33', 'sj', '2010-09-15 19:26:33', 'Y', 3),
+(2, '惠普', 'HP', 'sj', '2010-09-15 19:34:31', 'sj', '2010-09-15 19:34:31', 'Y', 3),
+(3, '三星', 'Samsun', 'sj', '2010-09-15 19:35:22', 'sj', '2010-09-15 19:35:22', 'Y', 5),
+(4, '宏碁', 'Acer', 'sj', '2010-09-15 19:37:02', 'sj', '2010-09-15 19:37:02', 'Y', 4),
+(5, '华硕', 'ASUS', 'sj', '2010-09-15 19:37:44', 'sj', '2010-09-15 19:37:44', 'Y', 4),
+(6, '联想', 'Lenovo', 'sj', '2010-09-15 19:38:33', 'sj', '2010-09-15 19:38:33', 'Y', 1),
+(7, '同方', '同方', 'sj', '2010-09-15 19:50:30', 'sj', '2010-09-15 19:50:30', 'Y', 1),
+(8, '索尼', 'SONY', 'sj', '2010-09-15 19:53:41', 'sj', '2010-09-15 19:53:41', 'Y', 2);
