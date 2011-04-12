@@ -13,6 +13,7 @@
 		<org.slf4j.version>1.5.10</org.slf4j.version>
 		<ibatis.version>2.3.4.726</ibatis.version>
 		<commons-lang.version>2.5</commons-lang.version>
+		<deploy.location>E:/source/eclipse/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/digiagent</deploy.location>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -303,6 +304,47 @@
 					<warName>digiagent</warName>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-antrun-plugin</artifactId>
+        		<version>1.6</version>
+        		<executions>
+          			<execution>
+						<id>deploy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<property name="deploy.filename" value="${build.finalName}" />
+								<echo message=" Starting to deploy into ${deploy.location}" /> 
+								<mkdir dir="${deploy.location}"/>
+								<copy todir="${deploy.location}">
+									<fileset dir="target/${deploy.filename}">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>undeploy</id>
+						<phase>clean</phase>
+						<configuration>
+							<tasks>
+								<echo message="Starting to remove ${deploy.location}" />
+								<delete dir="${deploy.location}"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+       			</executions>
+   			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
