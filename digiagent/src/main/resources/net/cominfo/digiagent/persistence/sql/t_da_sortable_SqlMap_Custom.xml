@@ -22,4 +22,27 @@
 		TRUNCATE TABLE t_da_sortable; 
 	</delete>
 	
+	<select id="getPageDisplay" parameterClass="List" resultClass="HashMap">
+		SELECT 
+			t_da_category.CATEGORY_NAME,
+			t_da_product.PRODUCT_NAME,
+			t_da_brand.BRAND_NAME
+		from 
+			(select 
+				t1.SORTABLE_KEY category_id, 
+				t2.SORTABLE_KEY product_id,
+				t3.SORTABLE_KEY brand_id
+			from t_da_sortable t1
+			LEFT JOIN t_da_sortable t2 on(t1.SORTABLE_ID = t2.PARENT_ID)
+			left join t_da_sortable t3 on (t2.SORTABLE_ID = t3.PARENT_ID)
+			where t1.SORTABLE_TYPE = 'C'
+			ORDER BY t1.SORTABLE_ORDER, t2.SORTABLE_ORDER, t3.SORTABLE_ORDER) t
+		LEFT JOIN t_da_category on (t.category_id = t_da_category.CATEGORY_ID)
+		left join t_da_product on (t.product_id = t_da_product.PRODUCT_ID)
+		left JOIN t_da_brand on (t.brand_id = t_da_brand.BRAND_ID)
+		<dynamic prepend=" where t_da_product.DISPLAY_TYPE in ">
+			<iterate open="(" close=")" conjunction=","> #[]# </iterate>
+		</dynamic>
+	</select>
+	
 </sqlMap>

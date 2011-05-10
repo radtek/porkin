@@ -1,6 +1,7 @@
 package net.cominfo.digiagent.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -296,4 +297,25 @@ public class SortableService {
 	public List<Integer> getAllChild(Integer rootId) {
 		return sortableDao.getAllChildId(rootId);
 	}
+	
+	@SuppressWarnings("unchecked")
+	private List<HashMap> getPageInfo(DisplayType param){
+		return sortableDao.getPageDisplay(param.getValue());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<HashMap> getNavigationPage(){
+		return getPageInfo(DisplayType.Navigation);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<HashMap> getSecondHandPage(){
+		return getPageInfo(DisplayType.SecondHand);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<HashMap> getPromotionPage(){
+		return getPageInfo(DisplayType.Promotion);
+	}
+	
 }

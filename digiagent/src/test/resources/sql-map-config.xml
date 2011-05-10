@@ -64,6 +64,9 @@
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_sortable_SqlMap.xml" />
 	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_sortable_SqlMap_Custom.xml" />
 	
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_advertise_SqlMap.xml" />
+	<sqlMap resource="net/cominfo/digiagent/persistence/sql/t_da_advertise_SqlMap_Custom.xml" />
+	
 </sqlMapConfig>
 
 

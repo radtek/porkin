@@ -42,5 +42,10 @@ public class SortableDao extends SortableDAOImpl {
 		getSqlMapClientTemplate().delete(
 				"t_da_sortable_Custom.cleanSortableTable");
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List getPageDisplay(List<String> param){
+		return 	getSqlMapClientTemplate().queryForList("t_da_sortable_Custom.getPageDisplay", param);
+	}
 
 }
