@@ -24,9 +24,12 @@
 	
 	<select id="getPageDisplay" parameterClass="List" resultClass="HashMap">
 		SELECT 
-			t_da_category.CATEGORY_NAME,
-			t_da_product.PRODUCT_NAME,
-			t_da_brand.BRAND_NAME
+			t_da_category.CATEGORY_ID as CATEGORY_ID,
+			t_da_category.CATEGORY_NAME as CATEGORY_NAME,
+			t_da_product.PRODUCT_ID  as PRODUCT_ID,
+			t_da_product.PRODUCT_NAME as PRODUCT_NAME,
+			t_da_brand.BRAND_ID as BRAND_ID,
+			t_da_brand.BRAND_NAME as BRAND_NAME
 		from 
 			(select 
 				t1.SORTABLE_KEY category_id, 

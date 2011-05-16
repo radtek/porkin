@@ -334,5 +334,10 @@ public class GeneralController {
 	public String secondHand(Model model) {
 		return "secondHand";
 	}
+	
+	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	public String welcome(Model model) {
+		return "welcome2";
+	}
 
 }
