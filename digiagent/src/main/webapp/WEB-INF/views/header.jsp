@@ -2,12 +2,6 @@
 <%@page pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <%@ include file="/common/taglibs.jsp" %>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>个人会员</title>
-<link href="${ctx}/styles/main2.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
 
 <script language="javascript">
 /**
@@ -96,9 +90,7 @@ function member() {
 	window.parent.location.href= "${ctx}/member";
 }
 </script>
-</head>
-<body>
-<table border="0" cellspacing="0" cellpadding="0" width="1000" align="center">
+<table border="0" cellspacing="0" cellpadding="0" width="98%" align="center">
   <tr>
     <td height="74" rowspan="2" width="420"><img src="${ctx}/images/head_pic01.gif" /></td>
     <td height="36" valign="top" colspan="2"><table border="0" cellspacing="0" cellpadding="0" align="right">
@@ -153,5 +145,3 @@ function member() {
     <td width="25"><img src="${ctx}/images/head_pic02.gif" /></td>
   </tr>
 </table>
-</body>
-</html>

@@ -337,7 +337,9 @@ public class GeneralController {
 	
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String welcome(Model model) {
-		return "welcome2";
+		model.addAttribute("navigationList", sortableService.getNavigationPage());
+		return "welcome";
 	}
+	
 
 }

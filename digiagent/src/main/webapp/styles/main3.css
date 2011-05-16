@@ -27,7 +27,7 @@ A:active { text-decoration:none; color:#ff6600;}
 body
 {
 	background-color:#eaeaea;
-	background-image: url(images/bg.gif);
+	background-image: url(../images/bg.gif);
 	background-position: right top;
 	background-repeat: repeat-x;
 	font-family:Arial, ËÎÌו;
@@ -78,7 +78,7 @@ hr
 
 .img_line03a
 {
-	background-image: url(images/line03a.gif);
+	background-image: url(../images/line03a.gif);
 	background-position:top;
 	background-repeat:repeat-x;
 	height:1px;
@@ -113,7 +113,7 @@ hr
 .title_color04
 {
 	height:40px;
-	background-image: url(images/title_bg01a.gif);
+	background-image: url(../images/title_bg01a.gif);
 	background-position:center;
 	background-repeat:no-repeat;
 	font-size:13px;
@@ -126,7 +126,7 @@ hr
 .title_color05
 {
 	height:40px;
-	background-image: url(images/title_bg01b.gif);
+	background-image: url(../images/title_bg01b.gif);
 	background-position:center;
 	background-repeat:no-repeat;
 	font-size:13px;
@@ -139,7 +139,7 @@ hr
 .title_color06
 {
 	height:40px;
-	background-image: url(images/title_bg01c.gif);
+	background-image: url(../images/title_bg01c.gif);
 	background-position:center;
 	background-repeat:no-repeat;
 	font-size:13px;
@@ -152,7 +152,7 @@ hr
 .title_color07
 {
 	height:55px;
-	background-image: url(images/title_bg02.gif);
+	background-image: url(../images/title_bg02.gif);
 	background-position:right;
 	background-repeat:no-repeat;
 	font-size:15px;
@@ -166,7 +166,7 @@ hr
 .title_left
 {
 	height:40px;
-	background-image: url(images/bg_pic03b.gif);
+	background-image: url(../images/bg_pic03b.gif);
 	background-position:top;
 	background-repeat:repeat-x;
 	font-size:15px;
@@ -181,7 +181,7 @@ hr
 .title_left_b
 {
 	height:40px;
-	background-image: url(images/bg_pic04b.gif);
+	background-image: url(../images/bg_pic04b.gif);
 	background-position:top;
 	background-repeat:repeat-x;
 	font-size:15px;
@@ -270,7 +270,7 @@ hr
 	font-size:12px;
 	color:#000000;
 	font-weight:bold;
-	background-image: url(images/btn_bg01.gif);
+	background-image: url(../images/btn_bg01.gif);
 	height:20px;
 	border:1px solid #d38300;
 	padding-top:3px;
@@ -282,7 +282,7 @@ hr
 	font-size:12px;
 	color:#000000;
 	font-weight:bold;
-	background-image: url(images/btn_bg02.gif);
+	background-image: url(../images/btn_bg02.gif);
 	width:50px;
 	height:20px;
 	border:0px;
@@ -371,7 +371,7 @@ table.user_list td {
 	background-color:#FFFFFF;
 	text-align:left;
 	padding:10px 15px 3px 15px;
-	background-image: url(images/line03a.gif);
+	background-image: url(../images/line03a.gif);
 	background-position:top;
 	background-repeat:repeat-x;
 }
@@ -394,7 +394,7 @@ table.list td {
 	background-color:#FFFFFF;
 	text-align:center;
 	padding:10px 15px 3px 15px;
-	background-image: url(images/line03a.gif);
+	background-image: url(../images/line03a.gif);
 	background-position:top;
 	background-repeat:repeat-x;
 }
@@ -410,7 +410,7 @@ table.list2 th {
 	background-color:#FFFFFF;
 	text-align:right;
 	padding:10px 0px 3px 30px;
-	background-image: url(images/line03a.gif);
+	background-image: url(../images/line03a.gif);
 	background-position:top;
 	background-repeat:repeat-x;
 	font-weight:normal;
@@ -421,7 +421,7 @@ table.list2 td {
 	background-color:#FFFFFF;
 	text-align:left;
 	padding:10px 30px 3px 0px;
-	background-image: url(images/line03a.gif);
+	background-image: url(../images/line03a.gif);
 	background-position:top;
 	background-repeat:repeat-x;
 }
