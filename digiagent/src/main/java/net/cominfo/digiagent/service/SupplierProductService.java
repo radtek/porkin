@@ -6,6 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.SequenceDao;
 import net.cominfo.digiagent.persistence.dao.SortableDao;
@@ -13,13 +17,10 @@ import net.cominfo.digiagent.persistence.dao.SupplierProductDao;
 import net.cominfo.digiagent.persistence.domain.ProductBrand;
 import net.cominfo.digiagent.persistence.domain.Sortable;
 import net.cominfo.digiagent.persistence.domain.SortableCriteria;
+import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductKey;
 import net.cominfo.digiagent.utils.Page;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -33,10 +34,9 @@ public class SupplierProductService {
 
 	@Autowired
 	private SortableDao sortableDao;
-	
+
 	@Autowired
 	private SequenceDao sequenceDao;
-	
 
 	@SuppressWarnings("unchecked")
 	public List<SupplierProductKey> query(int pageNo, int pageSize,
@@ -96,25 +96,32 @@ public class SupplierProductService {
 				supplierProduct.setSupplierId(supplierId);
 				supplierProduct.setCreateDate(new Date());
 				supplierProductDao.insert(supplierProduct);
-				
-				//增加品牌下的一个供应商
-				ProductBrand productBrand = productBrandDao.selectByPrimaryKey(productBrandId);
+
+				// 增加品牌下的一个供应商
+				ProductBrand productBrand = productBrandDao
+						.selectByPrimaryKey(productBrandId);
 				Integer brandId = productBrand.getBrandId();
 				SortableCriteria brandSortableCriteria = new SortableCriteria();
-				brandSortableCriteria.createCriteria().andSortableKeyEqualTo(brandId).andSortableTypeEqualTo(SortableType.Brand.getFlag());
-				List<Sortable> brandSortableList = sortableDao.selectByExample(brandSortableCriteria);
-				if(brandSortableList!=null && brandSortableList.size()>0){
+				brandSortableCriteria.createCriteria()
+						.andSortableKeyEqualTo(brandId)
+						.andSortableTypeEqualTo(SortableType.Brand.getFlag());
+				List<Sortable> brandSortableList = sortableDao
+						.selectByExample(brandSortableCriteria);
+				if (brandSortableList != null && brandSortableList.size() > 0) {
 					Sortable brandSortable = brandSortableList.get(0);
 					Integer parentId = brandSortable.getSortableId();
 					Sortable supplierSortable = new Sortable();
-					supplierSortable.setSortableId(sequenceDao.getSortableNexId());
+					supplierSortable.setSortableId(sequenceDao
+							.getSortableNexId());
 					supplierSortable.setSortableKey(supplierId);
-					supplierSortable.setSortableOrder(sequenceDao.getSortOrderNexId());
-					supplierSortable.setSortableType(SortableType.Supplier.getFlag());
+					supplierSortable.setSortableOrder(sequenceDao
+							.getSortOrderNexId());
+					supplierSortable.setSortableType(SortableType.Supplier
+							.getFlag());
 					supplierSortable.setParentId(parentId);
 					sortableDao.insert(supplierSortable);
 				}
-				
+
 			}
 		}
 		if (buffer.toString().length() > 0) {
@@ -144,13 +151,14 @@ public class SupplierProductService {
 				supplierProduct.setProductbrandId(productBrandId);
 				supplierProduct.setSupplierId(supplierId);
 				supplierProductDao.deleteByPrimaryKey(supplierProduct);
-				
+
 				// 相当于删除品牌下的一个供应商
 				ProductBrand productBrand = productBrandDao
 						.selectByPrimaryKey(productBrandId);
 				Integer brandId = productBrand.getBrandId();
 				SortableCriteria brandSortableCriteria = new SortableCriteria();
-				brandSortableCriteria.createCriteria().andSortableKeyEqualTo(brandId)
+				brandSortableCriteria.createCriteria()
+						.andSortableKeyEqualTo(brandId)
 						.andSortableTypeEqualTo(SortableType.Brand.getFlag());
 				List<Sortable> brandSortableList = sortableDao
 						.selectByExample(brandSortableCriteria);
@@ -158,9 +166,12 @@ public class SupplierProductService {
 					Sortable brandSortable = brandSortableList.get(0);
 					Integer parentId = brandSortable.getSortableId();
 					SortableCriteria supplierSortableCriteria = new SortableCriteria();
-					supplierSortableCriteria.createCriteria().andParentIdEqualTo(
-							parentId).andSortableKeyEqualTo(supplierId)
-							.andSortableTypeEqualTo(SortableType.Supplier.getFlag());
+					supplierSortableCriteria
+							.createCriteria()
+							.andParentIdEqualTo(parentId)
+							.andSortableKeyEqualTo(supplierId)
+							.andSortableTypeEqualTo(
+									SortableType.Supplier.getFlag());
 					sortableDao.deleteByExample(supplierSortableCriteria);
 				}
 			} else {
@@ -195,8 +206,9 @@ public class SupplierProductService {
 			Sortable brandSortable = brandSortableList.get(0);
 			Integer parentId = brandSortable.getSortableId();
 			SortableCriteria supplierSortableCriteria = new SortableCriteria();
-			supplierSortableCriteria.createCriteria().andParentIdEqualTo(
-					parentId).andSortableKeyEqualTo(supplierId)
+			supplierSortableCriteria.createCriteria()
+					.andParentIdEqualTo(parentId)
+					.andSortableKeyEqualTo(supplierId)
 					.andSortableTypeEqualTo(SortableType.Supplier.getFlag());
 			sortableDao.deleteByExample(supplierSortableCriteria);
 		}
@@ -243,6 +255,25 @@ public class SupplierProductService {
 					.getSqlMapClient()
 					.queryForList(
 							"t_da_supplierproduct_Custom.supplierInfoListByCondition",
+							condition);
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Supplier> getMainPageSupplierList(Map condition) {
+		List<Supplier> result = supplierProductDao
+				.getSqlMapClientTemplate()
+				.queryForList(
+						"t_da_supplierproduct_Custom.listSortableMainPageByCondition",
+						condition);
+		if (result != null && result.size() > 0) {
+			return result;
+		} else {
+			return supplierProductDao
+					.getSqlMapClientTemplate()
+					.queryForList(
+							"t_da_supplierproduct_Custom.supplierInfoListMainPageByCondition",
 							condition);
 		}
 

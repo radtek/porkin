@@ -9,6 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.User;
@@ -24,15 +34,6 @@ import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
 import net.cominfo.digiagent.utils.ValidatorUtils;
 import net.sf.json.JSONArray;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/")
@@ -52,13 +53,13 @@ public class GeneralController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private ProductBrandService productBrandService;
-	
+
 	@Autowired
 	private SortableService sortableService;
-	
+
 	@Autowired
 	private SupplierProductService supplierProductService;
 
@@ -131,7 +132,7 @@ public class GeneralController {
 					"register.captcha.error"));
 			hasError = true;
 		}
-		//		
+		//
 		// if(!agree.equalsIgnoreCase("Y")){
 		// model.addAttribute("agree", new
 		// Message(MessageType.success,"register.agree.checked"));
@@ -156,15 +157,24 @@ public class GeneralController {
 		return forward;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/freeSearch", method = RequestMethod.POST)
-	public String freeSearch(@RequestParam String searchkw, Model model) {
+	public String freeSearch(@RequestParam String searchkw,
+			@RequestParam String productId, @RequestParam String brandId,
+			Model model) {
 		List<Supplier> supplierList = null;
-		if (searchkw == null || searchkw.equals("")) {
-		} else {
+		if (StringUtils.isNotEmpty(searchkw)) {
 			supplierList = supplierService.getSupplierList(searchkw);
+		} else if (StringUtils.isNotEmpty(productId)) {
+			Map condition = new HashMap();
+			condition.put("brandId", brandId);
+			condition.put("productId", productId);
+			supplierList = supplierProductService
+					.getMainPageSupplierList(condition);
 		}
 		model.addAttribute("supplierList", supplierList);
 		model.addAttribute("searchkw", searchkw);
+		model.addAttribute("type", "supplierList");
 		return "welcome";
 	}
 
@@ -201,7 +211,7 @@ public class GeneralController {
 	 */
 	@RequestMapping(value = "/goBack", method = RequestMethod.GET)
 	public String goBack(HttpServletRequest request, Model model) {
-		String otherParam[] = {"categoryId", "productId", "productBrandId"};
+		String otherParam[] = { "categoryId", "productId", "productBrandId" };
 		for (String key : otherParam) {
 			String value = request.getParameter(key);
 			if (value != null) {
@@ -213,15 +223,20 @@ public class GeneralController {
 
 	/**
 	 * Search Bar 读取各列表
-	 * <p>Example : http://localhost:8080/digiagent/sortable/0/0</p>
-	 * @param type 0:category 1:product 2:brand
+	 * <p>
+	 * Example : http://localhost:8080/digiagent/sortable/0/0
+	 * </p>
+	 * 
+	 * @param type
+	 *            0:category 1:product 2:brand
 	 * @param parentId
 	 * @param model
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/sortable/{type}/{parentId}", method = RequestMethod.GET)
-	public String sortable(@PathVariable Integer type, @PathVariable Integer parentId, Model model) {
+	public String sortable(@PathVariable Integer type,
+			@PathVariable Integer parentId, Model model) {
 		List<Map> categoryList = null;
 		List<Map> productList = null;
 		List<Map> brandList = null;
@@ -252,7 +267,8 @@ public class GeneralController {
 				break;
 			case 3:
 				categoryList = categoryService.getCateogryList();
-				productId = productBrandService.getById(parentId).getProductId();
+				productId = productBrandService.getById(parentId)
+						.getProductId();
 				// get brand list
 				param.put("productId", productId);
 				brandList = productBrandService.getBrandList(param);
@@ -271,7 +287,7 @@ public class GeneralController {
 			default:
 				break;
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -288,6 +304,7 @@ public class GeneralController {
 
 	/**
 	 * 保存Search Bar 排序结果
+	 * 
 	 * @param request
 	 * @param model
 	 * @return
@@ -295,8 +312,9 @@ public class GeneralController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(HttpServletRequest request, Model model) {
 		String items = request.getParameter("items");
-		int type = Integer.valueOf((String)request.getParameter("type"));
-		int parentId = Integer.valueOf((String)request.getParameter("parentId"));
+		int type = Integer.valueOf((String) request.getParameter("type"));
+		int parentId = Integer.valueOf((String) request
+				.getParameter("parentId"));
 		JSONArray jsonArray = JSONArray.fromObject(items);
 		Object[] itemIds = jsonArray.toArray();
 		int[] sortItemIds = new int[itemIds.length];
@@ -315,7 +333,8 @@ public class GeneralController {
 			sortableService.sortBrand(sortItemIds, parentId);
 			break;
 		case 3:
-			int productBrandId = Integer.valueOf((String)request.getParameter("productBrandId"));
+			int productBrandId = Integer.valueOf((String) request
+					.getParameter("productBrandId"));
 			sortableService.sortSupplier(sortItemIds, parentId);
 			parentId = productBrandId;
 			break;
@@ -324,22 +343,23 @@ public class GeneralController {
 		}
 		return "redirect:/sortable/" + type + "/" + parentId;
 	}
-	
+
 	@RequestMapping(value = "/promotion", method = RequestMethod.GET)
 	public String sales(Model model) {
 		return "promotion";
 	}
-	
+
 	@RequestMapping(value = "/secondHand", method = RequestMethod.GET)
 	public String secondHand(Model model) {
 		return "secondHand";
 	}
-	
+
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String welcome(Model model) {
-		model.addAttribute("navigationList", sortableService.getNavigationPage());
+		model.addAttribute("type", "navigationList");
+		model.addAttribute("navigationList",
+				sortableService.getNavigationPage());
 		return "welcome";
 	}
-	
 
 }

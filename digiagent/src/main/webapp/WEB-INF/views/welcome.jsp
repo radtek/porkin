@@ -42,7 +42,7 @@
         <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02g.gif"><img src="${ctx}/images/bg_pic02b.gif" /></td>
       </tr>
       <tr>
-        <td class="text_left_on"><a href="#" class="Aleft">商品促销 <img src="${ctx}/images/btn_more.gif" /></a></td>
+        <td class="text_left_on"><a href="${ctx}/promotion" class="Aleft">商品促销 <img src="${ctx}/images/btn_more.gif" /></a></td>
       </tr>
     </table>    </td>
     <td width="15"></td>
@@ -54,7 +54,7 @@
         <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02g.gif"><img src="${ctx}/images/bg_pic02b.gif" /></td>
       </tr>
       <tr>
-        <td class="text_left_on"><a href="#" class="Aleft">二手信息 <img src="${ctx}/images/btn_more.gif" /></a></td>
+        <td class="text_left_on"><a href="${ctx}/secondHand" class="Aleft">二手信息 <img src="${ctx}/images/btn_more.gif" /></a></td>
       </tr>
     </table>      </td>
     <td width="15"></td>
@@ -66,20 +66,26 @@
         <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02g.gif"><img src="${ctx}/images/bg_pic02b.gif" /></td>
       </tr>
       <tr>
-        <td class="text_left_on"><a href="#" class="Aleft">商家排行 <img src="${ctx}/images/btn_more.gif" /></a></td>
+        <td class="text_left_on"><a href="${ctx }/report/rankList" class="Aleft">商家排行 <img src="${ctx}/images/btn_more.gif" /></a></td>
       </tr>
     </table>    </td>
 	<td width="15"></td>
-    <td><table border="0" cellspacing="0" cellpadding="0" align="right">
+    <td>
+    <form name="searchForm" action="freeSearch" method="post" target="_blank">
+    <table border="0" cellspacing="0" cellpadding="0" align="right">
       <tr>
         <td width="50"><img src="${ctx}/images/icon_seach.gif" /></td>
         <td><label>
-          <input type="text" name="textfield3" class="seach_input" />
+          <input type="text" name="searchkw" class="seach_input" value="${searchkw}"/>
+          <input type="hidden" name="productId" id="productId"/>
+          <input type="hidden" name="brandId" id="brandId"/>
         </label></td>
         <td width="15"></td>
-        <td><img src="${ctx}/images/btn_seachgo.gif" width="41" height="41" /></td>
+        <td><img src="${ctx}/images/btn_seachgo.gif" width="41" height="41" onclick="javascript:document.searchForm.submit()" style="cursor:pointer"/></td>
       </tr>
-    </table></td>
+    </table>
+    </form>
+    </td>
     <td width="10">&nbsp;</td>
   </tr>
   <tr>
@@ -109,7 +115,9 @@
 		  
 <c:choose>
 	<c:when test="${empty navigationList}">
+		<c:if test="${type == 'navigationList' }">
 			暂无数据!
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<c:set var="category" value=""/>
@@ -122,7 +130,7 @@
 	              <td width="140"><table width="130" border="0" cellpadding="0" cellspacing="0">
 	                <tr>
 	                  <td width="14" height="43"><img src="${ctx}/images/title_bg03a.gif" /></td>
-	                  <td background="${ctx}/images/title_bg03c.gif" class="title_color01">${navigation.CATEGORY_NAME}</td>
+	                  <td background="${ctx}/images/title_bg03c.gif" class="title_color01"><c:out value="${navigation.CATEGORY_NAME}"/></td>
 	                  <td width="14"><img src="${ctx}/images/title_bg03b.gif" /></td>
 	                </tr>
 	              </table></td>
@@ -138,7 +146,7 @@
                       <td width="100"><table width="100" border="0" cellpadding="0" cellspacing="0">
                           <tr>
                             <td width="6" height="23"><img src="${ctx}/images/title_bg04a.gif" /></td>
-                            <td background="${ctx}/images/title_bg04c.gif" class="title_color02">${navigation.PRODUCT_NAME}</td>
+                            <td background="${ctx}/images/title_bg04c.gif" class="title_color02"><c:out value="${navigation.PRODUCT_NAME}"/></td>
                             <td width="14"><img src="${ctx}/images/title_bg04b.gif" /></td>
                           </tr>
                       </table></td>
@@ -146,7 +154,7 @@
 				<c:set var="product" value="${category}_${navigation.PRODUCT_NAME}"/>
 			</c:if>
 			
-			<a href="#" class="Agray">${navigation.BRAND_NAME}</a> | 
+			<a href="javascript:void(0)" class="Agray" onclick="$('#brandId').val(${navigation.BRAND_ID});$('#productId').val(${navigation.PRODUCT_ID});document.searchForm.submit()"><c:out value="${navigation.BRAND_NAME}"/></a> | 
 			
 			<c:set var="nextIndex" value="${status.index + 1}"/>
 			<c:if test="${nextIndex <= status.count}">
@@ -181,73 +189,43 @@
 		
 		
 		  <!-- seller introduction -->
-		  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-			<tr>
-			  <td rowspan="3" width="70"><img src="${ctx}/images/ad_pic/ad002.jpg" width="70" height="55" class="img_border" /></td>
-			  <td rowspan="3" width="15"></td>
-			  <td colspan="2"><a href="#"><strong>大连鹏程电脑专卖</strong></a></td>
-			</tr>
-			<tr>
-			  <td colspan="2">地址：大连市友好路；介绍：高性价比宏碁台式电脑，京东商城网罗笔记本，台式机，移动硬盘等...</td>
-			</tr>
-			<tr>
-			  <td>电话：4564714656，4564714656 </td>
-			  <td width="75"><a href="#" class="Aorange">&gt;&gt; 查看详情</a></td>
-			</tr>
-			<tr>
-			  <td height="5" colspan="4"></td>
-			</tr>
-			<tr>
-			  <td height="25" background="${ctx}/images/line_01a.jpg" colspan="4" align="right"><img src="${ctx}/images/line_01b.jpg" /></td>
-			</tr>
-		  </table>
+		  <c:choose>
+			<c:when test="${empty supplierList}">
+				<c:if test="${type == 'supplierList' }">
+				<table border="0" cellspacing="0" cellpadding="0" width="620" align="center" class="supplierInfo">
+					<tr>
+						<td colspan="2">暂无数据!</td>
+					</tr>
+				</table>
+				</c:if>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="supplier" items="${supplierList}">
+				  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+					<tr>
+					  <td rowspan="3" width="70"><img src="${ctx}/supplier/getImage?id=${supplier.supplierId}" width="70" height="55" class="img_border" /></td>
+					  <td rowspan="3" width="15"></td>
+					  <td colspan="2"><a href="${ctx }/supplier/${supplier.supplierId}" target="_black"><strong><c:out value="${supplier.supplierName}"/></strong></a></td>
+					</tr>
+					<tr>
+					  <td colspan="2">地址：<c:out value="${supplier.supplierAddress}"/></td>
+					</tr>
+					<tr>
+					  <td>电话：<c:out value="${supplier.supplierTelephone}"/> </td>
+					  <td width="75"><a href="${ctx }/supplier/${supplier.supplierId}" class="Aorange" target="_black">&gt;&gt; 查看详情</a></td>
+					</tr>
+					<tr>
+					  <td height="5" colspan="4"></td>
+					</tr>
+					<tr>
+					  <td height="25" background="${ctx}/images/line_01a.jpg" colspan="4" align="right"><img src="${ctx}/images/line_01b.jpg" /></td>
+					</tr>
+				  </table>
+		  		</c:forEach>
+		  	</c:otherwise>
+		  </c:choose>
 		  <!-- seller introduction end -->
-		  
-		  <!-- seller introduction -->
-		  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-            <tr>
-              <td rowspan="3" width="70"><img src="${ctx}/images/ad_pic/ad002.jpg" width="70" height="55" class="img_border" /></td>
-              <td rowspan="3" width="15"></td>
-              <td colspan="2"><a href="#"><strong>大连鹏程电脑专卖</strong></a></td>
-            </tr>
-            <tr>
-              <td colspan="2">地址：大连市友好路；介绍：高性价比宏碁台式电脑，京东商城网罗笔记本，台式机，移动硬盘等...</td>
-            </tr>
-            <tr>
-              <td>电话：4564714656，4564714656 </td>
-              <td width="75"><a href="#" class="Aorange">&gt;&gt; 查看详情</a></td>
-            </tr>
-            <tr>
-              <td height="5" colspan="4"></td>
-            </tr>
-            <tr>
-              <td height="25" background="${ctx}/images/line_01a.jpg" colspan="4" align="right"><img src="${ctx}/images/line_01b.jpg" /></td>
-            </tr>
-          </table>
-		  <!-- seller introduction end -->
-
-		  <!-- seller introduction -->
-		  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-            <tr>
-              <td rowspan="3" width="70"><img src="${ctx}/images/ad_pic/ad002.jpg" width="70" height="55" class="img_border" /></td>
-              <td rowspan="3" width="15"></td>
-              <td colspan="2"><a href="#"><strong>大连鹏程电脑专卖</strong></a></td>
-            </tr>
-            <tr>
-              <td colspan="2">地址：大连市友好路；介绍：高性价比宏碁台式电脑，京东商城网罗笔记本，台式机，移动硬盘等...</td>
-            </tr>
-            <tr>
-              <td>电话：4564714656，4564714656 </td>
-              <td width="75"><a href="#" class="Aorange">&gt;&gt; 查看详情</a></td>
-            </tr>
-            <tr>
-              <td height="5" colspan="4"></td>
-            </tr>
-            <tr>
-              <td height="25" background="${ctx}/images/line_01a.jpg" colspan="4" align="right"><img src="${ctx}/images/line_01b.jpg" /></td>
-            </tr>
-          </table>
-		  <!-- seller introduction end -->		</td>
+		  </td>
 		<td width="10" background="${ctx}/images/bg_pic00g.gif"></td>
 	  </tr>
 	  <tr>
