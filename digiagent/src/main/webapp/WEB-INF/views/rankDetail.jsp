@@ -17,179 +17,101 @@
 	</tr>
 </table>
 
+<!-- left menu -->
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="10">&nbsp;</td>
+	<td width="15"></td>
+    <td width="170"><table width="170" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+        <tr>
+          <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic00f.gif"><img src="${ctx}/images/bg_pic00a.gif" /></td>
+          <td rowspan="2" width="45" style="border-top:1px solid #cccccc"><img src="${ctx}/images/icon_left01.gif" /></td>
+          <td class="text_left_en" style="border-top:1px solid #cccccc">Commerce Net Guide</td>
+          <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic00g.gif"><img src="${ctx}/images/bg_pic00b.gif" /></td>
+        </tr>
+        <tr>
+          <td class="text_left_on"><a href="${ctx}" class="Aleft">商讯导购 <img src="${ctx}/images/btn_more.gif" /></a></td>
+        </tr>
+      </table></td>
+    <td width="15"></td>
+    <td width="170"><table width="170" border="0" cellspacing="0" cellpadding="0" bgcolor="#f8f8f8">
+      <tr>
+        <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02f.gif"><img src="${ctx}/images/bg_pic02a.gif" /></td>
+        <td rowspan="2" width="45" style="border-top:1px solid #e2e2e2"><img src="${ctx}/images/icon_left02.gif" /></td>
+        <td class="text_left_en" style="border-top:1px solid #e2e2e2">Goods Promotion</td>
+        <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02g.gif"><img src="${ctx}/images/bg_pic02b.gif" /></td>
+      </tr>
+      <tr>
+        <td class="text_left_on"><a href="${ctx}/promotion" class="Aleft">商品促销 <img src="${ctx}/images/btn_more.gif" /></a></td>
+      </tr>
+    </table>    </td>
+    <td width="15"></td>
+    <td width="170"><table width="170" border="0" cellspacing="0" cellpadding="0" bgcolor="#f8f8f8">
+      <tr>
+        <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02f.gif"><img src="${ctx}/images/bg_pic02a.gif" /></td>
+        <td rowspan="2" width="45" style="border-top:1px solid #e2e2e2"><img src="${ctx}/images/icon_left03.gif" /></td>
+        <td class="text_left_en" style="border-top:1px solid #e2e2e2">Second-hand</td>
+        <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02g.gif"><img src="${ctx}/images/bg_pic02b.gif" /></td>
+      </tr>
+      <tr>
+        <td class="text_left_on"><a href="${ctx}/secondHand" class="Aleft">二手信息 <img src="${ctx}/images/btn_more.gif" /></a></td>
+      </tr>
+    </table>      </td>
+    <td width="15"></td>
+    <td width="170"><table width="170" border="0" cellspacing="0" cellpadding="0" bgcolor="#f8f8f8">
+      <tr>
+        <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02f.gif"><img src="${ctx}/images/bg_pic02a.gif" /></td>
+        <td rowspan="2" width="45" style="border-top:1px solid #e2e2e2"><img src="${ctx}/images/icon_left04.gif" /></td>
+        <td class="text_left_en" style="border-top:1px solid #e2e2e2">Seller Ranking</td>
+        <td width="10" rowspan="2" valign="top" background="${ctx}/images/bg_pic02g.gif"><img src="${ctx}/images/bg_pic02b.gif" /></td>
+      </tr>
+      <tr>
+        <td bgcolor="#ffffff" class="text_left_on">商家排行 </td>
+      </tr>
+    </table>    </td>
+	<td width="15"></td>
+    <td>
+    <form name="searchForm" action="${ctx}/freeSearch" method="post" target="_blank">
+    <table border="0" cellspacing="0" cellpadding="0" align="right">
+      <tr>
+        <td width="50"><img src="${ctx}/images/icon_seach.gif" /></td>
+        <td><label>
+          <input type="text" name="searchkw" class="seach_input" value="${searchkw}"/>
+          <input type="hidden" name="productId" id="productId"/>
+          <input type="hidden" name="brandId" id="brandId"/>
+        </label></td>
+        <td width="15"></td>
+        <td><img src="${ctx}/images/btn_seachgo.gif" width="41" height="41" onclick="javascript:document.searchForm.submit()" style="cursor:pointer"/></td>
+      </tr>
+    </table>
+    </form>
+    </td>
+    <td width="10">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="10" width="10"><img src="${ctx}/images/bg_pic00a.gif" /></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td bgcolor="#FFFFFF"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td background="${ctx}/images/bg_pic00e.gif"></td>
+    <td><img src="${ctx}/images/bg_pic00b.gif" /></td>
+  </tr>
+</table>
+<!-- left menu end -->
+
 <!-- center -->
-<table border="0" cellspacing="0" cellpadding="0" width="950"
-	align="center">
-	<tr valign="top">
-		<td width="190"><!-- left menu -->
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tr valign="top">
-				<td><!-- left menu on -->
-				<table border="0" cellspacing="0" cellpadding="0" width="190">
-					<tr>
-						<td height="10" width="10"><img src="${ctx}/images/bg_pic02a.gif" /></td>
-						<td background="${ctx}/images/bg_pic02e.gif" colspan="2"></td>
-						<td width="10"><img src="${ctx}/images/bg_pic02b.gif" /></td>
-						<td width="20"></td>
-					</tr>
-					<tr>
-						<td background="${ctx}/images/bg_pic02f.gif" rowspan="2"></td>
-						<td bgcolor="#f8f8f8" rowspan="2" width="45"><img
-							src="${ctx}/images/icon_left01.gif" /></td>
-
-						<td bgcolor="#f8f8f8" class="text_left_en">Commerce Net Guide</td>
-						<td background="${ctx}/images/bg_pic02g.gif" rowspan="2"></td>
-						<td rowspan="2"></td>
-					</tr>
-					<tr>
-						<td bgcolor="#f8f8f8" class="text_left"><a href="${ctx}"
-							class="Aleft">商讯导购 <img src="${ctx}/images/btn_more.gif" /></a></td>
-					</tr>
-					<tr>
-
-						<td height="10"><img src="${ctx}/images/bg_pic02c.gif" /></td>
-						<td background="${ctx}/images/bg_pic02h.gif" colspan="2"></td>
-						<td><img src="${ctx}/images/bg_pic02d.gif" /></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td height="10"></td>
-						<td colspan="2"></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
-				<!-- left menu on end --></td>
-			</tr>
-			<tr>
-				<td><!-- left menu off -->
-				<table border="0" cellspacing="0" cellpadding="0" width="190">
-					<tr>
-						<td height="10" width="10"><img src="${ctx}/images/bg_pic02a.gif" /></td>
-						<td background="${ctx}/images/bg_pic02e.gif" colspan="2"></td>
-						<td width="10"><img src="${ctx}/images/bg_pic02b.gif" /></td>
-						<td width="20"></td>
-					</tr>
-					<tr>
-						<td background="${ctx}/images/bg_pic02f.gif" rowspan="2"></td>
-						<td bgcolor="#f8f8f8" rowspan="2" width="45"><img
-							src="${ctx}/images/icon_left02.gif" /></td>
-						<td bgcolor="#f8f8f8" class="text_left_en">Goods Promotion</td>
-						<td background="${ctx}/images/bg_pic02g.gif" rowspan="2"></td>
-						<td rowspan="2"></td>
-					</tr>
-					<tr>
-						<td bgcolor="#f8f8f8" class="text_left"><a
-							href="${ctx }/promotion" class="Aleft">商品促销 <img
-							src="${ctx}/images/btn_more.gif" /></a></td>
-					</tr>
-					<tr>
-						<td height="10"><img src="${ctx}/images/bg_pic02c.gif" /></td>
-						<td background="${ctx}/images/bg_pic02h.gif" colspan="2"></td>
-						<td><img src="${ctx}/images/bg_pic02d.gif" /></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td height="10"></td>
-						<td colspan="2"></td>
-						<td></td>
-						<td><img src="${ctx}/images/bg_pic01g.gif"></td>
-					</tr>
-				</table>
-				<!-- left menu off end --></td>
-			</tr>
-			<tr>
-				<td><!-- left menu off -->
-				<table border="0" cellspacing="0" cellpadding="0" width="190">
-					<tr>
-						<td height="10" width="10"><img src="${ctx}/images/bg_pic02a.gif" /></td>
-						<td background="${ctx}/images/bg_pic02e.gif" colspan="2"></td>
-						<td width="10"><img src="${ctx}/images/bg_pic02b.gif" /></td>
-						<td width="20"></td>
-					</tr>
-					<tr>
-						<td background="${ctx}/images/bg_pic02f.gif" rowspan="2"></td>
-						<td bgcolor="#f8f8f8" rowspan="2" width="45"><img
-							src="${ctx}/images/icon_left03.gif" /></td>
-						<td bgcolor="#f8f8f8" class="text_left_en">Second-hand</td>
-						<td background="${ctx}/images/bg_pic02g.gif" rowspan="2"></td>
-						<td rowspan="2"></td>
-					</tr>
-					<tr>
-						<td bgcolor="#f8f8f8" class="text_left"><a
-							href="${ctx}/secondHand" class="Aleft">二手信息<img
-							src="${ctx}/images/btn_more.gif" /></a></td>
-					</tr>
-					<tr>
-						<td height="10"><img src="${ctx}/images/bg_pic02c.gif" /></td>
-						<td background="${ctx}/images/bg_pic02h.gif" colspan="2"></td>
-						<td><img src="${ctx}/images/bg_pic02d.gif" /></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td height="10"></td>
-						<td colspan="2"></td>
-						<td></td>
-						<td><img src="${ctx}/images/bg_pic01g.gif" /></td>
-					</tr>
-				</table>
-				<!-- left menu off end --></td>
-			</tr>
-			<tr>
-				<td><!-- left menu off -->
-				<table border="0" cellspacing="0" cellpadding="0" width="190">
-					<tr>
-						<td height="10" width="10"><img src="${ctx}/images/bg_pic00a.gif" /></td>
-						<td background="${ctx}/images/bg_pic00e.gif" colspan="2"></td>
-						<td background="${ctx}/images/bg_pic00e.gif" width="10"></td>
-						<td width="20"><img src="${ctx}/images/bg_pic01f.gif" /></td>
-					</tr>
-					<tr>
-
-						<td background="${ctx}/images/bg_pic00f.gif" rowspan="2"></td>
-						<td bgcolor="#ffffff" rowspan="2" width="45"><img
-							src="${ctx}/images/icon_left04.gif" /></td>
-						<td bgcolor="#ffffff" class="text_left_en">Seller Ranking</td>
-						<td bgcolor="#ffffff" rowspan="2"></td>
-						<td bgcolor="#ffffff" rowspan="2"></td>
-					</tr>
-					<tr>
-						<td bgcolor="#ffffff" class="text_left_on">商家排行</td>
-
-					</tr>
-					<tr>
-						<td height="10"><img src="${ctx}/images/bg_pic00c.gif" /></td>
-						<td background="${ctx}/images/bg_pic00h.gif" colspan="2"></td>
-						<td background="${ctx}/images/bg_pic00h.gif"></td>
-						<td><img src="${ctx}/images/bg_pic01d.gif" /></td>
-					</tr>
-					<tr>
-						<td height="10"></td>
-
-						<td colspan="2"></td>
-						<td></td>
-						<td><img src="${ctx}/images/bg_pic01e.gif" /></td>
-					</tr>
-				</table>
-
-				<!-- left menu off end --></td>
-			</tr>
-		</table>
-		<!-- left menu end --></td>
-
-		<td>
-		<table border="0" cellspacing="0" cellpadding="0" width="100%">
-			<tr>
-				<td height="10" width="10"><img src="${ctx}/images/bg_pic00a.gif" /></td>
-				<td background="${ctx}/images/bg_pic00e.gif"></td>
-				<td width="10"><img src="${ctx}/images/bg_pic00b.gif" /></td>
-			</tr>
-			<tr>
-
-				<td valign="top" background="${ctx}/images/bg_pic00f.gif"
-					style="padding-top: 194px"><img
-					src="${ctx}/images/color_white.gif" width="10" height="72" /></td>
-				<td bgcolor="#ffffff" valign="top">
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr valign="top">
+	<td><table border="0" cellspacing="0" cellpadding="0" width="100%">
+	  <tr>
+		<td width="10" background="${ctx}/images/bg_pic00f.gif"></td>
+		<td valign="top" bgcolor="#ffffff"><br />
 				<table border="0" align="center" cellpadding="0" cellspacing="0">
 					<tr valign="top">
 						<td width="220"><!-- 日访问量 Top10 -->
@@ -365,18 +287,18 @@
 					</tr>
 
 				</table>
-				<!-- 广告 end --></td>
-				<td background="${ctx}/images/bg_pic00g.gif"></td>
-			</tr>
-			<tr>
-				<td height="10"><img src="${ctx}/images/bg_pic00c.gif" /></td>
-				<td background="${ctx}/images/bg_pic00h.gif"></td>
-				<td><img src="${ctx}/images/bg_pic00d.gif" /></td>
-
-			</tr>
-		</table>
-		</td>
-	</tr>
+				<!-- 广告 end -->
+				 <!-- seller introduction end -->
+		  </td>
+		<td width="10" background="${ctx}/images/bg_pic00g.gif"></td>
+	  </tr>
+	  <tr>
+		<td height="10"><img src="${ctx}/images/bg_pic00c.gif" /></td>
+		<td background="${ctx}/images/bg_pic00h.gif"></td>
+		<td><img src="${ctx}/images/bg_pic00d.gif" /></td>
+	  </tr>
+    </table></td>
+  </tr>
 </table>
 <!-- center end -->
 
