@@ -58,9 +58,9 @@
 	<!-- 广告 -->
 	<table width="100%" height="160" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr align="center">
-        <td valign="top"><img src="ad_pic/ad003.jpg" width="210" height="140" /></td>
-        <td valign="top"><img src="ad_pic/ad004.jpg" width="210" height="140" /></td>
-        <td valign="top"><img src="ad_pic/ad005.jpg" width="210" height="140" /></td>
+        <td valign="top"><img src="${ctx }/images/ad_pic/ad003.jpg" width="210" height="140" /></td>
+        <td valign="top"><img src="${ctx }/images/ad_pic/ad004.jpg" width="210" height="140" /></td>
+        <td valign="top"><img src="${ctx }/images/ad_pic/ad005.jpg" width="210" height="140" /></td>
       </tr>
     </table>
     <!-- 广告 end -->

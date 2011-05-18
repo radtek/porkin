@@ -218,7 +218,7 @@ public class GeneralController {
 				model.addAttribute(key, value);
 			}
 		}
-		return "welcome";
+		return "redirect:/welcome";
 	}
 
 	/**

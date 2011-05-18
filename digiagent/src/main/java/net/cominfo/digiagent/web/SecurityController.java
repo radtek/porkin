@@ -8,17 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
-import net.cominfo.digiagent.captcha.render.Producer;
-import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
-import net.cominfo.digiagent.persistence.domain.User;
-import net.cominfo.digiagent.service.CompanyService;
-import net.cominfo.digiagent.service.UserRoleService;
-import net.cominfo.digiagent.spring.FlashMap.Message;
-import net.cominfo.digiagent.spring.FlashMap.MessageType;
-import net.cominfo.digiagent.spring.security.SecurityService;
-import net.cominfo.digiagent.utils.mail.SimpleMailSender;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +20,20 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.cominfo.digiagent.captcha.impl.FactoryRandomImpl;
+import net.cominfo.digiagent.captcha.render.Producer;
+import net.cominfo.digiagent.persistence.domain.SupplierWithBLOBs;
+import net.cominfo.digiagent.persistence.domain.User;
+import net.cominfo.digiagent.service.CompanyService;
+import net.cominfo.digiagent.service.UserRoleService;
+import net.cominfo.digiagent.spring.FlashMap.Message;
+import net.cominfo.digiagent.spring.FlashMap.MessageType;
+import net.cominfo.digiagent.spring.security.SecurityService;
+import net.cominfo.digiagent.utils.mail.SimpleMailSender;
+
 @Controller
 @RequestMapping(value = "/")
-@SessionAttributes( { "userId", "userName", "supplierId" })
+@SessionAttributes({ "userId", "userName", "supplierId" })
 public class SecurityController {
 
 	@Autowired
@@ -44,14 +44,13 @@ public class SecurityController {
 
 	@Autowired
 	private UserRoleService userRoleService;
-	
+
 	@Autowired
 	private SimpleMailSender simpleMailSender;
-	
-	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody String login(Model model, @RequestParam String username,
+	public @ResponseBody
+	String login(Model model, @RequestParam String username,
 			@RequestParam String password, HttpServletResponse response) {
 		User user = securityService.login(username, password);
 
@@ -61,14 +60,13 @@ public class SecurityController {
 			model.addAttribute("userName", user.getUserName());
 			model.addAttribute("supplierId", new Integer(0));
 			message = "success";
-		}
-		else{
+		} else {
 			message = "fail";
 		}
 		return message;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/autologin", method = RequestMethod.POST)
 	public String autoLogin(Model model, @RequestParam String username,
 			@RequestParam String password, HttpServletResponse response) {
@@ -78,11 +76,9 @@ public class SecurityController {
 			model.addAttribute("userName", user.getUserName());
 			model.addAttribute("supplierId", new Integer(0));
 		}
-		return "welcome";
-		
+		return "redirect:/welcome";
+
 	}
-	
-	
 
 	@RequestMapping(value = "/member", method = RequestMethod.GET)
 	public String member(@ModelAttribute("userId") Integer userId,
@@ -116,49 +112,46 @@ public class SecurityController {
 
 		return result;
 	}
-	
-	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
-	public @ResponseBody String adminLogout(SessionStatus status) {
-		status.setComplete();
-		return "welcome";
-	}
 
+	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
+	public @ResponseBody
+	String adminLogout(SessionStatus status) {
+		status.setComplete();
+		return "redirect:/welcome";
+	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(SessionStatus status) {
 		status.setComplete();
-		return "welcome";
+		return "redirect:/welcome";
 	}
-
 
 	@RequestMapping(value = "/passwordForm", method = RequestMethod.GET)
 	public String passwordForm(HttpServletResponse response) {
 		return "password";
 	}
-	
+
 	@RequestMapping(value = "/password", method = RequestMethod.GET)
 	public String assword(Model model, @RequestParam String username,
-			@RequestParam String captcha,HttpSession session) {
-		
+			@RequestParam String captcha, HttpSession session) {
+
 		String forward = "password";
 		User user = securityService.getUserByName(username);
-		if(user!=null){
+		if (user != null) {
 			String original = (String) session.getAttribute("icaptcha");
 			if (!captcha.equalsIgnoreCase(original)) {
 				model.addAttribute("captcha", new Message(MessageType.success,
 						"password.captcha.error"));
-			}
-			else{
+			} else {
 				// Send mail
 				String to = user.getUserEmail();
 				String password = user.getUserPassword();
 				simpleMailSender.sendMail(username, password, to);
 				forward = "password_success";
 			}
-		}
-		else{
+		} else {
 			model.addAttribute("username", new Message(MessageType.success,
-			"password.userName.notExist"));
+					"password.userName.notExist"));
 		}
 		return forward;
 	}
