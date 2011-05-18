@@ -346,11 +346,14 @@ public class GeneralController {
 
 	@RequestMapping(value = "/promotion", method = RequestMethod.GET)
 	public String sales(Model model) {
+		model.addAttribute("promotionList", sortableService.getPromotionPage());
 		return "promotion";
 	}
 
 	@RequestMapping(value = "/secondHand", method = RequestMethod.GET)
 	public String secondHand(Model model) {
+		model.addAttribute("secondHandList",
+				sortableService.getSecondHandPage());
 		return "secondHand";
 	}
 

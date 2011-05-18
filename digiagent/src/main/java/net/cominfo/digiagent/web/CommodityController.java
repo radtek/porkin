@@ -11,15 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.cominfo.digiagent.exception.ResourceNotFoundException;
-import net.cominfo.digiagent.persistence.domain.Commodity;
-import net.cominfo.digiagent.persistence.domain.CommodityImage;
-import net.cominfo.digiagent.service.CommodityImageService;
-import net.cominfo.digiagent.service.CommodityService;
-import net.cominfo.digiagent.service.UserRoleService;
-import net.cominfo.digiagent.spring.FlashMap.Message;
-import net.cominfo.digiagent.spring.FlashMap.MessageType;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +24,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.cominfo.digiagent.exception.ResourceNotFoundException;
+import net.cominfo.digiagent.persistence.domain.Commodity;
+import net.cominfo.digiagent.persistence.domain.CommodityImage;
+import net.cominfo.digiagent.service.CommodityImageService;
+import net.cominfo.digiagent.service.CommodityService;
+import net.cominfo.digiagent.service.UserRoleService;
+import net.cominfo.digiagent.spring.FlashMap.Message;
+import net.cominfo.digiagent.spring.FlashMap.MessageType;
+
 @Controller
 @RequestMapping(value = "/commodity")
-@SessionAttributes( { "userId", "userName", "userName" })
+@SessionAttributes({ "userId", "userName", "userName" })
 public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
@@ -43,19 +43,19 @@ public class CommodityController {
 	private CommodityImageService commodityImageService;
 	@Autowired
 	private UserRoleService userRoleService;
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/queryCommodityList", method = RequestMethod.GET)
 	public void queryCommodityList(@RequestParam Map param,
-			@RequestParam Integer productId, HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam Integer productId, HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
 			if (productId != null && productId > 0) {
 				param.put("productId", productId);
 			}
 			String kw = request.getParameter("kw");
 			if (kw != null && kw.length() > 0) {
-				param.put("kw", java.net.URLDecoder.decode(
-						kw, "UTF-8"));
+				param.put("kw", java.net.URLDecoder.decode(kw, "UTF-8"));
 			}
 			Long total = commodityService.count(param);
 			PrintWriter pw = response.getWriter();
@@ -146,8 +146,8 @@ public class CommodityController {
 		Commodity commodityUpdate = commodityService.getById(commodity
 				.getCommodityId());
 		if (commodity == null) {
-			new ResourceNotFoundException(new Long(commodityUpdate
-					.getCommodityId()));
+			new ResourceNotFoundException(new Long(
+					commodityUpdate.getCommodityId()));
 		}
 		commodityUpdate.setProductId(commodity.getProductId());
 		commodityUpdate.setActiveFlag(commodity.getActiveFlag());
@@ -177,10 +177,9 @@ public class CommodityController {
 
 	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
 	public String output(@RequestParam Integer id,
-			HttpServletResponse response, HttpServletRequest request,Model model) {
-		model
-				.addAttribute("image", commodityImageService
-						.getCommodityImage(id));
+			HttpServletResponse response, HttpServletRequest request,
+			Model model) {
+		model.addAttribute("image", commodityImageService.getCommodityImage(id));
 		return "image";
 	}
 
@@ -195,24 +194,24 @@ public class CommodityController {
 			return commodityService.delete(id);
 		}
 	}
-	
+
 	@RequestMapping(value = "/releaseCommodity", method = RequestMethod.POST)
-	public 
-	String release(@ModelAttribute("userName") String userName,
+	public String release(@ModelAttribute("userName") String userName,
 			@ModelAttribute("userId") Integer userId,
 			@ModelAttribute Commodity commodity,
 			@RequestParam("file1") MultipartFile image1,
 			@RequestParam("file2") MultipartFile image2,
 			@RequestParam("file3") MultipartFile image3,
 			@RequestParam("file4") MultipartFile image4,
-			@RequestParam("file5") MultipartFile image5,Model model) throws IOException {
-		return release(userName, userId, commodity, image1, image2, image3, image4, image5, null, null, model);
+			@RequestParam("file5") MultipartFile image5, Model model)
+			throws IOException {
+		return release(userName, userId, commodity, image1, image2, image3,
+				image4, image5, null, null, model);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
-	public 
-	String release(@ModelAttribute("userName") String userName,
+	public String release(@ModelAttribute("userName") String userName,
 			@ModelAttribute("userId") Integer userId,
 			@ModelAttribute Commodity commodity,
 			@RequestParam("file1") MultipartFile image1,
@@ -221,7 +220,8 @@ public class CommodityController {
 			@RequestParam("file4") MultipartFile image4,
 			@RequestParam("file5") MultipartFile image5,
 			@RequestParam("categoryName") String categoryName,
-			@RequestParam("productName") String productName,Model model) throws IOException {
+			@RequestParam("productName") String productName, Model model)
+			throws IOException {
 		List<MultipartFile> imageList = new ArrayList<MultipartFile>();
 		List<CommodityImage> commodityImageList = new ArrayList<CommodityImage>();
 		imageList.add(image1);
@@ -243,40 +243,42 @@ public class CommodityController {
 					commodityImage.setCommodityimageContent(image.getBytes());
 					commodityImageList.add(commodityImage);
 				}
+				model.addAttribute("message", new Message(MessageType.success,
+						"commodityRelease.picture.overSize"));
 			}
-			if (map.size() > 0) {
-				return JSONObject.toJSONString(map);
-			} else {
+			if (map.size() == 0) {
 				// 新加类别与产品
-				if (commodity.getProductId() == null || categoryName != null || productName != null) {
-					int productId = commodityService.generateNewProductId(categoryName, productName, userName);
+				if (commodity.getProductId() == null || categoryName != null
+						|| productName != null) {
+					int productId = commodityService.generateNewProductId(
+							categoryName, productName, userName);
 					commodity.setProductId(productId);
 				}
-				commodity = commodityService.release(commodity, commodityImageList,
-						userName, userId);
+				commodity = commodityService.release(commodity,
+						commodityImageList, userName, userId);
 				map.put("commodityId", commodity.getCommodityId());
+				model.addAttribute("message", new Message(MessageType.success,
+						"commodityRelease.success"));
 			}
-			model.addAttribute("message", new Message(MessageType.success,
-			"commodityRelease.success"));
 		} catch (Exception e) {
 			model.addAttribute("message", new Message(MessageType.success,
-			"commodityRelease.error"));
+					"commodityRelease.error"));
 		}
-//		return JSONObject.toJSONString(map);
-		
+		// return JSONObject.toJSONString(map);
+
 		List<String> roleIdList = userRoleService
-		.getRoleIdListByUserName(userName);
+				.getRoleIdListByUserName(userName);
 		String roleId = null;
-		
+
 		String result = "";
 		if (roleIdList != null && roleIdList.size() > 0) {
 			roleId = roleIdList.get(0);
 			if (roleId.equals("4")) {
 				result = "company";
-	
+
 			} else if (roleId.equals("5")) {
 				result = "person";
-			} 
+			}
 		}
 		if ("P".equals(commodity.getCommodityType()) || "person".equals(result)) {
 			return result + "/infoRelease";
