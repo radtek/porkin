@@ -56,7 +56,7 @@ function setHomepage()
          	}
     	}
     	var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components. interfaces.nsIPrefBranch);
-   	 	prefs.setCharPref('browser.startup.homepage','http://www.carzymusic.com');
+   	 	prefs.setCharPref('browser.startup.homepage','http://www.dalianit.com.cn/');
  	}
 }
 
