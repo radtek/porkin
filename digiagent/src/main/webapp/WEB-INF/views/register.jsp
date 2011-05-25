@@ -25,7 +25,7 @@ function showAgreement(){
 }
 
 function agreementConfirm(value){
-	if ($("input:checked").length == 0) {
+	if ($("input[name='type']:checked").length == 0) {
 		alert("请选择用户类型！");
 		return;
 	}

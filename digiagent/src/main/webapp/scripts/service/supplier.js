@@ -105,41 +105,6 @@ function validate(formData, jqForm, options) {
 		form.supplierName.focus();
 		return false;
 	}
-	if (form.supplierContactname.value.length == 0) {
-		$.messager.alert('消息','请输入联系人！','info');
-		form.supplierContactname.focus();
-		return false;
-	}
-	if (form.supplierZip.value.length == 0) {
-		$.messager.alert('消息','请输入邮编！','info');
-		form.supplierZip.focus();
-		return false;
-	}
-	if (form.supplierFax.value.length == 0) {
-		$.messager.alert('消息','请输入传真！','info');
-		form.supplierFax.focus();
-		return false;
-	}
-	if (form.supplierMobile.value.length == 0) {
-		$.messager.alert('消息','请输入手机！','info');
-		form.supplierMobile.focus();
-		return false;
-	}
-	if (form.supplierTelephone.value.length == 0) {
-		$.messager.alert('消息','请输入联系电话！','info');
-		form.supplierTelephone.focus();
-		return false;
-	}
-	if (form.supplierAddress.value.length == 0) {
-		$.messager.alert('消息','请输入联系地址！','info');
-		form.supplierAddress.focus();
-		return false;
-	}
-	if (form.supplierDescription.value.length == 0) {
-		$.messager.alert('消息','请输入简介！','info');
-		form.supplierDescription.focus();
-		return false;
-	}
 	if (form.supplierDescription.value.length > 1000) {
 		$.messager.alert('消息','简介不能超过1000个字符！','info');
 		form.supplierDescription.focus();
