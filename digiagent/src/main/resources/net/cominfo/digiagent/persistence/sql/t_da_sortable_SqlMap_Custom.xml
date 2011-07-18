@@ -43,7 +43,11 @@
 		LEFT JOIN t_da_category on (t.category_id = t_da_category.CATEGORY_ID)
 		left join t_da_product on (t.product_id = t_da_product.PRODUCT_ID)
 		left JOIN t_da_brand on (t.brand_id = t_da_brand.BRAND_ID)
-		<dynamic prepend=" where t_da_product.DISPLAY_TYPE in ">
+		where 
+			T_DA_CATEGORY.CATEGORY_NAME IS NOT NULL
+			AND T_DA_PRODUCT.PRODUCT_NAME IS NOT NULL
+			AND T_DA_BRAND.BRAND_NAME IS NOT NULL
+		<dynamic prepend=" AND t_da_product.DISPLAY_TYPE in ">
 			<iterate open="(" close=")" conjunction=","> #[]# </iterate>
 		</dynamic>
 	</select>
