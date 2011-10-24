@@ -40,7 +40,7 @@ function setHomepage()
  if (document.all)
     {
         document.body.style.behavior='url(#default#homepage)';
-        document.body.setHomePage('http://www.crazymusic.com');
+        document.body.setHomePage('http://www.dalianit.com.cn/');
     }
     else if (window.sidebar)
     {

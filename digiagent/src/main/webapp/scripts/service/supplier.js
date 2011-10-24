@@ -110,11 +110,11 @@ function validate(formData, jqForm, options) {
 		form.supplierDescription.focus();
 		return false;
 	}
-	if ($('#image').children().length == 0 && form.file.value.length == 0) {
-		$.messager.alert('消息','请选择图片！','info');
-		form.file.focus();
-		return false;
-	}
+	//if ($('#image').children().length == 0 && form.file.value.length == 0) {
+	//	$.messager.alert('消息','请选择图片！','info');
+	//	form.file.focus();
+	//	return false;
+	//}
 	var ext = form.file.value.split('.').pop().toLowerCase(); 
 	var allow = new Array('gif','png','jpg','jpeg'); 
 	if(form.file.value.length > 0 && jQuery.inArray(ext, allow) == -1) {
