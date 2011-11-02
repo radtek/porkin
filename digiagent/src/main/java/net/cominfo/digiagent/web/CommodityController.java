@@ -120,17 +120,19 @@ public class CommodityController {
 		Map map = new HashMap();
 		CommodityImage commodityImage = new CommodityImage();
 		// MYSQL BLOB类型最大65K
-		if (image.getSize() > 0 && image.getSize() / 1024 < 65) {
+		if (image.getSize() > 0 && image.getSize() / 1000 < 65) {
 			commodityImage.setCommodityimageContent(image.getBytes());
 		}
-		if (image.getSize() / 1024 >= 65) {
+		if (image.getSize() / 1000 >= 65) {
 			map.put("commodityId", -2);
 		} else {
 			commodity = commodityService.insert(commodity, userName, userId);
 			commodityImage.setCommodityId(commodity.getCommodityId());
-			commodityImageService.insert(commodityImage, userName);
+			if (commodityImage.getCommodityimageContent() != null) {
+				commodityImageService.insert(commodityImage, userName);
+				map.put("commodityImage", commodityImage.getCommodityimageId());
+			}
 			map.put("commodityId", commodity.getCommodityId());
-			map.put("commodityImage", commodityImage.getCommodityimageId());
 		}
 		return JSONObject.toJSONString(map);
 	}
@@ -160,13 +162,13 @@ public class CommodityController {
 		commodityUpdate.setCommodityDescription(commodity
 				.getCommodityDescription());
 		// MYSQL BLOB类型最大65K
-		if (image.getSize() > 0 && image.getSize() / 1024 < 65) {
+		if (image.getSize() > 0 && image.getSize() / 1000 < 65) {
 			commodityImage.setCommodityimageContent(image.getBytes());
 			commodityImage.setCommodityId(commodity.getCommodityId());
 			commodityImageService.update(commodityImage, userName);
 		}
 		commodityUpdate = commodityService.update(commodityUpdate, userName);
-		if (image.getSize() / 1024 >= 65) {
+		if (image.getSize() / 1000 >= 65) {
 			map.put("commodityId", -2);
 		} else {
 			map.put("commodityId", commodityUpdate.getCommodityId());
@@ -209,7 +211,7 @@ public class CommodityController {
 				image4, image5, null, null, model);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	@RequestMapping(value = "/release", method = RequestMethod.POST)
 	public String release(@ModelAttribute("userName") String userName,
 			@ModelAttribute("userId") Integer userId,
@@ -234,17 +236,18 @@ public class CommodityController {
 			for (MultipartFile image : imageList) {
 				if (image == null || image.getSize() == 0)
 					continue;
-				if (image.getSize() / 1024 >= 65) {
+				if (image.getSize() / 1000 >= 65) {
 					map.put("commodityId", -2);
+					model.addAttribute("message", new Message(MessageType.success,
+					"commodityRelease.picture.overSize"));
 				}
 				CommodityImage commodityImage = new CommodityImage();
 				// MYSQL BLOB类型最大65K
-				if (image.getSize() > 0 && image.getSize() / 1024 < 65) {
+				if (image.getSize() > 0 && image.getSize() / 1000 < 65) {
 					commodityImage.setCommodityimageContent(image.getBytes());
 					commodityImageList.add(commodityImage);
 				}
-				model.addAttribute("message", new Message(MessageType.success,
-						"commodityRelease.picture.overSize"));
+				
 			}
 			if (map.size() == 0) {
 				// 新加类别与产品

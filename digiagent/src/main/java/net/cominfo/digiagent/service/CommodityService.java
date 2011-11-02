@@ -76,7 +76,7 @@ public class CommodityService {
 		if (commodity.getCommodityId() != null) {
 			return commodity;
 		} else {
-			commodity.setCommodityId(sequenceDao.getCommentsNexId());
+			commodity.setCommodityId(sequenceDao.getCommodityNexId());
 			commodity.setUserId(userId);
 			commodity.setCreatedBy(userName);
 			commodity.setCreatedDate(new Date());

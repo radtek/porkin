@@ -5,8 +5,8 @@ import java.util.List;
 
 public enum DisplayType {
 
-	Navigation("1", "3", "5", "7"), Promotion("2", "3", "6", "7"), SecondHand(
-			"4", "5", "6", "7");
+	Navigation("1", "3", "5", "7"), Promotion("4", "5", "6", "7"), SecondHand(
+			"2", "3", "6", "7");
 
 	private List<String> value;
 

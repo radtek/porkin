@@ -136,7 +136,10 @@ function processJson(data) {
     		showType:'slide'
     	});
         $('#commodityId').val(data.commodityId);
-        var url = "../commodity/getImage?id=" +data.commodityImage + "&uuid=" + createUUID();
+        var url = "../images/common/nopic.jpg"
+        if (data.commodityImage != null) {
+        	url = "../commodity/getImage?id=" +data.commodityImage + "&uuid=" + createUUID();
+        }
         $('#image').attr('src', url);
 //    	$('#image').append('<image  onClick="onDeleteClickHandler(' + data.commodityId + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/>');
     	$('#commodityList').datagrid('reload');
@@ -163,7 +166,7 @@ function onEditClickHandler(id) {
 		$('#commodityEdit').css('display','block');
 		$('#commodityEdit').dialog({title:'修改', modal: true});
 		if (image==undefined) {
-			$('#image').empty();
+			$('#image').attr('src', '../images/common/nopic.jpg');
 			$('input[name="commodityimageId"]').val('');
 		} else {
 			$('input[name="commodityimageId"]').val(image.commodityimageId);
