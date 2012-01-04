@@ -12,6 +12,7 @@
 <link rel="shortcut icon" href="${ctx}/images/common/star.gif" />
 <link rel="stylesheet" type="text/css" href="${ctx}/styles/easyui.css">
 <link rel="stylesheet" type="text/css" href="${ctx}/styles/icon.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/styles/common.css">
 <script type="text/javascript" src="${ctx}/scripts/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery.form.js"></script>

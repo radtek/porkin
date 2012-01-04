@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+label{
+	display:inline-block;
+	white-space:nowrap;
+	font-size:12px;
+	margin:0;
+	padding:0 10 0 10;
+}
