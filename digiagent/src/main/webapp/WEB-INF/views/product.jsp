@@ -5,10 +5,13 @@
 	<script type="text/javascript" src="../scripts/service/product.js"></script>
 </head>
 <body>
+	<div><label for="name">类别:</label><select id="categoryId" name="categoryId"> </select>
+	<label for="name">产品名:</label><input id="productName" name="productName" />
+	<input type="button" value="查询" onclick="search()"/></div>
 	<table id="productList"></table>
 	<div id="productEdit" icon="icon-edit" style="width:400px;height:220px;display:none">
 		<div style="background:#fafafa;padding:10px;text-align:center">
-		<form id="productForm" action="../product/create" method="post"> 
+		<form id="productForm" action="../product/search" method="post"> 
 		  <div>
               	<label for="name">类别:</label>
               	<select id="categoryId" name="categoryId"> 

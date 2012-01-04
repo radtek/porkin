@@ -84,7 +84,7 @@ public class ProductService {
 		return (List<Product>) productDao.findPage(page,
 				"t_da_product_Custom.pageByCondition").getResult();
 	}
-
+	
 	public Long count(Map<String, Object> param) {
 		Page<Product> page = new Page<Product>();
 		page.setParam(param);

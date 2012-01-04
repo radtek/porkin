@@ -215,3 +215,123 @@ $(function(){
 		beforePageText:'页'
 	});
 });
+
+function search() {
+	var lastIndex;
+	var categoryIdVal = $('#categoryId').val() == null ? '' : $('#categoryId').val();
+	var productNameVal =$('#productName').val() == null ? '' : $('#productName').val();
+	$('#productList').datagrid({
+		title:'产品维护',
+		iconCls:'icon-edit',
+		width:850,
+		height:'auto',
+		singleSelect:true,
+		sortName: 'categoryName,productName',
+		sortOrder: 'asc,asc',
+		remoteSort: false,
+		idField:'productId',
+		method:'get',
+		url:'../product/search',
+		queryParams:{categoryId: categoryIdVal,productName:productNameVal},
+		pagination:true,
+		loadMsg:'数据加载中,请稍候...',
+		columns:[[
+			{field:'productId',title:'编号',width:80,align:'center'},
+			{field:'categoryName',title:'类别',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'productName',title:'产品名称',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'displayType',title:'显示方式',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				},
+				formatter:function(value,rec){
+					if (value == '1') {
+						return '导购';
+					}
+					if (value == '2') {
+						return '二手';
+					}
+					if (value == '3') {
+						return '导购+二手';
+					}
+					if (value == '4') {
+						return '促销';
+					}
+					if (value == '5') {
+						return '导购+促销';
+					}
+					if (value == '6') {
+						return '二手+:促销';
+					}
+					if (value == '7') {
+						return '导购+二手+促销';
+					}
+				}
+
+			},
+			
+			{field:'activeFlag',title:'状态',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				},
+				formatter:function(value,rec){
+					if (value == 'Y') {
+						return '开启';
+					} else {
+						return '禁用';
+					}
+				}
+			},
+			{field:'createdBy',title:'创建人',width:100,align:'center',sortable:true,
+				sorter:function(a,b,order){
+				return (a>b?1:-1)*(order=='asc'?1:-1);
+			}},
+			{field:'createdDate',title:'创建时间',width:130	,align:'center',sortable:true,
+					sorter:function(a,b,order){
+					return (a>b?1:-1)*(order=='asc'?1:-1);
+				}
+			},
+			{field:'opt',title:'操作',width:100,align:'center',
+				formatter:function(value,rec){
+					return '<span><image onClick="onEditClickHandler(' + rec['productId'] + ')" onmouseover="this.style.cursor=\'pointer\';" src="../images/datagrid/icon_list_edit.gif"/>&nbsp;&nbsp;<image onClick="onDeleteClickHandler(' + rec['productId'] + ')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span>';
+				}
+			}
+		]],
+		rownumbers:true,
+		toolbar:[{
+				id:'btnadd',
+				text:'新增',
+				iconCls:'icon-add',
+				handler:function(){
+					setCategorySelect('');
+					$('input[name="productId"]').val('');
+					$('select[name="categoryId"]').val('');
+					$('input[name="productName"]').val('');
+					$('select[name="displayType"]').val('');
+					$('select[name="activeFlag"]').val('Y');
+					$('#productEdit').css('display','block');
+					$('#productEdit').dialog({title:'新增', modal: true, icon:'icon-add'});
+					formSubmit('../product/create');
+				}
+		}],
+		onBeforeLoad:function(){
+			$(this).datagrid('rejectChanges');
+		},
+		onLoadSuccess:function() {
+			
+		}
+	});
+	
+	$('#productList').datagrid('getPager').pagination({
+		displayMsg:'显示 {from} 至 {to} 条  共 {total} 条记录',
+		afterPageText:'/{pages}',
+		beforePageText:'页'
+	});
+}

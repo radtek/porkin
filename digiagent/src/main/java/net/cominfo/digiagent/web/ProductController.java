@@ -48,7 +48,7 @@ public class ProductController {
 		map.put("rows", productList);
 		return Collections.singletonList(map).get(0);
 	}
-
+	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
 	Map<String, ? extends Object> update(

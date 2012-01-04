@@ -19,6 +19,9 @@
 		 <isNotEmpty prepend="AND" property="param.productName">
 			product_name like '%$param.productName$%'
          </isNotEmpty>
+          <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_product.category_id = '$param.categoryId$'
+         </isNotEmpty>
 		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
 		 	$orderByStatement$
 		 </isNotEmpty>
@@ -32,8 +35,11 @@
 		  LEFT JOIN t_da_category ON t_da_product.category_id = t_da_category.category_id
 		 WHERE product_id > 0
 		 <isNotEmpty prepend="AND" property="param.productName">
-			product_name = '%$param.productName$%'
-		</isNotEmpty>
+			product_name like '%$param.productName$%'
+         </isNotEmpty>
+          <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_product.category_id = '$param.categoryId$'
+         </isNotEmpty>
 	</select>
 
 	<select id="listByCondition" parameterClass="HashMap"
