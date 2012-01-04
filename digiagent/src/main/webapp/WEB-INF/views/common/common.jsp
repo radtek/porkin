@@ -16,6 +16,7 @@
 <script type="text/javascript" src="${ctx}/scripts/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/common/datetime.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/common/common.js"></script>
 <script>
 // 操作成功窗口提示停留时间(2秒)
 var optSuccessTime = 2000;

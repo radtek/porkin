@@ -8,8 +8,10 @@
 		maximizable:false
 	});
 	$('#productWin').window('close');
+	
+	$('select[name="provinceId"]').bind('change', setCitySelect);
+	setProvinceSelect('', -1);
 });
-
 
 //edit event
 function formSubmit() {
@@ -323,7 +325,14 @@ $(function(){
 		}
 	});
 	// edit
+	search();
+});
+
+function search() {
 	var lastIndex;
+	var provinceIdVal = $('#provinceId').val() == null ? '' : $('#provinceId').val();
+	var cityIdVal = $('#cityId').val() == null ? '' : $('#cityId').val();
+	var supplierNameVal = $('#supplierName').val();
 	$('#supplierProductList').datagrid({
 		title:'商家与产品关系维护',
 		iconCls:'icon-edit',
@@ -336,7 +345,7 @@ $(function(){
 		idField:'supplierId',
 		method:'get',
 		url:'../supplierProduct/search',
-		queryParams:{supplierName:''},
+		queryParams:{supplierName:supplierNameVal, provinceId: provinceIdVal, cityId: cityIdVal},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
@@ -384,4 +393,4 @@ $(function(){
 		afterPageText:'/{pages}',
 		beforePageText:'页'
 	});
-});
+}

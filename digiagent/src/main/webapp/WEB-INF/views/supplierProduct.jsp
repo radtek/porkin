@@ -5,6 +5,10 @@
 	<script type="text/javascript" src="../scripts/service/supplierProduct.js"></script>
 </head>
 <body>
+	<div><label for="name">省份:</label><select id="provinceId" name="provinceId"> </select>
+	<label for="name">城市:</label><select id="cityId" name="cityId"> </select>
+	<label for="name">商家:</label><input id="supplierName" name="supplierName" />
+	<input type="button" value="查询" onclick="search()"/></div>
 	<table id="supplierProductList"></table>
 	<div id="productPeriodWin" class="easyui-window" closed="true" modal="true" title="有效时间设置" style="width:300px;height:150px;padding:5px;background: #fafafa;">
 		<form id="productForm" action="../supplierProduct/updateSupplierProduct" method="post">

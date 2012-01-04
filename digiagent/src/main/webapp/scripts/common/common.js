@@ -17,3 +17,37 @@ function createUUID() {
     var uuid = s.join("");
     return uuid;
 }
+
+
+function setProvinceSelect(provinceId, cityId) {
+	$.ajax({
+		url:"../city/getProvinceList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="provinceId"]').empty().append(data).val(provinceId);
+			if (cityId > 0) {
+				setCitySelect(cityId);
+			}
+		},
+		error:function(err) {
+			alert(err);
+		}
+	});
+}
+
+function setCitySelect(cityId) {
+	$.ajax({
+		url:"../supplier/getCityList",
+	    data: "id=" + $('select[name="provinceId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="cityId"]').empty().append(data).val(cityId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
