@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div><label for="name">省份:</label><select id="provinceId" name="provinceId"> </select>
-	<label for="name">城市:</label><select id="cityId" name="cityId"><option>请选择...</option> </select>
+	<label for="name">城市:</label><select id="cityId" name="cityId"></select>
 	<label for="name">商家:</label><input id="supplierName" name="supplierName" />
 	<input type="button" value="查询" onclick="search()"/></div>
 	<table id="supplierProductList"></table>
