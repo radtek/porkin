@@ -1,18 +1,4 @@
-﻿function setCountrySelect(countryId) {
-	$.ajax({
-		url:"../brand/getCountryList",
-		dataType:"html",
-		type: "GET",
-		success: function(data) {
-			$('select[name="countryId"]').empty().append(data).val(countryId);
-		},
-		error:function(err) {
-			$.messager.alert('消息',err,'error');
-		}
-	});
-}
-
-// edit event
+﻿// edit event
 function formSubmit(actionUrl) {
 	// validate
 	$('#brandForm').ajaxForm({ 

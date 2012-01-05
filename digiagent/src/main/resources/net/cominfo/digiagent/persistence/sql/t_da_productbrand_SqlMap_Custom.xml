@@ -38,6 +38,18 @@
 				select t_da_supplierproduct.productbrand_id from t_da_supplierproduct where t_da_supplierproduct.supplier_id = '$param.supplierId$'
 			)
          </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.countryId">
+			t_da_brand.country_id = '$param.countryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.brandId">
+			t_da_brand.brand_id = '$param.brandId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_product.category_id = '$param.categoryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.productId">
+			t_da_product.product_id = '$param.productId$'
+         </isNotEmpty>
 		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
 		 	$orderByStatement$
 		 </isNotEmpty>
@@ -59,6 +71,18 @@
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.activeFlag">
 			t_da_productbrand.active_flag = '$param.activeFlag$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.countryId">
+			t_da_brand.country_id = '$param.countryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.brandId">
+			t_da_brand.brand_id = '$param.brandId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_product.category_id = '$param.categoryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.productId">
+			t_da_product.product_id = '$param.productId$'
          </isNotEmpty>
 	</select>
 

@@ -51,3 +51,160 @@ function setCitySelect(cityId) {
 	});
 }
 
+function setCountrySelect(countryId) {
+	$.ajax({
+		url:"../brand/getCountryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="countryId"]').empty().append(data).val(countryId);
+		},
+		error:function(err) {
+			$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setProductSelect(productId) {
+	$.ajax({
+		url:"../productBrand/getProductList",
+		data:"id=" + $('select[name="categoryId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="productId"]').empty().append(data).val(productId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setProductWinSelect(productId) {
+	$.ajax({
+		url:"../productBrand/getProductList",
+		data:"id=" + $('select[name="categoryIdWin"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="productIdWin"]').empty().append(data).val(productId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setCategorySelect(categoryId, productId) {
+	$.ajax({
+		url:"../product/getCategoryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="categoryId"]').empty().append(data).val(categoryId);
+			if (productId > 0) {
+				setProductSelect(productId);
+			}
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+
+function setCategoryWinSelect(categoryId, productId) {
+	$.ajax({
+		url:"../product/getCategoryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="categoryIdWin"]').empty().append(data).val(categoryId);
+			if (productId > 0) {
+				setProductSelect(productId);
+			}
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setCategoryByProductId(productId) {
+	$.get('../product/get', { id: productId } ,function(data) {
+		setCategorySelect(data.categoryId, productId);
+	});
+}
+
+function setBrandSelect(brandId) {
+	$.ajax({
+		url:"../productBrand/getBrandList",
+		data:"id=" + $('select[name="countryId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="brandId"]').empty().append(data).val(brandId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setBrandWinSelect(brandId) {
+	$.ajax({
+		url:"../productBrand/getBrandList",
+		data:"id=" + $('select[name="countryIdWin"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="brandIdWin"]').empty().append(data).val(brandId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setCountrySelect(countryId, brandId) {
+	$.ajax({
+		url:"../brand/getCountryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="countryId"]').empty().append(data).val(countryId);
+			if (brandId > 0) {
+				setBrandSelect(brandId);
+			}
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+
+function setCountryWinSelect(countryId, brandId) {
+	$.ajax({
+		url:"../brand/getCountryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="countryIdWin"]').empty().append(data).val(countryId);
+			if (brandId > 0) {
+				setBrandSelect(brandId);
+			}
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setCountryByBrandId(brandId) {
+	$.get('../brand/get', { id: brandId } ,function(data) {
+		setCountrySelect(data.countryId, brandId);
+	});
+}
+
+

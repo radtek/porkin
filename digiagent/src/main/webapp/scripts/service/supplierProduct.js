@@ -11,6 +11,14 @@
 	
 	$('select[name="provinceId"]').bind('change', setCitySelect);
 	setProvinceSelect('', -1);
+	setCountrySelect('', -1);
+	setCategorySelect('', -1);
+	setCountryWinSelect('', -1);
+	setCategoryWinSelect('', -1);
+	$('select[name="countryId"]').bind('change', setBrandSelect);
+	$('select[name="categoryId"]').bind('change', setProductSelect);
+	$('select[name="countryIdWin"]').bind('change', setBrandWinSelect);
+	$('select[name="categoryIdWin"]').bind('change', setProductWinSelect);
 });
 
 //edit event
@@ -60,6 +68,15 @@ function processJson(data) {
 function openProduct(supplierId){
 	$('#productWindow').window('open');
 	$('#supplierId').val(supplierId);
+	searchProduct();
+}
+
+function searchProduct(){
+	var countryIdVal = $('#countryId').val() == null ? '' : $('#countryId').val();
+	var brandIdVal = $('#brandId').val() == null ? '' : $('#brandId').val();
+	var categoryIdVal = $('#categoryId').val() == null ? '' : $('#categoryId').val();
+	var productIdVal = $('#productId').val() == null ? '' : $('#productId').val();
+	var supplierIdVal = $('#supplierId').val();
 	$('#ownProductList').datagrid({
 		width:'auto',
 		height:'auto',
@@ -72,7 +89,7 @@ function openProduct(supplierId){
 		idField:'productbrandId',
 		method:'get',
 		url:'../supplierProduct/productSearch',
-		queryParams:{productName:'', supplierId:supplierId},
+		queryParams:{countryId:countryIdVal, brandId:brandIdVal, categoryId:categoryIdVal, productId:productIdVal, supplierId:supplierIdVal},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
@@ -108,7 +125,7 @@ function openProduct(supplierId){
 			},
 			{field:'opt',title:'操作',width:50,align:'center',
 				formatter:function(value,rec){
-					return '<image onClick="onDeleteClickHandler(' + rec['productbrandId'] + ',' + supplierId +')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span><image onClick="onSaveClickHandler(' + rec['productbrandId'] + ',' + supplierId +',\'' + rec['startDate'] +'\',\'' + rec['endDate'] +'\')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/icons/help.png"/></span>';
+					return '<image onClick="onDeleteClickHandler(' + rec['productbrandId'] + ',' + supplierIdVal +')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/datagrid/icon_list_delete.gif"/></span><image onClick="onSaveClickHandler(' + rec['productbrandId'] + ',' + supplierIdVal +',\'' + rec['startDate'] +'\',\'' + rec['endDate'] +'\')" onmouseover="this.style.cursor=\'pointer\';" height="15" width="15" src="../images/icons/help.png"/></span>';
 				}
 			}
 		]],
@@ -251,6 +268,10 @@ function getSelectedDeleteProductIds() {
 
 
 function openProductBrand() {
+	var countryIdWinVal = $('#countryIdWin').val() == null ? '' : $('#countryIdWin').val();
+	var brandIdWinVal = $('#brandIdWin').val() == null ? '' : $('#brandIdWin').val();
+	var categoryIdWinVal = $('#categoryIdWin').val() == null ? '' : $('#categoryIdWin').val();
+	var productIdWinVal = $('#productIdWin').val() == null ? '' : $('#productIdWin').val();
 	var lastIndex;
 	$('#targetProductList').datagrid({
 		width:600,
@@ -267,7 +288,7 @@ function openProductBrand() {
 		idField:'productbrandId',
 		method:'get',
 		url:'../productBrand/search',
-		queryParams:{activeFlag:'Y',productBrandName:''},
+		queryParams:{activeFlag:'Y',productBrandName:'', countryId:countryIdWinVal, brandId:brandIdWinVal, categoryId:categoryIdWinVal, productId:productIdWinVal},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[

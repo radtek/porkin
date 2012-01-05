@@ -123,6 +123,18 @@
          <isNotEmpty prepend="AND" property="param.productName">
 			t_da_brand.product_name like '%$param.productName$%'
          </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.countryId">
+			t_da_country.country_id = '$param.countryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.brandId">
+			t_da_brand.brand_id = '$param.brandId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_category.category_id = '$param.categoryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.productId">
+			t_da_product.product_id = '$param.productId$'
+         </isNotEmpty>
          <isNotEmpty prepend="ORDER BY" property="orderByStatement">
 		 	$orderByStatement$
 		 </isNotEmpty>
@@ -143,6 +155,18 @@
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.productName">
 			t_da_brand.product_name like '%$param.productName$%'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.countryId">
+			t_da_country.country_id = '$param.countryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.brandId">
+			t_da_brand.brand_id = '$param.brandId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_category.category_id = '$param.categoryId$'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.productId">
+			t_da_product.product_id = '$param.productId$'
          </isNotEmpty>
 	</select>
 	
