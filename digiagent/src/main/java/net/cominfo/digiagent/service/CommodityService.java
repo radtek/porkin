@@ -58,8 +58,8 @@ public class CommodityService {
 		Page<Commodity> page = new Page<Commodity>();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
-		page.setOrderBy("COMMODITY_NAME");
-		page.setOrder("ASC");
+		page.setOrderBy("lastupdatedDate");
+		page.setOrder("DESC");
 		page.setParam(param);
 		return (List<Map>) commodityDao.findPage(page, "t_da_commodity_Custom.pageByCondition").getResult();
 	}

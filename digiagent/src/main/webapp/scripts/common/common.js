@@ -26,7 +26,7 @@ function setProvinceSelect(provinceId, cityId) {
 		type: "GET",
 		success: function(data) {
 			$('select[name="provinceId"]').empty().append(data).val(provinceId);
-			if (cityId > 0) {
+			if (provinceId > 0) {
 				setCitySelect(cityId);
 			}
 		},
@@ -102,7 +102,7 @@ function setCategorySelect(categoryId, productId) {
 		type: "GET",
 		success: function(data) {
 			$('select[name="categoryId"]').empty().append(data).val(categoryId);
-			if (productId > 0) {
+			if (categoryId > 0) {
 				setProductSelect(productId);
 			}
 		},

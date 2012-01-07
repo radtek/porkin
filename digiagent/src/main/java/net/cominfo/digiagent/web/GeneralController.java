@@ -9,20 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import net.cominfo.digiagent.persistence.domain.Role;
 import net.cominfo.digiagent.persistence.domain.Supplier;
 import net.cominfo.digiagent.persistence.domain.User;
 import net.cominfo.digiagent.service.CategoryService;
+import net.cominfo.digiagent.service.CommodityService;
+import net.cominfo.digiagent.service.DisplayType;
 import net.cominfo.digiagent.service.ProductBrandService;
 import net.cominfo.digiagent.service.ProductService;
 import net.cominfo.digiagent.service.SortableService;
@@ -34,6 +26,16 @@ import net.cominfo.digiagent.spring.FlashMap.MessageType;
 import net.cominfo.digiagent.spring.security.SecurityService;
 import net.cominfo.digiagent.utils.ValidatorUtils;
 import net.sf.json.JSONArray;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/")
@@ -62,6 +64,9 @@ public class GeneralController {
 
 	@Autowired
 	private SupplierProductService supplierProductService;
+	
+	@Autowired
+	private CommodityService commodityService;
 
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String aboutUs(Model model) {
@@ -344,18 +349,69 @@ public class GeneralController {
 		return "redirect:/sortable/" + type + "/" + parentId;
 	}
 
-	@RequestMapping(value = "/promotion", method = RequestMethod.GET)
-	public String sales(Model model) {
-		model.addAttribute("promotionList", sortableService.getPromotionPage());
+	@RequestMapping(value = "/secondHand")
+	public String secondHand(HttpServletRequest request, Model model) {
+//		model.addAttribute("secondHandList", sortableService.getSecondHandPage());
+		Map param = new HashMap();
+
+		param.put("commodityType", "S");
+		param.put("displayType", DisplayType.SecondHand.getValue());
+		
+		List<Map> commodityList = searchCommodity(request, model, param);
+		model.addAttribute("secondHandList", commodityList);
+		return "secondHand";
+	}
+	
+	@RequestMapping(value = "/promotion")
+	public String sales(HttpServletRequest request, Model model) {
+//		model.addAttribute("promotionList", sortableService.getPromotionPage());
+		Map param = new HashMap();
+
+		param.put("commodityType", "P");
+		param.put("displayType", DisplayType.Promotion.getValue());
+		
+		List<Map> commodityList = searchCommodity(request, model, param);
+		model.addAttribute("promotionList", commodityList);
 		return "promotion";
 	}
 
-	@RequestMapping(value = "/secondHand", method = RequestMethod.GET)
-	public String secondHand(Model model) {
-		model.addAttribute("secondHandList",
-				sortableService.getSecondHandPage());
-		return "secondHand";
+	private List<Map> searchCommodity(HttpServletRequest request, Model model,
+			Map param) {
+		String otherParam[] = { "categoryId", "productId", "commodityName" };
+		for (String key : otherParam) {
+			String value = request.getParameter(key);
+			if (value != null) {
+				param.put(key, value);
+			}
+		}
+		String pageStr = request.getParameter("pageNum");
+		Integer pageNum = 1;
+		if (StringUtils.isNotEmpty(pageStr) ) {
+			try {
+				pageNum = Integer.parseInt(pageStr);
+			} catch (Exception e) {
+				pageNum = 1;
+			}
+		}
+//			String kw = request.getParameter("kw");
+//			if (kw != null && kw.length() > 0) {
+//				param.put("kw", java.net.URLDecoder.decode(kw, "UTF-8"));
+//			}
+		Long total = commodityService.count(param);
+		Integer rows = 10;
+		int pageCount = (int) Math.ceil(total/(rows * 1.0));
+		if (pageNum > pageCount) {
+			pageNum = pageCount;
+		} else if (pageNum < 1) {
+			pageNum = 1;
+		}
+		model.addAttribute("total", total);
+		model.addAttribute("param", param);
+		model.addAttribute("pageCount", pageCount);
+		model.addAttribute("pageNum", pageNum);
+		return commodityService.query(pageNum, rows, param);
 	}
+	
 
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String welcome(Model model) {

@@ -11,13 +11,58 @@
 <script type="text/javascript" src="${ctx}/scripts/searchbar.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/common/common.js"></script>
 <script type="text/javascript" src="${ctx}/scripts/commoditylist.js"></script>
+<script>
+function setCategorySelect(categoryId, productId) {
+	$.ajax({
+		url:"${ctx}/product/getCategoryList",
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="categoryId"]').empty().append(data).val(categoryId);
+			if (categoryId > 0) {
+				setProductSelect(productId);
+			}
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+
+function setProductSelect(productId) {
+	$.ajax({
+		url:"${ctx}/productBrand/getProductList",
+		data:"id=" + $('select[name="categoryId"]').val(),
+		dataType:"html",
+		type: "GET",
+		success: function(data) {
+			$('select[name="productId"]').empty().append(data).val(productId);
+		},
+		error:function(err) {
+	    	$.messager.alert('消息',err,'error');
+		}
+	});
+}
+$(document).ready(function() {;
+	setCategorySelect('${param.categoryId}', '${param.productId}');
+	$('select[name="categoryId"]').bind('change', setProductSelect);
+});
+function goPage(pageNum) {
+	$('input[name=pageNum]').val(pageNum);
+	search();
+}
+function search() {
+	$('input[name=pageNum]').hide();
+	$('form[name=secondHandForm]').append($('input[name=pageNum]'));
+	document.secondHandForm.submit();
+}
+</script>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
   <tr><td height="25"></td></tr>
 </table>
-
 <!-- left menu -->
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
@@ -113,77 +158,70 @@
 	  <tr>
 		<td width="10" background="${ctx}/images/bg_pic00f.gif"></td>
 		<td valign="top" bgcolor="#ffffff"><br />
+		<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td colspan="12">
+				<form name="secondHandForm" action="${ctx }/secondHand" method="post">
+				<label for="name">类别:</label><select id="categoryId" name="categoryId" ></select>
+				<label for="name">产品:</label><select id="productId" name="productId"></select>
+				<label for="name">名称:</label><input type="text" name="commodityName" value="${param.commodityName }"/>
+				<input type="button" value="查询" onclick="search()"/>
+			</form>
+			</td>
+		</tr>
 	<c:choose>
 	<c:when test="${empty secondHandList}">
-			暂无数据!
+			<tr>
+			<th colspan="12">暂无数据!</th>
+			</tr>
 	</c:when>
 	<c:otherwise>
-		<c:set var="category" value=""/>
-		<c:set var="product" value=""/>
-		<c:set var="brand" value=""/>
+		<tr>
+			<th width="140">类别</th>
+			<th>产品</th>
+			<th>名称</th>
+			<th>描述</th>
+			<th>单价</th>
+			<th>供应商</th>
+			<th>联系人</th>
+			<th>电话</th>
+			<th>手机</th>
+			<th>地址</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+		</tr>
 		<c:forEach var="secondHand" items="${secondHandList}" varStatus="status">
-			<c:if test="${secondHand.CATEGORY_NAME != category}">
-				<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-	            <tr valign="top">
-	              <td width="140"><table width="130" border="0" cellpadding="0" cellspacing="0">
-	                <tr>
-	                  <td width="14" height="43"><img src="${ctx}/images/title_bg03a.gif" /></td>
-	                  <td background="${ctx}/images/title_bg03c.gif" class="title_color01"><c:out value="${secondHand.CATEGORY_NAME}"/></td>
-	                  <td width="14"><img src="${ctx}/images/title_bg03b.gif" /></td>
-	                </tr>
-	              </table></td>
-	              <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<c:set var="category" value="${secondHand.CATEGORY_NAME}"/>
-			</c:if>
-			
-			<c:set var="tmpProduct" value="${category}_${secondHand.PRODUCT_NAME}"/>
-			<c:if test="${tmpProduct != product}">
-				<tr>
-                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td width="100"><table width="100" border="0" cellpadding="0" cellspacing="0">
-                          <tr>
-                            <td width="6" height="23"><img src="${ctx}/images/title_bg04a.gif" /></td>
-                            <td background="${ctx}/images/title_bg04c.gif" class="title_color02"><c:out value="${secondHand.PRODUCT_NAME}"/></td>
-                            <td width="14"><img src="${ctx}/images/title_bg04b.gif" /></td>
-                          </tr>
-                      </table></td>
-                      <td class="title_color03" style="background-color:#f4f8fe;">&nbsp;&nbsp;
-				<c:set var="product" value="${category}_${secondHand.PRODUCT_NAME}"/>
-			</c:if>
-			
-			<a href="javascript:void(0)" class="Agray" onclick="queryCommodityList(1, 'S', false, ${secondHand.PRODUCT_ID});"><c:out value="${secondHand.BRAND_NAME}"/></a> | 
-			
-			<c:set var="nextIndex" value="${status.index + 1}"/>
-			<c:if test="${nextIndex <= status.count}">
-				<c:set var="tmpNextProduct" value="${secondHandList[nextIndex].CATEGORY_NAME}_${secondHandList[nextIndex].PRODUCT_NAME}"/>
-				
-				<c:if test="${tmpNextProduct != tmpProduct}">
-						</td>
-	                    </tr>
-	                  </table></td>
-	                </tr>
-	                <tr>
-	                  <td height="7"></td>
-	                </tr>
-				</c:if>
-			
-				<c:if test="${category != secondHandList[nextIndex].CATEGORY_NAME}">
-						</table></td>
-		              </tr>
-		          </table>
-				  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-		            <tr>
-		              <td background="${ctx}/images/line_01a.jpg" align="right"><img src="${ctx}/images/line_01b.jpg" /></td>
-		            </tr>
-		          </table>
-				  <br />
-				</c:if>
-			</c:if>
+			<tr valign="top">
+				<td width="140">${secondHand.categoryName}</td>
+				<td>${secondHand.productName}</td>
+				<td>${secondHand.commodityName}</td>
+				<td>${secondHand.commodityDescription}</td>
+				<td>${secondHand.commodityPrice }元</td>
+				<td>${secondHand.supplierName }</td>
+				<td>${secondHand.supplierContactname }</td>
+				<td>${secondHand.supplierTelephone }</td>
+				<td>${secondHand.supplierMobile }</td>
+				<td>${secondHand.supplierAddress }</td>
+				<td>${secondHand.startDate }</td>
+				<td>${secondHand.endDate }</td>
+			</tr>
+			<tr>
+				<td  colspan="12" background="${ctx}/images/line_01a.jpg" align="right"><img src="${ctx}/images/line_01b.jpg" /></td>
+			</tr>
 		</c:forEach>
 	</c:otherwise>
 </c:choose>
- 		<br /><br id="supplierBR"/>
+		<tr>
+		<td colspan="12" style="text-align:center">
+		<a href="javascript:goPage(1);" >首页</a>&nbsp;
+		<a href="javascript:goPage(${pageNum - 1});">前一页</a>&nbsp;
+		共<input type="text" name="pageNum" size=2 value="${pageNum }" onkeyup="CheckInputInt(this);" onchange="goPage(this.value);"/>/${pageCount}页&nbsp;
+		<a href="javascript:goPage(${pageNum + 1});" >后一页</a>&nbsp;
+		<a href="javascript:goPage(${pageCount})">尾页</a>&nbsp;
+		共${total }条记录
+		</td>
+		</tr>
+		</table>
 		  </td>
 		<td width="10" background="${ctx}/images/bg_pic00g.gif"></td>
 	  </tr>

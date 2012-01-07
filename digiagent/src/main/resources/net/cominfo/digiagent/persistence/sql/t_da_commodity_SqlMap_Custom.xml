@@ -6,8 +6,8 @@
 		SELECT t_da_commodity.commodity_id as commodityId,
 		       t_da_commodity.commodity_name as commodityName,
 		       t_da_commodity.commodity_Description as commodityDescription,
-		       date_format(t_da_commodity.start_date, '%Y/%m/%d %H:%i:%s') as startDate,
-		       date_format(t_da_commodity.end_date, '%Y/%m/%d %H:%i:%s') as endDate,
+		       date_format(t_da_commodity.start_date, '%Y/%m/%d') as startDate,
+		       date_format(t_da_commodity.end_date, '%Y/%m/%d') as endDate,
 		       t_da_commodity.created_by as createdBy,
 		       date_format(t_da_commodity.created_date, '%Y/%m/%d %H:%i:%s') as createdDate,
 		       t_da_commodity.lastupdated_by as lastupdatedBy,
@@ -56,8 +56,20 @@
 		 <isNotEmpty prepend="AND" property="param.productName">
 			t_da_product.product_name = '$param.productName$'
          </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_category.category_id = $param.categoryId$
+         </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.productId">
 			t_da_product.product_id = $param.productId$
+         </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.displayType">
+         	t_da_product.display_type IN
+         	<iterate  property="param.displayType" open="(" close=")" conjunction=",">    
+			 	$param.displayType[]$
+			</iterate>
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.commodityName">
+         	t_da_commodity.commodity_name like '%$param.commodityName$%'
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.kw">
          	(t_da_commodity.commodity_name like '%$param.kw$%' OR 
@@ -65,9 +77,9 @@
 			t_da_commodity.commodity_price like '%$param.kw$%' OR 
 			t_da_product.product_name like '%$param.kw$%')
          </isNotEmpty>
-         <isEmpty prepend="ORDER BY" property="orderByStatement">
-         	t_da_commodity.commodity_name
-         </isEmpty>
+<!--         <isEmpty prepend="ORDER BY" property="orderByStatement">-->
+<!--         	t_da_commodity.commodity_name-->
+<!--         </isEmpty>-->
 		 <isNotEmpty prepend="ORDER BY" property="orderByStatement">
 		 	$orderByStatement$
 		 </isNotEmpty>
@@ -92,8 +104,20 @@
 		 <isNotEmpty prepend="AND" property="param.productName">
 			t_da_product.product_name = '$param.productName$'
          </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="param.categoryId">
+			t_da_category.category_id = $param.categoryId$
+         </isNotEmpty>
 		 <isNotEmpty prepend="AND" property="param.productId">
 			t_da_product.product_id = $param.productId$
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.commodityName">
+         	t_da_commodity.commodity_name like '%$param.commodityName$%'
+         </isNotEmpty>
+         <isNotEmpty prepend="AND" property="param.displayType">
+         	t_da_product.display_type IN
+         	<iterate  property="param.displayType" open="(" close=")" conjunction=",">    
+			 	$param.displayType[]$
+			</iterate>
          </isNotEmpty>
          <isNotEmpty prepend="AND" property="param.kw">
          	(t_da_commodity.commodity_name like '%$param.kw$%' OR 
