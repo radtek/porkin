@@ -80,15 +80,22 @@ function onDeleteClickHandler(id) {
 }
 
 $(document).ready(function() {
-	$('select[name="countryId"]').bind('change', setBrandSelect);
-	$('select[name="categoryId"]').bind('change', setProductSelect);
-});
-
-// list
-$(function(){
+	setCountryWinSelect('', -1);
+	setCategoryWinSelect('', -1);
+	$('select[name="countryIdWin"]').bind('change', setBrandWinSelect);
+	$('select[name="categoryIdWin"]').bind('change', setProductWinSelect);
 	setCountrySelect('', -1);
 	setCategorySelect('', -1);
-	// edit
+	$('select[name="countryId"]').bind('change', setBrandSelect);
+	$('select[name="categoryId"]').bind('change', setProductSelect);
+	search();
+});
+
+function search() {
+	var countryIdVal = $('#countryId').val() == null ? '' : $('#countryId').val();
+	var brandIdVal = $('#brandId').val() == null ? '' : $('#brandId').val();
+	var categoryIdVal = $('#categoryId').val() == null ? '' : $('#categoryId').val();
+	var productIdVal = $('#productId').val() == null ? '' : $('#productId').val();
 	var lastIndex;
 	$('#productBrandList').datagrid({
 		title:'品牌与产品信息维护',
@@ -102,7 +109,7 @@ $(function(){
 		idField:'productBrandId',
 		method:'get',
 		url:'../productBrand/search',
-		queryParams:{productBrandName:''},
+		queryParams:{countryId:countryIdVal, brandId:brandIdVal, categoryId:categoryIdVal, productId:productIdVal},
 		pagination:true,
 		loadMsg:'数据加载中,请稍候...',
 		columns:[[
@@ -196,4 +203,4 @@ $(function(){
 		afterPageText:'/{pages}',
 		beforePageText:'页'
 	});
-});
+}

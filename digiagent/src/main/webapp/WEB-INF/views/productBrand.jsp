@@ -5,6 +5,11 @@
 	<script type="text/javascript" src="../scripts/service/productBrand.js"></script>
 </head>
 <body>
+	<div><label for="name">国家:</label><select id="countryId" name="countryIdWin"> </select>
+	<label for="name">品牌:</label><select id="brandId" name="brandIdWin"></select>
+	<label for="name">类别:</label><select id="categoryId" name="categoryIdWin"></select>
+	<label for="name">产品:</label><select id="productId" name="productIdWin"></select>
+	<input type="button" value="查询" onclick="search()"/></div>
 	<table id="productBrandList"></table>
 	<div id="productBrandEdit" icon="icon-edit" style="width:400px;height:170px;display:none">
 		<div style="background:#fafafa;padding:10px;text-align:center">
