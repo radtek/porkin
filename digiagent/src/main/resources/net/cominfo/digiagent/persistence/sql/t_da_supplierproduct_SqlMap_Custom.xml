@@ -382,26 +382,40 @@
 		  FROM t_da_supplierproduct, 
 			t_da_supplier, 
 			t_da_productbrand,
-			t_da_sortable c,
-			t_da_sortable p,
-			t_da_sortable b,
-			t_da_sortable
+			(
+				SELECT 
+				p.sortable_key as product_id,
+				b.sortable_key as brand_id,
+				t_da_sortable.sortable_key as supplier_id,
+				t_da_sortable.sortable_type,
+				t_da_sortable.sortable_order
+				FROM
+					t_da_sortable c,
+					t_da_sortable p,
+					t_da_sortable b,
+					t_da_sortable
+				WHERE
+				t_da_sortable.parent_id = b.sortable_id
+				AND b.parent_id = p.sortable_id
+				AND p.parent_id = c.sortable_id
+				GROUP BY 
+				p.sortable_key,
+				b.sortable_key,
+				t_da_sortable.sortable_key
+			) sort
 		WHERE t_da_supplierproduct.productbrand_id = t_da_productbrand.productbrand_id
-		and t_da_supplierproduct.supplier_id = t_da_supplier.supplier_id
-		and t_da_supplier.supplier_id = t_da_sortable.sortable_key 
-		and t_da_sortable.parent_id = b.sortable_id 
-		and b.parent_id = p.sortable_id 
-		and p.parent_id = c.sortable_id 
-		and p.sortable_key = t_da_productbrand.product_id
-		and b.sortable_key = t_da_productbrand.brand_id
-		and t_da_sortable.sortable_type = 'S'
+		AND t_da_supplierproduct.supplier_id = t_da_supplier.supplier_id
+		AND t_da_supplier.supplier_id = sort.supplier_id
+		AND sort.product_id = t_da_productbrand.product_id
+		AND sort.brand_id = t_da_productbrand.brand_id
+		AND sort.sortable_type = 'S'
 		<isNotEmpty prepend="AND" property="productId">
 			t_da_productbrand.product_id = $productId$
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="brandId">
 			t_da_productbrand.brand_id = $brandId$
 		</isNotEmpty>
-		 ORDER BY t_da_sortable.sortable_order asc
+		 ORDER BY sort.sortable_order asc
 	</select>
 	
 	<select id="getAllBrandSupplier" resultMap="getAllBrandSupplierResult">
