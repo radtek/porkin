@@ -39,6 +39,7 @@
 			LEFT JOIN t_da_sortable t2 on(t1.SORTABLE_ID = t2.PARENT_ID)
 			left join t_da_sortable t3 on (t2.SORTABLE_ID = t3.PARENT_ID)
 			where t1.SORTABLE_TYPE = 'C'
+			GROUP BY t1.SORTABLE_KEY,t2.SORTABLE_KEY,t3.SORTABLE_KEY
 			ORDER BY t1.SORTABLE_ORDER, t2.SORTABLE_ORDER, t3.SORTABLE_ORDER) t
 		LEFT JOIN t_da_category on (t.category_id = t_da_category.CATEGORY_ID)
 		left join t_da_product on (t.product_id = t_da_product.PRODUCT_ID)
