@@ -28,19 +28,17 @@
 		       t_da_product.product_name as productName,
 		       t_da_category.category_name as categoryName,
 			   imageId		
-			  FROM t_da_commodity
-			  left join t_da_product
-			  on t_da_product.product_id = t_da_commodity.product_id
-			  left join t_da_category
-			  on t_da_product.category_id = t_da_category.category_id
-			  left join t_da_user
-			  on t_da_commodity.user_id = t_da_user.user_id
-			  left join t_da_supplier
-			  on t_da_supplier.user_id = t_da_user.user_id
-			  left join (
-	                    select max(commodityimage_id) imageId, commodity_id
-	                           from t_da_commodityimage
-			                   group by commodity_id
+			  	FROM t_da_commodity
+			  	INNER JOIN t_da_product ON t_da_product.product_id = t_da_commodity.product_id
+				INNER JOIN t_da_productbrand ON t_da_productbrand.product_id = t_da_product.product_id
+				INNER JOIN t_da_supplierproduct ON t_da_supplierproduct.productbrand_id = t_da_productbrand.productbrand_id 
+				INNER JOIN t_da_supplier ON t_da_supplierproduct.supplier_id = t_da_supplier.supplier_id
+				INNER JOIN t_da_category ON t_da_product.category_id = t_da_category.category_id
+				INNER JOIN t_da_user ON t_da_commodity.user_id = t_da_user.user_id
+			  LEFT JOIN (
+	                    SELECT max(commodityimage_id) imageId, commodity_id
+	                           FROM t_da_commodityimage
+			                   GROUP BY commodity_id
 	               ) image
 			  on image.commodity_id = t_da_commodity.commodity_id
 		 WHERE t_da_commodity.commodity_id > 0
@@ -90,10 +88,12 @@
 		resultClass="HashMap">
 		SELECT count(*) as total
 		FROM t_da_commodity
-		  left join t_da_product
-		  on t_da_product.product_id = t_da_commodity.product_id
-		  left join t_da_category
-		  on t_da_product.category_id = t_da_category.category_id
+		INNER JOIN t_da_product ON t_da_product.product_id = t_da_commodity.product_id
+		INNER JOIN t_da_productbrand ON t_da_productbrand.product_id = t_da_product.product_id
+		INNER JOIN t_da_supplierproduct ON t_da_supplierproduct.productbrand_id = t_da_productbrand.productbrand_id 
+		INNER JOIN t_da_supplier ON t_da_supplierproduct.supplier_id = t_da_supplier.supplier_id
+		INNER JOIN t_da_category ON t_da_product.category_id = t_da_category.category_id
+		INNER JOIN t_da_user ON t_da_commodity.user_id = t_da_user.user_id
 		 WHERE commodity_id > 0
 		 <isNotEmpty prepend="AND" property="param.commodityType">
 			commodity_type = '$param.commodityType$'
