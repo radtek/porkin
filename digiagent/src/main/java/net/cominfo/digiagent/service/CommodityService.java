@@ -18,6 +18,7 @@ import net.cominfo.digiagent.persistence.domain.Product;
 import net.cominfo.digiagent.persistence.domain.CommodityCriteria.Criteria;
 import net.cominfo.digiagent.utils.Page;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,11 @@ public class CommodityService {
 		page.setOrderBy("lastupdatedDate");
 		page.setOrder("DESC");
 		page.setParam(param);
-		return (List<Map>) commodityDao.findPage(page, "t_da_commodity_Custom.pageByCondition").getResult();
+		if (StringUtils.isNotEmpty((String)param.get("isLookSupplier"))) {
+			return (List<Map>) commodityDao.findPage(page, "t_da_commodity_Custom.pageByCondition").getResult();
+		} else {
+			return (List<Map>) commodityDao.findPage(page, "t_da_commodity_Custom.pageByConditionAndNotSupplier").getResult();
+		}
 	}
 	
 	public Long count(Map<String, Object> param){

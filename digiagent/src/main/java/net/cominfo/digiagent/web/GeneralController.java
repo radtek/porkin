@@ -384,6 +384,7 @@ public class GeneralController {
 				param.put(key, value);
 			}
 		}
+		param.put("isLookSupplier", "true");
 		String pageStr = request.getParameter("pageNum");
 		Integer pageNum = 1;
 		if (StringUtils.isNotEmpty(pageStr) ) {
