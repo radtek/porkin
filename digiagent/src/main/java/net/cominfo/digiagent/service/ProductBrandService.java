@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import net.cominfo.digiagent.persistence.dao.BrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductBrandDao;
 import net.cominfo.digiagent.persistence.dao.ProductDao;
@@ -24,10 +28,6 @@ import net.cominfo.digiagent.persistence.domain.SortableCriteria;
 import net.cominfo.digiagent.persistence.domain.SupplierProduct;
 import net.cominfo.digiagent.persistence.domain.SupplierProductCriteria;
 import net.cominfo.digiagent.utils.Page;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -174,34 +174,30 @@ public class ProductBrandService {
 	}
 
 	public String delete(Integer id) {
-		// 是否有商家与品牌产品关联
-		if (isReferenceSupplierProduct(id)) {
-			return "reference";
-		} else {
-			
-			//相当于删除产品下的一个品牌
-			ProductBrand pb = productBrandDao.selectByPrimaryKey(id);
-			Integer brandId = pb.getBrandId();
-			Integer productId = pb.getProductId();
-			productBrandDao.deleteByPrimaryKey(id);
-			SortableCriteria productSortableCriteria = new SortableCriteria();
-			productSortableCriteria.createCriteria().andSortableKeyEqualTo(
-					productId).andSortableTypeEqualTo(
-					SortableType.Product.getFlag());
-			List<Sortable> productSortableList = sortableDao
-					.selectByExample(productSortableCriteria);
-			if (productSortableList != null && productSortableList.size() > 0) {
-				Sortable productSortable = productSortableList.get(0);
-				Integer parentId = productSortable.getSortableId();
-				SortableCriteria brandSortableCriteria = new SortableCriteria();
-				brandSortableCriteria.createCriteria().andSortableKeyEqualTo(
-						brandId).andParentIdEqualTo(parentId)
-						.andSortableTypeEqualTo(SortableType.Brand.getFlag());
-				sortableDao.deleteByExample(brandSortableCriteria);
-			}
-
-			return "success";
+		// 删除有商家与品牌产品关联的品牌产品关系ID记录
+		removeReferenceSupplierProduct(id);
+		//相当于删除产品下的一个品牌
+		ProductBrand pb = productBrandDao.selectByPrimaryKey(id);
+		Integer brandId = pb.getBrandId();
+		Integer productId = pb.getProductId();
+		productBrandDao.deleteByPrimaryKey(id);
+		SortableCriteria productSortableCriteria = new SortableCriteria();
+		productSortableCriteria.createCriteria().andSortableKeyEqualTo(
+				productId).andSortableTypeEqualTo(
+				SortableType.Product.getFlag());
+		List<Sortable> productSortableList = sortableDao
+				.selectByExample(productSortableCriteria);
+		if (productSortableList != null && productSortableList.size() > 0) {
+			Sortable productSortable = productSortableList.get(0);
+			Integer parentId = productSortable.getSortableId();
+			SortableCriteria brandSortableCriteria = new SortableCriteria();
+			brandSortableCriteria.createCriteria().andSortableKeyEqualTo(
+					brandId).andParentIdEqualTo(parentId)
+					.andSortableTypeEqualTo(SortableType.Brand.getFlag());
+			sortableDao.deleteByExample(brandSortableCriteria);
 		}
+
+		return "success";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -221,7 +217,7 @@ public class ProductBrandService {
 		}
 	}
 
-	private boolean isReferenceSupplierProduct(Integer productBrandId) {
+	private void removeReferenceSupplierProduct(Integer productBrandId) {
 		SupplierProductCriteria example = new SupplierProductCriteria();
 		net.cominfo.digiagent.persistence.domain.SupplierProductCriteria.Criteria criteria = example
 				.createCriteria();
@@ -229,9 +225,9 @@ public class ProductBrandService {
 		List<SupplierProduct> list = supplierProductDao
 				.selectByExample(example);
 		if (list != null && list.size() > 0) {
-			return true;
-		} else {
-			return false;
+			for (SupplierProduct supplierProduct : list) {
+				supplierProductDao.deleteByPrimaryKey(supplierProduct);
+			}
 		}
 	}
 
