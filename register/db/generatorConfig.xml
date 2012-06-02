@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-	<classPathEntry location="D:/Java/JDBC/mysql/mysql-connector-java-5.1.20.jar" />
+	<classPathEntry location="E:/Java/JDBC/mysql/mysql-connector-java-5.1.12/mysql-connector-java-5.1.12-bin.jar" />
 
 	<context id="DB2Tables" targetRuntime="MyBatis3">
+		
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$" />
+            <property name="replaceString" value="Criteria" />
+    	</plugin>
 	
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/study" userId="study"
-			password="study" />
+			connectionURL="jdbc:mysql://localhost:3306/register" userId="register"
+			password="a123456b" />
 			
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />

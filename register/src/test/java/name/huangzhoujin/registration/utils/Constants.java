@@ -2,7 +2,7 @@ package name.huangzhoujin.registration.utils;
 
 public class Constants {
 
-	public static final String Permission_Service = "permissionService";
+	public static final String User_Service = "userService";
 
 	public static String[] SERVICE_FACTORY_PATH_FOR_TEST = new String[] { "spring/applicationContext.xml" };
 

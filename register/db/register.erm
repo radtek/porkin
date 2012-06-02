@@ -22,7 +22,7 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>0</x>
+	<x>49</x>
 	<y>0</y>
 	<default_color>
 		<r>128</r>
@@ -121,7 +121,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2012-06-02 23:02:16</creation_date>
-			<updated_date>2012-06-03 00:00:05</updated_date>
+			<updated_date>2012-06-03 01:04:18</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -355,7 +355,7 @@
 		</word>
 		<word>
 			<id>15</id>
-			<length>30</length>
+			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
