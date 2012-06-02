@@ -40,13 +40,13 @@
 		<use_bezier_curve>false</use_bezier_curve>
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
-			<category_name_to_export></category_name_to_export>
-			<ddl_output></ddl_output>
-			<excel_output></excel_output>
-			<excel_template></excel_template>
-			<image_output></image_output>
-			<put_diagram_on_excel>false</put_diagram_on_excel>
-			<use_logical_name_as_sheet>false</use_logical_name_as_sheet>
+			<category_name_to_export>All</category_name_to_export>
+			<ddl_output>E:\springsource\workspaces\register\db\register.sql</ddl_output>
+			<excel_output>E:\springsource\workspaces\register\db\register.xls</excel_output>
+			<excel_template>Default（English）</excel_template>
+			<image_output>E:\springsource\workspaces\register\db\register.png</image_output>
+			<put_diagram_on_excel>true</put_diagram_on_excel>
+			<use_logical_name_as_sheet>true</use_logical_name_as_sheet>
 			<open_after_saved>false</open_after_saved>
 			<create_comment>true</create_comment>
 			<create_foreignKey>true</create_foreignKey>
@@ -110,7 +110,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2012-06-02 23:02:16</creation_date>
-			<updated_date>2012-06-02 23:44:26</updated_date>
+			<updated_date>2012-06-02 23:47:13</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
