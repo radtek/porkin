@@ -16,9 +16,9 @@
    <!-- in-memory database and a datasource -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/study?useUnicode=true&amp;characterEncoding=UTF-8" />
-		<property name="username" value="study" />
-		<property name="password" value="study" />
+		<property name="url" value="jdbc:mysql://localhost:3306/register?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="register" />
+		<property name="password" value="a123456b" />
 	</bean>
 
     <!-- transaction manager, use JtaTransactionManager for global tx -->
@@ -27,7 +27,7 @@
     </bean>
 
     <!-- enable component scanning (beware that this does not enable mapper scanning!) -->    
-    <context:component-scan base-package="name.huangzhoujin.learnmybatis.service" />
+    <context:component-scan base-package="name.huangzhoujin.registration.service" />
 
     <!-- enable autowire -->
     <context:annotation-config />
@@ -38,12 +38,12 @@
     <!-- define the SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="typeAliasesPackage" value="name.huangzhoujin.learnmybatis.persistence.domain" />
-        <property name="mapperLocations" value="classpath*:name/huangzhoujin/learnmybatis/persistence/sql/*Mapper.xml" />
+        <property name="typeAliasesPackage" value="name.huangzhoujin.registration.persistence.domain" />
+        <property name="mapperLocations" value="classpath*:name/huangzhoujin/registration/persistence/sql/*Mapper.xml" />
     </bean>
 
     <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="name.huangzhoujin.learnmybatis.persistence.sqlmapdao" />
+        <property name="basePackage" value="name.huangzhoujin.registration.persistence.sqlmapdao" />
     </bean>
 </beans>
