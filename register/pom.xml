@@ -13,6 +13,7 @@
 		<spring-security.version>3.0.3.RELEASE</spring-security.version>
 		<org.slf4j.version>1.5.10</org.slf4j.version>
 		<commons-lang.version>2.5</commons-lang.version>
+		<deploy.location>E:/springsource/workspaces/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/register</deploy.location>
 	</properties>
 
 	<dependencies>
@@ -23,6 +24,12 @@
 			<artifactId>junit</artifactId>
 			<version>4.9</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2</version>
 		</dependency>
 
 		<dependency>
@@ -36,7 +43,7 @@
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -54,7 +61,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.20</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -74,14 +81,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
-		<!--  URL Rewrite -->
+
+		<!-- URL Rewrite -->
 		<dependency>
 			<groupId>org.tuckey</groupId>
 			<artifactId>urlrewritefilter</artifactId>
 			<version>3.2.0</version>
 		</dependency>
-		
+
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -100,11 +107,53 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 	</dependencies>
-	
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<property name="deploy.filename" value="${project.build.finalName}" />
+								<echo message=" Starting to deploy into ${deploy.location}" />
+								<mkdir dir="${deploy.location}" />
+								<copy todir="${deploy.location}">
+									<fileset dir="target/${deploy.filename}">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>undeploy</id>
+						<phase>clean</phase>
+						<configuration>
+							<tasks>
+								<echo message="Starting to remove ${deploy.location}" />
+								<delete dir="${deploy.location}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -145,5 +194,5 @@
 		</plugins>
 		<finalName>register</finalName>
 	</build>
-	
+
 </project>
