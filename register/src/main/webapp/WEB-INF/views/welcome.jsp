@@ -187,8 +187,10 @@
 
 			</fieldset>
 
-			<fieldset class="buttons">
-				<input type="submit" name="create" class="save" value="Create"
+			<fieldset class="fieldcontain  required">
+				<label for="submit">&nbsp;<span class="required-indicator"></span>
+					</label> 
+					<input type="submit" name="create" class="save" value="Create"
 					id="create" />
 			</fieldset>
 		</form>

@@ -532,6 +532,17 @@ th:hover, tr:hover {
 	border: none;
 }
 
+.buttons2 {
+	overflow: hidden;
+	padding: 0.3em;
+	   -moz-box-shadow: 0 0 3px 1px #aaaaaa;
+	-webkit-box-shadow: 0 0 3px 1px #aaaaaa;
+	        box-shadow: 0 0 3px 1px #aaaaaa;
+	margin: 0.1em 0 0 0;
+	border: none;
+	width: 25%;
+}
+
 .buttons input,
 .buttons a {
 	background-color: transparent;
