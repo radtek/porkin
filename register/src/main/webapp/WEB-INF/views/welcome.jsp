@@ -13,7 +13,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Create Race</title>
+<title><spring:message code="label.register.welcome"/></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="shortcut icon" href="${ctx}/images/favicon.ico"
@@ -24,10 +24,22 @@
 <link rel="stylesheet" href="${ctx}/styles/main.css" type="text/css">
 <link rel="stylesheet" href="${ctx}/styles/mobile.css" type="text/css">
 
+<link rel="stylesheet" href="${ctx}/styles/base/jquery.ui.all.css">
+<script src="${ctx}/scripts/jquery/jquery-1.7.2.js"></script>
+<script src="${ctx}/scripts/external/jquery.bgiframe-2.1.2.js"></script>
+<script src="${ctx}/scripts/ui/jquery.ui.core.js"></script>
+<script src="${ctx}/scripts/ui/jquery.ui.widget.js"></script>
+<script src="${ctx}/scripts/ui/jquery.ui.mouse.js"></script>
+<script src="${ctx}/scripts/ui/jquery.ui.datepicker.js"></script>
+
+<script src="${ctx}/scripts/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+
 <meta name="layout" content="main">
-
-
-
+<script>
+	$(function() {
+		$( "#start_date" ).datepicker();
+	});
+</script>
 
 </head>
 <body>
@@ -47,73 +59,54 @@
 <!-- 	</div> -->
 
 	<div id="create-race" class="content scaffold-create" role="main">
-		<h1>欢迎使用网上报名系统</h1>
-
+		<h1><spring:message code="label.register.welcome"/></h1>
 
 		<form action="/racetrack/race/save" method="post">
 			<fieldset class="form">
 
 				<div class="fieldcontain  required">
-					<label for="name"><spring:message code="label.register.name"/><span class="required-indicator">*</span>
-					</label> <input type="text" name="name" required="" value="" id="name" />
+					<label for="name">
+						<spring:message code="label.register.name"/><span class="required-indicator">*</span>
+					</label> 
+					<input type="text" name="name" required="" value="" id="name" />
 				</div>
-
+				
 				<div class="fieldcontain  required">
-					<label for="startDateTime"> Start Date Time <span
-						class="required-indicator">*</span>
-					</label> <input type="hidden" name="startDateTime" value="date.struct" />
-
-					<select name="startDateTime_day" id="startDateTime_day"><option
-							value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4" selected="selected">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-						<option value="13">13</option>
-						<option value="14">14</option>
-						<option value="15">15</option>
-						<option value="16">16</option>
-						<option value="17">17</option>
-						<option value="18">18</option>
-
-						<option value="19">19</option>
-						<option value="20">20</option>
-						<option value="21">21</option>
-						<option value="22">22</option>
-						<option value="23">23</option>
-						<option value="24">24</option>
-						<option value="25">25</option>
-						<option value="26">26</option>
-						<option value="27">27</option>
-
-						<option value="28">28</option>
-						<option value="29">29</option>
-						<option value="30">30</option>
-						<option value="31">31</option>
-					</select> 
-
+					<label for="gender"> 
+						<spring:message code="label.register.gender"/> <span class="required-indicator">*</span>
+					</label> 
+					<select name="gender" required="" id="gender">
+						<option value='<spring:message code="label.register.gender.male"/>' selected="selected"><spring:message code="label.register.gender.male"/></option>
+						<option value='<spring:message code="label.register.gender.female"/>'><spring:message code="label.register.gender.female"/></option>
+					</select>
 				</div>
-
+				
 				<div class="fieldcontain  required">
-					<label for="city"> City <span class="required-indicator">*</span>
-
-					</label> <input type="text" name="city" required="" value="" id="city" />
+					<label for="education"> 
+						<spring:message code="label.register.education"/> <span class="required-indicator">*</span>
+					</label> 
+					<select name="education" required="" id="education">
+						<c:choose>
+							<c:when test="${empty educationCache}">
+								<option value="0"><spring:message code="label.register.no_data"/></option>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="education" items="${educationCache}" varStatus="status">
+									<option value='<c:out value="${education.educationId}"/>'><c:out value="${education.educationName}"/></option>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</select>
 				</div>
-
+				
 				<div class="fieldcontain  required">
-					<label for="state"> <spring:message code="label.level_class"/> <span class="required-indicator">*</span>
-					</label> <select name="state" required="" id="state">
+					<label for="area"> 
+						<spring:message code="label.register.area"/> <span class="required-indicator">*</span>
+					</label> 
+					<select name="area" required="" id="area">
 						<c:choose>
 							<c:when test="${empty areaCache}">
-								<c:if test="${type == 'areaCache' }"><option value="0">暂无数据!</option></c:if>
+								<option value="0"><spring:message code="label.register.no_data"/></option>
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="area" items="${areaCache}" varStatus="status">
@@ -125,46 +118,79 @@
 				</div>
 
 				<div class="fieldcontain  required">
-					<label for="distance"> Distance <span
-						class="required-indicator">*</span>
-
-					</label> <input type="number" name="distance" step="any" min="3.0"
-						max="100.0" required="" value="" id="distance" />
+					<label for="old_level"> <spring:message code="label.register.old_level"/> <span class="required-indicator">*</span>
+					</label> <select name="old_level" required="" id="old_level">
+						<c:choose>
+							<c:when test="${empty levelCache}">
+								<c:if test="${type == 'levelCache' }"><option value="0"><spring:message code="label.register.no_data"/></option></c:if>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="level" items="${levelCache}" varStatus="status">
+									<option value='<c:out value="${level.levelId}"/>'><c:out value="${level.levelName}"/></option>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</select>
+				</div>
+				
+				<div class="fieldcontain  required">
+					<label for="new_level"> <spring:message code="label.register.new_level"/> <span class="required-indicator">*</span>
+					</label> <select name="new_level" required="" id="new_level">
+						<c:choose>
+							<c:when test="${empty levelCache}">
+								<c:if test="${type == 'levelCache' }"><option value="0"><spring:message code="label.register.no_data"/></option></c:if>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="level" items="${levelCache}" varStatus="status">
+									<option value='<c:out value="${level.levelId}"/>'><c:out value="${level.levelName}"/></option>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</select>
+				</div>
+				
+				<div class="fieldcontain  required">
+					<label for="id_card">
+						<spring:message code="label.register.id_card"/><span class="required-indicator">*</span>
+					</label> 
+					<input type="text" name="id_card" required="" value="" id="id_card" />
+				</div>
+				
+				<div class="fieldcontain  required">
+					<label for="unemployee_no">
+						<spring:message code="label.register.unemployee_no"/><span class="required-indicator">*</span>
+					</label> 
+					<input type="text" name="unemployee_no" required="" value="" id="unemployee_no" />
 				</div>
 
 				<div class="fieldcontain  required">
-					<label for="cost"> Cost <span class="required-indicator">*</span>
-					</label> <input type="number" name="cost" step="any" min="0.0" max="999.99"
-						required="" value="" id="cost" />
-
+					<label for="location"> <spring:message code="label.register.location"/> <span class="required-indicator">*</span>
+					</label> <select name="location" required="" id="location">
+						<c:choose>
+							<c:when test="${empty locationCache}">
+								<option value="0"><spring:message code="label.register.no_data"/></option>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="location" items="${locationCache}" varStatus="status">
+									<option value='<c:out value="${location.locationId}"/>'><c:out value="${location.locationName}"/></option>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</select>
 				</div>
-
+				
 				<div class="fieldcontain  required">
-					<label for="maxRunners"> Max Runners <span
-						class="required-indicator">*</span>
-					</label> <input type="number" name="maxRunners" required="" value="10000"
-						id="maxRunners" />
+					<label for="start_date"> <spring:message code="label.register.start_date"/> <span class="required-indicator">*</span>
+					</label> <input type="text" name="start_date" required="" value="10000"
+						id="start_date" />
 				</div>
-
-				<div class="fieldcontain  ">
-					<label for="registrations"> Registrations </label>
-
-					<ul class="one-to-many">
-
-						<li class="add"><a
-							href="/racetrack/registration/create?race.id=">Add
-								Registration</a></li>
-					</ul>
-
-				</div>
-
 
 			</fieldset>
 
-			<!-- <fieldset class="buttons">
+			<fieldset class="buttons">
 				<input type="submit" name="create" class="save" value="Create"
 					id="create" />
-			</fieldset> -->
+			</fieldset>
 		</form>
 	</div>
 
