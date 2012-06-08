@@ -3,6 +3,7 @@ package name.huangzhoujin.registration.service;
 import java.util.List;
 
 import name.huangzhoujin.registration.persistence.domain.User;
+import name.huangzhoujin.registration.persistence.domain.UserCriteria;
 import name.huangzhoujin.registration.persistence.sqlmapdao.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ public class UserService {
 	}
 
 	public List<User> getAll() {
-		return userMapper.selectByExample(null);
+		UserCriteria criteria = new UserCriteria();
+		criteria.setOrderByClause("USER_ID");
+		return userMapper.selectByExample(criteria);
 	}
 
 }

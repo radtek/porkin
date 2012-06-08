@@ -39,7 +39,7 @@ public class AreaServiceTest {
 		int expected = 6;
 		int actual = 0;
 		for(Area a: result){
-			System.out.print("[AreaId="+a.getAreaId()+"]\t");
+			System.out.print("[AreaID="+a.getAreaId()+"]\t");
 			actual++;
 		}
 		System.out.println();

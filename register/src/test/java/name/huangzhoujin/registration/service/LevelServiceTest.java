@@ -1,6 +1,10 @@
 package name.huangzhoujin.registration.service;
 
+import java.util.List;
+
 import junit.framework.TestCase;
+import name.huangzhoujin.registration.persistence.domain.Education;
+import name.huangzhoujin.registration.persistence.domain.Level;
 import name.huangzhoujin.registration.utils.BeanLocatorUtil;
 import name.huangzhoujin.registration.utils.Constants;
 
@@ -25,6 +29,19 @@ public class LevelServiceTest {
 	public void testCountAllLevel() {
 		int expected = 5;
 		int actual = ls.countAllLevel();
+		TestCase.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testGetAll(){
+		List<Level> result = ls.getAll();
+		int expected = 5;
+		int actual = 0;
+		for(Level l: result){
+			System.out.print("[LevelID="+l.getLevelId()+"]\t");
+			actual++;
+		}
+		System.out.println();
 		TestCase.assertEquals(expected, actual);
 	}
 

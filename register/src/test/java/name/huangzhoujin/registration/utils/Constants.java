@@ -2,7 +2,6 @@ package name.huangzhoujin.registration.utils;
 
 public class Constants {
 
-	
 	public static final String Area_Service = "areaService";
 	public static final String Eduction_Service = "educationService";
 	public static final String Level_Service = "levelService";

@@ -3,6 +3,7 @@ package name.huangzhoujin.registration.service;
 import java.util.List;
 
 import name.huangzhoujin.registration.persistence.domain.Education;
+import name.huangzhoujin.registration.persistence.domain.EducationCriteria;
 import name.huangzhoujin.registration.persistence.sqlmapdao.EducationMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class EducationService {
 	}
 	
 	public List<Education> getAll(){
-		return educationMapper.selectByExample(null);
+		EducationCriteria criteria = new EducationCriteria();
+		criteria.setOrderByClause("Education_Id");
+		return educationMapper.selectByExample(criteria);
 	}
 }

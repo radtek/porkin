@@ -3,6 +3,7 @@ package name.huangzhoujin.registration.service;
 import java.util.List;
 
 import name.huangzhoujin.registration.persistence.domain.Location;
+import name.huangzhoujin.registration.persistence.domain.LocationCriteria;
 import name.huangzhoujin.registration.persistence.sqlmapdao.LocationMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class LocationService {
 	}
 	
 	public List<Location> getAll(){
-		return locationMapper.selectByExample(null);
+		LocationCriteria criteria = new LocationCriteria();
+		criteria.setOrderByClause("Location_ID");
+		return locationMapper.selectByExample(criteria);
 	}
 }

@@ -3,6 +3,7 @@ package name.huangzhoujin.registration.service;
 import java.util.List;
 
 import name.huangzhoujin.registration.persistence.domain.Level;
+import name.huangzhoujin.registration.persistence.domain.LevelCriteria;
 import name.huangzhoujin.registration.persistence.sqlmapdao.LevelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class LevelService {
 	}
 	
 	public List<Level> getAll(){
-		return levelMapper.selectByExample(null);
+		LevelCriteria criteria = new LevelCriteria();
+		criteria.setOrderByClause("Level_ID");
+		return levelMapper.selectByExample(criteria);
 	}
 }
