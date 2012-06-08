@@ -113,7 +113,7 @@
 				</div>
 
 				<div class="fieldcontain  required">
-					<label for="state"> State <span class="required-indicator">*</span>
+					<label for="state"> <spring:message code="lable.level_class"/> <span class="required-indicator">*</span>
 					</label> <select name="state" required="" id="state">
 						<c:choose>
 							<c:when test="${empty areaCache}">
