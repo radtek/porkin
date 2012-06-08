@@ -53,12 +53,8 @@
 		<form action="/racetrack/race/save" method="post">
 			<fieldset class="form">
 
-
-
-
 				<div class="fieldcontain  required">
-					<label for="name"> Name <span class="required-indicator">*</span>
-
+					<label for="name"><spring:message code="label.register.name"/><span class="required-indicator">*</span>
 					</label> <input type="text" name="name" required="" value="" id="name" />
 				</div>
 
@@ -113,7 +109,7 @@
 				</div>
 
 				<div class="fieldcontain  required">
-					<label for="state"> <spring:message code="lable.level_class"/> <span class="required-indicator">*</span>
+					<label for="state"> <spring:message code="label.level_class"/> <span class="required-indicator">*</span>
 					</label> <select name="state" required="" id="state">
 						<c:choose>
 							<c:when test="${empty areaCache}">
