@@ -27,6 +27,6 @@ public class EducationServiceTest {
 		int expected = 9;
 		int actual = es.countAllEducation();
 		TestCase.assertEquals(expected, actual);
-	}
+	}	
 
 }
