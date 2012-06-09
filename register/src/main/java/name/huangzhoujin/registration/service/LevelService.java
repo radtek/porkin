@@ -27,6 +27,7 @@ public class LevelService {
 		if(result==null || result.size()==0){
 			LevelCriteria criteria = new LevelCriteria();
 			criteria.setOrderByClause("Level_ID");
+			result = levelMapper.selectByExample(criteria);
 			SimpleCache.refresh(SystemConstants.LevelCache, result);
 		}
 		return result;

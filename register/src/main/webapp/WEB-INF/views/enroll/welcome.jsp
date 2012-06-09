@@ -68,7 +68,7 @@
 					<label for="name">
 						<spring:message code="label.register.name"/><span class="required-indicator">*</span>
 					</label> 
-					<input type="text" name="name" required="" value="" id="name" />
+					<input type="text" name="name" required="" value="${name}" id="name" />
 				</div>
 				
 				<div class="fieldcontain  required">
@@ -153,7 +153,7 @@
 					<label for="id_card">
 						<spring:message code="label.register.id_card"/><span class="required-indicator">*</span>
 					</label> 
-					<input type="text" name="id_card" required="" value="" id="id_card" />
+					<input type="text" name="id_card" required="" value="${id_card}" id="id_card" /><font color="red"><c:if test="${not empty idcard}"><fmt:message key="${idcard.text}" /></c:if></font
 				</div>
 				
 				<div class="fieldcontain  required">

@@ -14,6 +14,8 @@ import name.huangzhoujin.registration.service.LevelService;
 import name.huangzhoujin.registration.service.LocationService;
 import name.huangzhoujin.registration.service.RegistrationService;
 import name.huangzhoujin.registration.utils.DateUtil;
+import name.huangzhoujin.registration.utils.FlashMap.Message;
+import name.huangzhoujin.registration.utils.FlashMap.MessageType;
 import name.huangzhoujin.registration.utils.IdCardValidator;
 import name.huangzhoujin.registration.utils.SystemConstants;
 
@@ -39,7 +41,7 @@ public class MainController {
 
 	@Autowired
 	private LocationService locationService;
-	
+
 	@Autowired
 	private RegistrationService registrationService;
 
@@ -49,9 +51,11 @@ public class MainController {
 			@RequestParam Integer area, @RequestParam String old_level,
 			@RequestParam String new_level, @RequestParam String id_card,
 			@RequestParam String unemployee_no, @RequestParam Integer location,
-			@RequestParam String start_date) {
+			@RequestParam String start_date, Model model) {
+		
+		boolean hasError = false;
 
-		if(IdCardValidator.isValid(id_card)){
+		if (IdCardValidator.isValid(id_card)) {
 			Registration record = new Registration();
 			record.setRegister(name);
 			record.setGender(gender);
@@ -65,11 +69,26 @@ public class MainController {
 			record.setRegistrationDate(new Date());
 			record.setStartDate(DateUtil.strToDate(start_date));
 			registrationService.Save(record);
+			model.addAttribute("name", name);
 			return "enroll/success";
-			
+
+		} else {
+			model.addAttribute("idcard", new Message(MessageType.error,
+					"registration.idcard.error"));
+			hasError = true;
+			List<Area> areaList = areaService.getAll();
+			model.addAttribute(SystemConstants.AreaCache, areaList);
+			List<Education> eductionList = educationService.getAll();
+			model.addAttribute(SystemConstants.EducationCache, eductionList);
+			List<Level> levelList = levelService.getAll();
+			model.addAttribute(SystemConstants.LevelCache, levelList);
+			List<Location> locationList = locationService.getAll();
+			model.addAttribute(SystemConstants.LocationCache, locationList);
+
+			return "enroll/welcome";
+
 		}
-		
-		return "enroll/welcome";
+
 	}
 
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
@@ -77,13 +96,10 @@ public class MainController {
 
 		List<Area> areaList = areaService.getAll();
 		model.addAttribute(SystemConstants.AreaCache, areaList);
-
 		List<Education> eductionList = educationService.getAll();
 		model.addAttribute(SystemConstants.EducationCache, eductionList);
-
 		List<Level> levelList = levelService.getAll();
 		model.addAttribute(SystemConstants.LevelCache, levelList);
-
 		List<Location> locationList = locationService.getAll();
 		model.addAttribute(SystemConstants.LocationCache, locationList);
 

@@ -639,3 +639,25 @@ a.skip {
 	PADDING-TOP: 2px;
 	BORDER-BOTTOM: #2C59AA 1px solid
 }
+
+.info_title {
+	color: #000000;
+	PADDING-LEFT: 40px;
+	text-align: left;
+	font-weight:bold;
+	
+}
+
+.info_content {
+	color: #000000;
+	PADDING-LEFT: 80px;
+	text-align: left;
+	
+}
+
+.return_url {
+	color: #000000;
+	PADDING-LEFT: 400px;
+	align: middle
+	
+}
