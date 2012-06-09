@@ -3,7 +3,6 @@ package name.huangzhoujin.registration.service;
 import java.util.List;
 
 import junit.framework.TestCase;
-import name.huangzhoujin.registration.persistence.domain.Education;
 import name.huangzhoujin.registration.persistence.domain.Level;
 import name.huangzhoujin.registration.utils.BeanLocatorUtil;
 import name.huangzhoujin.registration.utils.Constants;
