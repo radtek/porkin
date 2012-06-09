@@ -21,14 +21,14 @@ public class RegistrationService {
 		return (result > 0);
 	}
 
-	public int delete(int id) {
+	public boolean delete(int id) {
 		int result = registrationMapper.deleteByPrimaryKey(id);
-		return result;
+		return result > 0;
 	}
 
 	public boolean update(Registration record) {
 		int result = registrationMapper.updateByPrimaryKey(record);
-		return (result > 0);
+		return result > 0;
 	}
 
 }
