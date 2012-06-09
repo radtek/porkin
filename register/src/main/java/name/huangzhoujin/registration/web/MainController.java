@@ -52,7 +52,7 @@ public class MainController {
 			@RequestParam String new_level, @RequestParam String id_card,
 			@RequestParam String unemployee_no, @RequestParam Integer location,
 			@RequestParam String start_date, Model model) {
-		
+
 		boolean hasError = false;
 
 		if (IdCardValidator.isValid(id_card)) {
@@ -76,6 +76,8 @@ public class MainController {
 			model.addAttribute("idcard", new Message(MessageType.error,
 					"registration.idcard.error"));
 			hasError = true;
+			model.addAttribute("hasError", hasError);
+
 			List<Area> areaList = areaService.getAll();
 			model.addAttribute(SystemConstants.AreaCache, areaList);
 			List<Education> eductionList = educationService.getAll();
