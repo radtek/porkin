@@ -17,5 +17,9 @@ public class SystemConstants {
 	public static final String LevelCache = "levelCache";
 	public static final String LocationCache = "locationCache";
 	public static final String UserCache = "userCache";
+	
+	// Flag
+	public static final String ActiveFlag = "Y";
+	public static final String NotActiveFlag = "N";
 
 }

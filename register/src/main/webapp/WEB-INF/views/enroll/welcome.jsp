@@ -43,10 +43,7 @@
 
 </head>
 <body>
-	<div id="grailsLogo" role="banner">
-		<a href="http://grails.org"><img
-			src="${ctx}/images/grails_logo.png" alt="Grails" /></a>
-	</div>
+<jsp:include page="/common/banner.jsp" />
 
 
 	<a href="#create-race" class="skip" tabindex="-1">Skip to
@@ -153,7 +150,8 @@
 					<label for="id_card">
 						<spring:message code="label.register.id_card"/><span class="required-indicator">*</span>
 					</label> 
-					<input type="text" name="id_card" required="" value="${id_card}" id="id_card" /><font color="red"><c:if test="${not empty idcard}"><fmt:message key="${idcard.text}" /></c:if></font
+					<input type="text" name="id_card" required="" value="${id_card}" id="id_card" />
+					<font color="red"><c:if test="${not empty idcard}"><fmt:message key="${idcard.text}" /></c:if></font>
 				</div>
 				
 				<div class="fieldcontain  required">
@@ -200,10 +198,7 @@
 		</form>
 	</div>
 
-	<div class="footer" role="contentinfo"></div>
-	<div id="spinner" class="spinner" style="display: none;">Loading&hellip;</div>
-
-	<script src="${ctx}/scripts/application.js" type="text/javascript"></script>
+	<jsp:include page="/common/footer.jsp" />
 
 </body>
 </html>

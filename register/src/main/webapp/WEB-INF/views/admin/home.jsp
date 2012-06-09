@@ -37,45 +37,67 @@
 <meta name="layout" content="main">
 <script>
 	$(function() {
-		$( "#start_date" ).datepicker();
+		$("#start_date").datepicker();
 	});
 </script>
 
 </head>
 <body>
-<jsp:include page="/common/banner.jsp" />
+	<jsp:include page="/common/banner.jsp" />
 
-
-	<a href="#create-race" class="skip" tabindex="-1">Skip to
-		content&hellip;</a>
-	<!-- 	<div class="nav" role="navigation"> -->
-	<!-- 		<ul> -->
-	<!-- 			<li><a class="home" href="/racetrack/">Home</a></li> -->
-	<!-- 			<li><a href="/racetrack/race/list" class="list">Race List</a></li> -->
-	<!-- 		</ul> -->
-	<!-- 	</div> -->
-
-	<div id="create-race" class="content scaffold-create" role="main">
-		<h1>
-			<spring:message code="label.register.welcome" />
-		</h1>
-		<br /> <br /> 
-
-		<div>
-			<div class="info_title">
-				${name}: <spring:message code="registration.hello" />	
-			</div>
-			<br/> <br/>
-			<div class="info_content"><spring:message code="registration.success" />			
+	<a href="#list-book" class="skip" tabindex="-1">Skip to content&hellip;</a>
+		<div class="nav" role="navigation">
+			<ul>
+				<li><a class="home" href="/racetrack/">Home</a></li>
+				<li><a href="/racetrack/book/create" class="create">New Book</a></li>
+			</ul>
+		</div>
+		<div id="list-book" class="content scaffold-list" role="main">
+			<h1>Book List</h1>
+			
+			<table>
+				<thead>
+					<tr>
+					
+						<th class="sortable" ><a href="/racetrack/book/list?sort=bname&amp;max=10&amp;order=asc">Bname</a></th>
+					
+						<th class="sortable" ><a href="/racetrack/book/list?sort=btype&amp;max=10&amp;order=asc">Btype</a></th>
+					
+						<th class="sortable" ><a href="/racetrack/book/list?sort=counter&amp;max=10&amp;order=asc">Counter</a></th>
+					
+						<th class="sortable" ><a href="/racetrack/book/list?sort=inTime&amp;max=10&amp;order=asc">In Time</a></th>
+					
+						<th class="sortable" ><a href="/racetrack/book/list?sort=memo&amp;max=10&amp;order=asc">Memo</a></th>
+					
+						<th class="sortable" ><a href="/racetrack/book/list?sort=price&amp;max=10&amp;order=asc">Price</a></th>
+					
+					</tr>
+				</thead>
+				<tbody>
+				
+					<tr class="even">
+					
+						<td><a href="/racetrack/book/show/1">abc</a></td>
+					
+						<td>da</td>
+					
+						<td>1</td>
+					
+						<td>2012-06-09 00:00:00 CST</td>
+					
+						<td>dfa</td>
+					
+						<td>111</td>
+					
+					</tr>
+				
+				</tbody>
+			</table>
+			<div class="pagination">
+				
 			</div>
 		</div>
-		<br/><br/>
-		<div class="return_url">
-			<a href="${ctx}/enroll/welcome"><spring:message code="button.register.return"/></a>
-		</div>
-	</div>
 
-	<jsp:include page="/common/footer.jsp" />
-
+		<jsp:include page="/common/footer.jsp" />
 </body>
 </html>

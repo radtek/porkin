@@ -68,7 +68,7 @@ public class MainController {
 			record.setLocationId(location);
 			record.setRegistrationDate(new Date());
 			record.setStartDate(DateUtil.strToDate(start_date));
-			registrationService.Save(record);
+			registrationService.create(record);
 			model.addAttribute("name", name);
 			return "enroll/success";
 

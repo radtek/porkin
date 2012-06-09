@@ -24,4 +24,11 @@ public class AreaService {
 		criteria.setOrderByClause("AREA_ID");
 		return areaMapper.selectByExample(criteria);
 	}
+	
+	public int delete(int id){
+		
+		
+	}
+	
+	public int save()
 }

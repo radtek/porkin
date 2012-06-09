@@ -17,8 +17,7 @@ public class UserServiceTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		us = (UserService) BeanLocatorUtil
-				.getBean(Constants.User_Service);
+		us = (UserService) BeanLocatorUtil.getBean(Constants.User_Service);
 	}
 
 	@After
