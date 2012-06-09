@@ -5,6 +5,8 @@ import java.util.List;
 import name.huangzhoujin.registration.persistence.domain.Level;
 import name.huangzhoujin.registration.persistence.domain.LevelCriteria;
 import name.huangzhoujin.registration.persistence.sqlmapdao.LevelMapper;
+import name.huangzhoujin.registration.utils.SimpleCache;
+import name.huangzhoujin.registration.utils.SystemConstants;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,14 @@ public class LevelService {
 		return levelMapper.countByExample(null);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Level> getAll(){
-		LevelCriteria criteria = new LevelCriteria();
-		criteria.setOrderByClause("Level_ID");
-		return levelMapper.selectByExample(criteria);
+		List<Level> result = (List<Level>) SimpleCache.load(SystemConstants.LevelCache);
+		if(result==null || result.size()==0){
+			LevelCriteria criteria = new LevelCriteria();
+			criteria.setOrderByClause("Level_ID");
+			SimpleCache.refresh(SystemConstants.LevelCache, result);
+		}
+		return result;
 	}
 }

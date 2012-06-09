@@ -7,11 +7,11 @@ public class SimpleCache {
 	
 	private static Map<String, Object> cache = new HashMap<String, Object>();
 
-	public static Object Load(String name) {
+	public static Object load(String name) {
 		return cache.get(name);
 	}
 
-	public static void Refresh(String name, Object obj) {
+	public static void refresh(String name, Object obj) {
 		cache.put(name, obj);
 	}
 
