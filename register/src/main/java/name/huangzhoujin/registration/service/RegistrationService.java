@@ -1,5 +1,6 @@
 package name.huangzhoujin.registration.service;
 
+import name.huangzhoujin.registration.persistence.domain.Registration;
 import name.huangzhoujin.registration.persistence.sqlmapdao.RegistrationMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,11 @@ public class RegistrationService {
 	
 	public int countAllRegistration() {
 		return registrationMapper.countByExample(null);
+	}
+	
+	public boolean Save(Registration record){
+		int result = registrationMapper.insert(record);
+		return (result>0);
 	}
 	
 }

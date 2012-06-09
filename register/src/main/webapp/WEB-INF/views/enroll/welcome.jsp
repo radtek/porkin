@@ -61,7 +61,7 @@
 	<div id="create-race" class="content scaffold-create" role="main">
 		<h1><spring:message code="label.register.welcome"/></h1>
 
-		<form action="/racetrack/race/save" method="post">
+		<form action="${ctx}/enroll/registration" method="post">
 			<fieldset class="form">
 
 				<div class="fieldcontain  required">
@@ -126,7 +126,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="level" items="${levelCache}" varStatus="status">
-									<option value='<c:out value="${level.levelId}"/>'><c:out value="${level.levelName}"/></option>
+									<option value='<c:out value="${level.levelName}"/>'><c:out value="${level.levelName}"/></option>
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
@@ -142,7 +142,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="level" items="${levelCache}" varStatus="status">
-									<option value='<c:out value="${level.levelId}"/>'><c:out value="${level.levelName}"/></option>
+									<option value='<c:out value="${level.levelName}"/>'><c:out value="${level.levelName}"/></option>
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
@@ -181,7 +181,7 @@
 				
 				<div class="fieldcontain  required">
 					<label for="start_date"> <spring:message code="label.register.start_date"/> <span class="required-indicator">*</span>
-					</label> <input type="text" name="start_date" required="" value="10000"
+					</label> <input type="text" name="start_date" required="" value=""
 						id="start_date" />
 				</div>
 
@@ -190,8 +190,12 @@
 			<fieldset class="fieldcontain  required">
 				<label for="submit">&nbsp;<span class="required-indicator"></span>
 					</label> 
-					<input type="submit" name="create" class="save" value="Create"
-					id="create" />
+					<input type="submit" name="create" 
+						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
+						onmouseout="this.className='btn3_mouseout'"
+						onmousedown="this.className='btn3_mousedown'"
+						onmouseup="this.className='btn3_mouseup'"
+						title='<spring:message code="button.register.submit"/>' value='<spring:message code="button.register.submit"/>' id="create" />
 			</fieldset>
 		</form>
 	</div>
