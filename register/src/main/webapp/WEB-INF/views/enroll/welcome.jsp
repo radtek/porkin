@@ -154,11 +154,25 @@
 					<font color="red"><c:if test="${not empty idcard}"><fmt:message key="${idcard.text}" /></c:if></font>
 				</div>
 				
-				<div class="fieldcontain  required">
+				<div class="fieldcontain  ">
 					<label for="unemployee_no">
-						<spring:message code="label.register.unemployee_no"/><span class="required-indicator">*</span>
+						<spring:message code="label.register.unemployee_no"/><span class="required-indicator"></span>
 					</label> 
 					<input type="text" name="unemployee_no" required="" value="" id="unemployee_no" />
+				</div>
+				
+				<div class="fieldcontain  required">
+					<label for="telephone">
+						<spring:message code="label.register.telephone"/><span class="required-indicator">*</span>
+					</label> 
+					<input type="text" name="telephone" required="" value="" id="telephone" />
+				</div>
+				
+				<div class="fieldcontain  ">
+					<label for="work_unit">
+						<spring:message code="label.register.work_unit"/><span class="required-indicator"></span>
+					</label> 
+					<input type="text" name="work_unit" required="" value="" id="work_unit" />
 				</div>
 
 				<div class="fieldcontain  required">
@@ -188,12 +202,19 @@
 			<fieldset class="fieldcontain  required">
 				<label for="submit">&nbsp;<span class="required-indicator"></span>
 					</label> 
-					<input type="submit" name="create" 
+					<input type="submit" name="submit" 
 						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
 						onmouseout="this.className='btn3_mouseout'"
 						onmousedown="this.className='btn3_mousedown'"
 						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.submit"/>' value='<spring:message code="button.register.submit"/>' id="create" />
+						title='<spring:message code="button.register.submit"/>' value='<spring:message code="button.register.submit"/>' id="submit" />
+						<span class="required-indicator">&nbsp;&nbsp;&nbsp;</span>
+						<input type="reset" name="reset" 
+						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
+						onmouseout="this.className='btn3_mouseout'"
+						onmousedown="this.className='btn3_mousedown'"
+						onmouseup="this.className='btn3_mouseup'"
+						title='<spring:message code="button.register.reset"/>' value='<spring:message code="button.register.reset"/>' id="reset" />
 			</fieldset>
 		</form>
 	</div>
