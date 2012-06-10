@@ -34,8 +34,8 @@ public class CustomServiceTest {
 		// condition.put("register", "黄州锦");
 		condition.put("unemployed_no", "123456789");
 
-		int expected = 2;
-		int actual = cs.countByCondition(condition);
+		long expected = 2;
+		long actual = cs.countByCondition(condition);
 		System.out.println("Result=" + actual);
 		TestCase.assertEquals(expected, actual);
 
@@ -49,24 +49,26 @@ public class CustomServiceTest {
 		condition.put("register", "黄州锦");
 		// condition.put("unemployed_no", "123456789");
 
-		int expected = 12;
-		int actual = cs.countByCondition(condition);
+		long expected = 12;
+		long actual = cs.countByCondition(condition);
 		System.out.println("Result=" + actual);
 		TestCase.assertEquals(expected, actual);
 
 	}
 	
-	//@Test
+	@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testListtByCondition1() {
 		int pageNo = 1;
-		int pageSize = 10;
+		int pageSize = 5;
 		
 		HashMap condition = new HashMap();
 		condition.put("register", "黄州锦");
+		condition.put("first", pageNo);
+		condition.put("pageSize", pageSize);
 		// condition.put("unemployed_no", "123456789");
 		
-		List<CustomDto> result = cs.listByCondition(pageNo,pageSize,condition);
+		List<CustomDto> result = cs.listByCondition(condition);
 		Iterator<CustomDto> iter = result.iterator();
 		CustomDto temp = null;
 		int i = 0;

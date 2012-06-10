@@ -1,7 +1,6 @@
 package name.huangzhoujin.registration.web;
 
 import java.util.HashMap;
-import java.util.List;
 
 import name.huangzhoujin.registration.persistence.dto.CustomDto;
 import name.huangzhoujin.registration.service.CustomService;
@@ -22,15 +21,18 @@ public class AdminController {
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) {
-		int pageNo = 1;
-		int pageSize = 10;
+		Page<CustomDto> page = new Page<CustomDto>();
+		page.setPageNo(1);
+		page.setPageSize(10);
 		HashMap param = new HashMap();
-		int count = customService.countByCondition(param);
-		List<CustomDto> list = customService.listByCondition(pageNo,pageSize,param);
-		model.addAttribute("count", count);
-		model.addAttribute("currentPage", pageSize);
-		model.addAttribute("pageSize", pageSize);
-		return "admin/index";
+		param.put("first",page.getFirst());
+		param.put("pageSize", page.getPageSize());
+		page.setResult(customService.listByCondition(param));
+		page.setTotalCount(customService.countByCondition(param));
+		
+		//List<CustomDto> list = customService.listByCondition(pageNo,pageSize,param);
+		model.addAttribute("page", page);
+		return "admin/home";
 
 	}
 
