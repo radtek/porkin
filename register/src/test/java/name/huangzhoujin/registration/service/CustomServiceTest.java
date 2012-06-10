@@ -21,14 +21,13 @@ public class CustomServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		cs = (CustomService) BeanLocatorUtil.getBean(Constants.Custom_Service);
-
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testCountByCondition1() {
 		HashMap condition = new HashMap();
@@ -43,7 +42,7 @@ public class CustomServiceTest {
 	}
 
 	
-	@Test
+	//@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testCountByCondition2() {
 		HashMap condition = new HashMap();
@@ -57,7 +56,7 @@ public class CustomServiceTest {
 
 	}
 	
-	@Test
+	//@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testListtByCondition1() {
 		int pageNo = 1;
