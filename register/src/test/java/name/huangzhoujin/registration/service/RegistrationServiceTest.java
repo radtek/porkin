@@ -24,7 +24,7 @@ public class RegistrationServiceTest {
 
 	@Test
 	public void testCountAllRegistration() {
-		int expected = 0;
+		int expected = 36;
 		int actual = rs.countAllRegistration();
 		TestCase.assertEquals(expected, actual);
 	}

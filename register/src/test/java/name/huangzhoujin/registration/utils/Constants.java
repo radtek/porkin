@@ -8,7 +8,7 @@ public class Constants {
 	public static final String Location_Service = "locationService";
 	public static final String Registration_Service = "registrationService";
 	public static final String User_Service = "userService";
-	public static final String Custom_ervice = "customService";
+	public static final String Custom_Service = "customService";
 
 	public static String[] SERVICE_FACTORY_PATH_FOR_TEST = new String[] { "spring/applicationContext.xml" };
 
