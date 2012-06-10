@@ -7,7 +7,13 @@
 	content&hellip;</a>
 <div class="nav" role="navigation">
 	<ul>
-		<li><a class="home" href="/racetrack/">Home</a></li>
-		<li><a href="/racetrack/book/create" class="create">New Book</a></li>
+		<li><a class="home" href="${ctx}/registration/list"><spring:message
+					code="menu.sub.registration" /></a></li>
+		<li><a href="${ctx}/area/list" class="list"><spring:message
+					code="menu.sub.area" /></a></li>
+
+		<li><a href="${ctx}/user/list" class="create"><spring:message
+					code="menu.sub.user" /></a></li>
+
 	</ul>
 </div>

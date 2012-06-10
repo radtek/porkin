@@ -1,17 +1,14 @@
 package name.huangzhoujin.registration.persistence.sqlmapdao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import name.huangzhoujin.registration.persistence.dto.CustomDto;
+import name.huangzhoujin.registration.utils.Page;
 
 public interface CustomMapper {
 
-	@SuppressWarnings("rawtypes")
-	int countByCondition(HashMap example);
+	int countByCondition(Page<CustomDto> page);
 	
-	
-	@SuppressWarnings("rawtypes")
-	List<CustomDto> listByCondition(HashMap example);
+	List<CustomDto> listByCondition(Page<CustomDto> page);
 
 }

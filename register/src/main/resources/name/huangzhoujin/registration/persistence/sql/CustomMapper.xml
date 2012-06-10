@@ -22,16 +22,16 @@
   
 	<sql id="Condtione_Where_Clause">
 		<where>
-			<if test="register != null">
-				register = #{register}
+			<if test="param.register != null">
+				register = #{param.register}
 			</if>
-			<if test="unemployed_no != null">
-				AND unemployed_no = #{unemployed_no}
+			<if test="param.unemployed_no != null">
+				AND unemployed_no = #{param.unemployed_no}
 			</if>
 		</where>
 	</sql>
 
-	<select id="countByCondition" parameterType="java.util.HashMap"
+	<select id="countByCondition" parameterClass="name.huangzhoujin.registration.utils.Page"
 		resultType="java.lang.Integer">
 		select count(*) count_number from t_reg_registration
 		<if test="_parameter != null">
@@ -40,7 +40,7 @@
 
 	</select>
 
-	<select id="listByCondition" parameterType="java.util.HashMap"
+	<select id="listByCondition" parameterClass="name.huangzhoujin.registration.utils.Page"
 		resultMap="CustomResultMap">
 		select
 			REGISTRATION_ID registrationId,
@@ -67,7 +67,7 @@
 		</if>
 		order by REGISTRATION_ID,AREA_NAME,NEW_LEVEL,START_DATE
 		<if test="pageNo !=null">
-			limit #{pageNo}, #{pageSize}
+			LIMIT #{first}, #{pageSize};
 		</if>
 	</select>
 

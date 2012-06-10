@@ -46,48 +46,33 @@
 	<jsp:include page="/common/banner.jsp" />
 
 	<a href="#list-book" class="skip" tabindex="-1">Skip to content&hellip;</a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="/racetrack/">Home</a></li>
-				<li><a href="/racetrack/book/create" class="create">New Book</a></li>
-			</ul>
-		</div>
+	<jsp:include page="/common/menu.jsp" />
+
 		<div id="list-book" class="content scaffold-list" role="main">
-			<h1>Book List</h1>
+			<h1><spring:message code="registration.list" /></h1>
 			
 			<table>
 				<thead>
 					<tr>
-					
-						<th class="sortable" ><a href="/racetrack/book/list?sort=bname&amp;max=10&amp;order=asc">Bname</a></th>
-					
-						<th class="sortable" ><a href="/racetrack/book/list?sort=btype&amp;max=10&amp;order=asc">Btype</a></th>
-					
-						<th class="sortable" ><a href="/racetrack/book/list?sort=counter&amp;max=10&amp;order=asc">Counter</a></th>
-					
-						<th class="sortable" ><a href="/racetrack/book/list?sort=inTime&amp;max=10&amp;order=asc">In Time</a></th>
-					
-						<th class="sortable" ><a href="/racetrack/book/list?sort=memo&amp;max=10&amp;order=asc">Memo</a></th>
-					
-						<th class="sortable" ><a href="/racetrack/book/list?sort=price&amp;max=10&amp;order=asc">Price</a></th>
-					
+						<th class="sortable" ><spring:message code="label.register.name" /></th>
+						<th class="sortable" ><spring:message code="label.register.gender" /></th>
+						<th class="sortable" ><spring:message code="label.register.id_card" /></th>
+						<th class="sortable" ><spring:message code="label.register.area" /></th>
+						<th class="sortable" ><spring:message code="label.register.new_level" /></th>
+						<th class="sortable" ><spring:message code="label.register.telephone" /></th>
+						<th class="sortable" >&nbsp;</th>
+						<th class="sortable" >&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
 				
 					<tr class="even">
-					
-						<td><a href="/racetrack/book/show/1">abc</a></td>
-					
 						<td>da</td>
-					
 						<td>1</td>
-					
 						<td>2012-06-09 00:00:00 CST</td>
-					
 						<td>dfa</td>
-					
 						<td>111</td>
+						<td><a href="/racetrack/book/show/1">abc</a></td>
 					
 					</tr>
 				

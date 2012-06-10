@@ -60,13 +60,14 @@ public class CustomServiceTest {
 	@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testListtByCondition1() {
+		int pageNo = 1;
+		int pageSize = 10;
+		
 		HashMap condition = new HashMap();
 		condition.put("register", "黄州锦");
-		condition.put("pageNo", 2);
-		condition.put("pageSize", 5);
-		
 		// condition.put("unemployed_no", "123456789");
-		List<CustomDto> result = cs.listByCondition(condition);
+		
+		List<CustomDto> result = cs.listByCondition(pageNo,pageSize,condition);
 		Iterator<CustomDto> iter = result.iterator();
 		CustomDto temp = null;
 		int i = 0;
