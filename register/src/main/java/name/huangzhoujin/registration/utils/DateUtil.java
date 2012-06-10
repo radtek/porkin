@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class DateUtil {
 	
-	private static String dateFormat = "yyyy-MM-dd";
+	private static String dateFormat = SystemConstants.defaultFormat1;
 	
 	public static String getDateFormat() {
 		return dateFormat;
@@ -15,6 +15,18 @@ public class DateUtil {
 		DateUtil.dateFormat = dateFormat;
 	}
 
+	public static String dateToStr(Date date){
+		String result = null;
+		try{
+			SimpleDateFormat sdf=new SimpleDateFormat(getDateFormat());
+			result = sdf.format(date);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public static Date strToDate(String strDate){
 		Date result = null;
 		try{
@@ -26,5 +38,5 @@ public class DateUtil {
 		}
 		return result;
 	}
-
+	
 }

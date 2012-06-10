@@ -3,6 +3,23 @@
 <mapper
 	namespace="name.huangzhoujin.registration.persistence.sqlmapdao.CustomMapper">
 
+	<resultMap id="CustomResultMap" type="name.huangzhoujin.registration.persistence.dto.CustomDto" >
+    	<result column="REGISTRATION_ID" property="registrationId" jdbcType="INTEGER" />
+    	<result column="REGISTER" property="register" jdbcType="VARCHAR" />
+    	<result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    	<result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    	<result column="OLD_LEVEL" property="oldLevel" jdbcType="VARCHAR" />
+    	<result column="NEW_LEVEL" property="newLevel" jdbcType="VARCHAR" />
+    	<result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
+    	<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    	<result column="WORK_UNIT" property="workUnit" jdbcType="VARCHAR" />
+    	<result column="UNEMPLOYED_NO" property="unemployedNo" jdbcType="VARCHAR" />
+    	<result column="REGISTRATION_DATE" property="registrationDate" jdbcType="DATE" />
+    	<result column="START_DATE" property="startDate" jdbcType="DATE" />
+    	<result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    	<result column="LOCATION_NAME" property="locationName" jdbcType="VARCHAR" />
+  </resultMap>
+  
 	<sql id="Condtione_Where_Clause">
 		<where>
 			<if test="register != null">
@@ -20,6 +37,35 @@
 		<if test="_parameter != null">
 			<include refid="Condtione_Where_Clause" />
 		</if>
+
+	</select>
+
+	<select id="listByCondition" parameterType="java.util.HashMap"
+		resultMap="CustomResultMap">
+		select
+			REGISTRATION_ID registrationId,
+			REGISTER register,
+			GENDER gender,
+			EDUCATION education,
+			OLD_LEVEL oldLevel,
+			NEW_LEVEL newLevel,
+			ID_CARD idCard,
+			PHONE phone,
+			WORK_UNIT workUnit,
+			UNEMPLOYED_NO unemployedNo,
+			REGISTRATION_DATE registrationDate,
+			START_DATE startDate,
+			AREA_NAME areaName,
+			LOCATION_NAME locationName
+		from t_reg_registration t1
+		left join t_reg_area t2 on
+		(t1.area_id = t2.area_id)
+		left join t_reg_location t3 on
+		(t1.location_id = t3.location_id)
+		<if test="_parameter != null">
+			<include refid="Condtione_Where_Clause" />
+		</if>
+		order by REGISTRATION_ID,AREA_NAME,NEW_LEVEL,START_DATE
 		<if test="pageNo !=null">
 			limit #{pageNo}, #{pageSize}
 		</if>

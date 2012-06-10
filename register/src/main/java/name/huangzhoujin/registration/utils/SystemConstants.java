@@ -21,5 +21,9 @@ public class SystemConstants {
 	// Flag
 	public static final String ActiveFlag = "Y";
 	public static final String NotActiveFlag = "N";
+	
+	public static String defaultFormat1 = "yyyy-MM-dd";
+	public static String defaultFormat2 = "yyyy/MM/dd";
+
 
 }

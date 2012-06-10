@@ -1,7 +1,9 @@
 package name.huangzhoujin.registration.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import name.huangzhoujin.registration.persistence.dto.CustomDto;
 import name.huangzhoujin.registration.persistence.sqlmapdao.CustomMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,11 @@ public class CustomService {
 	@SuppressWarnings("rawtypes")
 	public int countByCondition(HashMap param){
 		return customMapper.countByCondition(param);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<CustomDto> listByCondition(HashMap param){
+		return customMapper.listByCondition(param);
 	}
 
 }
