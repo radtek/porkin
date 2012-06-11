@@ -27,12 +27,17 @@ public class CustomServiceTest {
 	public void tearDown() throws Exception {
 	}
 
-	//@Test
+	@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testCountByCondition1() {
 		HashMap condition = new HashMap();
 		// condition.put("register", "黄州锦");
 		condition.put("unemployed_no", "123456789");
+		
+		condition.put("start_date", "2012-06-01");
+		condition.put("end_date", "2013-06-01");
+		condition.put("start_time", "2012-06-01");
+		condition.put("end_time", "2013-06-01");
 
 		long expected = 2;
 		long actual = cs.countByCondition(condition);
@@ -42,7 +47,7 @@ public class CustomServiceTest {
 	}
 
 	
-	//@Test
+	@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testCountByCondition2() {
 		HashMap condition = new HashMap();
