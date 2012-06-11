@@ -119,7 +119,7 @@
 					</label> <select name="old_level" required="" id="old_level">
 						<c:choose>
 							<c:when test="${empty levelCache}">
-								<c:if test="${type == 'levelCache' }"><option value="0"><spring:message code="label.register.no_data"/></option></c:if>
+								<option value="0"><spring:message code="label.register.no_data"/></option>
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="level" items="${levelCache}" varStatus="status">
@@ -135,7 +135,7 @@
 					</label> <select name="new_level" required="" id="new_level">
 						<c:choose>
 							<c:when test="${empty levelCache}">
-								<c:if test="${type == 'levelCache' }"><option value="0"><spring:message code="label.register.no_data"/></option></c:if>
+								<option value="0"><spring:message code="label.register.no_data"/></option>
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="level" items="${levelCache}" varStatus="status">

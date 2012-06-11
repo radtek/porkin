@@ -23,10 +23,46 @@
 	<sql id="Condtione_Where_Clause">
 		<where>
 			<if test="register != null">
-				register = #{register}
+				REGISTER like %#{register}%
 			</if>
-			<if test="unemployed_no != null">
-				AND unemployed_no = #{unemployed_no}
+			
+			<if test="id_card != null">
+				AND ID_CARD = #{id_card}
+			</if>
+			
+			<if test="telephone != null">
+				AND PHONE = #{telephone}
+			</if>
+			
+			<if test="area_id != null">
+				AND t1.area_id = #{area_id}
+			</if>
+			
+			<if test="old_level != null">
+				AND old_level = #{old_level}
+			</if>
+			
+			<if test="new_level != null">
+				AND new_level = #{new_level}
+			</if>
+			<if test="start_date != null">
+				AND date_format(REGISTRATION_DATE, '%Y-%m-%d') >= #{start_time}
+			</if>
+			
+			<if test="end_date != null">
+				AND date_format(REGISTRATION_DATE, '%Y-%m-%d') <= #{end_date}
+			</if>
+			
+			<if test="start_time != null">
+				AND date_format(start_date, '%Y-%m-%d') >= #{start_time}
+			</if>
+			
+			<if test="end_time != null">
+				AND date_format(start_date, '%Y-%m-%d') <= #{end_time}
+			</if>
+			
+			<if test="location_id != null">
+				AND t1.location_id = #{location_id}
 			</if>
 		</where>
 	</sql>

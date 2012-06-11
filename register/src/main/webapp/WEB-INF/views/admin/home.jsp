@@ -40,6 +40,18 @@
 		$("#start_date").datepicker();
 	});
 	
+	$(function() {
+		$("#end_date").datepicker();
+	});
+	
+	$(function() {
+		$("#start_time").datepicker();
+	});
+	
+	$(function() {
+		$("#end_time").datepicker();
+	});
+	
 	/**
 	 * 验证输入页码
 	 * @param oInput
@@ -65,7 +77,7 @@
 		if (obj.value - 0 < 1) {
 			obj.value = 1;
 	    }
-		window.location.href = "${ctx}/supplier/comments/${supplierId}?page=" + obj.value + "&rows=10";
+		window.location.href = "${ctx}/registration/list?page=" + obj.value + "&rows=10";
 	}
 
 	/**
@@ -74,11 +86,11 @@
 	 * @return
 	 */
 	function skip(pageNum) {
-		window.location.href = "${ctx}/supplier/comments/${supplierId}?page=" + pageNum + "&rows=10";
+		window.location.href = "${ctx}/registration/list?page=" + pageNum + "&rows=10";
 	}
 	
 	function skip(pageNum) {
-		window.location.href = "${ctx}/supplier/comments/${supplierId}?page=" + pageNum + "&rows=10";
+		window.location.href = "${ctx}/registration/list?page=" + pageNum + "&rows=10";
 	}
 	
 	
@@ -96,6 +108,158 @@
 		<h1>
 			<spring:message code="registration.list" />
 		</h1>
+		<br />
+		<form action="${ctx}/registration/search" method="post">
+		<div class="searchbar">
+			<table>
+				<tr>
+					<td><spring:message code="label.register.name" />
+						&nbsp;&nbsp;<input type="text" name="register" value="${register}" id="register" /></td>
+					<td><spring:message code="label.register.id_card" />&nbsp;&nbsp;<input
+						type="text" name="id_card" value="${id_card}" id="name" /></td>
+					<td><spring:message code="label.register.telephone" />&nbsp;&nbsp;<input
+						type="text" name="telephone" value="${telephone}" id="name" /></td>
+				</tr>
+				<tr>
+					<td><spring:message code="label.register.area" />&nbsp;&nbsp;
+						<select name="area_id" required="" id="area_id">
+							<c:choose>
+								<c:when test="${empty areaCache}">
+									<option value="0">
+										<spring:message code="label.register.no_data" />
+									</option>
+								</c:when>
+								<c:otherwise>
+									<option value="">&nbsp;--&nbsp;</option>
+									<c:forEach var="area" items="${areaCache}" varStatus="status">
+										<c:choose>
+											<c:when test="$(area_id==area.areaId)">
+												<option value='<c:out value="${area.areaId}"/>' selected="selected">
+													<c:out value="${area.areaName}" />
+												</option>
+											</c:when>
+											<c:otherwise>
+												<option value='<c:out value="${area.areaId}"/>'>
+													<c:out value="${area.areaName}" />
+												</option>
+											</c:otherwise>
+										</c:choose>
+										
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+					</select></td>
+					<td><spring:message code="label.register.old_level" /> <select
+						name="old_level" required="" id="old_level">
+							<c:choose>
+								<c:when test="${empty levelCache}">
+									<option value="0">
+										<spring:message code="label.register.no_data" />
+									</option>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="level" items="${levelCache}" varStatus="status">
+										<c:choose>
+											<c:when test="${old_level==level.levelName} }">
+												<option value='<c:out value="${level.levelName}"/>' selected="selected">
+													<c:out value="${level.levelName}" />
+												</option>
+											</c:when>
+											<c:otherwise>
+												<option value='<c:out value="${level.levelName}"/>'>
+													<c:out value="${level.levelName}" />
+												</option>
+											</c:otherwise>
+										</c:choose>
+										
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+					</select></td>
+					<td><spring:message code="label.register.new_level" /> <select
+						name="new_level" required="" id="new_level">
+							<c:choose>
+								<c:when test="${empty levelCache}">
+									<option value="0">
+										<spring:message code="label.register.no_data" />
+									</option>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="level" items="${levelCache}" varStatus="status">
+										<c:choose>
+											<c:when test="${new_level==level.levelName}">
+												<option value='<c:out value="${level.levelName}"/>' selected="selected">
+													<c:out value="${level.levelName}" />
+												</option>
+											</c:when>
+											<c:otherwise>
+												<option value='<c:out value="${level.levelName}"/>'>
+													<c:out value="${level.levelName}" />
+												</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+					</select></td>
+					
+				</tr>
+				<tr>
+					<td>
+						<spring:message code="label.register.start_date" /><br />
+						<spring:message code="label.register.start_time" />&nbsp;:&nbsp;
+						<input type="text" name="start_date" value="${start_date}" id="start_date" /><br />
+						<spring:message code="label.register.end_time" />&nbsp;:&nbsp;
+						<input type="text" name="end_date" value="${end_date}" id="end_date" />
+					</td>
+					<td><spring:message code="label.register.reg_date" /><br />
+						<spring:message code="label.register.start_time" />&nbsp;:&nbsp;
+						<input type="text" name="start_time"  value="${start_time}" id="start_time" /><br />
+						<spring:message code="label.register.end_time" />&nbsp;:&nbsp;
+						<input type="text" name="end_time"  value="${end_time}" id="end_time" /></td>
+					<td>
+					<spring:message code="label.register.location"/> <span class="required-indicator">*</span>
+					<select name="location_id" required="" id="location_id">
+						<c:choose>
+							<c:when test="${empty locationCache}">
+								<option value="0"><spring:message code="label.register.no_data"/></option>
+							</c:when>
+							<c:otherwise>
+								<option value="">&nbsp;--&nbsp;</option>
+								<c:forEach var="location" items="${locationCache}" varStatus="status">
+									<c:choose>
+										<c:when test="${location_id==location.locationId}">
+											<option value="${location.locationId}" selected="selected">
+												<c:out value="${location.locationName}"/>
+											</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${location.locationId}"><c:out value="${location.locationName}"/></option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</select><br/><br/>
+					<input type="submit" name="submit" 
+						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
+						onmouseout="this.className='btn3_mouseout'"
+						onmousedown="this.className='btn3_mousedown'"
+						onmouseup="this.className='btn3_mouseup'"
+						title='<spring:message code="button.register.submit"/>' value='<spring:message code="button.register.submit"/>' id="submit" />
+						<span class="required-indicator">&nbsp;&nbsp;&nbsp;</span>
+						<input type="reset" name="reset" 
+						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
+						onmouseout="this.className='btn3_mouseout'"
+						onmousedown="this.className='btn3_mousedown'"
+						onmouseup="this.className='btn3_mouseup'"
+						title='<spring:message code="button.register.reset"/>' value='<spring:message code="button.register.reset"/>' id="reset" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		</form>
+		<br />
 
 		<c:choose>
 			<c:when test="${page.totalCount>0}">
@@ -128,36 +292,37 @@
 								<td>${custom.areaName}</td>
 								<td>${custom.newLevel}</td>
 								<td>${custom.phone}</td>
-								<td><a
-									href="${ctx}/registration/show/${custom.registrationId}"><spring:message
-											code="label.register.view" /></a></td>
-								<td><a
-									href="${ctx}/registration/detele/${custom.registrationId}"><spring:message
-											code="label.register.delete" /></a></td>
+								<td><spring:message code="label.register.delete" /></td>
+								<td>
+									<spring:message code="label.register.delete" />
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</c:when>
 			<c:otherwise>
-				<spring:message code="label.register.no_data" />
+				<div class="info_title"><spring:message code="label.register.no_data" />
+				<br/><br/><br/>
+				</div>
+				
 			</c:otherwise>
 		</c:choose>
 
 		<div class="pagination">
-			<table width="560" border="0" align="center" cellpadding="0" cellspacing="0">
-				<tr style="font-size:12px">
-					<td align="center" class="page_number">
-					<a href="javascript:void(0)" onclick="skip(1)">首页</a> &nbsp;&nbsp; 
-					<a href="javascript:void(0)" onclick="skip(${page.prePage})">前一页</a> &nbsp;&nbsp;
-					 第<input type="text" name="pageNum" size=2 value="${page.pageNo}" class="page_input" onkeyup="CheckInputInt(this);" onchange="go(this, ${page.pageNo });" />&nbsp;/&nbsp;${page.totalPages}
-			&nbsp;&nbsp; <a href="javascript:void(0)"
-				onclick="skip(${page.nextPage})">后一页</a>
-			&nbsp;&nbsp; <a href="javascript:void(0)" onclick="skip(${page.totalPages})">尾页</a>
-			&nbsp;&nbsp; 每页${page.pageSize}条&nbsp;/&nbsp; 共${page.totalCount }条记录</td>
-		</tr>
-	</table>
-	</div>
+			<a
+						href="javascript:void(0)" onclick="skip(1)">首页</a> &nbsp;&nbsp; <a
+						href="javascript:void(0)" onclick="skip(${page.prePage})">前一页</a>
+						&nbsp;&nbsp; 第<input type="text" name="pageNum" size=2
+						value="${page.pageNo}" class="page_input"
+						onkeyup="CheckInputInt(this);"
+						onchange="go(this, ${page.pageNo });" />&nbsp;/&nbsp;${page.totalPages}
+						&nbsp;&nbsp; <a href="javascript:void(0)"
+						onclick="skip(${page.nextPage})">后一页</a> &nbsp;&nbsp; <a
+						href="javascript:void(0)" onclick="skip(${page.totalPages})">尾页</a>
+						&nbsp;&nbsp; 每页${page.pageSize}条&nbsp;/&nbsp; 共${page.totalCount
+						}条记录</td>
+		</div>
 	</div>
 
 	<jsp:include page="/common/footer.jsp" />

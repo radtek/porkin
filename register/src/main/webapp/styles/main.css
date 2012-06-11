@@ -661,3 +661,20 @@ a.skip {
 	align: middle
 	
 }
+
+.searchbar {
+	color: #000000;
+	PADDING-LEFT: 30px;
+	align: left
+}
+
+.spacespan{
+	padding: 1em	
+}
+
+no_input{
+    background-color: #FCFCFC;
+    border: 1px solid #CCCCCC;
+    font-size: 1em;
+    padding: 0.2em 0.4em;
+}
