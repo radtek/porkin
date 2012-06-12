@@ -50,7 +50,7 @@ public class MainController {
 			@RequestParam String gender, @RequestParam String education,
 			@RequestParam Integer area, @RequestParam String old_level,
 			@RequestParam String new_level, @RequestParam String id_card,
-			@RequestParam String unemployee_no, @RequestParam Integer location,
+			@RequestParam String unemployee_no, @RequestParam String telephone, @RequestParam Integer location,
 			@RequestParam String start_date, Model model) {
 
 		boolean hasError = false;
@@ -65,6 +65,7 @@ public class MainController {
 			record.setNewLevel(new_level);
 			record.setIdCard(id_card);
 			record.setUnemployedNo(unemployee_no);
+			record.setPhone(telephone);
 			record.setLocationId(location);
 			record.setRegistrationDate(new Date());
 			record.setStartDate(DateUtil.strToDate(start_date));

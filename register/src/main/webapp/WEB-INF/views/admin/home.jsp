@@ -122,7 +122,7 @@
 				</tr>
 				<tr>
 					<td><spring:message code="label.register.area" />&nbsp;&nbsp;
-						<select name="area_id" required="" id="area_id">
+						<select name="area_id" id="area_id">
 							<c:choose>
 								<c:when test="${empty areaCache}">
 									<option value="0">
@@ -130,7 +130,7 @@
 									</option>
 								</c:when>
 								<c:otherwise>
-									<option value="">&nbsp;--&nbsp;</option>
+									<option value="0"><spring:message code="label.register.no_limit" /></option>
 									<c:forEach var="area" items="${areaCache}" varStatus="status">
 										<c:choose>
 											<c:when test="$(area_id==area.areaId)">
@@ -150,7 +150,7 @@
 							</c:choose>
 					</select></td>
 					<td><spring:message code="label.register.old_level" /> <select
-						name="old_level" required="" id="old_level">
+						name="old_level" id="old_level">
 							<c:choose>
 								<c:when test="${empty levelCache}">
 									<option value="0">
@@ -158,6 +158,7 @@
 									</option>
 								</c:when>
 								<c:otherwise>
+									<option value="0"><spring:message code="label.register.no_limit" /></option>
 									<c:forEach var="level" items="${levelCache}" varStatus="status">
 										<c:choose>
 											<c:when test="${old_level==level.levelName} }">
@@ -177,7 +178,7 @@
 							</c:choose>
 					</select></td>
 					<td><spring:message code="label.register.new_level" /> <select
-						name="new_level" required="" id="new_level">
+						name="new_level" id="new_level">
 							<c:choose>
 								<c:when test="${empty levelCache}">
 									<option value="0">
@@ -185,6 +186,7 @@
 									</option>
 								</c:when>
 								<c:otherwise>
+									<option value="0"><spring:message code="label.register.no_limit" /></option>
 									<c:forEach var="level" items="${levelCache}" varStatus="status">
 										<c:choose>
 											<c:when test="${new_level==level.levelName}">
@@ -219,13 +221,13 @@
 						<input type="text" name="end_time"  value="${end_time}" id="end_time" /></td>
 					<td>
 					<spring:message code="label.register.location"/> <span class="required-indicator">*</span>
-					<select name="location_id" required="" id="location_id">
+					<select name="location_id" id="location_id">
 						<c:choose>
 							<c:when test="${empty locationCache}">
 								<option value="0"><spring:message code="label.register.no_data"/></option>
 							</c:when>
 							<c:otherwise>
-								<option value="">&nbsp;--&nbsp;</option>
+								<option value="0"><spring:message code="label.register.no_limit" /></option>
 								<c:forEach var="location" items="${locationCache}" varStatus="status">
 									<c:choose>
 										<c:when test="${location_id==location.locationId}">

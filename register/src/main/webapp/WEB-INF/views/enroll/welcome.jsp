@@ -158,7 +158,7 @@
 					<label for="unemployee_no">
 						<spring:message code="label.register.unemployee_no"/><span class="required-indicator"></span>
 					</label> 
-					<input type="text" name="unemployee_no" required="" value="" id="unemployee_no" />
+					<input type="text" name="unemployee_no" value="" id="unemployee_no" />
 				</div>
 				
 				<div class="fieldcontain  required">
@@ -172,7 +172,7 @@
 					<label for="work_unit">
 						<spring:message code="label.register.work_unit"/><span class="required-indicator"></span>
 					</label> 
-					<input type="text" name="work_unit" required="" value="" id="work_unit" />
+					<input type="text" name="work_unit"  value="" id="work_unit" />
 				</div>
 
 				<div class="fieldcontain  required">

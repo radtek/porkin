@@ -26,7 +26,7 @@
 				REGISTER like CONCAT('%','${register}','%' )  
 			</if>
 			
-			<if test="id_card != null and id_card!=''">
+			<if test="id_card != null">
 				AND ID_CARD = #{id_card}
 			</if>
 			
@@ -69,7 +69,7 @@
 
 	<select id="countByCondition" parameterType="java.util.HashMap"
 		resultType="java.lang.Long">
-		select count(*) count_number from t_reg_registration
+		select count(*) count_number from t_reg_registration t1
 		<if test="_parameter != null">
 			<include refid="Condtione_Where_Clause" />
 		</if>

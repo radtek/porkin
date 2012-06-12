@@ -18,6 +18,7 @@ import name.huangzhoujin.registration.service.LevelService;
 import name.huangzhoujin.registration.service.LocationService;
 import name.huangzhoujin.registration.utils.NumberUtil;
 import name.huangzhoujin.registration.utils.Page;
+import name.huangzhoujin.registration.utils.StringUtil;
 import name.huangzhoujin.registration.utils.SystemConstants;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,20 +75,25 @@ public class RegistratonController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String search(HttpServletRequest request,
-            HttpServletResponse response,Model model) {
-		
-		String register = request.getParameter("register");
-		String id_card = request.getParameter("id_card");
-		String telephone = request.getParameter("telephone");
-		Integer area_id = NumberUtil.strToIngeger(request.getParameter("area_id"));
-		String old_level = request.getParameter("old_level");
-		String new_level = request.getParameter("new_level");
-		String start_date = request.getParameter("start_date");
-		String end_date = request.getParameter("end_date");
-		String start_time = request.getParameter("start_time");
-		String end_time = request.getParameter("end_time"); 
-		Integer location_id = NumberUtil.strToIngeger(request.getParameter("location_id"));
-		Integer pageNo = NumberUtil.strToIngeger(request.getParameter("pageNo"));
+			HttpServletResponse response, Model model) {
+
+		String register = StringUtil.toNull(request.getParameter("register"));
+		String id_card = StringUtil.toNull(request.getParameter("id_card"));
+		String telephone = StringUtil.toNull(request.getParameter("telephone"));
+		Integer area_id = NumberUtil.strToIngeger(StringUtil.toNull(request
+				.getParameter("area_id")));
+		String old_level = StringUtil.toNull(request.getParameter("old_level"));
+		String new_level = StringUtil.toNull(request.getParameter("new_level"));
+		String start_date = StringUtil.toNull(request
+				.getParameter("start_date"));
+		String end_date = StringUtil.toNull(request.getParameter("end_date"));
+		String start_time = StringUtil.toNull(request
+				.getParameter("start_time"));
+		String end_time = StringUtil.toNull(request.getParameter("end_time"));
+		Integer location_id = NumberUtil.strToIngeger(StringUtil.toNull(request
+				.getParameter("location_id")));
+		Integer pageNo = NumberUtil.strToIngeger(StringUtil.toNull(request
+				.getParameter("pageNo")));
 
 		Page<CustomDto> page = new Page<CustomDto>();
 		HashMap param = new HashMap();
@@ -102,15 +108,15 @@ public class RegistratonController {
 		param.put("start_time", start_time);
 		param.put("end_time", end_time);
 		param.put("location_id", location_id);
-		
-		if(pageNo==null){
+
+		if (pageNo == null) {
 			pageNo = 1;
 		}
 		page.setPageNo(pageNo);
 		page.setPageSize(10);
 		param.put("first", page.getFirst());
 		param.put("pageSize", page.getPageSize());
-		
+
 		page.setResult(customService.listByCondition(param));
 		page.setTotalCount(customService.countByCondition(param));
 		model.addAttribute("page", page);
@@ -123,7 +129,7 @@ public class RegistratonController {
 		model.addAttribute(SystemConstants.LevelCache, levelList);
 		List<Location> locationList = locationService.getAll();
 		model.addAttribute(SystemConstants.LocationCache, locationList);
-		
+
 		model.addAttribute("register", register);
 		model.addAttribute("id_card", id_card);
 		model.addAttribute("telephone", telephone);
