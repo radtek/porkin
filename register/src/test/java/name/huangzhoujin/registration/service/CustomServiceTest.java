@@ -85,7 +85,7 @@ public class CustomServiceTest {
 		TestCase.assertTrue(true);
 	}
 	
-	@Test
+	//@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testListtByCondition2() {
 		HashMap param = new HashMap();
@@ -119,7 +119,7 @@ public class CustomServiceTest {
 		TestCase.assertTrue(true);
 	} 
 	
-	@Test
+	//@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testListtByCondition3() {
 		HashMap param = new HashMap();
@@ -146,6 +146,18 @@ public class CustomServiceTest {
 		
 		TestCase.assertTrue(true);
 	} 
+	
+	
+	@Test
+	public void testGetById() {
+		int id = 9;
+		
+		CustomDto result = cs.getByRegistrationId(id);
+		System.out.println("result="+result.getAreaName());
+		
+		TestCase.assertTrue(true);
+	} 
+	
 	
 	
 

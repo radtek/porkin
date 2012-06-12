@@ -24,5 +24,9 @@ public class CustomService {
 	public List<CustomDto> listByCondition(HashMap param) {
 		return customMapper.listByCondition(param);
 	}
+	
+	public CustomDto getByRegistrationId(int id){
+		return customMapper.getByRegistrationId(id);
+	}
 
 }

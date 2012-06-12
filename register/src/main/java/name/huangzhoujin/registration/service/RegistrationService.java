@@ -30,5 +30,9 @@ public class RegistrationService {
 		int result = registrationMapper.updateByPrimaryKey(record);
 		return result > 0;
 	}
+	
+	public Registration getById(int id){
+		return registrationMapper.selectByPrimaryKey(id);
+	}
 
 }

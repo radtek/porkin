@@ -77,7 +77,8 @@
 		if (obj.value - 0 < 1) {
 			obj.value = 1;
 	    }
-		window.location.href = "${ctx}/registration/list?page=" + obj.value + "&rows=10";
+		
+		window.location.href = "${ctx}/registration/display?pageNo=" + obj.value;
 	}
 
 	/**
@@ -86,11 +87,7 @@
 	 * @return
 	 */
 	function skip(pageNum) {
-		window.location.href = "${ctx}/registration/list?page=" + pageNum + "&rows=10";
-	}
-	
-	function skip(pageNum) {
-		window.location.href = "${ctx}/registration/list?page=" + pageNum + "&rows=10";
+		window.location.href = "${ctx}/registration/display?pageNo=" + pageNum;
 	}
 	
 	
@@ -109,7 +106,8 @@
 			<spring:message code="registration.list" />
 		</h1>
 		<br />
-		<form action="${ctx}/registration/search" method="post">
+		<form action="${ctx}/registration/search" name="searchForm" id ="searchForm" method="POST">
+		<input type="hidden" id="pageNo" name="pageNo" value="" />
 		<div class="searchbar">
 			<table>
 				<tr>
@@ -248,14 +246,14 @@
 						onmouseout="this.className='btn3_mouseout'"
 						onmousedown="this.className='btn3_mousedown'"
 						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.submit"/>' value='<spring:message code="button.register.submit"/>' id="submit" />
+						title='<spring:message code="button.register.search"/>' value='<spring:message code="button.register.search"/>' id="submit" />
 						<span class="required-indicator">&nbsp;&nbsp;&nbsp;</span>
 						<input type="reset" name="reset" 
 						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
 						onmouseout="this.className='btn3_mouseout'"
 						onmousedown="this.className='btn3_mousedown'"
 						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.reset"/>' value='<spring:message code="button.register.reset"/>' id="reset" />
+						title='<spring:message code="button.register.export"/>' value='<spring:message code="button.register.export"/>' id="reset" />
 					</td>
 				</tr>
 			</table>
@@ -294,10 +292,19 @@
 								<td>${custom.areaName}</td>
 								<td>${custom.newLevel}</td>
 								<td>${custom.phone}</td>
-								<td><spring:message code="label.register.delete" /></td>
 								<td>
-									<spring:message code="label.register.delete" />
+									<form action="${ctx}/registration/show/${custom.registrationId}">
+										<input type="submit" value='<spring:message code="label.register.view" />' class="delete"/>
+									</form>
 								</td>
+								<td>
+									<form action="${ctx}/registration/delete">
+										<input type="hidden" name="id" value="${custom.registrationId}" id="id" />
+										<input type="submit" name="_action_delete" value='<spring:message code="label.register.delete" />' class="delete" onclick="return confirm(&#39;<spring:message code="label.register.confirm_delete" />&#39;);" />
+									</form>
+							
+								</td>
+								
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -315,7 +322,7 @@
 			<a
 						href="javascript:void(0)" onclick="skip(1)">首页</a> &nbsp;&nbsp; <a
 						href="javascript:void(0)" onclick="skip(${page.prePage})">前一页</a>
-						&nbsp;&nbsp; 第<input type="text" name="pageNum" size=2
+						&nbsp;&nbsp; 第<input type="text" name="pageNo" size=2
 						value="${page.pageNo}" class="page_input"
 						onkeyup="CheckInputInt(this);"
 						onchange="go(this, ${page.pageNo });" />&nbsp;/&nbsp;${page.totalPages}

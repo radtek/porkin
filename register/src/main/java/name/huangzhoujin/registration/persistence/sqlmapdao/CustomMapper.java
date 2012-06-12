@@ -12,5 +12,7 @@ public interface CustomMapper {
 	
 	@SuppressWarnings("rawtypes")
 	List<CustomDto> listByCondition(HashMap param);
+	
+	CustomDto getByRegistrationId(int id);
 
 }

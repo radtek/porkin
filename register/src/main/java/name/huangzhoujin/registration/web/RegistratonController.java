@@ -10,12 +10,14 @@ import name.huangzhoujin.registration.persistence.domain.Area;
 import name.huangzhoujin.registration.persistence.domain.Education;
 import name.huangzhoujin.registration.persistence.domain.Level;
 import name.huangzhoujin.registration.persistence.domain.Location;
+import name.huangzhoujin.registration.persistence.domain.Registration;
 import name.huangzhoujin.registration.persistence.dto.CustomDto;
 import name.huangzhoujin.registration.service.AreaService;
 import name.huangzhoujin.registration.service.CustomService;
 import name.huangzhoujin.registration.service.EducationService;
 import name.huangzhoujin.registration.service.LevelService;
 import name.huangzhoujin.registration.service.LocationService;
+import name.huangzhoujin.registration.service.RegistrationService;
 import name.huangzhoujin.registration.utils.NumberUtil;
 import name.huangzhoujin.registration.utils.Page;
 import name.huangzhoujin.registration.utils.StringUtil;
@@ -26,6 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping(value = "/registration")
@@ -45,19 +49,24 @@ public class RegistratonController {
 
 	@Autowired
 	private LocationService locationService;
+	
+	@Autowired
+	private RegistrationService registrationService;
+	
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) {
+	public String list(HttpServletRequest request,Model model) {
 		Page<CustomDto> page = new Page<CustomDto>();
 		page.setPageNo(1);
 		page.setPageSize(10);
 		HashMap param = new HashMap();
 		param.put("first", page.getFirst());
 		param.put("pageSize", page.getPageSize());
+		WebUtils.setSessionAttribute(request, "condition", param);
+		
 		page.setResult(customService.listByCondition(param));
 		page.setTotalCount(customService.countByCondition(param));
-
 		model.addAttribute("page", page);
 
 		List<Area> areaList = areaService.getAll();
@@ -68,6 +77,19 @@ public class RegistratonController {
 		model.addAttribute(SystemConstants.LevelCache, levelList);
 		List<Location> locationList = locationService.getAll();
 		model.addAttribute(SystemConstants.LocationCache, locationList);
+		
+		model.addAttribute("register", (String) param.get("register"));
+		model.addAttribute("id_card", (String) param.get("id_card"));
+		model.addAttribute("telephone", (String) param.get("telephone"));
+		model.addAttribute("area_id", (Integer) param.get("area_id"));
+		model.addAttribute("old_level", (String) param.get("old_level"));
+		model.addAttribute("new_level", (String) param.get("new_level"));
+		model.addAttribute("start_date", (String) param.get("start_date"));
+		model.addAttribute("end_date", (String) param.get("end_date"));
+		model.addAttribute("start_time", (String) param.get("start_time"));
+		model.addAttribute("end_time", param.get("end_time"));
+		model.addAttribute("location_id", (Integer) param.get("location_id"));
+		
 		return "admin/home";
 	}
 
@@ -94,7 +116,6 @@ public class RegistratonController {
 		Integer pageNo = NumberUtil.strToIngeger(StringUtil.toNull(request
 				.getParameter("pageNo")));
 
-		Page<CustomDto> page = new Page<CustomDto>();
 		HashMap param = new HashMap();
 		param.put("register", register);
 		param.put("id_card", id_card);
@@ -107,7 +128,10 @@ public class RegistratonController {
 		param.put("start_time", start_time);
 		param.put("end_time", end_time);
 		param.put("location_id", location_id);
+		
+		WebUtils.setSessionAttribute(request, "condition", param);
 
+		Page<CustomDto> page = new Page<CustomDto>();
 		if (pageNo == null) {
 			pageNo = 1;
 		}
@@ -144,14 +168,64 @@ public class RegistratonController {
 		return "admin/home";
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public String display(@RequestParam Integer pageNo,
+			HttpServletRequest request, Model model) {
+
+		HashMap param = (HashMap) WebUtils.getSessionAttribute(request, "condition");
+
+		Page<CustomDto> page = new Page<CustomDto>();
+		if (pageNo == null) {
+			pageNo = 1;
+		}
+		page.setPageNo(pageNo);
+		page.setPageSize(10);
+		param.put("first", page.getFirst());
+		param.put("pageSize", page.getPageSize());
+
+		page.setResult(customService.listByCondition(param));
+		page.setTotalCount(customService.countByCondition(param));
+		model.addAttribute("page", page);
+
+		List<Area> areaList = areaService.getAll();
+		model.addAttribute(SystemConstants.AreaCache, areaList);
+		List<Education> eductionList = educationService.getAll();
+		model.addAttribute(SystemConstants.EducationCache, eductionList);
+		List<Level> levelList = levelService.getAll();
+		model.addAttribute(SystemConstants.LevelCache, levelList);
+		List<Location> locationList = locationService.getAll();
+		model.addAttribute(SystemConstants.LocationCache, locationList);
+
+		model.addAttribute("register", (String) param.get("register"));
+		model.addAttribute("id_card", (String) param.get("id_card"));
+		model.addAttribute("telephone", (String) param.get("telephone"));
+		model.addAttribute("area_id", (Integer) param.get("area_id"));
+		model.addAttribute("old_level", (String) param.get("old_level"));
+		model.addAttribute("new_level", (String) param.get("new_level"));
+		model.addAttribute("start_date", (String) param.get("start_date"));
+		model.addAttribute("end_date", (String) param.get("end_date"));
+		model.addAttribute("start_time", (String) param.get("start_time"));
+		model.addAttribute("end_time", param.get("end_time"));
+		model.addAttribute("location_id", (Integer) param.get("location_id"));
+
+		return "admin/home";
+	}
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		return "admin/home";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete(Model model) {
-		return "admin/home";
+	public String delete(@RequestParam Integer id) {
+		Registration category = registrationService.getById(id);
+		if (category == null) {
+			return "fail";
+		} else {
+			registrationService.delete(id);
+			return "redirect:/registration/list";
+		}
 	}
 
 }
