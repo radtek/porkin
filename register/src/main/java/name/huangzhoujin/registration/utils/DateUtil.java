@@ -22,7 +22,7 @@ public class DateUtil {
 			result = sdf.format(date);
 		}
 		catch(Exception e){
-			e.printStackTrace();
+			result = "";
 		}
 		return result;
 	}

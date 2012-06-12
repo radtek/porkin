@@ -52,6 +52,7 @@
 		$("#end_time").datepicker();
 	});
 	
+	
 	/**
 	 * 验证输入页码
 	 * @param oInput
@@ -90,6 +91,17 @@
 		window.location.href = "${ctx}/registration/display?pageNo=" + pageNum;
 	}
 	
+	function doExport(){
+		searchForm.action="${ctx}/registration/export";
+		alert(12);
+		searchForm.submit();
+	}
+	
+	function doSearch(){
+		searchForm.action="${ctx}/registration/search";
+		searchForm.submit();
+	}
+	
 	
 </script>
 
@@ -106,7 +118,7 @@
 			<spring:message code="registration.list" />
 		</h1>
 		<br />
-		<form action="${ctx}/registration/search" name="searchForm" id ="searchForm" method="POST">
+		<form name="searchForm" id ="searchForm" method="POST">
 		<input type="hidden" id="pageNo" name="pageNo" value="" />
 		<div class="searchbar">
 			<table>
@@ -241,19 +253,13 @@
 							</c:otherwise>
 						</c:choose>
 					</select><br/><br/>
-					<input type="submit" name="submit" 
-						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
-						onmouseout="this.className='btn3_mouseout'"
-						onmousedown="this.className='btn3_mousedown'"
-						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.search"/>' value='<spring:message code="button.register.search"/>' id="submit" />
+					<input type="button" name="mainSearch" class=btn3_mouseout title='<spring:message code="button.register.search"/>' value='<spring:message code="button.register.search"/>' 
+					id="mainSearch" onclick="doSearch()"/>
 						<span class="required-indicator">&nbsp;&nbsp;&nbsp;</span>
-						<input type="reset" name="reset" 
-						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
-						onmouseout="this.className='btn3_mouseout'"
-						onmousedown="this.className='btn3_mousedown'"
-						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.export"/>' value='<spring:message code="button.register.export"/>' id="reset" />
+						<input type="button" name="exportExcel" 
+						class=btn3_mouseout 
+						title='<spring:message code="button.register.export"/>' value='<spring:message code="button.register.export"/>' id="exportExcel" 
+						onclick="doExport()"/>
 					</td>
 				</tr>
 			</table>

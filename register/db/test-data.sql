@@ -2,7 +2,7 @@
 MySQL Backup
 Source Server Version: 5.5.16
 Source Database: register
-Date: 2012/6/12 00:59:18
+Date: 2012/6/12 01:17:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
