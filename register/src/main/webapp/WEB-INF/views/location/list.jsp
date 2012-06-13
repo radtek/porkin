@@ -79,7 +79,7 @@
 			obj.value = 1;
 	    }
 		
-		window.location.href = "${ctx}/area/display?pageNo=" + obj.value;
+		window.location.href = "${ctx}/location/display?pageNo=" + obj.value;
 	}
 
 	/**
@@ -88,26 +88,8 @@
 	 * @return
 	 */
 	function skip(pageNum) {
-		window.location.href = "${ctx}/area/display?pageNo=" + pageNum;
+		window.location.href = "${ctx}/location/display?pageNo=" + pageNum;
 	}
-	
-</script>
-
-<script type="text/javascript">
-	
-	function doDelete(id){
-		var confirm1 = confirm(' <spring:message code="label.register.confirm_delete" /> ');
-		var formid = "areaform"+id;
-		document.getElementById(formid).action ="${ctx}/area/delete";
-		document.getElementById(formid).submit();
-	}
-	
-	function doSave(id){
-		var formid = "areaform"+id;
-		document.getElementById(formid).action ="${ctx}/area/save";
-		document.getElementById(formid).submit();
-	}
-	
 	
 </script>
 
@@ -133,29 +115,21 @@
 							<th class="sortable"><spring:message code="lable.list.no" /></th>
 							<th class="sortable"><spring:message code="lable.list.areaName" /></th>
 							<th class="sortable">&nbsp;</th>
-							<th class="sortable">&nbsp;</th>
 						</tr>
 					</thead>
 
 					<tbody>
 						<c:forEach var="area" items="${page.result}" varStatus="status">
-							<form id="areaform${area.areaId}" name="areaform${area.areaId}" method="post" >
 							<tr class="even">
-							
 								<td>${area.areaId}</td>
+								<td>${area.areaName}</td>
 								<td>
-									<input type="hidden" name="id" value="${area.areaId}" id="id" />
-									<input type="text" name="areaName" required="" value="${area.areaName}" id="areaName" />
-								</td>
-								<td>
-									<input type="button" name="_action_delete" value='<spring:message code="label.register.delete" />' class="delete" onclick="doDelete(${area.areaId});" />
-								</td>
-								<td>
-									<input type="button" name="_action_delete" value='<spring:message code="label.register.save" />' class="delete" onclick="doSave(${area.areaId});" />
+									<form action="${ctx}/area/delete">
+										<input type="hidden" name="id" value="${area.areaId}" id="id" />
+										<input type="submit" name="_action_delete" value='<spring:message code="label.register.delete" />' class="delete" onclick="return confirm(&#39;<spring:message code="label.register.confirm_delete" />&#39;);" />
+									</form>
 								</td>
 							</tr>
-							</form>	
-							
 						</c:forEach>
 					</tbody>
 				</table>

@@ -11,6 +11,8 @@
 					code="menu.sub.registration" /></a></li>
 		<li><a href="${ctx}/area/list" class="list"><spring:message
 					code="menu.sub.area" /></a></li>
+		<li><a href="${ctx}/location/list" class="list"><spring:message
+					code="label.register.location" /></a></li>
 
 		<li><a href="${ctx}/user/list" class="create"><spring:message
 					code="menu.sub.user" /></a></li>
