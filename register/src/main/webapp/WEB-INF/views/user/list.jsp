@@ -109,7 +109,7 @@
 	}
 	
 	function showuserForm(){
-		window.open ('${ctx}/user/addForm','<spring:message code="label.register.create" />','height=185,width=500,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
+		window.location.href= "${ctx}/user/addForm"
 	}
 	
 	
@@ -141,8 +141,18 @@
 					<thead>
 						<tr>
 							<th class="sortable"><spring:message code="lable.list.no" /></th>
-							<th class="sortable"><spring:message
-									code="lable.list.userName" /></th>
+							<th class="sortable">
+								<spring:message
+									code="user.username" /></th>
+							<th class="sortable">
+								<spring:message
+									code="user.password" /></th>
+							<th class="sortable">
+								<spring:message
+									code="user.role" /></th>
+							<th class="sortable">
+								<spring:message
+									code="user.active" /></th>
 							<th class="sortable">&nbsp;</th>
 							<th class="sortable">&nbsp;</th>
 						</tr>
@@ -155,9 +165,39 @@
 								<tr class="even">
 
 									<td>${user.userId}</td>
-									<td><input type="hidden" name="id" value="${user.userId}"
-										id="id" /> <input type="text" name="userName" required=""
-										value="${user.userName}" id="userName" /></td>
+									<td><input type="hidden" name="userId" value="${user.userId}"
+										id="userId" /> <input type="text" name="username" required=""
+										value="${user.username}" id="username" /></td>
+									<td><input type="password" name="password" required=""
+										value="${user.password}" id="password" /></td>
+									<td>
+										<select name="roleFlag"  required=""  id="roleFlag">
+											<c:choose>
+												<c:when test="${user.roleFlag =='A'}">
+													<option value="A" selected="selected"><spring:message code="user.role.admin"/></option>
+													<option value="U"><spring:message code="user.role.user"/></option>
+												</c:when>
+												<c:otherwise>
+													<option value="A"><spring:message code="user.role.admin"/></option>
+													<option value="U" selected="selected"><spring:message code="user.role.user"/></option>
+												</c:otherwise>
+											</c:choose>
+										</select>
+									</td>
+									<td>
+										<select name="active"  required=""  id="active">
+											<c:choose>
+												<c:when test="${user.active=='Y'}">
+													<option value="Y" selected="selected"><spring:message code="user.active.yes"/></option>
+													<option value="N"><spring:message code="user.active.no"/></option>
+												</c:when>
+												<c:otherwise>
+													<option value="N" selected="selected"><spring:message code="user.active.no"/></option>
+													<option value="Y"><spring:message code="user.active.yes"/></option>
+												</c:otherwise>
+											</c:choose>
+										</select>
+									</td>
 									<td><input type="button" name="_action_delete"
 										value='<spring:message code="label.register.delete" />'
 										class="delete" onclick="doDelete(${user.userId});" /></td>

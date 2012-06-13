@@ -37,33 +37,90 @@
 <meta name="layout" content="main">
 
 <script type="text/javascript">
-	
-	function onSubmit(){
-		document.getElementById("areaForm").action="${ctx}/area/create";
-		document.getElementById("areaForm").submit();
-		
-		 window.parent.reload();
-	}
-	
+function doExport(){
+	document.searchForm.action="${ctx}/registration/export";
+	document.searchForm.submit();
+}
+
+function doSearch(){
+	document.searchForm.action="${ctx}/registration/search";
+	document.searchForm.submit();
+}
+
 </script>
 
 </head>
 <body>
-	<div id="list-book" class="content scaffold-list" role="main">
-		<form action="${ctx}/area/create" method="post" name="areaForm" id="areaForm">
+	<jsp:include page="/common/banner.jsp" />
+
+	<a href="#list-book" class="skip" tabindex="-1">Skip to
+		content&hellip;</a>
+	<jsp:include page="/common/menu.jsp" />
+
+	<div id="create-race" class="content scaffold-create" role="main">
+		<h1><spring:message code="registration.adduser"/>&nbsp;&nbsp;&nbsp;</h1>
+		
+		<c:if test="${not empty useradd}">
+			<div class="searchbar">
+			<br/>
+			<h3>&nbsp;&nbsp;&nbsp;&nbsp;<font color="red"><fmt:message key="${useradd.text}" /></font>
+			</h3>
+			</div>
+		</c:if>
+		<br/>
+		<form action="${ctx}/user/create" method="post">
 			<fieldset class="form">
+
 				<div class="fieldcontain  required">
-					<label for="name">
-						<b><spring:message code="registration.addarea" /></b>
+					<label for="username">
+						<spring:message code="user.username"/><span class="required-indicator">*</span>
 					</label> 
-				</div>
-				<div class="fieldcontain  required">
-					<label for="areaName">
-						<spring:message code="lable.list.areaName"/><span class="required-indicator">*</span>
-					</label> 
-					<input type="text" name="areaName" required="" value="" id="areaName" />
+					<input type="text" name="username" required="" value="" id="username" />
 				</div>
 				
+				<div class="fieldcontain  required">
+					<label for="password">
+						<spring:message code="user.password"/><span class="required-indicator">*</span>
+					</label> 
+					<input type="password" name="password" required="" value="" id="password" />
+				</div>
+				
+				<div class="fieldcontain  required">
+					<label for="password2">
+						<spring:message code="user.password"/><span class="required-indicator">*</span>
+					</label> 
+					<input type="password" name="password2" required="" value="" id="password2" />
+				</div>
+				
+				<div class="fieldcontain  required">
+					<label for="email">
+						<spring:message code="user.email"/><span class="required-indicator"></span>
+					</label> 
+					<input type="text" name="email"  value="" id="email" />
+				</div>
+
+				<div class="fieldcontain  required">
+					<label for="roleFlag"> 
+						<spring:message code="user.role"/> <span class="required-indicator">*</span>
+					</label> 
+					<select name="roleFlag" required="" id="roleFlag">
+						<option value="A" selected="selected"><spring:message code="user.role.admin"/></option>
+						<option value="U"> <spring:message code="user.role.user"/></option>
+					</select>
+				</div>
+				
+				<div class="fieldcontain  required">
+					<label for="active"> 
+						<spring:message code="user.active"/> <span class="required-indicator">*</span>
+					</label> 
+					<select name="active" required="" id="active">
+						<option value="Y" selected="selected"><spring:message code="user.active.yes"/></option>
+						<option value="N"> <spring:message code="user.active.no"/></option>
+					</select>
+				</div>
+
+			</fieldset>
+
 			<fieldset class="fieldcontain  required">
 				<label for="submit">&nbsp;<span class="required-indicator"></span>
 					</label> 
@@ -72,11 +129,18 @@
 						onmouseout="this.className='btn3_mouseout'"
 						onmousedown="this.className='btn3_mousedown'"
 						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.submit"/>'  value='<spring:message code="button.register.submit"/>' id="submit" />
+						title='<spring:message code="button.register.submit"/>' value='<spring:message code="button.register.submit"/>' id="submit" />
 						<span class="required-indicator">&nbsp;&nbsp;&nbsp;</span>
-						
+						<input type="reset" name="reset" 
+						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
+						onmouseout="this.className='btn3_mouseout'"
+						onmousedown="this.className='btn3_mousedown'"
+						onmouseup="this.className='btn3_mouseup'"
+						title='<spring:message code="button.register.reset"/>' value='<spring:message code="button.register.reset"/>' id="reset" />
 			</fieldset>
 		</form>
 	</div>
+
+	<jsp:include page="/common/footer.jsp" />
 </body>
 </html>
