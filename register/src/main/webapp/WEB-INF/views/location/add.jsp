@@ -39,10 +39,9 @@
 <script type="text/javascript">
 	
 	function onSubmit(){
-		document.getElementById("areaForm").action="${ctx}/area/create";
-		document.getElementById("areaForm").submit();
-		
-		 window.parent.reload();
+		document.getElementById("locationForm").action="${ctx}/location/create";
+		document.getElementById("locationForm").submit();
+		window.parent.reload();
 	}
 	
 </script>
@@ -50,18 +49,18 @@
 </head>
 <body>
 	<div id="list-book" class="content scaffold-list" role="main">
-		<form action="${ctx}/area/create" method="post" name="areaForm" id="areaForm">
+		<form action="${ctx}/location/create" method="post" name="locationForm" id="locationForm">
 			<fieldset class="form">
 				<div class="fieldcontain  required">
 					<label for="name">
-						<b><spring:message code="registration.addarea" /></b>
+						<b><spring:message code="registration.addlocation" /></b>
 					</label> 
 				</div>
 				<div class="fieldcontain  required">
-					<label for="areaName">
-						<spring:message code="lable.list.areaName"/><span class="required-indicator">*</span>
+					<label for="locationName">
+						<spring:message code="label.register.location"/><span class="required-indicator">*</span>
 					</label> 
-					<input type="text" name="areaName" required="" value="" id="areaName" />
+					<input type="text" name="locationName" required="" value="" id="locationName" />
 				</div>
 				
 			<fieldset class="fieldcontain  required">

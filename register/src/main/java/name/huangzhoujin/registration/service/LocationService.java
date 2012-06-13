@@ -2,8 +2,6 @@ package name.huangzhoujin.registration.service;
 
 import java.util.List;
 
-import name.huangzhoujin.registration.persistence.domain.Area;
-import name.huangzhoujin.registration.persistence.domain.AreaCriteria;
 import name.huangzhoujin.registration.persistence.domain.Location;
 import name.huangzhoujin.registration.persistence.domain.LocationCriteria;
 import name.huangzhoujin.registration.persistence.domain.RegistrationCriteria;
@@ -18,7 +16,7 @@ public class LocationService {
 
 	@Autowired
 	private LocationMapper locationMapper;
-	
+
 	@Autowired
 	private RegistrationMapper registrationMapper;
 
@@ -32,14 +30,6 @@ public class LocationService {
 		return locationMapper.selectByExample(criteria);
 	}
 
-	public List<Location> getByPage(int first, int pageSize) {
-		LocationCriteria criteria = new LocationCriteria();
-		criteria.setFirst(first);
-		criteria.setPageSize(pageSize);
-		criteria.setOrderByClause("Location_ID");
-		return locationMapper.selectByExample(criteria);
-	}
-	
 	public boolean delete(int id) {
 		RegistrationCriteria criteria = new RegistrationCriteria();
 		criteria.createCriteria().andLocationIdEqualTo(id);
@@ -47,4 +37,27 @@ public class LocationService {
 		int result = locationMapper.deleteByPrimaryKey(id);
 		return result > 0;
 	}
+
+	public boolean save(Location record) {
+		int result = locationMapper.updateByPrimaryKey(record);
+		return result > 0;
+	}
+
+	public boolean create(Location record) {
+		int result = locationMapper.insertSelective(record);
+		return result > 0;
+	}
+
+	public Location getById(int id) {
+		return locationMapper.selectByPrimaryKey(id);
+	}
+
+	public List<Location> getByPage(int first, int pageSize) {
+		LocationCriteria criteria = new LocationCriteria();
+		criteria.setFirst(first);
+		criteria.setPageSize(pageSize);
+		criteria.setOrderByClause("Location_ID");
+		return locationMapper.selectByExample(criteria);
+	}
+
 }

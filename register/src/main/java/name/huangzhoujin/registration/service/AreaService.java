@@ -16,7 +16,7 @@ public class AreaService {
 
 	@Autowired
 	private AreaMapper areaMapper;
-	
+
 	@Autowired
 	private RegistrationMapper registrationMapper;
 
@@ -47,12 +47,12 @@ public class AreaService {
 		int result = areaMapper.insertSelective(record);
 		return result > 0;
 	}
-	
-	public Area getById(int id){
+
+	public Area getById(int id) {
 		return areaMapper.selectByPrimaryKey(id);
 	}
-	
-	public List<Area> getByPage(int first,int pageSize) {
+
+	public List<Area> getByPage(int first, int pageSize) {
 		AreaCriteria criteria = new AreaCriteria();
 		criteria.setFirst(first);
 		criteria.setPageSize(pageSize);

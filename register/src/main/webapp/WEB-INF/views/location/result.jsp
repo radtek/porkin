@@ -50,16 +50,16 @@
 <body>
 	<div id="list-book" class="content scaffold-list" role="main">
 		<br/>
-		<form action="${ctx}/area/create" method="post" name="areaForm" id="areaForm">
+		<form action="${ctx}/location/create" method="post" name="locationForm" id="locationForm">
 			<fieldset class="form">
 				<div class="fieldcontain  required">
 					<label for="name">
-						<b><spring:message code="registration.addarea" /></b>
+						<b><spring:message code="registration.addlocation" /></b>
 					</label> 
 				</div>
 				<div class="fieldcontain  required">
-					<label for="areaName">
-						&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="${area.text}" />
+					<label for="locationName">
+						&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="${location.text}" />
 					</label> 
 				</div>
 			<fieldset class="fieldcontain  required">
