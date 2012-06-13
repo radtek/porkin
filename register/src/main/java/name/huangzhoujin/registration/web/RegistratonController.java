@@ -222,8 +222,8 @@ public class RegistratonController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(@RequestParam Integer id) {
-		Registration category = registrationService.getById(id);
-		if (category == null) {
+		Registration registration = registrationService.getById(id);
+		if (registration == null) {
 			return "fail";
 		} else {
 			registrationService.delete(id);

@@ -45,5 +45,20 @@ public class AreaServiceTest {
 		System.out.println();
 		TestCase.assertEquals(expected, actual);
 	}
+	
+	@Test
+	public void testByPage(){
+		List<Area> areaList = as.getByPage(1, 3);
+		int expected = 3;
+		int actual = 0;
+	
+		for(Area a: areaList){
+			System.out.print("[Area="+a.getAreaName()+"]\t");
+			actual++;
+		}
+		System.out.println();
+		TestCase.assertEquals(expected, actual);
+	}
+
 
 }

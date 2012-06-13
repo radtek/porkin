@@ -91,18 +91,19 @@
 		window.location.href = "${ctx}/registration/display?pageNo=" + pageNum;
 	}
 	
-	function doExport(){
-		searchForm.action="${ctx}/registration/export";
-		alert(12);
-		searchForm.submit();
-	}
-	
-	function doSearch(){
-		searchForm.action="${ctx}/registration/search";
-		searchForm.submit();
-	}
-	
-	
+</script>
+
+<script type="text/javascript">
+function doExport(){
+	document.searchForm.action="${ctx}/registration/export";
+	document.searchForm.submit();
+}
+
+function doSearch(){
+	document.searchForm.action="${ctx}/registration/search";
+	document.searchForm.submit();
+}
+
 </script>
 
 </head>
@@ -325,18 +326,17 @@
 		</c:choose>
 
 		<div class="pagination">
-			<a
-						href="javascript:void(0)" onclick="skip(1)">首页</a> &nbsp;&nbsp; <a
-						href="javascript:void(0)" onclick="skip(${page.prePage})">前一页</a>
-						&nbsp;&nbsp; 第<input type="text" name="pageNo" size=2
-						value="${page.pageNo}" class="page_input"
-						onkeyup="CheckInputInt(this);"
-						onchange="go(this, ${page.pageNo });" />&nbsp;/&nbsp;${page.totalPages}
-						&nbsp;&nbsp; <a href="javascript:void(0)"
-						onclick="skip(${page.nextPage})">后一页</a> &nbsp;&nbsp; <a
-						href="javascript:void(0)" onclick="skip(${page.totalPages})">尾页</a>
-						&nbsp;&nbsp; 每页${page.pageSize}条&nbsp;/&nbsp; 共${page.totalCount
-						}条记录</td>
+			<a href="javascript:void(0)" onclick="skip(1)"><spring:message code="label.register.firstpage" /></a>
+			 &nbsp;&nbsp; 
+			<a href="javascript:void(0)" onclick="skip(${page.prePage})"><spring:message code="label.register.prevpage" /></a>
+			&nbsp;&nbsp; <spring:message code="label.register.thepage" />
+			<input type="text" name="pageNo" size=2 value="${page.pageNo}" class="page_input" onkeyup="CheckInputInt(this);" onchange="go(this, ${page.totalPages });" />
+			&nbsp;/&nbsp;${page.totalPages}	&nbsp;&nbsp; 
+			<a href="javascript:void(0)" onclick="skip(${page.nextPage})"><spring:message code="label.register.nextpage" /></a> 
+			&nbsp;&nbsp; 
+			<a href="javascript:void(0)" onclick="skip(${page.totalPages})"><spring:message code="label.register.lastpage" /></a>
+			&nbsp;&nbsp; <spring:message code="label.register.everypage" />${page.pageSize}<spring:message code="label.register.items" />
+			&nbsp;/&nbsp; <spring:message code="label.register.total" />${page.totalCount}<spring:message code="label.register.records" />
 		</div>
 	</div>
 
