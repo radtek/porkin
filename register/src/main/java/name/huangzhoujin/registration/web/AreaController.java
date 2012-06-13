@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import name.huangzhoujin.registration.persistence.domain.Area;
 import name.huangzhoujin.registration.service.AreaService;
 import name.huangzhoujin.registration.utils.Page;
+import name.huangzhoujin.registration.utils.FlashMap.Message;
+import name.huangzhoujin.registration.utils.FlashMap.MessageType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,10 +64,16 @@ public class AreaController {
 			Model model) {
 		Area area = new Area();
 		area.setAreaName(areaName);
-		if(areaService.create(area)){
-			
+		boolean result = areaService.create(area);
+		if(result){
+			model.addAttribute("area", new Message(MessageType.info,
+					"admin.sava.success"));
 		}
-		return "redirect:/area/list";
+		else{
+			model.addAttribute("area", new Message(MessageType.info,
+					"admin.save.failure"));
+		}
+		return "area/result";
 		
 	}
 	
@@ -83,5 +91,11 @@ public class AreaController {
 		return "area/list";
 		
 	}
+	
+	@RequestMapping(value = "/addForm", method = RequestMethod.GET)
+	public String addForm( Model model) {
+		return "area/add";
+	}
+	
 
 }

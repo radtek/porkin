@@ -108,6 +108,10 @@
 		document.getElementById(formid).submit();
 	}
 	
+	function showAreaForm(){
+		window.open ('${ctx}/area/addForm','<spring:message code="label.register.create" />','height=185,width=500,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
+	}
+	
 	
 </script>
 
@@ -124,14 +128,21 @@
 			<spring:message code="area.list" />
 		</h1>
 		<br />
-		
+		<div class="searchbar">
+			<input type="button" name="_action_delete"
+				value='<spring:message code="label.register.create" />'
+				class="delete" onclick="showAreaForm()" />
+		</div>
+
+		<br />
 		<c:choose>
 			<c:when test="${page.totalCount>0}">
 				<table>
 					<thead>
 						<tr>
 							<th class="sortable"><spring:message code="lable.list.no" /></th>
-							<th class="sortable"><spring:message code="lable.list.areaName" /></th>
+							<th class="sortable"><spring:message
+									code="lable.list.areaName" /></th>
 							<th class="sortable">&nbsp;</th>
 							<th class="sortable">&nbsp;</th>
 						</tr>
@@ -139,46 +150,58 @@
 
 					<tbody>
 						<c:forEach var="area" items="${page.result}" varStatus="status">
-							<form id="areaform${area.areaId}" name="areaform${area.areaId}" method="post" >
-							<tr class="even">
-							
-								<td>${area.areaId}</td>
-								<td>
-									<input type="hidden" name="id" value="${area.areaId}" id="id" />
-									<input type="text" name="areaName" required="" value="${area.areaName}" id="areaName" />
-								</td>
-								<td>
-									<input type="button" name="_action_delete" value='<spring:message code="label.register.delete" />' class="delete" onclick="doDelete(${area.areaId});" />
-								</td>
-								<td>
-									<input type="button" name="_action_delete" value='<spring:message code="label.register.save" />' class="delete" onclick="doSave(${area.areaId});" />
-								</td>
-							</tr>
-							</form>	
-							
+							<form id="areaform${area.areaId}" name="areaform${area.areaId}"
+								method="post">
+								<tr class="even">
+
+									<td>${area.areaId}</td>
+									<td><input type="hidden" name="id" value="${area.areaId}"
+										id="id" /> <input type="text" name="areaName" required=""
+										value="${area.areaName}" id="areaName" /></td>
+									<td><input type="button" name="_action_delete"
+										value='<spring:message code="label.register.delete" />'
+										class="delete" onclick="doDelete(${area.areaId});" /></td>
+									<td><input type="button" name="_action_delete"
+										value='<spring:message code="label.register.save" />'
+										class="delete" onclick="doSave(${area.areaId});" /></td>
+								</tr>
+							</form>
+
 						</c:forEach>
 					</tbody>
 				</table>
 			</c:when>
 			<c:otherwise>
-				<div class="info_title"><spring:message code="label.register.no_data" />
-				<br/><br/><br/>
+				<div class="info_title">
+					<spring:message code="label.register.no_data" />
+					<br />
+					<br />
+					<br />
 				</div>
-				
+
 			</c:otherwise>
 		</c:choose>
 		<div class="pagination">
-			<a href="javascript:void(0)" onclick="skip(1)"><spring:message code="label.register.firstpage" /></a>
-			 &nbsp;&nbsp; 
-			<a href="javascript:void(0)" onclick="skip(${page.prePage})"><spring:message code="label.register.prevpage" /></a>
-			&nbsp;&nbsp; <spring:message code="label.register.thepage" />
-			<input type="text" name="pageNo" size=2 value="${page.pageNo}" class="page_input" onkeyup="CheckInputInt(this);" onchange="go(this, ${page.totalPages });" />
-			&nbsp;/&nbsp;${page.totalPages}	&nbsp;&nbsp; 
-			<a href="javascript:void(0)" onclick="skip(${page.nextPage})"><spring:message code="label.register.nextpage" /></a> 
-			&nbsp;&nbsp; 
-			<a href="javascript:void(0)" onclick="skip(${page.totalPages})"><spring:message code="label.register.lastpage" /></a>
-			&nbsp;&nbsp; <spring:message code="label.register.everypage" />${page.pageSize}<spring:message code="label.register.items" />
-			&nbsp;/&nbsp; <spring:message code="label.register.total" />${page.totalCount}<spring:message code="label.register.records" />
+			<a href="javascript:void(0)" onclick="skip(1)"><spring:message
+					code="label.register.firstpage" /></a> &nbsp;&nbsp; <a
+				href="javascript:void(0)" onclick="skip(${page.prePage})"><spring:message
+					code="label.register.prevpage" /></a> &nbsp;&nbsp;
+			<spring:message code="label.register.thepage" />
+			<input type="text" name="pageNo" size=2 value="${page.pageNo}"
+				class="page_input" onkeyup="CheckInputInt(this);"
+				onchange="go(this, ${page.totalPages });" />
+			&nbsp;/&nbsp;${page.totalPages} &nbsp;&nbsp; <a
+				href="javascript:void(0)" onclick="skip(${page.nextPage})"><spring:message
+					code="label.register.nextpage" /></a> &nbsp;&nbsp; <a
+				href="javascript:void(0)" onclick="skip(${page.totalPages})"><spring:message
+					code="label.register.lastpage" /></a> &nbsp;&nbsp;
+			<spring:message code="label.register.everypage" />
+			${page.pageSize}
+			<spring:message code="label.register.items" />
+			&nbsp;/&nbsp;
+			<spring:message code="label.register.total" />
+			${page.totalCount}
+			<spring:message code="label.register.records" />
 		</div>
 	</div>
 
