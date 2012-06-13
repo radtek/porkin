@@ -81,7 +81,7 @@ CREATE TABLE `t_reg_registration` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_reg_user`;
 CREATE TABLE `t_reg_user` (
-  `USER_ID` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
   `USERNAME` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `PASSWORD` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `EMAIL` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
