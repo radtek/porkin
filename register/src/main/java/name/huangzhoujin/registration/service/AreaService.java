@@ -20,7 +20,7 @@ public class AreaService {
 	@Autowired
 	private RegistrationMapper registrationMapper;
 
-	public long countAllArea() {
+	public int countAllArea() {
 		return areaMapper.countByExample(null);
 	}
 
