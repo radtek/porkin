@@ -22,7 +22,7 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>49</x>
+	<x>0</x>
 	<y>0</y>
 	<default_color>
 		<r>128</r>
@@ -51,11 +51,11 @@
 		<use_bezier_curve>false</use_bezier_curve>
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
-			<category_name_to_export>All</category_name_to_export>
+			<category_name_to_export>全体</category_name_to_export>
 			<ddl_output>E:\springsource\workspaces\register\db\register.sql</ddl_output>
-			<excel_output>E:\springsource\workspaces\register\db\register.xls</excel_output>
-			<excel_template>Default（English）</excel_template>
-			<image_output>E:\springsource\workspaces\register\db\register.png</image_output>
+			<excel_output>E:\Sources\STS\register\db\register.xls</excel_output>
+			<excel_template>デフォルト（英語）</excel_template>
+			<image_output>E:\Sources\STS\register\db\register.png</image_output>
 			<put_diagram_on_excel>true</put_diagram_on_excel>
 			<use_logical_name_as_sheet>true</use_logical_name_as_sheet>
 			<open_after_saved>false</open_after_saved>
@@ -108,7 +108,7 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>微软雅黑</font_name>
+				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
 			<x>50</x>
 			<y>50</y>
@@ -121,7 +121,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2012-06-02 23:02:16</creation_date>
-			<updated_date>2012-06-03 01:04:18</updated_date>
+			<updated_date>2012-06-13 18:38:58</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -472,7 +472,7 @@
 		</word>
 		<word>
 			<id>24</id>
-			<length>20</length>
+			<length>null</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -481,7 +481,7 @@
 			<description></description>
 			<logical_name>USER_ID</logical_name>
 			<physical_name>USER_ID</physical_name>
-			<type>varchar(n)</type>
+			<type>integer</type>
 		</word>
 		<word>
 			<id>25</id>
@@ -1457,14 +1457,14 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>varchar(n)</type>
+					<type>integer</type>
 					<constraint></constraint>
 					<default_value></default_value>
-					<auto_increment>false</auto_increment>
+					<auto_increment>true</auto_increment>
 					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
-					<unique_key>false</unique_key>
+					<unique_key>true</unique_key>
 					<character_set></character_set>
 					<collation></collation>
 					<sequence>
