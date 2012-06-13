@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import name.huangzhoujin.registration.persistence.domain.Area;
 import name.huangzhoujin.registration.service.AreaService;
-import name.huangzhoujin.registration.utils.Page;
 import name.huangzhoujin.registration.utils.FlashMap.Message;
 import name.huangzhoujin.registration.utils.FlashMap.MessageType;
+import name.huangzhoujin.registration.utils.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value = "/area")
+@SessionAttributes({ "userId", "userName", "roleId" })
 public class AreaController {
 
 	@Autowired
