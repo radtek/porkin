@@ -79,7 +79,7 @@
 			obj.value = 1;
 	    }
 		
-		window.location.href = "${ctx}/area/display?pageNo=" + obj.value;
+		window.location.href = "${ctx}/user/display?pageNo=" + obj.value;
 	}
 
 	/**
@@ -88,7 +88,7 @@
 	 * @return
 	 */
 	function skip(pageNum) {
-		window.location.href = "${ctx}/area/display?pageNo=" + pageNum;
+		window.location.href = "${ctx}/user/display?pageNo=" + pageNum;
 	}
 	
 </script>
@@ -97,19 +97,19 @@
 	
 	function doDelete(id){
 		var confirm1 = confirm(' <spring:message code="label.register.confirm_delete" /> ');
-		var formid = "areaform"+id;
-		document.getElementById(formid).action ="${ctx}/area/delete";
+		var formid = "userform"+id;
+		document.getElementById(formid).action ="${ctx}/user/delete";
 		document.getElementById(formid).submit();
 	}
 	
 	function doSave(id){
-		var formid = "areaform"+id;
-		document.getElementById(formid).action ="${ctx}/area/save";
+		var formid = "userform"+id;
+		document.getElementById(formid).action ="${ctx}/user/save";
 		document.getElementById(formid).submit();
 	}
 	
-	function showAreaForm(){
-		window.open ('${ctx}/area/addForm','<spring:message code="label.register.create" />','height=185,width=500,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
+	function showuserForm(){
+		window.open ('${ctx}/user/addForm','<spring:message code="label.register.create" />','height=185,width=500,top=50,left=200,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no,depended=yes,titlebar=no,scrollbars=no,toolbar=no');
 	}
 	
 	
@@ -125,13 +125,13 @@
 
 	<div id="list-book" class="content scaffold-list" role="main">
 		<h1>
-			<spring:message code="area.list" />
+			<spring:message code="user.list" />
 		</h1>
 		<br />
 		<div class="searchbar">
 			<input type="button" name="_action_delete"
 				value='<spring:message code="label.register.create" />'
-				class="delete" onclick="showAreaForm()" />
+				class="delete" onclick="showuserForm()" />
 		</div>
 
 		<br />
@@ -142,28 +142,28 @@
 						<tr>
 							<th class="sortable"><spring:message code="lable.list.no" /></th>
 							<th class="sortable"><spring:message
-									code="lable.list.areaName" /></th>
+									code="lable.list.userName" /></th>
 							<th class="sortable">&nbsp;</th>
 							<th class="sortable">&nbsp;</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<c:forEach var="area" items="${page.result}" varStatus="status">
-							<form id="areaform${area.areaId}" name="areaform${area.areaId}"
+						<c:forEach var="user" items="${page.result}" varStatus="status">
+							<form id="userform${user.userId}" name="userform${user.userId}"
 								method="post">
 								<tr class="even">
 
-									<td>${area.areaId}</td>
-									<td><input type="hidden" name="id" value="${area.areaId}"
-										id="id" /> <input type="text" name="areaName" required=""
-										value="${area.areaName}" id="areaName" /></td>
+									<td>${user.userId}</td>
+									<td><input type="hidden" name="id" value="${user.userId}"
+										id="id" /> <input type="text" name="userName" required=""
+										value="${user.userName}" id="userName" /></td>
 									<td><input type="button" name="_action_delete"
 										value='<spring:message code="label.register.delete" />'
-										class="delete" onclick="doDelete(${area.areaId});" /></td>
+										class="delete" onclick="doDelete(${user.userId});" /></td>
 									<td><input type="button" name="_action_delete"
 										value='<spring:message code="label.register.save" />'
-										class="delete" onclick="doSave(${area.areaId});" /></td>
+										class="delete" onclick="doSave(${user.userId});" /></td>
 								</tr>
 							</form>
 

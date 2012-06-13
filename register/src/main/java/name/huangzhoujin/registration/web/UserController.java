@@ -100,5 +100,19 @@ public class UserController {
 		return "user/login";
 
 	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String list(Model model) {
+		Page<User> page = new Page<User>();
+		page.setPageNo(1);
+		page.setPageSize(10);
+		List<User> areaList = userService.getByPage(page.getFirst(),
+				page.getPageSize());
+		page.setResult(areaList);
+		page.setTotalCount(areaService.countAllArea());
+		model.addAttribute("page", page);
+		return "area/list";
+	}
+	
 
 }

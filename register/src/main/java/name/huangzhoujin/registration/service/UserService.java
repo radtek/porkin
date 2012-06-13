@@ -16,25 +16,63 @@ public class UserService {
 	@Autowired
 	private UserMapper userMapper;
 
-	public int countAllPermission() {
+	public int countAlluser() {
 		return userMapper.countByExample(null);
 	}
 
 	public List<User> getAll() {
 		UserCriteria criteria = new UserCriteria();
-		criteria.setOrderByClause("USER_ID");
+		criteria.setOrderByClause("User_ID");
+		return userMapper.selectByExample(criteria);
+	}
+
+	public boolean delete(int id) {
+		int result = userMapper.deleteByPrimaryKey(id);
+		return result > 0;
+	}
+
+	public boolean save(User record) {
+		int result = userMapper.updateByPrimaryKey(record);
+		return result > 0;
+	}
+
+	public boolean create(User record) {
+		int result = userMapper.insertSelective(record);
+		return result > 0;
+	}
+
+	public User getById(int id) {
+		return userMapper.selectByPrimaryKey(id);
+	}
+
+	public List<User> getByPage(int first, int pageSize) {
+		UserCriteria criteria = new UserCriteria();
+		criteria.setFirst(first);
+		criteria.setPageSize(pageSize);
+		criteria.setOrderByClause("User_ID");
 		return userMapper.selectByExample(criteria);
 	}
 
 	public User login(String username, String password) {
-		User result = null;
 		UserCriteria criteria = new UserCriteria();
-		criteria.createCriteria().andUsernameEqualTo(username)
-				.andPasswordEqualTo(password)
-				.andActiveEqualTo(SystemConstants.ActiveFlag);
-		List<User> list = userMapper.selectByExample(criteria);
-		if (list != null && list.size() > 0) {
-			result = list.get(0);
+		criteria.createCriteria().andActiveEqualTo(SystemConstants.ActiveFlag)
+				.andUsernameEqualTo(username).andPasswordEqualTo(password);
+		List<User> userList = userMapper.selectByExample(criteria);
+		User result = null;
+		if(userList!=null && userList.size()>0){
+			result = userList.get(0);
+		}
+		return result;
+	}
+	
+	public boolean existedUser(String username){
+		UserCriteria criteria = new UserCriteria();
+		criteria.createCriteria().andActiveEqualTo(SystemConstants.ActiveFlag)
+				.andUsernameEqualTo(username);
+		List<User> userList = userMapper.selectByExample(criteria);
+		boolean result = false;
+		if(userList!=null && userList.size()>0){
+			result = true;
 		}
 		return result;
 	}

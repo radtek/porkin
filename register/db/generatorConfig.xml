@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-	<classPathEntry location="E:/Java/JDBC/mysql/mysql-connector-java-5.1.12/mysql-connector-java-5.1.12-bin.jar" />
+	<classPathEntry location="D:/Java/JDBC/mysql/mysql-connector-java-5.1.20.jar" />
 
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		
@@ -36,11 +36,11 @@
             <property name="enableSubPackages" value="true" />  
         </javaClientGenerator>  
 
-		<table tableName="t_reg_area" domainObjectName="Area" />
-		<table tableName="t_reg_education" domainObjectName="Education" />
-		<table tableName="t_reg_level" domainObjectName="Level" />
-		<table tableName="t_reg_location" domainObjectName="Location" />
-		<table tableName="t_reg_registration" domainObjectName="Registration" />
+<!-- 		<table tableName="t_reg_area" domainObjectName="Area" /> -->
+<!-- 		<table tableName="t_reg_education" domainObjectName="Education" /> -->
+<!-- 		<table tableName="t_reg_level" domainObjectName="Level" /> -->
+<!-- 		<table tableName="t_reg_location" domainObjectName="Location" /> -->
+<!-- 		<table tableName="t_reg_registration" domainObjectName="Registration" /> -->
 		<table tableName="t_reg_user" domainObjectName="User" />
 
 		

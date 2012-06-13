@@ -25,13 +25,6 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testCountAllPermission() {
-		int expected = 1;
-		int actual = us.countAllPermission();
-		TestCase.assertEquals(expected, actual);
-	}
-	
-	@Test
 	public void testGetAll() {
 		List<User> result = us.getAll();
 		int expected = 1;
