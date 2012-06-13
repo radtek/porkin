@@ -189,5 +189,20 @@ public class UserController {
 		userService.save(user);
 		return "redirect:/location/list";
 	}
+	
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public String display(@RequestParam Integer pageNo,
+			HttpServletRequest request, Model model) {
+		Page<User> page = new Page<User>();
+		page.setPageNo(pageNo);
+		page.setPageSize(10);
+		List<User> userList = userService.getByPage(
+				page.getFirst(), page.getPageSize());
+		page.setResult(userList);
+		page.setTotalCount(userService.countAlluser());
+		model.addAttribute("page", page);
+		return "user/list";
+
+	}
 
 }
