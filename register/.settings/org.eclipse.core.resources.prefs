@@ -1,6 +1,9 @@
 eclipse.preferences.version=1
 encoding//db/init-data.sql=UTF-8
+encoding//db/register.sql=GB2312
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/WEB-INF/i18n/messages.properties=UTF-8
 encoding//src/test/java=UTF-8
 encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8
