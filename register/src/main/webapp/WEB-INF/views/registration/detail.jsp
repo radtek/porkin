@@ -110,47 +110,76 @@
 
 
 			<li class="fieldcontain"><span id="bname-label"
-				class="property-label">Bname</span> <span class="property-value"
-				aria-labelledby="bname-label">fda</span></li>
+				class="property-label"><spring:message code="label.register.name"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.register}</span></li>
 
 
 
-			<li class="fieldcontain"><span id="btype-label"
-				class="property-label">Btype</span> <span class="property-value"
-				aria-labelledby="btype-label">fa</span></li>
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.gender"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.gender}</span></li>
 
 
 
-			<li class="fieldcontain"><span id="counter-label"
-				class="property-label">Counter</span> <span class="property-value"
-				aria-labelledby="counter-label">1</span></li>
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.education"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.education}</span></li>
+
+
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.area"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.areaName}</span></li>
 
 
 
-			<li class="fieldcontain"><span id="inTime-label"
-				class="property-label">In Time</span> <span class="property-value"
-				aria-labelledby="inTime-label">2012-06-12 00:00:00 CST</span></li>
+
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.old_level"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.oldLevel}</span></li>
 
 
 
-			<li class="fieldcontain"><span id="memo-label"
-				class="property-label">Memo</span> <span class="property-value"
-				aria-labelledby="memo-label">11</span></li>
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.new_level"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.newLevel}</span></li>
 
-
-
-			<li class="fieldcontain"><span id="price-label"
-				class="property-label">Price</span> <span class="property-value"
-				aria-labelledby="price-label">11</span></li>
-
-
-
-			<li class="fieldcontain"><span id="publish-label"
-				class="property-label">Publish</span> <span class="property-value"
-				aria-labelledby="publish-label">dd</span></li>
-
-
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.id_card"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.idCard}</span></li>
+			
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.telephone"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.phone}</span></li>
+				
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.work_unit"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.workUnit}</span></li>
+				
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.unemployee_no"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.unemployedNo}</span></li>
+				
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.start_date"/></span> <span class="property-value"
+				aria-labelledby="bname-label">
+				<fmt:formatDate value="${custom.startDate}" type="time" timeStyle="full" pattern="yyyy-MM-dd"/>
+				</span></li>
+				
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.reg_date"/></span> <span class="property-value"
+				aria-labelledby="bname-label">
+				<fmt:formatDate value="${custom.registrationDate}" type="time" timeStyle="full" pattern="yyyy-MM-dd"/> 
+				</span></li>
+				
+				<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.location"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.locationName}</span></li>
 		</ol>
+		
+		<br/>
+		<div class="return_url">
+			<a href="${ctx}/registration/list"><spring:message code="button.register.return"/></a>
+		</div>
 		
 	</div>
 

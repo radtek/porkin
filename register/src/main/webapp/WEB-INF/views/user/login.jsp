@@ -7,39 +7,97 @@
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
-<html lang="en" class="no-js">
-<!--<![endif]-->
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title><spring:message code="label.register.welcome"/></title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Welcome to Grails</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="${ctx}/images/favicon.ico" type="image/x-icon">
+		<link rel="apple-touch-icon" href="${ctx}/images/apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/racetrack/static/images/apple-touch-icon-retina.png">
+		<link rel="stylesheet" href="${ctx}/styles/main.css" type="text/css">
+		<link rel="stylesheet" href="${ctx}/styles/mobile.css" type="text/css">
+		
+		<meta name="layout" content="main"/>
+		
+		<style type="text/css" media="screen">
+			#status {
+				background-color: #eee;
+				border: .2em solid #fff;
+				margin: 2em 2em 1em;
+				padding: 1em;
+				width: 12em;
+				float: left;
+				-moz-box-shadow: 0px 0px 1.25em #ccc;
+				-webkit-box-shadow: 0px 0px 1.25em #ccc;
+				box-shadow: 0px 0px 1.25em #ccc;
+				-moz-border-radius: 0.6em;
+				-webkit-border-radius: 0.6em;
+				border-radius: 0.6em;
+			}
 
-<link rel="shortcut icon" href="${ctx}/images/favicon.ico"
-	type="image/x-icon">
-<link rel="apple-touch-icon" href="${ctx}/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="114x114"
-	href="${ctx}/images/apple-touch-icon-retina.png">
-<link rel="stylesheet" href="${ctx}/styles/main.css" type="text/css">
-<link rel="stylesheet" href="${ctx}/styles/mobile.css" type="text/css">
+			.ie6 #status {
+				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
+			}
 
-<link rel="stylesheet" href="${ctx}/styles/base/jquery.ui.all.css">
-<script src="${ctx}/scripts/jquery/jquery-1.7.2.js"></script>
-<script src="${ctx}/scripts/external/jquery.bgiframe-2.1.2.js"></script>
-<script src="${ctx}/scripts/ui/jquery.ui.core.js"></script>
-<script src="${ctx}/scripts/ui/jquery.ui.widget.js"></script>
-<script src="${ctx}/scripts/ui/jquery.ui.mouse.js"></script>
-<script src="${ctx}/scripts/ui/jquery.ui.datepicker.js"></script>
+			#status ul {
+				font-size: 0.9em;
+				list-style-type: none;
+				margin-bottom: 0.6em;
+				padding: 0;
+			}
+            
+			#status li {
+				line-height: 1.3;
+			}
 
-<script src="${ctx}/scripts/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+			#status h1 {
+				text-transform: uppercase;
+				font-size: 1.1em;
+				margin: 0 0 0.3em;
+			}
 
-<meta name="layout" content="main">
-<script>
-	$(function() {
-		$( "#start_date" ).datepicker();
-	});
-</script>
+			#page-body {
+				margin: 2em 1em 1.25em 18em;
+			}
+
+			h2 {
+				margin-top: 1em;
+				margin-bottom: 0.3em;
+				font-size: 1em;
+			}
+
+			p {
+				line-height: 1.5;
+				margin: 0.25em 0;
+			}
+
+			#controller-list ul {
+				list-style-position: inside;
+			}
+
+			#controller-list li {
+				line-height: 1.3;
+				list-style-position: inside;
+				margin: 0.25em 0;
+			}
+
+			@media screen and (max-width: 480px) {
+				#status {
+					display: none;
+				}
+
+				#page-body {
+					margin: 0 1em 1em;
+				}
+
+				#page-body h1 {
+					margin-top: 0;
+				}
+			}
+		</style>
+
 
 </head>
 <body>
