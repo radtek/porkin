@@ -82,7 +82,7 @@
 			REGISTRATION_ID registrationId,
 			REGISTER register,
 			GENDER gender,
-			EDUCATION education,
+			EDUCATION_NAME education,
 			OLD_LEVEL oldLevel,
 			NEW_LEVEL newLevel,
 			ID_CARD idCard,
@@ -98,6 +98,8 @@
 		(t1.area_id = t2.area_id)
 		left join t_reg_location t3 on
 		(t1.location_id = t3.location_id)
+		left join t_reg_education t4 on
+		(t1.education = t4.education_id)
 		<if test="_parameter != null">
 			<include refid="Condtione_Where_Clause" />
 		</if>
@@ -113,7 +115,7 @@
 			REGISTRATION_ID registrationId,
 			REGISTER register,
 			GENDER gender,
-			EDUCATION education,
+			EDUCATION_NAME education,
 			OLD_LEVEL oldLevel,
 			NEW_LEVEL newLevel,
 			ID_CARD idCard,
@@ -129,6 +131,8 @@
 		(t1.area_id = t2.area_id)
 		left join t_reg_location t3 on
 		(t1.location_id = t3.location_id)
+		left join t_reg_education t4 on
+		(t1.education = t4.education_id)
 		where REGISTRATION_ID= #{id,jdbcType=INTEGER}
 		
 	</select>
