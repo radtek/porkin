@@ -3,7 +3,6 @@
 <%@ include file="/common/taglibs.jsp"%>
 
 <!doctype html>
-<!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
@@ -143,6 +142,7 @@
 						<spring:message code="label.register.name"/><span class="required-indicator">*</span>
 					</label> 
 					<input type="text" name="name" required="" value="${name}" id="name" />
+					<font color="red"><c:if test="${not empty register}"><fmt:message key="${register.text}" /></c:if></font>
 				</div>
 				
 				<div class="fieldcontain  required">
@@ -166,7 +166,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="education" items="${educationCache}" varStatus="status">
-									<option value='<c:out value="${education.educationId}"/>'><c:out value="${education.educationName}"/></option>
+									<option value='<c:out value="${education.educationName}"/>'><c:out value="${education.educationName}"/></option>
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
@@ -243,6 +243,7 @@
 						<spring:message code="label.register.telephone"/><span class="required-indicator">*</span>
 					</label> 
 					<input type="text" name="telephone" required="" value="" id="telephone" />
+					<font color="red"><c:if test="${not empty phone}"><fmt:message key="${phone.text}" /></c:if></font>
 				</div>
 				
 				<div class="fieldcontain  ">
@@ -270,8 +271,9 @@
 				
 				<div class="fieldcontain  required">
 					<label for="start_date"> <spring:message code="label.register.start_date"/> <span class="required-indicator">*</span>
-					</label> <input type="text" name="start_date" required="" value=""
-						id="start_date" />
+					</label> 
+						<input type="text" name="start_date" required="" value="" id="start_date" />
+						<font color="red"><c:if test="${not empty start_course}"><fmt:message key="${start_course.text}" /></c:if></font>
 				</div>
 
 			</fieldset>
@@ -279,19 +281,9 @@
 			<fieldset class="fieldcontain  required">
 				<label for="submit">&nbsp;<span class="required-indicator"></span>
 					</label> 
-					<input type="submit" name="submit" 
-						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
-						onmouseout="this.className='btn3_mouseout'"
-						onmousedown="this.className='btn3_mousedown'"
-						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.submit"/>' value='<spring:message code="button.register.submit"/>' id="submit" />
+					<input type="submit" name="submit" value='<spring:message code="button.register.submit"/>' id="submit" />
 						<span class="required-indicator">&nbsp;&nbsp;&nbsp;</span>
-						<input type="reset" name="reset" 
-						class=btn3_mouseout onmouseover="this.className='btn3_mouseover'" 
-						onmouseout="this.className='btn3_mouseout'"
-						onmousedown="this.className='btn3_mousedown'"
-						onmouseup="this.className='btn3_mouseup'"
-						title='<spring:message code="button.register.reset"/>' value='<spring:message code="button.register.reset"/>' id="reset" />
+						<input type="reset" name="reset" value='<spring:message code="button.register.reset"/>' id="reset" />
 			</fieldset>
 		</form>
 	</div>

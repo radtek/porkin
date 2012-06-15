@@ -18,6 +18,7 @@ import name.huangzhoujin.registration.utils.FlashMap.Message;
 import name.huangzhoujin.registration.utils.FlashMap.MessageType;
 import name.huangzhoujin.registration.utils.IdCardValidator;
 import name.huangzhoujin.registration.utils.SystemConstants;
+import org.apache.commons.lang.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,35 +51,38 @@ public class MainController {
 			@RequestParam String gender, @RequestParam String education,
 			@RequestParam Integer area, @RequestParam String old_level,
 			@RequestParam String new_level, @RequestParam String id_card,
-			@RequestParam String unemployee_no, @RequestParam String telephone, @RequestParam Integer location,
-			@RequestParam String start_date, Model model) {
+			@RequestParam String unemployee_no, @RequestParam String telephone,
+			@RequestParam Integer location, @RequestParam String start_date,
+			Model model) {
 
 		boolean hasError = false;
+		if (name == null || name.trim().equals("")) {
+			model.addAttribute("register", new Message(MessageType.error,
+					"registration.register.error"));
+			hasError = true;
+		}
 
-		if (IdCardValidator.isValid(id_card)) {
-			Registration record = new Registration();
-			record.setRegister(name);
-			record.setGender(gender);
-			record.setEducation(education);
-			record.setAreaId(area);
-			record.setOldLevel(old_level);
-			record.setNewLevel(new_level);
-			record.setIdCard(id_card);
-			record.setUnemployedNo(unemployee_no);
-			record.setPhone(telephone);
-			record.setLocationId(location);
-			record.setRegistrationDate(new Date());
-			record.setStartDate(DateUtil.strToDate(start_date));
-			registrationService.create(record);
-			model.addAttribute("name", name);
-			return "enroll/success";
-
-		} else {
+		if (id_card == null || id_card.trim().equals("")
+				|| (!IdCardValidator.isValid(id_card))) {
 			model.addAttribute("idcard", new Message(MessageType.error,
 					"registration.idcard.error"));
 			hasError = true;
-			model.addAttribute("hasError", hasError);
+		}
 
+		if (telephone == null || telephone.trim().equals("")) {
+			model.addAttribute("phone", new Message(MessageType.error,
+					"registration.telphone.error"));
+			hasError = true;
+		}
+
+		if (start_date == null || start_date.trim().equals("")
+				|| (!DateUtil.isValidate(start_date))) {
+			model.addAttribute("start_course", new Message(MessageType.error,
+					"registration.start_date.error"));
+			hasError = true;
+		}
+
+		if (hasError) {
 			List<Area> areaList = areaService.getAll();
 			model.addAttribute(SystemConstants.AreaCache, areaList);
 			List<Education> eductionList = educationService.getAll();
@@ -89,6 +93,25 @@ public class MainController {
 			model.addAttribute(SystemConstants.LocationCache, locationList);
 
 			return "enroll/welcome";
+
+		} else {
+			Registration record = new Registration();
+			record.setRegister(StringUtils.substring(name.trim(), 0, 10));
+			record.setGender(gender);
+			record.setEducation(education);
+			record.setAreaId(area);
+			record.setOldLevel(old_level);
+			record.setNewLevel(new_level);
+			record.setIdCard(StringUtils.substring(id_card, 0, 18));
+			record.setUnemployedNo(unemployee_no);
+			record.setPhone(StringUtils.substring(telephone.trim(),0, 20));
+			record.setLocationId(location);
+			record.setRegistrationDate(new Date());
+			record.setStartDate(DateUtil.strToDate(StringUtils.substring(
+					start_date.trim(), 0, 10)));
+			registrationService.create(record);
+			model.addAttribute("name", name);
+			return "enroll/success";
 
 		}
 
