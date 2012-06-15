@@ -5,5 +5,5 @@
 
 <div id="grailsLogo" role="banner">
 	<a href="${ctx}/user/home"><img
-		src="${ctx}/images/grails_logo.png" alt="Grails" /></a>
+		src="${ctx}/images/grails_logo.png" alt='<spring:message code="label.register.welcome"/>' /></a>
 </div>
