@@ -133,6 +133,10 @@
 
 	<div id="create-race" class="content scaffold-create" role="main">
 		<h1><spring:message code="label.register.welcome"/></h1>
+		<br/>
+		<div class="info_content">
+			<h5><font color="red">${memoDesc}</font></h5>
+		</div>
 
 		<form action="${ctx}/enroll/registration" method="post">
 			<fieldset class="form">
@@ -269,12 +273,12 @@
 					</select>
 				</div>
 				
-				<div class="fieldcontain  required">
-					<label for="start_date"> <spring:message code="label.register.start_date"/> <span class="required-indicator">*</span>
-					</label> 
-						<input type="text" name="start_date" required="" value="" id="start_date" />
-						<font color="red"><c:if test="${not empty start_course}"><fmt:message key="${start_course.text}" /></c:if></font>
-				</div>
+<!-- 				<div class="fieldcontain  required"> -->
+<%-- 					<label for="start_date"> <spring:message code="label.register.start_date"/> <span class="required-indicator">*</span> --%>
+<!-- 					</label>  -->
+<!-- 						<input type="text" name="start_date" required="" value="" id="start_date" /> -->
+<%-- 						<font color="red"><c:if test="${not empty start_course}"><fmt:message key="${start_course.text}" /></c:if></font> --%>
+<!-- 				</div> -->
 
 			</fieldset>
 

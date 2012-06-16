@@ -66,7 +66,9 @@
 				${name}: <spring:message code="registration.hello" />	
 			</div>
 			<br/> <br/>
-			<div class="info_content"><spring:message code="registration.success" />			
+			<div class="info_content">
+			<spring:message code="registration.success" /><br/><br/>
+			<h5><font color="red">${memoDesc}</font></h5>			
 			</div>
 		</div>
 		<br/><br/>

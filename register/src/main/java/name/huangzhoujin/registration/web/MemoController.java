@@ -7,6 +7,7 @@ import name.huangzhoujin.registration.service.MemoService;
 import name.huangzhoujin.registration.utils.FlashMap.Message;
 import name.huangzhoujin.registration.utils.FlashMap.MessageType;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +43,7 @@ public class MemoController {
 			Model model) {
 		Memo memo = new Memo();
 		memo.setMemoId(memoId);
-		memo.setMemoDescription(description);
+		memo.setMemoDescription(StringUtils.substring(description, 0, 200));
 		boolean result = memoService.save(memo);
 		if(result){
 			model.addAttribute("memoInfo", new Message(MessageType.info,

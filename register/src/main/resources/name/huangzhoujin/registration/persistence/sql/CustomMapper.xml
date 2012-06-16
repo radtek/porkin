@@ -46,19 +46,19 @@
 				AND new_level = #{new_level}
 			</if>
 			<if test="start_date != null">
-				<![CDATA[ AND date_format(REGISTRATION_DATE, '%Y-%m-%d') >= #{start_date} ]]>
+				<![CDATA[ AND date_format(start_date, '%Y-%m-%d') >= #{start_date} ]]>
 			</if>
 			
 			<if test="end_date != null">
-				<![CDATA[ AND date_format(REGISTRATION_DATE, '%Y-%m-%d') <= #{end_date} ]]>
+				<![CDATA[ AND date_format(start_date, '%Y-%m-%d') <= #{end_date} ]]>
 			</if>
 			
 			<if test="start_time != null">
-				<![CDATA[ AND date_format(start_date, '%Y-%m-%d') >= #{start_time} ]]>
+				<![CDATA[ AND date_format(REGISTRATION_DATE, '%Y-%m-%d') >= #{start_time} ]]>
 			</if>
 			
 			<if test="end_time != null">
-				<![CDATA[ AND date_format(start_date, '%Y-%m-%d') <= #{end_time} ]]>
+				<![CDATA[ AND date_format(REGISTRATION_DATE, '%Y-%m-%d') <= #{end_time} ]]>
 			</if>
 			
 			<if test="location_id != null">

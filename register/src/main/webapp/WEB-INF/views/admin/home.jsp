@@ -160,7 +160,7 @@ function doSearch(){
 								</c:otherwise>
 							</c:choose>
 					</select></td>
-					<td><spring:message code="label.register.old_level" /> <select
+					<td><spring:message code="label.register.old_level" /> &nbsp;<select
 						name="old_level" id="old_level">
 							<c:choose>
 								<c:when test="${empty levelCache}">
@@ -218,20 +218,21 @@ function doSearch(){
 					
 				</tr>
 				<tr>
-					<td>
-						<spring:message code="label.register.start_date" /><br />
-						<spring:message code="label.register.start_time" />&nbsp;:&nbsp;
-						<input type="text" name="start_date" value="${start_date}" id="start_date" /><br />
-						<spring:message code="label.register.end_time" />&nbsp;:&nbsp;
-						<input type="text" name="end_date" value="${end_date}" id="end_date" />
-					</td>
+<!-- 					<td> -->
+<%-- 						<spring:message code="label.register.start_date" /><br /> --%>
+<%-- 						<spring:message code="label.register.start_time" />&nbsp;:&nbsp; --%>
+<%-- 						<input type="text" name="start_date" value="${start_date}" id="start_date" /><br /> --%>
+<%-- 						<spring:message code="label.register.end_time" />&nbsp;:&nbsp; --%>
+<%-- 						<input type="text" name="end_date" value="${end_date}" id="end_date" /> --%>
+<!-- 					</td> -->
+					
 					<td><spring:message code="label.register.reg_date" /><br />
 						<spring:message code="label.register.start_time" />&nbsp;:&nbsp;
 						<input type="text" name="start_time"  value="${start_time}" id="start_time" /><br />
 						<spring:message code="label.register.end_time" />&nbsp;:&nbsp;
 						<input type="text" name="end_time"  value="${end_time}" id="end_time" /></td>
 					<td>
-					<spring:message code="label.register.location"/> <span class="required-indicator">*</span>
+					<spring:message code="label.register.location"/> <span class="required-indicator"></span>
 					<select name="location_id" id="location_id">
 						<c:choose>
 							<c:when test="${empty locationCache}">
@@ -253,7 +254,9 @@ function doSearch(){
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
-					</select><br/><br/>
+					</select>
+					</td>
+					<td>
 					<input type="button" name="mainSearch" class=btn3_mouseout title='<spring:message code="button.register.search"/>' value='<spring:message code="button.register.search"/>' 
 					id="mainSearch" onclick="doSearch()"/>
 						<span class="required-indicator">&nbsp;&nbsp;&nbsp;</span>
@@ -307,7 +310,7 @@ function doSearch(){
 								<td>
 									<form action="${ctx}/registration/delete">
 										<input type="hidden" name="id" value="${custom.registrationId}" id="id" />
-										<input type="submit" name="_action_delete" value='<spring:message code="label.register.delete" />' class="delete" onclick="return confirm(&#39;<spring:message code="label.register.confirm_delete" />&#39;);" />
+										<input type="submit" name="_action_delete" value='<spring:message code="label.register.delete" />' class="delete" onclick='return confirm(&#39; <spring:message code="label.register.confirm_delete" /> &#39;);' />
 									</form>
 							
 								</td>

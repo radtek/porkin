@@ -38,6 +38,11 @@
 
 </head>
 <body>
+	<jsp:include page="/common/banner.jsp" />
+
+	<a href="#list-book" class="skip" tabindex="-1">Skip to
+		content&hellip;</a>
+	<jsp:include page="/common/menu.jsp" />
 	<div id="list-book" class="content scaffold-list" role="main">
 		<form action="${ctx}/memo/save" method="post" name="memoForm" id="memoForm">
 			<fieldset class="form">
@@ -53,7 +58,7 @@
 					<label for="description">
 						<span class="required-indicator"></span>
 					</label> 
-					<input type="textarea" name="description" value="${memo.memoDescription}" id="description" />
+					<textarea  row="5" col="30" name="description" id="description" >${memo.memoDescription}</textarea>
 				</div>
 				
 			<fieldset class="fieldcontain  required">
@@ -70,5 +75,7 @@
 			</fieldset>
 		</form>
 	</div>
+	
+	<jsp:include page="/common/footer.jsp" />
 </body>
 </html>
