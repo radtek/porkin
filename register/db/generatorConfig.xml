@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-	<classPathEntry location="D:/Java/JDBC/mysql/mysql-connector-java-5.1.20.jar" />
+<!-- 	<classPathEntry location="D:/Java/JDBC/mysql/mysql-connector-java-5.1.20.jar" /> -->
+
+	<classPathEntry location="E:/Java/JDBC/mysql-connector-java-5.1.15/mysql-connector-java-5.1.15-bin.jar" />
 
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		
@@ -41,7 +43,8 @@
 <!-- 		<table tableName="t_reg_level" domainObjectName="Level" /> -->
 <!-- 		<table tableName="t_reg_location" domainObjectName="Location" /> -->
 <!-- 		<table tableName="t_reg_registration" domainObjectName="Registration" /> -->
-		<table tableName="t_reg_user" domainObjectName="User" />
+<!-- 		<table tableName="t_reg_user" domainObjectName="User" /> -->
+		<table tableName="t_reg_memo" domainObjectName="Memo" />
 
 		
 	</context>
