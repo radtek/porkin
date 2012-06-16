@@ -13,6 +13,9 @@
 					code="menu.sub.area" /></a></li>
 		<li><a href="${ctx}/location/list" class="list"><spring:message
 					code="label.register.location" /></a></li>
+					
+		<li><a href="${ctx}/memo/load" class="list"><spring:message
+					code="menu.sub.memo" /></a></li>
        					
         <c:if test="${sessionScope.roleId=='A'}">
 			<li><a href="${ctx}/user/list" class="create"><spring:message

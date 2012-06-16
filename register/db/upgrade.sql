@@ -1,0 +1,2 @@
+ ALTER TABLE t_reg_registration MODIFY  START_DATE DATE NULL;
+ ALTER TABLE t_reg_registration MODIFY  START_DATE DATE NOT NULL;

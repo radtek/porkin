@@ -2,7 +2,7 @@
 MySQL Backup
 Source Server Version: 5.5.16
 Source Database: register
-Date: 2012/6/12 01:17:28
+Date: 2012/6/16 13:38:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,6 +51,17 @@ CREATE TABLE `t_reg_location` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
+--  Table structure for `t_reg_memo`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_reg_memo`;
+CREATE TABLE `t_reg_memo` (
+  `MEMO_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MEMO_DESCRIPTION` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`MEMO_ID`),
+  UNIQUE KEY `MEMO_ID` (`MEMO_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 --  Table structure for `t_reg_registration`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_reg_registration`;
@@ -66,14 +77,14 @@ CREATE TABLE `t_reg_registration` (
   `WORK_UNIT` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '????',
   `UNEMPLOYED_NO` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '????',
   `REGISTRATION_DATE` date NOT NULL COMMENT '????',
-  `START_DATE` date NOT NULL COMMENT '????',
+  `START_DATE` date DEFAULT NULL COMMENT '????',
   `AREA_ID` int(11) NOT NULL COMMENT '???',
   `LOCATION_ID` int(11) NOT NULL COMMENT '????',
   PRIMARY KEY (`REGISTRATION_ID`),
   KEY `AREA_ID` (`AREA_ID`),
   KEY `LOCATION_ID` (`LOCATION_ID`),
-  CONSTRAINT `t_reg_registration_ibfk_1` FOREIGN KEY (`AREA_ID`) REFERENCES `t_reg_area` (`AREA_ID`),
-  CONSTRAINT `t_reg_registration_ibfk_2` FOREIGN KEY (`LOCATION_ID`) REFERENCES `t_reg_location` (`LOCATION_ID`)
+  CONSTRAINT `t_reg_registration_ibfk_2` FOREIGN KEY (`LOCATION_ID`) REFERENCES `t_reg_location` (`LOCATION_ID`),
+  CONSTRAINT `t_reg_registration_ibfk_1` FOREIGN KEY (`AREA_ID`) REFERENCES `t_reg_area` (`AREA_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -87,8 +98,9 @@ CREATE TABLE `t_reg_user` (
   `EMAIL` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ROLE_FLAG` char(1) CHARACTER SET utf8 NOT NULL COMMENT 'A: Administrator\r\nU: User',
   `ACTIVE` char(1) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Y: active\r\nN: inactive',
-  PRIMARY KEY (`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`USER_ID`),
+  UNIQUE KEY `USER_ID` (`USER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records 
