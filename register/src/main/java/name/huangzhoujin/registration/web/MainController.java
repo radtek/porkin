@@ -15,7 +15,6 @@ import name.huangzhoujin.registration.service.LevelService;
 import name.huangzhoujin.registration.service.LocationService;
 import name.huangzhoujin.registration.service.MemoService;
 import name.huangzhoujin.registration.service.RegistrationService;
-import name.huangzhoujin.registration.utils.DateUtil;
 import name.huangzhoujin.registration.utils.FlashMap.Message;
 import name.huangzhoujin.registration.utils.FlashMap.MessageType;
 import name.huangzhoujin.registration.utils.IdCardValidator;
