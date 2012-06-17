@@ -26,6 +26,7 @@ import name.huangzhoujin.registration.utils.SystemConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -107,7 +108,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) {
+	public String list(@ModelAttribute("userName") String userName, Model model) {
 		Page<User> page = new Page<User>();
 		page.setPageNo(1);
 		page.setPageSize(10);
@@ -120,49 +121,50 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/addForm", method = RequestMethod.GET)
-	public String addForm(Model model) {
+	public String addForm(@ModelAttribute("userName") String userName,
+			Model model) {
 		return "user/add";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+	public String create(@ModelAttribute("userName") String userName,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String password2 = request.getParameter("password2");
 		String email = request.getParameter("email");
 		String roleFlag = request.getParameter("roleFlag");
 		String active = request.getParameter("active");
-		
+
 		String forward = "user/add";
-		
+
 		boolean existedUser = userService.existedUser(username);
-		if(existedUser){
+		if (existedUser) {
 			model.addAttribute("useradd", new Message(MessageType.info,
 					"user.existed.user"));
-		}
-		else{
-			if(password.equals(password2)){
+		} else {
+			if (password.equals(password2)) {
 				User user = new User();
 				user.setUsername(username);
 				user.setPassword(password);
 				user.setEmail(email);
 				user.setRoleFlag(roleFlag);
 				user.setActive(active);
-				if(userService.create(user)){
-					forward ="redirect:/user/list";
+				if (userService.create(user)) {
+					forward = "redirect:/user/list";
 				}
-			}
-			else{
+			} else {
 				model.addAttribute("useradd", new Message(MessageType.info,
 						"user.confict.password"));
 			}
 		}
 		return forward;
 	}
-	
+
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@RequestParam Integer id) {
+	public String delete(@ModelAttribute("userName") String userName,
+			@RequestParam Integer id) {
 		User user = userService.getById(id);
 		if (user == null) {
 			return "fail";
@@ -171,17 +173,18 @@ public class UserController {
 			return "redirect:/user/list";
 		}
 	}
-	
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+	public String save(@ModelAttribute("userName") String userName,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 		String userId = request.getParameter("userId");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String roleFlag = request.getParameter("roleFlag");
 		String active = request.getParameter("active");
-		
+
 		User user = new User();
 		user.setUserId(Integer.parseInt(userId));
 		user.setUsername(username);
@@ -192,21 +195,22 @@ public class UserController {
 		userService.save(user);
 		return "redirect:/location/list";
 	}
-	
+
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public String display(@RequestParam Integer pageNo,
-			HttpServletRequest request, Model model) {
+	public String display(@ModelAttribute("userName") String userName,
+			@RequestParam Integer pageNo, HttpServletRequest request,
+			Model model) {
 		Page<User> page = new Page<User>();
 		page.setPageNo(pageNo);
 		page.setPageSize(10);
-		List<User> userList = userService.getByPage(
-				page.getFirst(), page.getPageSize());
+		List<User> userList = userService.getByPage(page.getFirst(),
+				page.getPageSize());
 		page.setResult(userList);
 		page.setTotalCount(userService.countAlluser());
 		model.addAttribute("page", page);
 		return "user/list";
 	}
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(SessionStatus status) {
 		status.setComplete();

@@ -13,6 +13,7 @@ import name.huangzhoujin.registration.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ public class AreaController {
 	private AreaService areaService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(@ModelAttribute("userName") String userName, Model model) {
 		Page<Area> page = new Page<Area>();
 		page.setPageNo(1);
 		page.setPageSize(10);
@@ -40,7 +41,8 @@ public class AreaController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@RequestParam Integer id) {
+	public String delete(@ModelAttribute("userName") String userName,
+			@RequestParam Integer id) {
 		Area area = areaService.getById(id);
 		if (area == null) {
 			return "fail";
@@ -51,37 +53,37 @@ public class AreaController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@RequestParam Integer id, @RequestParam String areaName,
-			Model model) {
+	public String save(@ModelAttribute("userName") String userName,
+			@RequestParam Integer id, @RequestParam String areaName, Model model) {
 		Area area = new Area();
 		area.setAreaId(id);
 		area.setAreaName(areaName);
 		areaService.save(area);
 		return "redirect:/area/list";
-		
+
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create( @RequestParam String areaName,
-			Model model) {
+	public String create(@ModelAttribute("userName") String userName,
+			@RequestParam String areaName, Model model) {
 		Area area = new Area();
 		area.setAreaName(areaName);
 		boolean result = areaService.create(area);
-		if(result){
+		if (result) {
 			model.addAttribute("area", new Message(MessageType.info,
 					"admin.sava.success"));
-		}
-		else{
+		} else {
 			model.addAttribute("area", new Message(MessageType.info,
 					"admin.save.failure"));
 		}
 		return "area/result";
-		
+
 	}
-	
+
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public String display(@RequestParam Integer pageNo,
-			HttpServletRequest request, Model model) {
+	public String display(@ModelAttribute("userName") String userName,
+			@RequestParam Integer pageNo, HttpServletRequest request,
+			Model model) {
 		Page<Area> page = new Page<Area>();
 		page.setPageNo(pageNo);
 		page.setPageSize(10);
@@ -91,13 +93,13 @@ public class AreaController {
 		page.setTotalCount(areaService.countAllArea());
 		model.addAttribute("page", page);
 		return "area/list";
-		
+
 	}
-	
+
 	@RequestMapping(value = "/addForm", method = RequestMethod.GET)
-	public String addForm( Model model) {
+	public String addForm(@ModelAttribute("userName") String userName,
+			Model model) {
 		return "area/add";
 	}
-	
 
 }

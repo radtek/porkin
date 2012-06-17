@@ -13,6 +13,7 @@ import name.huangzhoujin.registration.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ public class LocationController {
 	private LocationService locationService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(@ModelAttribute("userName") String userName, Model model) {
 		Page<Location> page = new Page<Location>();
 		page.setPageNo(1);
 		page.setPageSize(10);
@@ -40,7 +41,8 @@ public class LocationController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@RequestParam Integer id) {
+	public String delete(@ModelAttribute("userName") String userName,
+			@RequestParam Integer id) {
 		Location location = locationService.getById(id);
 		if (location == null) {
 			return "fail";
@@ -51,8 +53,9 @@ public class LocationController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@RequestParam Integer id,
-			@RequestParam String locationName, Model model) {
+	public String save(@ModelAttribute("userName") String userName,
+			@RequestParam Integer id, @RequestParam String locationName,
+			Model model) {
 		Location location = new Location();
 		location.setLocationId(id);
 		location.setLocationName(locationName);
@@ -62,7 +65,8 @@ public class LocationController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(@RequestParam String locationName, Model model) {
+	public String create(@ModelAttribute("userName") String userName,
+			@RequestParam String locationName, Model model) {
 		Location location = new Location();
 		location.setLocationName(locationName);
 		boolean result = locationService.create(location);
@@ -78,8 +82,9 @@ public class LocationController {
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public String display(@RequestParam Integer pageNo,
-			HttpServletRequest request, Model model) {
+	public String display(@ModelAttribute("userName") String userName,
+			@RequestParam Integer pageNo, HttpServletRequest request,
+			Model model) {
 		Page<Location> page = new Page<Location>();
 		page.setPageNo(pageNo);
 		page.setPageSize(10);
@@ -93,7 +98,8 @@ public class LocationController {
 	}
 
 	@RequestMapping(value = "/addForm", method = RequestMethod.GET)
-	public String addForm(Model model) {
+	public String addForm(@ModelAttribute("userName") String userName,
+			Model model) {
 		return "location/add";
 	}
 

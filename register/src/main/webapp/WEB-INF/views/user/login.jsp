@@ -11,7 +11,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Welcome to Grails</title>
+		<title><spring:message code="label.register.welcome" /></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="${ctx}/images/favicon.ico" type="image/x-icon">
 		<link rel="apple-touch-icon" href="${ctx}/images/apple-touch-icon.png">

@@ -29,14 +29,17 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping(value = "/registration")
+@SessionAttributes({ "userId", "userName", "roleId" })
 public class RegistratonController {
 
 	@Autowired
@@ -59,7 +62,8 @@ public class RegistratonController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(HttpServletRequest request, Model model) {
+	public String list(@ModelAttribute("userName") String userName,
+			HttpServletRequest request, Model model) {
 		Page<CustomDto> page = new Page<CustomDto>();
 		page.setPageNo(1);
 		page.setPageSize(10);
@@ -98,8 +102,9 @@ public class RegistratonController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String search(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+	public String search(@ModelAttribute("userName") String userName,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 
 		String register = StringUtil.toNull(request.getParameter("register"));
 		String id_card = StringUtil.toNull(request.getParameter("id_card"));
@@ -173,8 +178,9 @@ public class RegistratonController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public String display(@RequestParam Integer pageNo,
-			HttpServletRequest request, Model model) {
+	public String display(@ModelAttribute("userName") String userName,
+			@RequestParam Integer pageNo, HttpServletRequest request,
+			Model model) {
 
 		HashMap param = (HashMap) WebUtils.getSessionAttribute(request,
 				"condition");
@@ -217,12 +223,14 @@ public class RegistratonController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String create(Model model) {
+	public String create(@ModelAttribute("userName") String userName,
+			Model model) {
 		return "admin/home";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete(@RequestParam Integer id) {
+	public String delete(@ModelAttribute("userName") String userName,
+			@RequestParam Integer id) {
 		Registration registration = registrationService.getById(id);
 		if (registration == null) {
 			return "fail";
@@ -234,8 +242,9 @@ public class RegistratonController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/export", method = RequestMethod.POST)
-	public void export(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+	public void export(@ModelAttribute("userName") String userName,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 
 		String register = StringUtil.toNull(request.getParameter("register"));
 		String id_card = StringUtil.toNull(request.getParameter("id_card"));
@@ -265,45 +274,42 @@ public class RegistratonController {
 		param.put("start_time", start_time);
 		param.put("end_time", end_time);
 		param.put("location_id", location_id);
-		
-		List<CustomDto> result =customService.listByCondition(param);
-		
-		String fileName = "Report.xls";  
-        response.setHeader("Content-Disposition", "inline; filename="  
-                + fileName);  
-        // 确保发送的当前文本格式  
-        response.setContentType("application/vnd.ms-excel");
-        
-        // 7. 输出流
-        try {  
-            // Retrieve the output stream  
-            ServletOutputStream outputStream = response.getOutputStream();  
-            // Write to the output stream
-            Workbook wb = ExcelUtil.generateExcel(result);
-            wb.write(outputStream);
-            outputStream.flush();  
-        } catch (Exception e) {  
-            e.printStackTrace();
-        }  
-        
-  	}
-	
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String show(@PathVariable Integer id,HttpServletRequest request,
-			HttpServletResponse response, Model model) {
-		
-		CustomDto customDto = customService.getByRegistrationId(id);
-		if(customDto!=null){
-			model.addAttribute("custom",customDto);
-			return "registration/detail";
+
+		List<CustomDto> result = customService.listByCondition(param);
+
+		String fileName = "Report.xls";
+		response.setHeader("Content-Disposition", "inline; filename="
+				+ fileName);
+		// 确保发送的当前文本格式
+		response.setContentType("application/vnd.ms-excel");
+
+		// 7. 输出流
+		try {
+			// Retrieve the output stream
+			ServletOutputStream outputStream = response.getOutputStream();
+			// Write to the output stream
+			Workbook wb = ExcelUtil.generateExcel(result);
+			wb.write(outputStream);
+			outputStream.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		else{
+
+	}
+
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String show(@ModelAttribute("userName") String userName,
+			@PathVariable Integer id, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+
+		CustomDto customDto = customService.getByRegistrationId(id);
+		if (customDto != null) {
+			model.addAttribute("custom", customDto);
+			return "registration/detail";
+		} else {
 			return "redirect:/registration/list";
 		}
-		
-		
-		
+
 	}
-				
 
 }
