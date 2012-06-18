@@ -7,30 +7,50 @@ public class DateUtil {
 
 	private static String dateFormat = SystemConstants.defaultFormat1;
 
-	public static String getDateFormat() {
-		return dateFormat;
+	private static String timestampFormat = SystemConstants.defaultTimestampFormat;
+
+	public static String getTimestampFormat() {
+		return timestampFormat;
 	}
 
-	public static boolean isValidate(String strDate){
-		try{
-			SimpleDateFormat sdf=new SimpleDateFormat(getDateFormat());
-			sdf.setLenient(false);
-			sdf.parse(strDate);
-			return true;
-		}
-		catch(Exception e){
-			return false;
-		}
+	public static void setTimestampFormat(String timestampFormat) {
+		DateUtil.timestampFormat = timestampFormat;
+	}
+
+	public static String getDateFormat() {
+		return dateFormat;
 	}
 
 	public static void setDateFormat(String dateFormat) {
 		DateUtil.dateFormat = dateFormat;
 	}
 
+	public static boolean isValidate(String strDate) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(getDateFormat());
+			sdf.setLenient(false);
+			sdf.parse(strDate);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	public static String dateToStr(Date date) {
 		String result = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat(getDateFormat());
+			result = sdf.format(date);
+		} catch (Exception e) {
+			result = "";
+		}
+		return result;
+	}
+
+	public static String dateToStrstamp(Date date) {
+		String result = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(getTimestampFormat());
 			result = sdf.format(date);
 		} catch (Exception e) {
 			result = "";
@@ -48,7 +68,5 @@ public class DateUtil {
 		}
 		return result;
 	}
-	
-	
 
 }

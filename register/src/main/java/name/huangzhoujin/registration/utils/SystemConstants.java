@@ -22,8 +22,10 @@ public class SystemConstants {
 	public static final String ActiveFlag = "Y";
 	public static final String NotActiveFlag = "N";
 	
-	public static String defaultFormat1 = "yyyy-MM-dd";
-	public static String defaultFormat2 = "yyyy/MM/dd";
+	public static final String defaultFormat1 = "yyyy-MM-dd";
+	public static final String defaultFormat2 = "yyyy/MM/dd";
+	public static final String defaultTimestampFormat = "yyyyMMdd-HHmm";
+	public static final String defaultExcelProfix = "Report";
 
 
 }

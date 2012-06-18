@@ -277,7 +277,7 @@ public class RegistratonController {
 
 		List<CustomDto> result = customService.listByCondition(param);
 
-		String fileName = "Report.xls";
+		String fileName = ExcelUtil.generateFileName(SystemConstants.defaultExcelProfix);
 		response.setHeader("Content-Disposition", "inline; filename="
 				+ fileName);
 		// 确保发送的当前文本格式

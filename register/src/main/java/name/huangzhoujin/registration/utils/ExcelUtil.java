@@ -1,6 +1,5 @@
 package name.huangzhoujin.registration.utils;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +13,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 public class ExcelUtil {
+	
+	public static String generateFileName(String prefix){
+		Date now = new Date();
+		String timestamp = DateUtil.dateToStrstamp(now);
+		String result= prefix +"-"+timestamp+".xls";
+		return result;
+	}
 
 	public static HSSFWorkbook generateExcel(List<CustomDto> customDtoList) {
 		HSSFWorkbook wb = new HSSFWorkbook();
@@ -66,7 +72,7 @@ public class ExcelUtil {
 		CreationHelper createHelper = wb.getCreationHelper();
 		CellStyle cellStyle = wb.createCellStyle();
 		cellStyle.setDataFormat(createHelper.createDataFormat().getFormat(
-				"yyyy/mm/dd/"));
+				SystemConstants.defaultFormat2));
 
 		int length = customDtoList.size();
 		CustomDto data = null;
@@ -85,7 +91,8 @@ public class ExcelUtil {
 			cell.setCellValue(data.getGender());
 
 			cell = row.createCell(3);
-			cell.setCellValue(data.getEducation()==null?"":data.getEducation());
+			cell.setCellValue(data.getEducation() == null ? "" : data
+					.getEducation());
 
 			cell = row.createCell(4);
 			cell.setCellValue(data.getAreaName());
@@ -100,70 +107,72 @@ public class ExcelUtil {
 			cell.setCellValue(data.getIdCard());
 
 			cell = row.createCell(8);
-			cell.setCellValue(data.getPhone()==null?"":data.getPhone());
+			cell.setCellValue(data.getPhone() == null ? "" : data.getPhone());
 
 			cell = row.createCell(9);
-			cell.setCellValue(data.getWorkUnit()==null?"":data.getWorkUnit());
+			cell.setCellValue(data.getWorkUnit() == null ? "" : data
+					.getWorkUnit());
 
 			cell = row.createCell(10);
-			cell.setCellValue(data.getUnemployedNo()==null?"":data.getUnemployedNo());
+			cell.setCellValue(data.getUnemployedNo() == null ? "" : data
+					.getUnemployedNo());
 
 			cell = row.createCell(11);
-			if(data.getStartDate()!=null){
+			if (data.getStartDate() != null) {
 				cell.setCellValue(data.getStartDate());
 				cell.setCellStyle(cellStyle);
 			}
-			
 
 			cell = row.createCell(12);
 			cell.setCellValue(data.getLocationName());
 
 			cell = row.createCell(13);
-			if(data.getRegistrationDate()!=null){
+			if (data.getRegistrationDate() != null) {
 				cell.setCellValue(data.getRegistrationDate());
 				cell.setCellStyle(cellStyle);
 			}
 		}
 
-//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//		try {
-//			wb.write(baos);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
-		
-//		byte[] ba = baos.toByteArray();
-//		ByteArrayInputStream bais = new ByteArrayInputStream(ba);
-//		return bais;
+		// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		// try {
+		// wb.write(baos);
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+
+		// byte[] ba = baos.toByteArray();
+		// ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+		// return bais;
 		return wb;
 
 	}
 
 	public static void main(String[] args) {
-		List<CustomDto> customDtoList = new ArrayList<CustomDto>();
-		CustomDto c1 = new CustomDto();
-		c1.setAreaName("Huang");
-		c1.setEducation("名");
-		c1.setRegistrationDate(new Date());
-		c1.setStartDate(new Date(-1));
-
-		CustomDto c2 = new CustomDto();
-		c2.setGender("Hu");
-		c2.setRegistrationDate(new Date());
-		c2.setStartDate(new Date(-2));
-
-		CustomDto c3 = new CustomDto();
-		c3.setStartDate(new Date(-1));
-		c3.setPhone("123353");
-		c3.setRegistrationDate(new Date());
-		c3.setStartDate(new Date(-3));
-
-		customDtoList.add(c1);
-		customDtoList.add(c2);
-		customDtoList.add(c3);
-
-		generateExcel(customDtoList);
+//		List<CustomDto> customDtoList = new ArrayList<CustomDto>();
+//		CustomDto c1 = new CustomDto();
+//		c1.setAreaName("Huang");
+//		c1.setEducation("名");
+//		c1.setRegistrationDate(new Date());
+//		c1.setStartDate(new Date(-1));
+//
+//		CustomDto c2 = new CustomDto();
+//		c2.setGender("Hu");
+//		c2.setRegistrationDate(new Date());
+//		c2.setStartDate(new Date(-2));
+//
+//		CustomDto c3 = new CustomDto();
+//		c3.setStartDate(new Date(-1));
+//		c3.setPhone("123353");
+//		c3.setRegistrationDate(new Date());
+//		c3.setStartDate(new Date(-3));
+//
+//		customDtoList.add(c1);
+//		customDtoList.add(c2);
+//		customDtoList.add(c3);
+//
+//		generateExcel(customDtoList);
+		
+		System.out.println(generateFileName(SystemConstants.defaultExcelProfix));
 
 	}
 
