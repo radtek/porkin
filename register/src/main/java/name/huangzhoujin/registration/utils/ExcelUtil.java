@@ -69,10 +69,11 @@ public class ExcelUtil {
 				"yyyy/mm/dd/"));
 
 		int length = customDtoList.size();
+		CustomDto data = null;
 		for (int i = 0; i < length; i++) {
 			int no = i + 1;
 			row = sheet.createRow(no);
-			CustomDto data = customDtoList.get(i);
+			data = customDtoList.get(i);
 
 			cell = row.createCell(0);
 			cell.setCellValue(no);
@@ -84,7 +85,7 @@ public class ExcelUtil {
 			cell.setCellValue(data.getGender());
 
 			cell = row.createCell(3);
-			cell.setCellValue(data.getEducation());
+			cell.setCellValue(data.getEducation()==null?"":data.getEducation());
 
 			cell = row.createCell(4);
 			cell.setCellValue(data.getAreaName());
@@ -99,25 +100,29 @@ public class ExcelUtil {
 			cell.setCellValue(data.getIdCard());
 
 			cell = row.createCell(8);
-			cell.setCellValue(data.getPhone());
+			cell.setCellValue(data.getPhone()==null?"":data.getPhone());
 
 			cell = row.createCell(9);
-			cell.setCellValue(data.getWorkUnit());
+			cell.setCellValue(data.getWorkUnit()==null?"":data.getWorkUnit());
 
 			cell = row.createCell(10);
-			cell.setCellValue(data.getUnemployedNo());
+			cell.setCellValue(data.getUnemployedNo()==null?"":data.getUnemployedNo());
 
 			cell = row.createCell(11);
-			cell.setCellValue(data.getStartDate());
-			cell.setCellStyle(cellStyle);
+			if(data.getStartDate()!=null){
+				cell.setCellValue(data.getStartDate());
+				cell.setCellStyle(cellStyle);
+			}
+			
 
 			cell = row.createCell(12);
 			cell.setCellValue(data.getLocationName());
 
 			cell = row.createCell(13);
-			cell.setCellValue(data.getRegistrationDate());
-			cell.setCellStyle(cellStyle);
-
+			if(data.getRegistrationDate()!=null){
+				cell.setCellValue(data.getRegistrationDate());
+				cell.setCellStyle(cellStyle);
+			}
 		}
 
 //		ByteArrayOutputStream baos = new ByteArrayOutputStream();
