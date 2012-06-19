@@ -17,6 +17,13 @@
 			<artifactId>log4j</artifactId><!--唯一标识 -->
 			<version>1.2.16</version><!--版本号 -->
 		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.20</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
