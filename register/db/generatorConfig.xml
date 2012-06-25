@@ -42,9 +42,9 @@
 <!-- 		<table tableName="t_reg_education" domainObjectName="Education" /> -->
 <!-- 		<table tableName="t_reg_level" domainObjectName="Level" /> -->
 <!-- 		<table tableName="t_reg_location" domainObjectName="Location" /> -->
-<!-- 		<table tableName="t_reg_registration" domainObjectName="Registration" /> -->
+		<table tableName="t_reg_registration" domainObjectName="Registration" />
 <!-- 		<table tableName="t_reg_user" domainObjectName="User" /> -->
-		<table tableName="t_reg_memo" domainObjectName="Memo" />
+<!-- 		<table tableName="t_reg_memo" domainObjectName="Memo" /> -->
 
 		
 	</context>

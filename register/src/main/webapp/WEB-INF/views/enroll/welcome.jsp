@@ -235,6 +235,14 @@
 					<font color="red"><c:if test="${not empty idcard}"><fmt:message key="${idcard.text}" /></c:if></font>
 				</div>
 				
+				<div class="fieldcontain  required">
+					<label for="post_address">
+						<spring:message code="label.register.post_address"/><span class="required-indicator">*</span>
+					</label> 
+					<input type="text" name="post_address" required="" value="${post_address}" id="post_address" />
+					<font color="red"><c:if test="${not empty postaddress}"><fmt:message key="${postaddress.text}" /></c:if></font>
+				</div>
+				
 				<div class="fieldcontain  ">
 					<label for="unemployee_no">
 						<spring:message code="label.register.unemployee_no"/><span class="required-indicator"></span>

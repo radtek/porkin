@@ -57,23 +57,29 @@ public class MainController {
 			@RequestParam String new_level, @RequestParam String id_card,
 			@RequestParam String unemployee_no, @RequestParam String telephone,
 			@RequestParam Integer location, //@RequestParam String start_date,
+			@RequestParam String post_address,
 			Model model) {
 
 		boolean hasError = false;
-		if (name == null || name.trim().equals("")) {
+		if (StringUtils.isBlank(name)) {
 			model.addAttribute("register", new Message(MessageType.error,
 					"registration.register.error"));
 			hasError = true;
 		}
+		
+		if(StringUtils.isBlank(post_address)){
+			model.addAttribute("postaddress", new Message(MessageType.error,
+					"registration.post_address.error"));
+			hasError = true;
+		}
 
-		if (id_card == null || id_card.trim().equals("")
-				|| (!IdCardValidator.isValid(id_card))) {
+		if (StringUtils.isBlank(id_card) || (!IdCardValidator.isValid(id_card))) {
 			model.addAttribute("idcard", new Message(MessageType.error,
 					"registration.idcard.error"));
 			hasError = true;
 		}
 
-		if (telephone == null || telephone.trim().equals("")) {
+		if (StringUtils.isBlank(telephone)) {
 			model.addAttribute("phone", new Message(MessageType.error,
 					"registration.telphone.error"));
 			hasError = true;
@@ -116,6 +122,7 @@ public class MainController {
 			record.setPhone(StringUtils.substring(telephone.trim(),0, 20));
 			record.setLocationId(location);
 			record.setRegistrationDate(new Date());
+			record.setPostAddress(StringUtils.substring(post_address.trim(),0,200));
 //			record.setStartDate(DateUtil.strToDate(StringUtils.substring(
 //					start_date.trim(), 0, 10)));
 			registrationService.create(record);

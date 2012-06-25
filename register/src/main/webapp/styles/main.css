@@ -662,7 +662,8 @@ a.skip {
 
 .info_content {
 	color: #000000;
-	PADDING-LEFT: 80px;
+	PADDING-LEFT: 40px;
+	PADDING-RIGHT: 40px;
 	text-align: left;
 	
 }
