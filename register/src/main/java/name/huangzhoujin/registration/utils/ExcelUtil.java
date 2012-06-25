@@ -68,6 +68,9 @@ public class ExcelUtil {
 
 		cell = row.createCell(13);
 		cell.setCellValue("报名时间");
+		
+		cell = row.createCell(14);
+		cell.setCellValue("通信地址（身份证地址）");
 
 		CreationHelper createHelper = wb.getCreationHelper();
 		CellStyle cellStyle = wb.createCellStyle();
@@ -131,6 +134,9 @@ public class ExcelUtil {
 				cell.setCellValue(data.getRegistrationDate());
 				cell.setCellStyle(cellStyle);
 			}
+			
+			cell = row.createCell(14);
+			cell.setCellValue(data.getPostAddress() == null ? "" : data.getPostAddress());
 		}
 
 		// ByteArrayOutputStream baos = new ByteArrayOutputStream();

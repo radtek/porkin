@@ -91,7 +91,7 @@
 			WORK_UNIT workUnit,
 			UNEMPLOYED_NO unemployedNo,
 			REGISTRATION_DATE registrationDate,
-			
+			POST_ADDRESS postAddress,
 			START_DATE startDate,
 			AREA_NAME areaName,
 			LOCATION_NAME locationName
