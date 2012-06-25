@@ -14,6 +14,7 @@
     	<result column="PHONE" property="phone" jdbcType="VARCHAR" />
     	<result column="WORK_UNIT" property="workUnit" jdbcType="VARCHAR" />
     	<result column="UNEMPLOYED_NO" property="unemployedNo" jdbcType="VARCHAR" />
+    	<result column="POST_ADDRESS" property="postAddress" jdbcType="VARCHAR" />
     	<result column="REGISTRATION_DATE" property="registrationDate" jdbcType="DATE" />
     	<result column="START_DATE" property="startDate" jdbcType="DATE" />
     	<result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
@@ -90,6 +91,7 @@
 			WORK_UNIT workUnit,
 			UNEMPLOYED_NO unemployedNo,
 			REGISTRATION_DATE registrationDate,
+			
 			START_DATE startDate,
 			AREA_NAME areaName,
 			LOCATION_NAME locationName
@@ -120,6 +122,7 @@
 			PHONE phone,
 			WORK_UNIT workUnit,
 			UNEMPLOYED_NO unemployedNo,
+			POST_ADDRESS postAddress,
 			REGISTRATION_DATE registrationDate,
 			START_DATE startDate,
 			AREA_NAME areaName,

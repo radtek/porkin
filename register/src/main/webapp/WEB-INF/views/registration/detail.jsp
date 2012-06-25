@@ -146,6 +146,10 @@
 			<li class="fieldcontain"><span id="bname-label"
 				class="property-label"><spring:message code="label.register.id_card"/></span> <span class="property-value"
 				aria-labelledby="bname-label">${custom.idCard}</span></li>
+				
+			<li class="fieldcontain"><span id="bname-label"
+				class="property-label"><spring:message code="label.register.post_address"/></span> <span class="property-value"
+				aria-labelledby="bname-label">${custom.postAddress}</span></li>
 			
 			<li class="fieldcontain"><span id="bname-label"
 				class="property-label"><spring:message code="label.register.telephone"/></span> <span class="property-value"
@@ -159,11 +163,11 @@
 				class="property-label"><spring:message code="label.register.unemployee_no"/></span> <span class="property-value"
 				aria-labelledby="bname-label">${custom.unemployedNo}</span></li>
 				
-			<li class="fieldcontain"><span id="bname-label"
-				class="property-label"><spring:message code="label.register.start_date"/></span> <span class="property-value"
-				aria-labelledby="bname-label">
-				<fmt:formatDate value="${custom.startDate}" type="time" timeStyle="full" pattern="yyyy-MM-dd"/>
-				</span></li>
+<!-- 			<li class="fieldcontain"><span id="bname-label" -->
+<%-- 				class="property-label"><spring:message code="label.register.start_date"/></span> <span class="property-value" --%>
+<!-- 				aria-labelledby="bname-label"> -->
+<%-- 				<fmt:formatDate value="${custom.startDate}" type="time" timeStyle="full" pattern="yyyy-MM-dd"/> --%>
+<!-- 				</span></li> -->
 				
 			<li class="fieldcontain"><span id="bname-label"
 				class="property-label"><spring:message code="label.register.reg_date"/></span> <span class="property-value"

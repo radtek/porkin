@@ -19,7 +19,17 @@ public class CustomDto implements Serializable {
 	private Date startDate;
 	private String areaName;
 	private String locationName;
+	private String postAddress;
+
 	private static final long serialVersionUID = 1L;
+
+	public String getPostAddress() {
+		return postAddress;
+	}
+
+	public void setPostAddress(String postAddress) {
+		this.postAddress = postAddress;
+	}
 
 	public Integer getRegistrationId() {
 		return registrationId;
@@ -128,8 +138,6 @@ public class CustomDto implements Serializable {
 	public String getLocationName() {
 		return locationName;
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
