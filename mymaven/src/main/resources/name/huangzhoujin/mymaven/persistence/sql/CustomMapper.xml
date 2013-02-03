@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="name.huangzhoujin.mymaven.persistence.sqlmapdao.CustomMapper">
+
+	<update id="resetRepository">
+		update T_MVN_REPOSITORY t set t.USED_FLAG = 'N';
+	</update>
+
+	<select id="getMinUnusedRepositoryID" resultType="java.lang.Long">
+		select
+		MIN(t.REP_ID)
+		as min_number from T_MVN_REPOSITORY t where
+		t.USED_FLAG='N'
+	</select>
+	<select id="countByRepURL" parameterType="java.lang.String"
+		resultType="java.lang.Long">
+		select COUNT(*) as count_number from T_MVN_REPOSITORY t
+		where t.REP_URL=
+		#{value}
+	</select>
+
+	<select id="repositoryTopList" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		SELECT DISTINCT(mymaven_url(REP_URL,#{value})) as TOPLIST from
+		T_MVN_REPOSITORY
+	</select>
+
+</mapper>
