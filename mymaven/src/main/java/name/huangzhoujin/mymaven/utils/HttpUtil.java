@@ -92,8 +92,13 @@ public class HttpUtil {
 				unusedList.add(ServiceFacade.getPropertiesBean()
 						.getRepository() + url + Constants.SLASH_STRING);
 			}
-		}
 
+			iter = unusedList.iterator();
+			while(iter.hasNext()) {
+				url = iter.next();
+				log.info("UnusedLink>>>" + url);
+			}
+		}
 		return unusedList;
 	}
 
@@ -214,7 +219,7 @@ public class HttpUtil {
 			httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
 					getProxy());
 			HttpGet httpget = new HttpGet(url);
-			log.info("executing request with Proxy" + httpget.getURI());
+			log.info("executing request with Proxy " + httpget.getURI());
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String responseBody = httpclient.execute(httpget, responseHandler);
 			result = responseBody.toString();
@@ -390,13 +395,17 @@ public class HttpUtil {
 	}
 
 	public static void main(String[] args) {
-//		List<String> list = getUnusedList();
-//		Iterator<String> iter = list.iterator();
-//		String url = null;
-//		while (iter.hasNext()) {
-//			url = iter.next();
-//			System.out.println(">>>" + url);
-//		}
+		// List<String> list = getUnusedList();
+		// Iterator<String> iter = list.iterator();
+		// String url = null;
+		// while (iter.hasNext()) {
+		// url = iter.next();
+		// System.out.println(">>>" + url);
+		// }
+		
+		String link = "https://repository.sonatype.org/content/groups/public/org/99soft/";
+		HttpUtil.isUnusedList(link);
+		//System.out.println(flag);
 	}
 
 }
